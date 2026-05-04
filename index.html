@@ -1,31 +1,90 @@
-<html>
-<style>
-  .red-text {
-    color: red;
-  }
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billy Chen's Blog</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
 
-  h2 {
-    font-family: Lobster, Monospace;
-  }
+        h1 {
+            color: #5B8FF9;
+            border-bottom: 3px solid #5B8FF9;
+            padding-bottom: 10px;
+        }
 
-  p {
-    font-size: 16px;
-    font-family: Monospace;
-  }
+        .article-list {
+            margin-top: 30px;
+        }
 
-  .thick-green-border {
-    border-color: green;
-    border-width: 3px;
-    border-style: solid;
-    border-radius: 50%;
-  }
+        .article {
+            background: #F6F8FB;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #5B8FF9;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-  .smaller-image {
-    width: 100px;
-  }
-</style>
+        .article:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(91, 143, 249, 0.15);
+        }
 
-<h2 class="red-text">jchenibm@github.io</h2>
+        .article h2 {
+            margin-top: 0;
+            color: #5B8FF9;
+        }
 
+        .article a {
+            color: #5B8FF9;
+            text-decoration: none;
+            border-bottom: 1px dashed #5B8FF9;
+        }
+
+        .article a:hover {
+            border-bottom-style: solid;
+        }
+
+        .article .meta {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Billy Chen's Blog</h1>
+
+    <div class="article-list">
+        <div class="article">
+            <h2><a href="ai-skeptic-friends.html">我那些质疑 AI 的朋友都疯了</a></h2>
+            <div class="meta">
+                <span>作者：Thomas Ptacek</span> |
+                <span>翻译：Billy Chen</span> |
+                <span>发布日期：2026年5月4日</span>
+            </div>
+            <p>一篇关于 AI 辅助编程的真诚挑衅。作者认为，许多对 AI 的怀疑论者基于过时的使用方式或错误的前提进行批评，而这些批评在当今使用 Agent 和工作流的实践中已不成立。</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Powered by GitHub Pages</p>
+        <p>© 2026 Billy Chen. All rights reserved.</p>
+    </div>
+</body>
 </html>
-

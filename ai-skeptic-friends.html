@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>我的AI怀疑论朋友们都疯了 · Fly博客</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=Manrope:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Light Theme Color Palette */
+    --paper-50:#FDFCFB;
+    --paper-100:#F8F7F4;
+    --paper-200:#EBE9E4;
+    --paper-300:#DCD9D2;
+    --paper-400:#C8C5BE;
+    --paper-500:#A8A49C;
+    --ink-100:#2A2825;
+    --ink-200:#4A4640;
+    --ink-300:#6B675F;
+    --ink-400:#8B877D;
+    --accent:#2563EB;
+    --accent-hot:#3B82F6;
+    --signal:#EA580C;
+    --warn:#DC2626;
+    --grow:#16A34A;
+    --grid:rgba(0,0,0,0.04);
+    --hairline:rgba(0,0,0,0.08);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  ::selection{ background:var(--accent); color:var(--paper-50); }
+
+  body{
+    font-family:'Noto Sans SC', 'Manrope', system-ui, sans-serif;
+    font-weight:300;
+    background:var(--paper-100);
+    color:var(--ink-100);
+    line-height:1.65;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,0,0,0.03), transparent 60%),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
+    background-attachment: fixed, fixed, fixed;
+    min-height:100vh;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.025;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .frame{
+    position:relative; z-index:2;
+    max-width:1320px;
+    margin:0 auto;
+    padding:0 56px;
+  }
+
+  /* ───────── HERO ───────── */
+  .hero{
+    padding:96px 0 72px;
+    position:relative;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    padding-bottom:64px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .topbar .left{ display:flex; align-items:center; gap:14px; }
+  .topbar .left::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.5; transform:scale(.85); }
+  }
+  .topbar .right{ display:flex; gap:32px; }
+  .topbar .right span:not(:last-child)::after{
+    content:'/'; margin-left:32px; color:var(--ink-400);
+  }
+
+  .eyebrow{
+    margin-top:72px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{
+    content:''; width:32px; height:1px; background:var(--accent);
+  }
+
+  h1.title{
+    margin-top:32px;
+    font-family:'Noto Sans SC', 'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(42px, 7.2vw, 108px);
+    line-height:1.1;
+    letter-spacing:-.025em;
+    color:var(--ink-100);
+  }
+  h1.title .ital{
+    font-style:italic;
+    color:var(--accent);
+  }
+
+  .kicker{
+    margin-top:40px;
+    font-family:'Noto Sans SC', sans-serif;
+    font-weight:300;
+    font-size:clamp(18px, 1.9vw, 24px);
+    line-height:1.7;
+    color:var(--ink-200);
+    max-width:800px;
+  }
+
+  .meta{
+    margin-top:48px;
+    display:flex;
+    gap:48px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+  }
+  .meta span{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .meta span::before{
+    content:''; width:16px; height:1px; background:var(--ink-300);
+  }
+
+  /* ───────── TOWER ───────── */
+  .tower{
+    position:relative;
+    margin-top:64px;
+    padding-bottom:64px;
+  }
+
+  .floor{
+    position:relative;
+    padding:88px 0 88px 0;
+    border-top:1px solid var(--hairline);
+  }
+  .floor:last-child{ border-bottom:1px solid var(--hairline); }
+
+  .floor.lvl-01{
+    background: linear-gradient(180deg, rgba(37,99,235,0.04) 0%, transparent 60%);
+  }
+  .floor.lvl-02{
+    background: linear-gradient(180deg, rgba(37,99,235,0.08) 0%, transparent 60%);
+  }
+  .floor.lvl-03{
+    background: linear-gradient(180deg, rgba(37,99,235,0.12) 0%, transparent 60%);
+  }
+  .floor.lvl-04{
+    background: linear-gradient(180deg, rgba(37,99,235,0.16) 0%, transparent 60%);
+  }
+
+  .floor-head{
+    display:grid;
+    grid-template-columns: 280px 1fr;
+    column-gap:64px;
+    align-items:start;
+    margin-bottom:56px;
+  }
+
+  .floor .number{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 200, 'SOFT' 0, 'WONK' 0;
+    font-style:italic;
+    font-size:clamp(140px, 16vw, 220px);
+    line-height:.84;
+    letter-spacing:-.05em;
+    user-select:none;
+  }
+  .floor.lvl-01 .number{ color:rgba(42,40,37,.25); }
+  .floor.lvl-02 .number{ color:rgba(42,40,37,.45); }
+  .floor.lvl-03 .number{ color:var(--accent); }
+  .floor.lvl-04 .number{ color:var(--accent); }
+  .floor .number .tag{
+    display:block;
+    margin-top:24px;
+    font-family:'Noto Sans SC', 'JetBrains Mono', monospace;
+    font-style:normal;
+    font-size:10px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    white-space:nowrap;
+  }
+  .floor .number .tag::before{
+    content:''; display:inline-block;
+    width:24px; height:1px;
+    background:var(--ink-300);
+    vertical-align:middle;
+    margin-right:10px;
+  }
+
+  .floor .head-body .verb{
+    font-family:'Noto Sans SC', 'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .floor .head-body .verb::before{
+    content:''; width:18px; height:1px; background:var(--accent);
+  }
+
+  .floor .head-body h2{
+    font-family:'Noto Sans SC', 'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(42px, 5.2vw, 68px);
+    line-height:1.05;
+    letter-spacing:-.02em;
+    color:var(--ink-100);
+    margin-bottom:14px;
+  }
+  .floor .head-body h2 em{
+    font-style:italic;
+    color:var(--accent);
+  }
+
+  .floor .head-body .tagline{
+    font-family:'Noto Sans SC', sans-serif;
+    font-weight:300;
+    font-style:italic;
+    font-size:20px;
+    line-height:1.6;
+    color:var(--ink-200);
+  }
+
+  /* ───────── CONCEPT CARDS ───────── */
+  .concept-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+  }
+  .concept-row.tight { gap:16px; }
+
+  .card{
+    border:1px solid var(--hairline);
+    border-radius:6px;
+    padding:28px 28px 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor:pointer;
+    transition: border-color 320ms ease, transform 320ms ease, box-shadow 320ms ease, background 320ms ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity:.25;
+    transition: opacity 320ms ease;
+  }
+  .card:hover{
+    border-color:rgba(37,99,235,0.4);
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.5));
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform:translateY(-1px);
+  }
+  .card:hover::before{ opacity:.55; }
+  .card.expanded{
+    border-color:var(--accent);
+    background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.6));
+    box-shadow: 0 4px 20px rgba(37,99,235,0.15);
+  }
+  .card.expanded::before{ opacity:.8; }
+  .concept-row:has(.card.expanded){
+    grid-template-columns: 1fr;
+  }
+
+  .card .card-eyebrow{
+    font-family:'Noto Sans SC', 'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    margin-bottom:14px;
+  }
+  .card h3{
+    font-family:'Noto Sans SC', 'Fraunces', serif;
+    font-weight:500;
+    font-size:22px;
+    line-height:1.2;
+    letter-spacing:-.01em;
+    color:var(--ink-100);
+    margin-bottom:10px;
+  }
+  .card h3 em{
+    font-style:italic;
+    color:var(--accent);
+  }
+  .card .one-liner{
+    font-family:'Noto Sans SC', sans-serif;
+    font-weight:300;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink-200);
+    line-height:1.6;
+  }
+
+  .card .expand-hint{
+    margin-top:16px;
+    font-family:'Noto Sans SC', 'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    transition: color 320ms ease;
+  }
+  .card:hover .expand-hint{ color:var(--accent); }
+  .card.expanded .expand-hint{ display:none; }
+
+  .card .detail{
+    display:none;
+    margin-top:24px;
+    padding-top:24px;
+    border-top:1px dashed rgba(0,0,0,0.12);
+  }
+  .card.expanded .detail{ display:block; }
+  .card .detail p{
+    font-size:14.5px;
+    line-height:1.8;
+    color:var(--ink-200);
+    margin-bottom:14px;
+    max-width:64ch;
+  }
+  .card .detail p strong{ color:var(--ink-100); font-weight:500; }
+  .card .detail p em{ font-style:italic; color:var(--ink-100); }
+  .card .detail ul{
+    font-size:14.5px;
+    line-height:1.8;
+    color:var(--ink-200);
+    margin-bottom:14px;
+    padding-left:20px;
+  }
+  .card .detail li{ margin-bottom:10px; }
+  .card .detail blockquote{
+    border-left:3px solid var(--accent);
+    padding-left:16px;
+    margin:16px 0;
+    font-style:italic;
+    color:var(--ink-300);
+  }
+
+  .conn-label{
+    font-family:'Noto Sans SC', 'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    margin-top:20px;
+    margin-bottom:10px;
+  }
+  .connections{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .conn-chip{
+    padding:5px 10px;
+    border-radius:3px;
+    font-family:'Noto Sans SC', 'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.04em;
+    border:1px solid var(--hairline);
+    color:var(--ink-200);
+    background: rgba(255,255,255,0.5);
+  }
+  .conn-chip.feeds{
+    color:var(--accent);
+    border-color:rgba(37,99,235,0.4);
+    background: rgba(37,99,235,0.08);
+  }
+  .conn-chip.fed-by{
+    color:var(--grow);
+    border-color:rgba(22,163,74,0.35);
+    background: rgba(22,163,74,0.08);
+  }
+  .conn-chip.parallel{
+    color:var(--ink-200);
+    border-color:rgba(0,0,0,0.15);
+  }
+  .conn-chip.branch{
+    color:var(--accent);
+    border:1px dashed rgba(37,99,235,0.4);
+  }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width:1100px){
+    .floor-head{ grid-template-columns: 200px 1fr; column-gap:40px; }
+  }
+  @media (max-width:760px){
+    .frame{ padding:0 24px; }
+    .floor-head{ grid-template-columns:1fr; }
+    .floor .number{ font-size:120px; }
+    h1.title{ font-size:48px; }
+    .topbar .right{ display:none; }
+    .meta{ flex-direction:column; gap:24px; }
+  }
+
+  /* ───────── ON-LOAD REVEAL ───────── */
+  @media (prefers-reduced-motion: no-preference){
+    .floor{
+      opacity:0;
+      transform:translateY(24px);
+      animation:rise 900ms cubic-bezier(.2,.6,.2,1) forwards;
+    }
+    .floor.lvl-01{ animation-delay:120ms; }
+    .floor.lvl-02{ animation-delay:240ms; }
+    .floor.lvl-03{ animation-delay:360ms; }
+    .floor.lvl-04{ animation-delay:480ms; }
+    @keyframes rise{
+      to{ opacity:1; transform:none; }
+    }
+    h1.title, .kicker{ animation:rise 900ms cubic-bezier(.2,.6,.2,1) backwards; }
+    h1.title{ animation-delay:60ms; }
+    .kicker{ animation-delay:160ms; }
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- ───────── HERO ───────── -->
+  <header class="hero">
+    <div class="topbar">
+      <div class="left">FLY.IO · BLOG</div>
+      <div class="right">
+        <span>AI编程</span>
+        <span>LLM</span>
+        <span>软件开发</span>
+      </div>
+    </div>
+
+    <div class="eyebrow">一篇关于AI辅助编程的深度思考</div>
+
+    <h1 class="title">
+      我的AI怀疑论<span class="ital">朋友们</span><br>
+      都疯了
+    </h1>
+
+    <p class="kicker">
+      我认识的一些最聪明的人骨子里坚信AI只是一时的狂热——就像NFT疯潮的下一个迭代。我一直不愿反驳他们，因为他们确实比我聪明。但他们的论点经不起推敲，也值得正面回应。那些才华横溢的人正在出于固执，做着LLM已经做得更好的事情。
+    </p>
+
+    <div class="meta">
+      <span>作者：Thomas Ptacek</span>
+      <span>资深开发者</span>
+      <span>发布于 2025</span>
+    </div>
+  </header>
+
+  <!-- ───────── TOWER ───────── -->
+  <section class="tower">
+
+    <!-- ── FLOOR 01: 核心观点 ── -->
+    <article class="floor lvl-01">
+      <div class="floor-head">
+        <div class="number">01<span class="tag">核心论点</span></div>
+        <div class="head-body">
+          <div class="verb">开篇立场</div>
+          <h2>LLM是<em>革命性</em>的技术</h2>
+          <div class="tagline">即使今天停止所有LLM进展，它仍将是我职业生涯中第二重要的事情。</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">论点 01</div>
+          <h3>这不是<em>一时的狂热</em></h3>
+          <div class="one-liner">AI不是下一个NFT，而是真正的生产力革命。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>一些最聪明的人认为AI是昙花一现的狂热，类似于NFT炒作。但这个论点经不起推敲。我们正在目睹的是真正的生产力革命。</p>
+            <blockquote>
+              "即使今天停止所有LLM的进展，LLM仍将是我职业生涯中第二重要的事情。"
+            </blockquote>
+            <p>对于艺术、音乐和写作领域，我保持怀疑态度。但在软件开发领域？我完全不相信那些怀疑论者。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 代理模式</span>
+              <span class="conn-chip parallel">平行 ↔ 编程效率</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">论点 02</div>
+          <h3>你可能在<em>用错方式</em>使用LLM</h3>
+          <div class="one-liner">如果你6个月前尝试失败了，那不是真正的LLM辅助编程。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>如果你在ChatGPT页面上发出请求，然后将生成的（通常有问题的）代码粘贴到编辑器中，那你根本没有做真正的AI辅助编程。</p>
+            <p><strong>真正的LLM辅助编程使用代理（Agents）</strong>：</p>
+            <ul>
+              <li>代理可以自主探索你的代码库</li>
+              <li>直接编写文件</li>
+              <li>运行工具</li>
+              <li>编译代码、运行测试并迭代结果</li>
+            </ul>
+            <p>难怪你和AI支持者在互相说梦——你们根本不在同一个频道上。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 代码质量</span>
+              <span class="conn-chip branch">关联 ↔ Cursor</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">论点 03</div>
+          <h3>LLM能编写<em>繁琐代码</em></h3>
+          <div class="one-liner">大部分项目的大部分代码都是繁琐的——这正是LLM擅长的。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>LLM可以编写你将需要的所有繁琐代码中的很大一部分。而大多数项目上的大多数代码都是繁琐的。</p>
+            <ul>
+              <li><strong>减少搜索</strong>：LLM大幅减少你需要Google搜索的内容数量</li>
+              <li><strong>自主查找</strong>：它们自己查找信息</li>
+              <li><strong>不知疲倦</strong>：它们不会疲劳，不受惯性影响</li>
+            </ul>
+            <p>想想任何你想构建但没有开始的东西。你可能尝试了一些初步步骤，但如果你不在新编程语言的学习曲线中，你可能会推迟一天、一年，甚至整个职业生涯。</p>
+            <p>LLM可以被指示去弄清楚所有那些繁琐的事情。它会让你直接进入那个黄金时刻——代码几乎就能工作，而开发意味着调整代码并立即看到事情变得更好。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 项目启动</span>
+              <span class="conn-chip parallel">平行 ↔ 开发体验</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── FLOOR 02: 常见质疑回应 ── -->
+    <article class="floor lvl-02">
+      <div class="floor-head">
+        <div class="number">02<span class="tag">质疑回应</span></div>
+        <div class="head-body">
+          <div class="verb">反驳怀疑论</div>
+          <h2>针对常见<em>误解</em>的澄清</h2>
+          <div class="tagline">回应关于幻觉、代码质量、工作替代等核心质疑。</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">质疑 01</div>
+          <h3>但代码是<em>概率性的</em></h3>
+          <div class="one-liner">不，代码不是概率性的——它是可知的、可验证的。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>人们抱怨LLM生成的代码是"概率性的"。不，它不是。它是代码。它不是Yacc输出。它是可知的。</p>
+            <p><strong>关键区别</strong>：</p>
+            <ul>
+              <li>LLM本身可能是随机的，但LLM不重要</li>
+              <li>重要的是你是否能理解结果</li>
+              <li>你的防护措施是否有效</li>
+            </ul>
+            <p>阅读他人的代码是工作的一部分。如果你无法消化LLM生成的那些无聊、重复的代码——那是技能问题！你是如何处理人类开发者在截止日期前制造出的混乱代码的？</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 代码审查</span>
+              <span class="conn-chip parallel">平行 ↔ 责任归属</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">质疑 02</div>
+          <h3>但会<em>产生幻觉</em></h3>
+          <div class="one-liner">幻觉问题在编程环境中基本已被解决。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>如果幻觉对你很重要，那么你的编程语言辜负了你。</p>
+            <p><strong>代理如何处理幻觉</strong>：</p>
+            <ul>
+              <li>代理会进行代码检查</li>
+              <li>编译和运行测试</li>
+              <li>如果LLM发明了新的函数签名，代理会看到错误</li>
+              <li>将错误反馈给LLM，它会说"哦对，我完全编造了那个"然后重试</li>
+            </ul>
+            <p>你只有在观察代理生成的思维链日志时才会注意到这一点。但这正是我喜欢Zed的代理模式的原因：它让你切换标签页并让它工作，完成后通过桌面通知你。</p>
+            <p><strong>幻觉几乎是已解决的问题</strong>——但它是开发者建议使用LLM时首先提出的事情，尽管这（或多或少）是一个已解决的问题。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 错误处理</span>
+              <span class="conn-chip parallel">平行 ↔ 测试驱动</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">质疑 03</div>
+          <h3>但代码质量<em>很差</em></h3>
+          <div class="one-liner">就像初级开发者写的代码——但你仍然需要审查。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>你一直负责合并到主分支的代码。五年前是这样，明天也是这样，无论你是否使用LLM。</p>
+            <p><strong>质量保证</strong>：</p>
+            <ul>
+              <li>如果你用LLM构建人们依赖的东西，阅读代码</li>
+              <li>你可能会花5-10分钟将其调整为你自己的风格</li>
+              <li>LLM显示出适应本地习语的迹象，但我们还没到那一步</li>
+            </ul>
+            <p>高级开发者的部分职责是让能力较弱的编码者变得高效——无论他们是人类还是算法的。用好代理本身就是一种技能，也是一个涉及提示词、索引和（尤其是）工具的工程项目。LLM只有在你允许的情况下才会产生糟糕的代码。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 代码审查</span>
+              <span class="conn-chip branch">关联 ↔ 团队协作</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">质疑 04</div>
+          <h3>但它们会<em>抢走工作</em></h3>
+          <div class="one-liner">实习生每个月要20美元吗？因为Cursor.ai就这个价格。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>关于AI取代开发者工作的担忧一直存在。但让我们换个角度思考：</p>
+            <ul>
+              <li><strong>成本对比</strong>：实习生每个月要20美元吗？因为Cursor.ai就这个价格</li>
+              <li><strong>效率提升</strong>：LLM处理繁琐工作，让你专注于真正重要的部分</li>
+              <li><strong>能力扩展</strong>：让中级开发者能够处理以前需要高级技能的任务</li>
+            </ul>
+            <p>高级开发者的职责是让团队变得更有生产力。如果LLM能帮助团队中的每个人都变得更高效，那为什么不使用它呢？</p>
+            <blockquote>
+              "使用代理本身就是一种技能，也是一个工程项目。"
+            </blockquote>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 团队效率</span>
+              <span class="conn-chip parallel">平行 ↔ 成本效益</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">质疑 05</div>
+          <h3>但不擅长<em>Rust</em></h3>
+          <div class="one-liner">每种语言都有其特点，但这不是拒绝AI的理由。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>关于LLM不擅长Rust或其他特定语言的论点，这实际上是对编程语言本身的批评，而不是对AI工具的批评。</p>
+            <p><strong>理性看待</strong>：</p>
+            <ul>
+              <li>每种语言都有学习曲线</li>
+              <li>LLM可以学习和适应不同的编程范式</li>
+              <li>代理可以通过工具和反馈循环改进</li>
+              <li>语言特性不会阻止AI辅助</li>
+            </ul>
+            <p>编程工具的演进是持续的。AI只是这一演进过程中的下一个步骤。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 语言学习</span>
+              <span class="conn-chip branch">关联 ↔ 工具生态</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">质疑 06</div>
+          <h3>但这不是<em>真正的编程</em></h3>
+          <div class="one-liner">这是对编程本质的误解——解决问题才是核心。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>有些人认为使用AI工具就不是"真正的编程"。这种观点忽视了编程的本质：</p>
+            <ul>
+              <li><strong>编程即解决问题</strong>：工具的演进不会改变这一点</li>
+              <li><strong>历史视角</strong>：从汇编到高级语言，每次"简化"都伴随着同样的质疑</li>
+              <li><strong>价值转移</strong>：从语法细节转移到架构和逻辑思考</li>
+              <li><strong>核心技能</strong>：理解问题、设计解决方案、验证结果</li>
+            </ul>
+            <p>那些无法接受AI辅助编程的人，可能会发现自己正在被那些能够有效利用这些工具的人超越。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 编程演进</span>
+              <span class="conn-chip parallel">平行 ↔ 技能发展</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── FLOOR 03: 实践建议 ── -->
+    <article class="floor lvl-03">
+      <div class="floor-head">
+        <div class="number">03<span class="tag">实践指南</span></div>
+        <div class="head-body">
+          <div class="verb">如何使用</div>
+          <h2>真正有效的<em>LLM辅助</em>编程</h2>
+          <div class="tagline">不是关于ChatGPT对话，而是关于代理、工具集成和工作流重构。</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">实践 01</div>
+          <h3>使用<em>代理</em>而非对话</h3>
+          <div class="one-liner">真正的LLM编程使用代理系统，而不是聊天界面。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>代理的核心能力</strong>：</p>
+            <ul>
+              <li>从代码树中提取任意代码到其上下文窗口</li>
+              <li>运行标准Unix工具导航树并提取信息</li>
+              <li>与Git交互</li>
+              <li>运行现有工具，如linter、格式化器和模型检查器</li>
+              <li>通过MCP进行基本任意的工具调用</li>
+            </ul>
+            <p>代理中的实际"做事"的代码本身不是AI。这应该让你放心。它是令人惊讶的简单系统代码，以与Makefile相同的方式连接到关于编程的基本事实。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 工具集成</span>
+              <span class="conn-chip parallel">平行 ↔ 自动化</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">实践 02</div>
+          <h3><em>成本</em>效益分析</h3>
+          <div class="one-liner">20美元/月的Cursor vs 实习生的成本对比。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>直接成本对比</strong>：</p>
+            <ul>
+              <li>Cursor.ai：每月20美元</li>
+              <li>实习生：每月数千美元</li>
+              <li>中级开发者：每月数万美元</li>
+            </ul>
+            <p><strong>隐性成本</strong>：</p>
+            <ul>
+              <li>招聘和培训时间</li>
+              <li>管理开销</li>
+              <li>学习曲线</li>
+              <li>离职风险</li>
+            </ul>
+            <p>从纯经济角度看，LLM辅助编程是显而易见的选择。但这不仅仅是成本问题——更是关于团队能力和效率的问题。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 团队建设</span>
+              <span class="conn-chip parallel">平行 ↔ 资源分配</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">实践 03</div>
+          <h3><em>责任感</em>不会消失</h3>
+          <div class="one-liner">你仍然要对合并到主分支的代码负责。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>责任归属清晰</strong>：</p>
+            <ul>
+              <li>五年前你是负责的，明天你仍然是</li>
+              <li>无论是否使用LLM，这一点不会改变</li>
+              <li>AI工具不会改变你的职业责任</li>
+              <li>审查和测试仍然是必需的</li>
+            </ul>
+            <p>事实上，使用LLM可能会让你成为更好的开发者，因为它让你能够：</p>
+            <ul>
+              <li>更快地探索不同的解决方案</li>
+              <li>在相同时间内审查更多代码</li>
+              <li>专注于更高层次的架构问题</li>
+              <li>减少低级错误</li>
+            </ul>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 专业成长</span>
+              <span class="conn-chip parallel">平行 ↔ 最佳实践</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">实践 04</div>
+          <h3><em>阅读</em>生成的代码</h3>
+          <div class="one-liner">你仍然需要阅读和理解AI生成的代码。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>为什么必须阅读</strong>：</p>
+            <ul>
+              <li>代码必须符合你的项目风格</li>
+              <li>你需要理解它是如何工作的</li>
+              <li>维护需要理解</li>
+              <li>调试需要熟悉</li>
+            </ul>
+            <p><strong>实际流程</strong>：</p>
+            <ul>
+              <li>LLM生成初始代码</li>
+              <li>你花5-10分钟调整风格</li>
+              <li>深度阅读确保理解</li>
+              <li>测试验证功能</li>
+              <li>合并到代码库</li>
+            </ul>
+            <p>这实际上比从零开始编写代码要快得多，同时保持了你对代码库的控制和理解。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 代码质量</span>
+              <span class="conn-chip parallel">平行 ↔ 维护性</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── FLOOR 04: 未来展望 ── -->
+    <article class="floor lvl-04">
+      <div class="floor-head">
+        <div class="number">04<span class="tag">结论</span></div>
+        <div class="head-body">
+          <div class="verb">最终思考</div>
+          <h2>拥抱<em>变革</em>而不是抗拒</h2>
+          <div class="tagline">AI辅助编程不是威胁，而是让开发者变得更强大的工具。</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">展望 01</div>
+          <h3><em>技能</em>重新定义</h3>
+          <div class="one-liner">高级开发者的技能正在从"手写代码"转向"指导和审查"。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>编程技能的本质正在发生变化：</p>
+            <ul>
+              <li><strong>从</strong>：手写每一行代码</li>
+              <li><strong>到</strong>：指导和审查AI生成的代码</li>
+              <li><strong>核心能力</strong>：问题分析、架构设计、质量判断</li>
+              <li><strong>工具掌握</strong>：代理配置、提示工程、工作流设计</li>
+            </ul>
+            <p>那些能够适应这种变化的开发者将会蓬勃发展。那些固守旧方式的人可能会发现自己落后了。</p>
+            <blockquote>
+              "高级开发者的部分职责是让能力较弱的编码者变得高效。"
+            </blockquote>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 职业发展</span>
+              <span class="conn-chip parallel">平行 ↔ 技能演进</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">展望 02</div>
+          <h3><em>生产力</em>解放</h3>
+          <div class="one-liner">让开发者专注于真正有价值的创造性工作。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>真正的价值</strong>：</p>
+            <ul>
+              <li>从繁琐的样板代码中解放</li>
+              <li>专注于解决真正的问题</li>
+              <li>更快地原型化和迭代</li>
+              <li>减少技术债务的积累</li>
+            </ul>
+            <p>想象一下，你可以在几分钟内启动一个新项目，所有的基础设施和样板代码都由LLM处理。你只需要关注核心业务逻辑和创新功能。这就是AI辅助编程的承诺。</p>
+            <p><strong>多巴胺冲击</strong>：代码几乎就能工作，你只需要调整并立即看到改进——这就是我们编码的原因，那种即时的满足感和成就感。</p>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 创造力</span>
+              <span class="conn-chip parallel">平行 ↔ 开发效率</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">展望 03</div>
+          <h3><em>生态系统</em>演进</h3>
+          <div class="one-liner">代理、工具、工作流——整个开发环境都在进化。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>正在发生的改变</strong>：</p>
+            <ul>
+              <li>IDE集成代理模式</li>
+              <li>MCP（模型上下文协议）标准化</li>
+              <li>代理市场蓬勃发展</li>
+              <li>企业级工具链成熟</li>
+            </ul>
+            <p>这不是一时的狂热——这是基础设施的持久性转变。那些早期采用者将获得显著的竞争优势。</p>
+            <p><strong>最佳实践</strong>：</p>
+            <ul>
+              <li>投资于代理配置和提示工程</li>
+              <li>建立代码审查和质量保证流程</li>
+              <li>培训团队成员有效使用AI工具</li>
+              <li>保持对技术的深度理解</li>
+            </ul>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 工具生态</span>
+              <span class="conn-chip branch">关联 ↔ 行业标准</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">展望 04</div>
+          <h3><em>最终建议</em></h3>
+          <div class="one-liner">不要因为固执而错过技术进步的机会。</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>给怀疑论者的建议</strong>：</p>
+            <ul>
+              <li>真正尝试使用代理系统一周</li>
+              <li>不要用6个月前的经验来判断现在的技术</li>
+              <li>关注实际的生产力提升，而不是哲学辩论</li>
+              <li>保持开放的心态和学习意愿</li>
+            </ul>
+            <p><strong>给支持者的建议</strong>：</p>
+            <ul>
+              <li>不要过度吹嘘——保持务实</li>
+              <li>承认工具的局限性和需要改进的地方</li>
+              <li>专注于解决实际问题，而不是参与意识形态争论</li>
+              <li>帮助团队建立有效的AI辅助编程实践</li>
+            </ul>
+            <blockquote>
+              "才华横溢的人正在出于固执，做着LLM已经做得更好的事情。不要成为其中之一。"
+            </blockquote>
+            <div class="conn-label">关联关系</div>
+            <div class="connections">
+              <span class="conn-chip feeds">推动 → 个人成长</span>
+              <span class="conn-chip parallel">平行 ↔ 团队成功</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+</div>
+
+<script>
+function toggleExpand(el) {
+  el.classList.toggle('expanded');
+}
+</script>
+
+</body>
+</html>
