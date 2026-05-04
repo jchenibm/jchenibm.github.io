@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>吃辣！辣椒的中国史 — 布莱恩·R·多恩特</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=Manrope:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Light Theme Color Palette */
+    --paper-50:#FDFCFB;
+    --paper-100:#F8F7F4;
+    --paper-200:#EBE9E4;
+    --paper-300:#DCD9D2;
+    --paper-400:#C8C5BE;
+    --paper-500:#A8A49C;
+    --ink-100:#2A2825;
+    --ink-200:#4A4640;
+    --ink-300:#6B675F;
+    --ink-400:#8B877D;
+    --accent:#DC2626;
+    --accent-hot:#EF4444;
+    --signal:#EA580C;
+    --warn:#DC2626;
+    --grow:#16A34A;
+    --grid:rgba(0,0,0,0.04);
+    --hairline:rgba(0,0,0,0.08);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  ::selection{ background:var(--accent); color:var(--paper-50); }
+
+  body{
+    font-family:'Noto Sans SC', 'Manrope', system-ui, sans-serif;
+    font-weight:300;
+    background:var(--paper-100);
+    color:var(--ink-100);
+    line-height:1.55;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(220,38,38,0.04), transparent 60%),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
+    background-attachment: fixed, fixed, fixed;
+    min-height:100vh;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.025;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .frame{
+    position:relative; z-index:2;
+    max-width:1320px;
+    margin:0 auto;
+    padding:0 56px;
+  }
+
+  /* ───────── HERO ───────── */
+  .hero{
+    padding:96px 0 72px;
+    position:relative;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    padding-bottom:64px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .topbar .left{ display:flex; align-items:center; gap:14px; }
+  .topbar .left::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.5; transform:scale(.85); }
+  }
+  .topbar .right{ display:flex; gap:32px; }
+  .topbar .right span:not(:last-child)::after{
+    content:'/'; margin-left:32px; color:var(--ink-400);
+  }
+
+  .eyebrow{
+    margin-top:72px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{
+    content:''; width:32px; height:1px; background:var(--accent);
+  }
+
+  h1.title{
+    margin-top:32px;
+    font-family:'Fraunces', 'Noto Serif SC', serif;
+    font-variation-settings:'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+    font-size:clamp(56px, 9.2vw, 148px);
+    line-height:.92;
+    letter-spacing:-.035em;
+    color:var(--ink-100);
+  }
+  h1.title .ital{
+    font-style:italic;
+    font-variation-settings:'opsz' 144, 'wght' 320, 'SOFT' 100, 'WONK' 1;
+    color:var(--accent);
+  }
+
+  .kicker{
+    margin-top:40px;
+    font-family:'Fraunces', 'Noto Serif SC', serif;
+    font-variation-settings:'opsz' 36, 'wght' 320, 'SOFT' 50;
+    font-style:italic;
+    font-size:clamp(20px, 2.1vw, 26px);
+    line-height:1.45;
+    color:var(--ink-200);
+    max-width:760px;
+  }
+
+  .author-info{
+    margin-top:32px;
+    font-family:'Noto Sans SC', sans-serif;
+    font-size:15px;
+    color:var(--ink-300);
+    display:flex;
+    gap:24px;
+    align-items:center;
+  }
+  .author-info .tag{
+    padding:6px 12px;
+    background:rgba(220,38,38,0.08);
+    color:var(--accent);
+    border-radius:4px;
+    font-size:12px;
+    font-weight:500;
+  }
+
+  /* ───────── TOWER ───────── */
+  .tower{
+    position:relative;
+    margin-top:64px;
+    padding-bottom:64px;
+  }
+
+  .floor{
+    position:relative;
+    padding:88px 0 88px 0;
+    border-top:1px solid var(--hairline);
+  }
+  .floor:last-child{ border-bottom:1px solid var(--hairline); }
+
+  .floor.lvl-01{
+    background: linear-gradient(180deg, rgba(220,38,38,0.04) 0%, transparent 60%);
+  }
+  .floor.lvl-02{
+    background: linear-gradient(180deg, rgba(220,38,38,0.08) 0%, transparent 60%);
+  }
+  .floor.lvl-03{
+    background: linear-gradient(180deg, rgba(220,38,38,0.12) 0%, transparent 60%);
+  }
+
+  .floor-head{
+    display:grid;
+    grid-template-columns: 280px 1fr;
+    column-gap:64px;
+    align-items:start;
+    margin-bottom:56px;
+  }
+
+  .floor .number{
+    display:block;
+    font-family:'Fraunces', 'Noto Serif SC', serif;
+    font-variation-settings:'opsz' 144, 'wght' 200, 'SOFT' 0, 'WONK' 0;
+    font-style:italic;
+    font-size:clamp(140px, 16vw, 220px);
+    line-height:.84;
+    letter-spacing:-.05em;
+    user-select:none;
+  }
+  .floor.lvl-01 .number{ color:rgba(42,40,37,.25); }
+  .floor.lvl-02 .number{ color:rgba(42,40,37,.45); }
+  .floor.lvl-03 .number{ color:var(--accent); }
+  .floor .number .tag{
+    display:block;
+    margin-top:24px;
+    font-family:'JetBrains Mono', monospace;
+    font-style:normal;
+    font-size:10px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    white-space:nowrap;
+  }
+  .floor .number .tag::before{
+    content:''; display:inline-block;
+    width:24px; height:1px;
+    background:var(--ink-300);
+    vertical-align:middle;
+    margin-right:10px;
+  }
+
+  .floor .head-body .verb{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .floor .head-body .verb::before{
+    content:''; width:18px; height:1px; background:var(--accent);
+  }
+
+  .floor .head-body h2{
+    font-family:'Fraunces', 'Noto Serif SC', serif;
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+    font-size:clamp(48px, 5.8vw, 76px);
+    line-height:.95;
+    letter-spacing:-.028em;
+    color:var(--ink-100);
+    margin-bottom:14px;
+  }
+  .floor .head-body h2 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 100, 'WONK' 1;
+  }
+
+  .floor .head-body .tagline{
+    font-family:'Fraunces', 'Noto Serif SC', serif;
+    font-variation-settings:'opsz' 24, 'wght' 350;
+    font-style:italic;
+    font-size:22px;
+    line-height:1.4;
+    color:var(--ink-200);
+  }
+
+  /* ───────── CONCEPT CARDS ───────── */
+  .concept-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+  }
+  .concept-row.tight { gap:16px; }
+
+  .card{
+    border:1px solid var(--hairline);
+    border-radius:6px;
+    padding:28px 28px 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor:pointer;
+    transition: border-color 320ms ease, transform 320ms ease, box-shadow 320ms ease, background 320ms ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity:.25;
+    transition: opacity 320ms ease;
+  }
+  .card:hover{
+    border-color:rgba(220,38,38,0.4);
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.5));
+    box-shadow: 0 4px 16px rgba(220,38,38,0.12);
+    transform:translateY(-1px);
+  }
+  .card:hover::before{ opacity:.55; }
+  .card.expanded{
+    border-color:var(--accent);
+    background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.6));
+    box-shadow: 0 4px 20px rgba(220,38,38,0.2);
+  }
+  .card.expanded::before{ opacity:.8; }
+  .concept-row:has(.card.expanded){
+    grid-template-columns: 1fr;
+  }
+
+  .card .card-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    margin-bottom:14px;
+  }
+  .card h3{
+    font-family:'Fraunces', 'Noto Serif SC', serif;
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT' 30, 'WONK' 1;
+    font-size:24px;
+    line-height:1.1;
+    letter-spacing:-.018em;
+    color:var(--ink-100);
+    margin-bottom:10px;
+  }
+  .card h3 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT' 100, 'WONK' 1;
+  }
+  .card .one-liner{
+    font-family:'Fraunces', 'Noto Serif SC', serif;
+    font-variation-settings:'opsz' 18, 'wght' 320;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink-200);
+    line-height:1.55;
+  }
+
+  .card .expand-hint{
+    margin-top:16px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    transition: color 320ms ease;
+  }
+  .card:hover .expand-hint{ color:var(--accent); }
+  .card.expanded .expand-hint{ display:none; }
+
+  .card .detail{
+    display:none;
+    margin-top:24px;
+    padding-top:24px;
+    border-top:1px dashed rgba(0,0,0,0.12);
+  }
+  .card.expanded .detail{ display:block; }
+  .card .detail p{
+    font-size:14.5px;
+    line-height:1.7;
+    color:var(--ink-200);
+    margin-bottom:14px;
+    max-width:64ch;
+  }
+  .card .detail p strong{ color:var(--ink-100); font-weight:600; }
+  .card .detail p em{ font-style:italic; color:var(--ink-100); }
+  .card .detail ul{
+    margin:16px 0;
+    padding-left:20px;
+  }
+  .card .detail li{
+    font-size:14.5px;
+    line-height:1.7;
+    color:var(--ink-200);
+    margin-bottom:8px;
+  }
+
+  .conn-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    margin-top:20px;
+    margin-bottom:10px;
+  }
+  .connections{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .conn-chip{
+    padding:5px 10px;
+    border-radius:3px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.04em;
+    border:1px solid var(--hairline);
+    color:var(--ink-200);
+    background: rgba(255,255,255,0.5);
+  }
+  .conn-chip.feeds{
+    color:var(--accent);
+    border-color:rgba(220,38,38,0.4);
+    background: rgba(220,38,38,0.08);
+  }
+  .conn-chip.fed-by{
+    color:var(--grow);
+    border-color:rgba(22,163,74,0.35);
+    background: rgba(22,163,74,0.08);
+  }
+  .conn-chip.parallel{
+    color:var(--ink-200);
+    border-color:rgba(0,0,0,0.15);
+  }
+  .conn-chip.branch{
+    color:var(--accent);
+    border:1px dashed rgba(220,38,38,0.4);
+  }
+
+  /* ───────── TIMELINE ───────── */
+  .timeline{
+    margin-top:32px;
+    padding-left:20px;
+    border-left:2px solid var(--hairline);
+  }
+  .timeline-item{
+    position:relative;
+    padding-left:24px;
+    margin-bottom:24px;
+  }
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:-27px;
+    top:6px;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--paper-100);
+    border:2px solid var(--accent);
+  }
+  .timeline-era{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:4px;
+  }
+  .timeline-content{
+    font-size:14px;
+    color:var(--ink-200);
+    line-height:1.6;
+  }
+
+  /* ───────── STATS GRID ───────── */
+  .stats-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap:16px;
+    margin-top:24px;
+  }
+  .stat-item{
+    text-align:center;
+    padding:16px;
+    background:rgba(255,255,255,0.5);
+    border-radius:4px;
+    border:1px solid var(--hairline);
+  }
+  .stat-value{
+    font-family:'Fraunces', serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent);
+    line-height:1;
+    margin-bottom:4px;
+  }
+  .stat-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+  }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width:1100px){
+    .floor-head{ grid-template-columns: 200px 1fr; column-gap:40px; }
+  }
+  @media (max-width:760px){
+    .frame{ padding:0 24px; }
+    .floor-head{ grid-template-columns:1fr; }
+    .floor .number{ font-size:120px; }
+    h1.title{ font-size:56px; }
+    .topbar .right{ display:none; }
+  }
+
+  /* ───────── ON-LOAD REVEAL ───────── */
+  @media (prefers-reduced-motion: no-preference){
+    .floor{
+      opacity:0;
+      transform:translateY(24px);
+      animation:rise 900ms cubic-bezier(.2,.6,.2,1) forwards;
+    }
+    .floor.lvl-01{ animation-delay:120ms; }
+    .floor.lvl-02{ animation-delay:240ms; }
+    .floor.lvl-03{ animation-delay:360ms; }
+    @keyframes rise{
+      to{ opacity:1; transform:none; }
+    }
+    h1.title, .kicker{ animation:rise 900ms cubic-bezier(.2,.6,.2,1) backwards; }
+    h1.title{ animation-delay:60ms; }
+    .kicker{ animation-delay:160ms; }
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- ───────── HERO ───────── -->
+  <header class="hero">
+    <div class="topbar">
+      <div class="left">布莱恩·R·多恩特 · 2020</div>
+      <div class="right">
+        <span>美食史</span>
+        <span>文化交流</span>
+        <span>农业演变</span>
+      </div>
+    </div>
+
+    <div class="eyebrow">辣椒中国史</div>
+
+    <h1 class="title">
+      吃<span class="ital">辣！</span><br>
+      <span class="ital">辣椒的中国史</span>
+    </h1>
+
+    <p class="kicker">
+      一部跨越五百年的味觉革命史，从美洲新大陆到中华餐桌，辣椒如何改变中国的饮食版图与文化基因。
+    </p>
+
+    <div class="author-info">
+      <span class="tag">饮食文化研究</span>
+      <span>213页 · 大象出版社 · 2020年</span>
+    </div>
+  </header>
+
+  <!-- ───────── TOWER ───────── -->
+  <section class="tower">
+
+    <!-- ── FLOOR 01 ── -->
+    <article class="floor lvl-01">
+      <div class="floor-head">
+        <div class="number">01<span class="tag">传入时期</span></div>
+        <div class="head-body">
+          <div class="verb">史前至1700年</div>
+          <h2><em>辣椒到来</em>之前</h2>
+          <div class="tagline">中国饮食史中的辛辣传统与辣椒的引入</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">第一章 · 01</div>
+          <h3>没有辣椒的<em>日子</em></h3>
+          <div class="one-liner">史前至1500年：中国传统辛辣调味体系</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p>在辣椒到来之前，中国人的"辣"味主要来自以下传统调料：</p>
+            <ul>
+              <li><strong>花椒（Zanthoxylum）</strong>：中国最古老的辛辣调料，起源于长江流域</li>
+              <li><strong>姜（Zingiber）</strong>：从东南亚传入，成为重要调味品</li>
+              <li><strong>茱萸（Evodia）</strong>：古代重要的辛辣调料，后逐渐被花椒取代</li>
+              <li><strong>芥末和蒜</strong>：提供不同层次的辛辣体验</li>
+            </ul>
+            <p>这些调料构成了中国独特的"五味"理论中的辛味体系，在辣椒到来之前已经延续了数千年。</p>
+            <div class="conn-label">历史脉络</div>
+            <div class="connections">
+              <span class="conn-chip feeds">feeds → 辣椒传入</span>
+              <span class="conn-chip parallel">parallels ↔ 其他香料传入</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">第二章 · 02</div>
+          <h3>辣椒<em>来到中国</em></h3>
+          <div class="one-liner">1500-1700年：美洲作物的跨洋之旅</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>辣椒的起源与传播</strong></p>
+            <ul>
+              <li><strong>原产地</strong>：辣椒原产于美洲，是哥伦布大交换的重要作物之一</li>
+              <li><strong>传入路径</strong>：通过海路和陆路两条路线进入中国</li>
+              <li><strong>时间节点</strong>：16世纪末至17世纪初首次出现在中国文献中</li>
+            </ul>
+            <p><strong>早期记载</strong></p>
+            <ul>
+              <li>1591年《遵生八笺》首次提及"番椒"</li>
+              <li>明代高濂记录了辣椒的观赏价值</li>
+              <li>早期主要作为观赏植物栽培</li>
+            </ul>
+            <div class="conn-label">传播路径</div>
+            <div class="connections">
+              <span class="conn-chip fed-by">← fed by 哥伦布大交换</span>
+              <span class="conn-chip branch">↗ 分支传入路径</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">历史背景 · 03</div>
+          <h3><em>明代</em>饮食文化</h3>
+          <div class="one-liner">辣椒传入时的中国社会饮食环境</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>明代饮食特点</strong></p>
+            <ul>
+              <li><strong>地域分化</strong>：南北饮食文化差异明显</li>
+              <li><strong>调味体系</strong>：以酸甜咸鲜为主，辛辣为辅</li>
+              <li><strong>社会等级</strong>：饮食反映社会阶层差异</li>
+              <li><strong>文人饮食</strong>：讲究饮食养生与雅致</li>
+            </ul>
+            <p>辣椒作为新奇作物，最初并未引起饮食界的重视，更多被视为观赏植物或药用植物。</p>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">1500s</div>
+                <div class="stat-label">首次记载</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">200+</div>
+                <div class="stat-label">年观望期</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── FLOOR 02 ── -->
+    <article class="floor lvl-02">
+      <div class="floor-head">
+        <div class="number">02<span class="tag">征服时期</span></div>
+        <div class="head-body">
+          <div class="verb">1700至1900年</div>
+          <h2><em>辣椒征服</em>中国</h2>
+          <div class="tagline">从观赏植物到国民调味的蜕变之旅</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">第三章 · 01</div>
+          <h3>辣椒的<em>本土化</em>进程</h3>
+          <div class="one-liner">1700-1900年：从观赏到食用的转变</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>食用化的推动因素</strong></p>
+            <ul>
+              <li><strong>人口压力</strong>：清代人口剧增，需要更多廉价调味品</li>
+              <li><strong>种植优势</strong>：辣椒适应性强，产量高，易于栽培</li>
+              <li><strong>防腐作用</strong>：辣椒的抗菌性有助于食物保存</li>
+              <li><strong>口味适应</strong>：逐渐培养出对辣椒的接受和喜爱</li>
+            </ul>
+
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-era">1700s初期</div>
+                <div class="timeline-content">辣椒开始在西南地区作为食物出现</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-era">1750s-1800s</div>
+                <div class="timeline-content">湖南、四川等地开始广泛食用辣椒</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-era">1800s中期</div>
+                <div class="timeline-content">辣椒成为西南地区重要调味品</div>
+              </div>
+            </div>
+
+            <div class="conn-label">区域传播</div>
+            <div class="connections">
+              <span class="conn-chip feeds">feeds → 西南地区</span>
+              <span class="conn-chip parallel">parallels ↔ 其他辛辣调料</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">地域扩散 · 02</div>
+          <h3><em>西南地区</em>的辣椒文化</h3>
+          <div class="one-liner">四川、湖南、贵州的辣椒革命</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>四川：辣椒与花椒的完美结合</strong></p>
+            <ul>
+              <li>形成了独特的"麻辣"风味体系</li>
+              <li>辣椒与当地花椒融合，创造川菜灵魂</li>
+              <li>清代中后期辣椒在四川普及</li>
+            </ul>
+
+            <p><strong>湖南：无辣不欢的饮食传统</strong></p>
+            <ul>
+              <li>辣椒成为日常饮食必备</li>
+              <li>创造了剁椒、泡椒等加工方式</li>
+              <li>形成了"辣不怕"的饮食文化</li>
+            </ul>
+
+            <p><strong>贵州：辣椒的多样化应用</strong></p>
+            <ul>
+              <li>发展出独特的辣椒酱制作工艺</li>
+              <li>辣椒成为当地经济作物</li>
+            </ul>
+
+            <div class="conn-label">文化影响</div>
+            <div class="connections">
+              <span class="conn-chip fed-by">← fed by 本土化进程</span>
+              <span class="conn-chip branch">↗ 地域菜系形成</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">社会影响 · 03</div>
+          <h3>辣椒与<em>社会变迁</em></h3>
+          <div class="one-liner">饮食变革背后的社会文化意义</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>经济层面</strong></p>
+            <ul>
+              <li>辣椒成为重要的经济作物</li>
+              <li>促进了农产品商品化</li>
+              <li>改善了农民生计</li>
+            </ul>
+
+            <p><strong>社会层面</strong></p>
+            <ul>
+              <li>降低了饮食成本，改善民生</li>
+              <li>创造了新的就业机会（辣椒加工）</li>
+              <li>促进了区域贸易发展</li>
+            </ul>
+
+            <p><strong>文化层面</strong></p>
+            <ul>
+              <li>塑造了地域文化认同</li>
+              <li>影响了文学艺术创作</li>
+              <li>成为民间习俗的重要组成部分</li>
+            </ul>
+
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">200+</div>
+                <div class="stat-label">年演变期</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">3</div>
+                <div class="stat-label">核心区域</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── FLOOR 03 ── -->
+    <article class="floor lvl-03">
+      <div class="floor-head">
+        <div class="number">03<span class="tag">现代发展</span></div>
+        <div class="head-body">
+          <div class="verb">1900年至今</div>
+          <h2><em>辣椒帝国</em>的崛起</h2>
+          <div class="tagline">从传统调味到现代产业的全面发展</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">第四章 · 01</div>
+          <h3>辣椒的<em>现代化革命</em></h3>
+          <div class="one-liner">1900-2000年：工业化时代的辣椒产业</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>技术革新</strong></p>
+            <ul>
+              <li><strong>加工技术</strong>：辣椒酱、辣椒粉工业化生产</li>
+              <li><strong>种植技术</strong>：品种改良、规模化种植</li>
+              <li><strong>储存技术</strong>：延长保质期，扩大销售范围</li>
+              <li><strong>运输技术</strong>：冷链物流，全国配送</li>
+            </ul>
+
+            <p><strong>品牌化发展</strong></p>
+            <ul>
+              <li>老干妈（1996年）：贵州辣椒酱走向世界</li>
+              <li>郫县豆瓣：川菜灵魂的标准化生产</li>
+              <li>各种地方辣椒品牌的兴起</li>
+            </ul>
+
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-era">1950s</div>
+                <div class="timeline-content">公私合营，辣椒产业国有化</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-era">1980s</div>
+                <div class="timeline-content">改革开放，私营辣椒企业兴起</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-era">1990s</div>
+                <div class="timeline-content">知名品牌诞生，现代化进程加速</div>
+              </div>
+            </div>
+
+            <div class="conn-label">产业演进</div>
+            <div class="connections">
+              <span class="conn-chip feeds">feeds → 现代产业</span>
+              <span class="conn-chip parallel">parallels ↔ 食品工业化</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">第五章 · 02</div>
+          <h3>中国的<em>辣椒帝国</em></h3>
+          <div class="one-liner">2000年至今：世界辣椒生产与消费大国</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>生产规模</strong></p>
+            <ul>
+              <li>中国已成为世界最大的辣椒生产国之一</li>
+              <li>辣椒种植遍布全国，品种丰富多样</li>
+              <li>形成了完整的产业链体系</li>
+            </ul>
+
+            <p><strong>消费文化</strong></p>
+            <ul>
+              <li><strong>全国普及</strong>：辣椒突破地域限制，全国食用</li>
+              <li><strong>年轻化趋势</strong>：年轻人更爱吃辣</li>
+              <li><strong>社交属性</strong>：火锅、串串等社交餐饮兴起</li>
+              <li><strong>全球化</strong>：中餐出海带动辣椒文化传播</li>
+            </ul>
+
+            <p><strong>地域特色</strong></p>
+            <ul>
+              <li><strong>四川</strong>：麻辣文化，火锅产业</li>
+              <li><strong>湖南</strong>：剁椒文化，湘菜影响力</li>
+              <li><strong>贵州</strong>：辣椒酱产业，老干妈现象</li>
+              <li><strong>陕西</strong>：油泼面，面食辣味</li>
+            </ul>
+
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">No.1</div>
+                <div class="stat-label">生产大国</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">1000+</div>
+                <div class="stat-label">品种数量</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">¥500亿</div>
+                <div class="stat-label">产业规模</div>
+              </div>
+            </div>
+
+            <div class="conn-label">文化输出</div>
+            <div class="connections">
+              <span class="conn-chip fed-by">← fed by 现代化革命</span>
+              <span class="conn-chip branch">↗ 全球中餐传播</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" onclick="toggleExpand(this)">
+          <div class="card-eyebrow">文化影响 · 03</div>
+          <h3>辣椒与<em>中国身份</em></h3>
+          <div class="one-liner">辣椒如何塑造现代中国文化认同</div>
+          <div class="expand-hint">点击探索</div>
+          <div class="detail">
+            <p><strong>身份认同</strong></p>
+            <ul>
+              <li><strong>地域认同</strong>：吃辣成为地域文化标志</li>
+              <li><strong>年轻文化</strong>：挑战味蕾极限成为时尚</li>
+              <li><strong>社交方式</strong>：聚餐吃辣成为社交活动</li>
+            </ul>
+
+            <p><strong>文学艺术</strong></p>
+            <ul>
+              <li>文学作品中的辣椒意象</li>
+              <li>影视作品的饮食文化呈现</li>
+              <li>音乐、网络文化的辣味表达</li>
+            </ul>
+
+            <p><strong>健康观念</strong></p>
+            <ul>
+              <li>辣椒素的健康功效研究</li>
+              <li>传统医学与现代营养学的结合</li>
+              <li>辣味食品的健康消费趋势</li>
+            </ul>
+
+            <p><strong>未来展望</strong></p>
+            <ul>
+              <li>辣椒产业的持续创新</li>
+              <li>国际化进程加速</li>
+              <li>文化输出与软实力建设</li>
+            </ul>
+
+            <div class="conn-label">历史意义</div>
+            <div class="connections">
+              <span class="conn-chip feeds">feeds → 文化软实力</span>
+              <span class="conn-chip parallel">parallels ↔ 饮食文明演变</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── SUMMARY FLOOR ── -->
+    <article class="floor lvl-01">
+      <div class="floor-head">
+        <div class="number">SUM<span class="tag">总结</span></div>
+        <div class="head-body">
+          <div class="verb">五百年历程</div>
+          <h2>从<em>外来物种</em>到国民味道</h2>
+          <div class="tagline">辣椒中国史的完整叙事</div>
+        </div>
+      </div>
+
+      <div class="concept-row">
+        <div class="card expanded">
+          <div class="card-eyebrow">历史脉络</div>
+          <h3>辣椒中国的<em>五百年</em></h3>
+          <div class="one-liner">一场跨越时空的味觉革命</div>
+          <div class="detail">
+            <p><strong>传入期（1500-1700）</strong>：辣椒作为新奇作物进入中国，主要作为观赏和药用植物存在。</p>
+
+            <p><strong>适应期（1700-1900）</strong>：辣椒开始被食用，在西南地区扎根，形成地域性饮食文化。</p>
+
+            <p><strong>发展期（1900-2000）</strong>：工业化推动辣椒产业现代化，品牌化发展，全国普及。</p>
+
+            <p><strong>繁荣期（2000至今）</strong>：辣椒成为国民调味，产业规模巨大，文化输出全球。</p>
+
+            <p><strong>历史意义</strong>：辣椒在中国的历史是外来作物本土化的典型案例，反映了中国文化的包容性与创新能力，也展现了饮食文明如何在全球化进程中实现创造性转化。</p>
+
+            <div class="conn-label">核心启示</div>
+            <div class="connections">
+              <span class="conn-chip feeds">feeds → 文化融合</span>
+              <span class="conn-chip fed-by">← fed by 哥伦布大交换</span>
+              <span class="conn-chip parallel">parallels ↔ 全球化饮食</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+</div>
+
+<script>
+function toggleExpand(el) {
+  el.classList.toggle('expanded');
+}
+</script>
+
+</body>
+</html>
