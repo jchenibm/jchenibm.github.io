@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 编程词典 - 完整指南</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --paper-50: #FDFCFB;
+      --paper-100: #F8F7F4;
+      --paper-200: #EBE9E4;
+      --paper-300: #DCD9D2;
+      --paper-400: #C8C5BE;
+      --paper-500: #A8A49C;
+      --ink-100: #2A2825;
+      --ink-200: #4A4640;
+      --ink-300: #6B675F;
+      --ink-400: #8B877D;
+      --accent: #2563EB;
+      --accent-hot: #3B82F6;
+      --signal: #EA580C;
+      --warn: #DC2626;
+      --grow: #16A34A;
+      --grid: rgba(0,0,0,0.04);
+      --hairline: rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      background-color: var(--paper-100);
+      color: var(--ink-100);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,0,0,0.03), transparent 60%),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 100% 100%, 64px 64px, 64px 64px;
+      background-attachment: fixed, fixed, fixed;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    .frame {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, rgba(248,247,244,0.95), rgba(248,247,244,0.8));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--hairline);
+      padding: 16px 0;
+    }
+
+    .topbar .content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topbar .left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar .left::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 12px var(--signal);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .topbar .title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-200);
+    }
+
+    .topbar .right {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-400);
+    }
+
+    header.hero {
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+
+    h1.title {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+      font-size: clamp(56px, 9.2vw, 148px);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      color: var(--ink-100);
+      margin-bottom: 32px;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--ink-300);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .hero .meta {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero .meta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-400);
+    }
+
+    .hero .meta-value {
+      font-size: 14px;
+      color: var(--ink-200);
+      font-weight: 400;
+    }
+
+    .floor {
+      padding: 60px 0;
+      position: relative;
+    }
+
+    .floor.lvl-01 {
+      background: linear-gradient(180deg, rgba(37,99,235,0.04) 0%, transparent 60%);
+    }
+
+    .floor.lvl-02 {
+      background: linear-gradient(180deg, rgba(37,99,235,0.08) 0%, transparent 60%);
+    }
+
+    .floor.lvl-03 {
+      background: linear-gradient(180deg, rgba(37,99,235,0.12) 0%, transparent 60%);
+    }
+
+    .floor.lvl-04 {
+      background: linear-gradient(180deg, rgba(37,99,235,0.16) 0%, transparent 60%);
+    }
+
+    .floor.lvl-05 {
+      background: linear-gradient(180deg, rgba(37,99,235,0.20) 0%, transparent 60%);
+    }
+
+    .floor.lvl-06 {
+      background: linear-gradient(180deg, rgba(37,99,235,0.24) 0%, transparent 60%);
+    }
+
+    .floor.lvl-07 {
+      background: linear-gradient(180deg, rgba(37,99,235,0.28) 0%, transparent 60%);
+    }
+
+    .floor-head {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      margin-bottom: 40px;
+      align-items: center;
+    }
+
+    .floor .number {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 96, 'wght' 200, 'SOFT' 30, 'WONK' 1;
+      font-size: clamp(80px, 8vw, 160px);
+      line-height: 1;
+    }
+
+    .floor.lvl-01 .number { color: rgba(42,40,37,0.25); }
+    .floor.lvl-02 .number { color: rgba(42,40,37,0.45); }
+    .floor.lvl-03 .number { color: rgba(42,40,37,0.65); }
+    .floor.lvl-04 .number { color: rgba(42,40,37,0.7); }
+    .floor.lvl-05 .number { color: var(--accent); }
+    .floor.lvl-06 .number { color: var(--accent); }
+    .floor.lvl-07 .number { color: var(--accent); }
+
+    .floor-title {
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      font-size: clamp(36px, 4.5vw, 56px);
+      line-height: 1.2;
+      color: var(--ink-100);
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      border: 1px solid var(--hairline);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    }
+
+    .card:hover {
+      border-color: rgba(37,99,235,0.4);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.5));
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .card-term {
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      font-size: 22px;
+      color: var(--ink-100);
+      font-weight: 700;
+    }
+
+    .card-term-en {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--ink-400);
+      margin-top: 4px;
+    }
+
+    .card-body {
+      padding: 20px 24px;
+    }
+
+    .card-definition {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-200);
+      margin-bottom: 16px;
+    }
+
+    .card-usage-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--ink-400);
+      margin-bottom: 8px;
+    }
+
+    .card-usage {
+      background: rgba(37,99,235,0.06);
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-200);
+    }
+
+    .card-usage strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .floor {
+        opacity: 0;
+        transform: translateY(24px);
+        animation: rise 900ms cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+      }
+
+      .floor.lvl-01 { animation-delay: 120ms; }
+      .floor.lvl-02 { animation-delay: 240ms; }
+      .floor.lvl-03 { animation-delay: 360ms; }
+      .floor.lvl-04 { animation-delay: 480ms; }
+      .floor.lvl-05 { animation-delay: 600ms; }
+      .floor.lvl-06 { animation-delay: 720ms; }
+      .floor.lvl-07 { animation-delay: 840ms; }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .floor-head {
+        grid-template-columns: 200px 1fr;
+        column-gap: 40px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .frame {
+        padding: 0 24px;
+      }
+      .floor-head {
+        grid-template-columns: 1fr;
+      }
+      .floor .number {
+        font-size: 120px;
+      }
+      h1.title {
+        font-size: 56px;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+      .topbar .right {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <div class="topbar">
+    <div class="frame">
+      <div class="topbar content">
+        <div class="left">
+          <span class="title">AI 编程词典</span>
+        </div>
+        <div class="right">
+          完整参考 • 59 个术语
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="frame">
+      <h1 class="title">AI 编程<br>词典</h1>
+      <p class="subtitle">AI 编程的术语表，翻译成通俗易懂的中文。从模型到质询——理解 AI 驱动开发所需的所有术语。</p>
+      <div class="meta">
+        <div class="meta-item">
+          <span class="meta-label">术语</span>
+          <span class="meta-value">59 个定义</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">章节</span>
+          <span class="meta-value">7 个分类</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">来源</span>
+          <span class="meta-value">dictionary-of-ai-coding</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 第一部分：模型 (13 个术语) -->
+  <section class="floor lvl-01">
+    <div class="frame">
+      <div class="floor-head">
+        <span class="number">01</span>
+        <h2 class="floor-title">模型</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">模型</h3>
+            <div class="card-term-en">Model</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">参数。无状态——只做下一个词预测，不做其他任何事情。"Claude Opus 4.7" 和 "GPT-5" 都是模型。模型本身无法执行任何代理任务；它必须被驾驭。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我们应该在规划步骤中将模型从 Sonnet 切换到 Opus 吗？"</strong><br>
+              "试试——但在这次任务中，驾驭系统承担了大部分工作。如果系统提示词和工具不正确，更换模型也无济于事。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">参数</h3>
+            <div class="card-term-en">Parameters</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型内部的数字——通常有数十亿个——在训练期间进行调整。模型"知道"的一切都存在于这些参数中。训练设置参数；推理使用参数且不修改它们。也称为权重。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我们可以根据我们的代码库进行微调吗？"</strong><br>
+              "那会更新参数——之后就变成不同的模型了。对于单个项目，将代码库作为上下文加载几乎总是比重训练更便宜。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">训练</h3>
+            <div class="card-term-en">Training</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">设置模型参数的过程，通过向模型展示大量文本来调整参数以改进下一个词预测。这是模型提供商完成的一次性、昂贵的过程。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我们能让它了解我们的内部 API 吗？"</strong><br>
+              "不能通过训练——那是模型提供商需要数月的流程。将 API 文档加载到上下文中，这才是你实际能控制的手段。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">推理</h3>
+            <div class="card-term-en">Inference</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">运行训练好的模型来生成输出——每次模型提供商请求时都会发生。参数保持不变；模型只是在给定的上下文上执行下一个词预测。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"为什么费用随着使用量扩展，而不是固定许可？"</strong><br>
+              "你在为推理付费——每次模型提供商请求都在提供商的硬件上运行模型。训练已经发生，但推理成本每次请求都会累积。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">词元</h3>
+            <div class="card-term-en">Token</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型读取和写入的原子单位。大致是单词大小，但不完全如此——常见词是一个词元，罕见或长词会分成多个。上下文窗口大小、成本和延迟都以词元计算。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"这个提示词会有多大？"</strong><br>
+              "用分词器运行一下——结构很紧凑，但 JSON 键很奇怪，所以会分成比你想的更多的词元。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">下一个词预测</h3>
+            <div class="card-term-en">Next-token prediction</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型实际做的事情。给定一个上下文，它采样一个下一个词元，追加它，然后再次运行。每个输出——一个句子、一个工具调用、一个千行文件——都是一次构建一个词元的。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"代理如何'决定'调用工具？"</strong><br>
+              "它不会——这完全是下一个词预测。工具调用只是驾驭系统从输出流中解析出的结构化字符串。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">非确定性</h3>
+            <div class="card-term-en">Non-determinism</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">相同的输入可以产生不同的输出。用相同的上下文运行模型两次，可能会得到两个不同的答案。这是模型生成文本方式的属性。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"Claude 今天表现很差。他们是不是发布了一个更差的版本？"</strong><br>
+              "可能不会——模型输出是非确定性的。你在同一任务上会有好日子和坏日子。明天再试试，然后再寻找原因。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">模型提供商</h3>
+            <div class="card-term-en">Model provider</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">为推理提供模型的任何服务。通常是远程服务（Anthropic、OpenAI、Google），但也可是本地的——在你自己的机器上运行的 Ollama、LM Studio、llama.cpp。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我们可以为隔离网络的客户端离线运行这个吗？"</strong><br>
+              "将模型提供商切换到本地的——在他们的机器上使用 Ollama 或 llama.cpp。驾驭系统不在乎，它只是访问不同的端点。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">驾驭系统</h3>
+            <div class="card-term-en">Harness</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型周围的一切，将模型变成代理：工具、系统提示词、上下文窗口管理、权限、钩子。Claude.ai 和 Claude Code 运行在相同的模型上，但由于驾驭系统不同而行为不同。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"相同的模型，为什么 Claude Code 在编辑文件而 Claude.ai 只在回答问题？"</strong><br>
+              "不同的驾驭系统——Claude Code 有文件系统工具、不同的系统提示词和权限层。模型在这里不是变量。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">模型提供商请求</h3>
+            <div class="card-term-en">Model provider request</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">从驾驭系统到模型提供商的一次往返。驾驭系统发送当前上下文；提供商返回一个响应（工具调用或最终答案）。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"一个问题烧了四万个词元？"</strong><br>
+              "看看工具调用——十二次 grep、八次读取、四次编辑。每个工具结果都会产生另一个模型提供商请求。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">输入词元</h3>
+            <div class="card-term-en">Input tokens</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">驾驭系统在每次模型提供商请求上发送的词元。计费率低于输出词元。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"账单很高，但代理几乎没有写任何东西。"</strong><br>
+              "这是输入词元——每轮对话都会重新发送整个会话。没有前缀缓存，你每次请求都要为历史记录付费。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">输出词元</h3>
+            <div class="card-term-en">Output tokens</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型生成的词元。计费率高于输入词元，因为它们需要更多计算来生成。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"重构会话即使输入很小，也在烧掉大量积分。"</strong><br>
+              "代理在重写整个文件而不是修补。输出词元的成本大约是输入费率的五倍。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">前缀缓存</h3>
+            <div class="card-term-en">Prefix cache</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">提供商端的存储，允许连续的模型提供商请求跳过重新处理共享前缀。当请求的开头与最近请求的开头匹配时，提供商重用之前的工作。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"为什么会话中途账单突然激增？"</strong><br>
+              "驾驭系统开始在每轮对话中向系统提示词注入当前时间。前缀缓存在第一个更改的词元处中断。"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第二部分：会话、上下文窗口和轮次 (8 个术语) -->
+  <section class="floor lvl-02">
+    <div class="frame">
+      <div class="floor-head">
+        <span class="number">02</span>
+        <h2 class="floor-title">会话、上下文窗口和轮次</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">无状态</h3>
+            <div class="card-term-en">Stateless</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">不携带任何信息。模型在模型提供商请求之间是无状态的——每个请求都重新发送完整的上下文窗口。代理在会话之间默认是无状态的。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"为什么每次我清理后它都忘记约定？"</strong><br>
+              "模型是无状态的——新会话从空开始。如果你想携带它，将其写入 AGENTS.md 或驾驭系统在会话开始时加载的记忆文件。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">上下文</h3>
+            <div class="card-term-en">Context</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">代理现在可以访问的相关信息。抽象概念——不是模型看到的原始输入，不是运行历史，而是代理知道的与任务相关的内容。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它一直在发明类型中没有的字段。"</strong><br>
+              "类型文件不在上下文中——它在读取调用站点并猜测。先读取定义。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">上下文窗口</h3>
+            <div class="card-term-en">Context window</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型在每次模型提供商请求中看到的所有内容。有限的、特定于模型的，是模型感知任何东西的唯一表面。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我可以把整个单体仓库粘贴到提示词中吗？"</strong><br>
+              "上下文窗口是 20 万词元——那可能是仓库的五分之一。选择任务涉及的文件。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">有状态</h3>
+            <div class="card-term-en">Stateful</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">携带信息。会话在轮次之间是有状态的——上下文随着会话运行而累积。通过添加记忆系统，代理可以在会话之间变为有状态。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它记住了我昨天的偏好——这意味着模型学到了它们吗？"</strong><br>
+              "不，代理是有状态的，因为驾驭系统将它们写入记忆文件并在会话开始时重新加载。模型本身看不到昨天的任何东西。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">代理</h3>
+            <div class="card-term-en">Agent</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">被驾驭的模型，配备工具、系统提示词和上下文窗口，与用户进行轮次对话。Claude Code 是代理。Cursor 是代理。代理是你实际交谈的对象。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"你在迁移中使用哪个代理？"</strong><br>
+              "本地使用 Claude Code，UI 工作使用 Cursor——底层模型相同，驾驭系统不同。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">系统提示词</h3>
+            <div class="card-term-en">System prompt</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">驾驭系统在每个模型提供商请求之前添加的指令——代理的常备简报：它是谁、如何表现、可以调用哪些工具、遵循什么约定。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"两个驾驭系统，相同的模型，在相同的提示词上行为完全不同。"</strong><br>
+              "不同的系统提示词。一个针对简洁的代码编辑进行了调整，另一个针对解释。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">会话</h3>
+            <div class="card-term-en">Session</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">与代理的一次有界交互运行。从空开始，累积消息、工具结果和读取的文件，在清理、关闭或压缩成新会话时结束。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"一个会话可以运行多长时间才会崩溃？"</strong><br>
+              "取决于工作——专注的重构比开放式研究保持更长时间。会话膨胀后，进行交接或压缩，不要硬推。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">轮次</h3>
+            <div class="card-term-en">Turn</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">一条用户消息加上代理在响应中所做的一切，直到它返回给用户。包含一个或多个模型提供商请求——如果代理调用工具，则很多。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"一轮花了两分钟？"</strong><br>
+              "它在这一轮中进行了十四次工具调用——每一次都是单独的模型提供商请求。延迟在代理最终返回给你之前累积。"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三部分：工具和环境 (10 个术语) -->
+  <section class="floor lvl-03">
+    <div class="frame">
+      <div class="floor-head">
+        <span class="number">03</span>
+        <h2 class="floor-title">工具和环境</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">环境</h3>
+            <div class="card-term-en">Environment</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">代理行动的世界——驾驭系统之外的任何东西，代理通过工具结果感知，通过工具调用改变。文件系统是最常见的环境类型。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"代理看不到暂存数据库架构。"</strong><br>
+              "将其连接到环境中——给它一个 psql 工具，在暂存上作用域只读。驾驭系统没问题，只是没有可操作的东西。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">文件系统</h3>
+            <div class="card-term-en">Filesystem</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">代理从中读取、写入和执行的文件和目录树——编码代理的默认环境类型。AGENTS.md、技能、源代码、构建脚本都存在于文件系统中。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"为什么它没有选择我的 AGENTS.md？"</strong><br>
+              "它在针对不同的文件系统运行——沙箱挂载了父目录，而不是项目根目录。重新指向驾驭系统。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">工具</h3>
+            <div class="card-term-en">Tool</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">驾驭系统为代理调用暴露的函数——读取、写入、Bash、搜索。工具是代理感知和作用于环境的方式。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"代理可以直接查询暂存吗？"</strong><br>
+              "向驾驭系统添加 psql 工具，在暂存上作用域只读。没有工具，代理对文件系统之外的任何东西都是盲目的。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">工具调用</h3>
+            <div class="card-term-en">Tool call</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型命名工具及其参数的输出——只是结构化文本。它自己不会做任何事情；驾驭系统必须读取并执行它。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它说运行了测试，但文件时间戳没有改变。"</strong><br>
+              "查看记录——它是否实际发出了工具调用，还是只是描述运行它们？模型生成调用，但如果驾驭系统没有执行它，什么也不会发生。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">工具结果</h3>
+            <div class="card-term-en">Tool result</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">驾驭系统在执行工具调用后发回的内容——文件内容、命令输出、错误。代理对环境的唯一窗口。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它推理文件就像它是空的。"</strong><br>
+              "工具结果作为权限拒绝返回，而不是内容。模型只看到错误字符串。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">MCP</h3>
+            <div class="card-term-en">Model Context Protocol</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型上下文协议。将外部工具服务器插入驾驭系统的协议——代理如何获得驾驭系统附带工具之外的工具。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"代理需要从 Linear 读取工单。"</strong><br>
+              "配置驾驭系统使用 Linear MCP 服务器——它将 Linear API 暴露为代理可以调用的工具。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">权限请求</h3>
+            <div class="card-term-en">Permission request</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">驾驭系统在执行未预先批准的工具调用之前向用户显示的内容。模型生成工具调用；驾驭系统不是立即运行它，而是暂停并询问。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它被权限请求阻止了十分钟——我在开会。"</strong><br>
+              "这就是人在环中的成本。预先批准安全工具，这样请求只在真正有风险的调用时触发。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">权限模式</h3>
+            <div class="card-term-en">Permission mode</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">代理模式的权限门控部分——哪些工具调用触发权限请求，哪些自动运行。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它在每次 grep 时都暂停——完全搞砸了 AFK 运行。"</strong><br>
+              "放宽只读工具的权限模式，在写入和 shell 上保持提示。研究会话中的大多数权限请求都是噪音。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">代理模式</h3>
+            <div class="card-term-en">Agent mode</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">在运行时塑造代理行为的预设——将权限模式与注入系统提示词的行为指令捆绑在一起。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"当我只想要一个计划时，它一直在编辑文件。"</strong><br>
+              "切换到计划模式——它将阻止写入并保持研究。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">沙箱</h3>
+            <div class="card-term-en">Sandbox</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">代理运行的隔离环境——容器、虚拟机、临时文件系统或受限权限 shell。限制代理操作的爆炸半径。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我想让它绕过权限过夜运行，但我还没准备好。"</strong><br>
+              "把它放进沙箱——新容器，不挂载凭据，没有网络输出。最坏的情况它会摧毁自己的文件系统，你丢弃容器。"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第四部分：失败模式 (9 个术语) -->
+  <section class="floor lvl-04">
+    <div class="frame">
+      <div class="floor-head">
+        <span class="number">04</span>
+        <h2 class="floor-title">失败模式</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">讨好</h3>
+            <div class="card-term-en">Sycophancy</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">自信的同意模型输出。由训练引起：模型被塑造成倾向于人类喜欢的答案，而人类倾向于喜欢同意而不是被告知他们错了。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它说我的重构计划看起来很棒，然后我问'你确定吗？'，它撤回了整个计划。"</strong><br>
+              "典型的讨好——它首先同意是因为你听起来很自信，然后让步是因为你听起来怀疑。计划的质量没有改变，你的语气改变了。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">幻觉</h3>
+            <div class="card-term-en">Hallucination</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">自信的错误模型输出。两种类型：事实性（关于世界发明或错误的事实）和忠实性（输出偏离上下文知识）。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它在架构上幻觉出了一个 parseAsync 方法。"</strong><br>
+              "事实性还是忠实性？方法存在于我粘贴的文档中——它只是在那四十轮后停止阅读它们。忠实性。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">参数知识</h3>
+            <div class="card-term-en">Parametric knowledge</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型从训练中"知道"的内容，存储在其参数中。在训练时冻结——模型无法看到自己的参数或更新它们。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它写出完美的 React，但在我们的内部 SDK 上发明方法。"</strong><br>
+              "React 在参数知识中密集——数百万训练示例。你的 SDK 不在，所以模型填充看似合理的形状。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">知识截止</h3>
+            <div class="card-term-en">Knowledge cutoff</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">模型没有参数知识的日期。截止日期之后的库、API 和事件是幻觉陷阱，除非它们的文档被加载为上下文知识。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它一直在写 v3 SDK 语法——我们在 v5 上。"</strong><br>
+              "v5 在知识截止之后发布。将 v5 更改日志加载为上下文知识。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">上下文知识</h3>
+            <div class="card-term-en">Contextual knowledge</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">代理现在可以直接从上下文中读取的事实——用户任务、代理读取的文件、工具结果、会话开始时加载的 AGENTS.md 内容。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"为什么当我粘贴文档时它能准确使用 API，而不粘贴时会编造？"</strong><br>
+              "有文档时，它是上下文知识——从页面读取。没有，它是参数知识，罕见端点会模糊。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">注意力关系</h3>
+            <div class="card-term-en">Attention relationship</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">在预测每个词元时，模型会考虑上下文中的每个其他词元——有些重度，其他几乎不考虑。两个词元之间的配对是一个注意力关系。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它一直在混淆差异中的两个 user 符号——听起来我们在愚蠢区域。"</strong><br>
+              "是的，每个调用站点与其声明之间的注意力关系在与另一个对抗。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">注意力预算</h3>
+            <div class="card-term-en">Attention budget</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">每个词元都有有限的影响力分配给上下文的其余部分。对一个关系的重度影响会留给其他关系的较少。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"为什么它一直忽略我粘贴在顶部的架构？"</strong><br>
+              "我们在愚蠢区域深处——每个词元的注意力预算是固定的，但上下文一直在增长。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">注意力退化</h3>
+            <div class="card-term-en">Attention degradation</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">随着会话增长，每个词元的注意力预算分布在更多竞争对手上。任何有意义关系的信号都会缩小；来自不相关上下文的噪音会涌入。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它在愚蠢区域深处——发明类型文件中没有的泛型。"</strong><br>
+              "注意力退化。类型定义仍在上下文中，但它们上的信号被其他所有东西埋没。清理并重新加载。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">智能区域</h3>
+            <div class="card-term-en">Smart zone</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">在会话早期，代理处于"智能区域"——敏锐、专注、回忆良好。随着会话增长，它会漂移到"愚蠢区域"：更草率、更健忘、更多错误。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它完美地处理了前三个组件，但搞砸了第四个。"</strong><br>
+              "你离开了智能区域——相同的模型，只是现在深入愚蠢区域。压缩并重新加载计划。"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第五部分：交接 (6 个术语) -->
+  <section class="floor lvl-05">
+    <div class="frame">
+      <div class="floor-head">
+        <span class="number">05</span>
+        <h2 class="floor-title">交接</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">清理</h3>
+            <div class="card-term-en">Clearing</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">结束当前会话并开始新会话。下一条消息以空会话和空上下文窗口开始。通常是用户驱动的。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它一直在失败的测试上循环。"</strong><br>
+              "直接清理——用计划文档和测试文件开始新会话。与现有上下文斗争没有意义。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">交接</h3>
+            <div class="card-term-en">Handoff</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">将代理上下文从一个会话转移到另一个会话，没有返回路径。携带机制不同——书面交接制品、记忆摘要（压缩）。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"规划会话变得繁重——我应该继续吗？"</strong><br>
+              "进行交接。将决策写入文档，清理，在阅读文档的新会话中开始实现。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">交接制品</h3>
+            <div class="card-term-en">Handoff artifact</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">用作交接携带机制的文档——由一个会话编写，供另一个会话读取。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我如何在规划代理和实现代理之间分配这个？"</strong><br>
+              "让规划代理编写交接制品——文件路径、决策、约束。实现代理的会话在打开时指向制品并以此作为简报。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">规格</h3>
+            <div class="card-term-en">Spec</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">描述多会话工作的交接制品——正在构建什么，而不是每个会话如何完成其部分。随着工作进展而变化。由工单组成。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"这应该都是一个会话吗？"</strong><br>
+              "不，将其写成规格——将其分解为工单，每个工单在自己的会话中运行。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">工单</h3>
+            <div class="card-term-en">Ticket</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">范围为一个会话工作的交接制品。独立存在，或作为规格的子项挂起。工单可以阻止或被同级工单阻止。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我从哪里开始迁移规格？"</strong><br>
+              "查看工单图——架构更改阻止回填，回填阻止 API 切换。选择一个叶子并在其上运行会话。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">压缩</h3>
+            <div class="card-term-en">Compaction</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">在记忆中完成的交接：前一个会话的历史被总结并作为新会话的种子。有损——用细节换取空间。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"上下文变得繁重，我仍然需要通过测试。"</strong><br>
+              "在开始之前压缩——将承载的内容写入摘要提示词，以便新会话保留架构决策并丢弃探索。"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第六部分：记忆和引导 (5 个术语) -->
+  <section class="floor lvl-06">
+    <div class="frame">
+      <div class="floor-head">
+        <span class="number">06</span>
+        <h2 class="floor-title">记忆和引导</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">记忆系统</h3>
+            <div class="card-term-en">Memory system</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">试图使代理在会话之间有状态的系统。在会话期间将信息持久化到环境中，并在未来会话开始时重新加载到上下文窗口中。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我一直不得不重复告诉它我在使用 Postgres，而不是 MySQL。"</strong><br>
+              "连接一个记忆系统——在第一轮时将其学习的内容写入文件系统，在会话开始时重新加载。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">AGENTS.md</h3>
+            <div class="card-term-en">AGENTS.md</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">环境中的一种文件，驾驭系统在会话开始时将其加载到上下文窗口中——项目的代理常备简报。跨驾驭系统约定。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"为什么每个会话开始时都已经烧掉了 4k 词元？"</strong><br>
+              "检查 AGENTS.md——有人将整个风格指南粘贴到那里，而不是放在技能后面。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">渐进披露</h3>
+            <div class="card-term-en">Progressive disclosure</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">只加载代理现在需要的上下文，并指向其余部分。借用于 UI 设计。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我应该将整个风格指南转储到 AGENTS.md 中吗？"</strong><br>
+              "不——渐进披露。将风格指南引用为技能，代理在实际需要编写组件时加载它。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">技能</h3>
+            <div class="card-term-en">Skill</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">作为一个单元捆绑的可教学能力——做好一项任务的指令和资源，保存在环境中，仅在相关时加载到上下文窗口中。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我应该把部署手册放在哪里？"</strong><br>
+              "作为技能——代理仅在任务涉及部署时加载它。在 AGENTS.md 中，它会在每轮对话中烧掉词元。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">子代理</h3>
+            <div class="card-term-en">Subagent</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">通过工具调用由另一个代理生成的代理。在自己的会话中运行，拥有自己的上下文窗口，并报告单个工具结果。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"grep 结果炸掉了我的上下文。"</strong><br>
+              "生成一个子代理来进行搜索——它会在噪音上烧掉自己的上下文窗口，并报告你实际需要的两个文件路径。"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第七部分：工作模式 (8 个术语) -->
+  <section class="floor lvl-07">
+    <div class="frame">
+      <div class="floor-head">
+        <span class="number">07</span>
+        <h2 class="floor-title">工作模式</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">人在环中</h3>
+            <div class="card-term-en">Human-in-the-loop</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">一个或多个人类在会话期间与代理配对的工作模式——审查、重定向或实时协作。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"今晚 AFK 运行这个？"</strong><br>
+              "不，架构迁移——保持人在环中。我想看到每一步，并在它选择错误的回填列时进行引导。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">AFK</h3>
+            <div class="card-term-en">AFK</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">用户启动会话并让代理无人值守运行的工作模式。AI 编程的吞吐量倍增器——许多 AFK 会话可以并行运行，而你睡觉、吃饭或做其他事情。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我在 AFK 运行这个——三个沙箱代理进行重构，早上审查 PR。"</strong><br>
+              "绕过权限？是的，只读文件系统，没有网络。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">自动检查</h3>
+            <div class="card-term-en">Automated check</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">在环境中运行的确定性验证——测试、类型检查、lint、构建、预提交钩子。通过/失败，没有判断。代理可以自我纠正的信号。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"代理一直在 AFK 运行中发布损坏的代码。"</strong><br>
+              "沙箱中连接了什么自动检查？添加类型检查和 lint——它会从这些中自我纠正。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">自动审查</h3>
+            <div class="card-term-en">Automated review</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">一个代理审查另一个代理的工作，通常使用不同的模型或系统提示词。非确定性：它形成判断。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我们从 AFK 运行中收到了太多糟糕的 PR。"</strong><br>
+              "在合并之前添加自动审查步骤——不同的模型、独立的系统提示词、作用域于安全和合同更改。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">人工审查</h3>
+            <div class="card-term-en">Human review</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">用户阅读代理产生的代码并对其形成判断。阅读差异或更改的文件算数；阅读代理对它所做事情的描述不算。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"我人工审查了 AFK 输出。"</strong><br>
+              "你阅读了差异还是只是摘要？差异。摘要说它删除了死代码——结果该函数是从生成的文件调用的。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">凭感觉编程</h3>
+            <div class="card-term-en">Vibe coding</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">用户接受代理代码而不进行人工审查的工作模式。差异被视为不透明——重要的是程序是否表现，而不是内部内容。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"你读了它在身份验证流程中更改的内容吗？"</strong><br>
+              "凭感觉编程——登录仍然有效，这就是我检查的所有内容。在推送之前阅读差异，在身份验证上凭感觉是秘密泄露到日志中的方式。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">设计概念</h3>
+            <div class="card-term-en">Design concept</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">用户和代理之间共同持有的对正在构建内容的理解，与任何资产分离。设计概念的质量通过构建它的对话的质量来感受。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它完全按照我的要求编写，但仍然是错的。"</strong><br>
+              "你还没有共享设计概念——它在用假设填补空白。继续对话，直到取消、退款和部分履行在你之间达成一致。"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-term">质询</h3>
+            <div class="card-term-en">Grilling</div>
+          </div>
+          <div class="card-body">
+            <p class="card-definition">与代理开发设计概念的技巧：代理以苏格拉底式方式面试用户，一次一个决策，为每个决策提出推荐答案。</p>
+            <div class="card-usage-label">使用示例</div>
+            <div class="card-usage">
+              <strong>"它直接编写规格，但取消逻辑错了。"</strong><br>
+              "先质询——让它询问你关于部分取消、退款和时机的问题，然后再将任何内容提交到文档。"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 60px 0; text-align: center; color: var(--ink-400); font-size: 14px;">
+    <div class="frame">
+      <p>来源：<a href="https://github.com/mattpocock/dictionary-of-ai-coding" style="color: var(--accent); text-decoration: none;">dictionary-of-ai-coding</a> by Matt Pocock</p>
+      <p style="margin-top: 8px;">使用 Nate Herk 浅色主题生成 • 59 个术语 • 7 个章节</p>
+    </div>
+  </footer>
+</body>
+</html>
