@@ -3,88 +3,495 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billy Chen's Blog</title>
+    <title>Billy Chen's Blog - 技术思考与实践</title>
+    <meta name="description" content="Billy Chen 的技术博客，分享 AI、编程、软件架构等技术思考与实践">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
             color: #333;
         }
 
-        h1 {
-            color: #5B8FF9;
-            border-bottom: 3px solid #5B8FF9;
-            padding-bottom: 10px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .article-list {
-            margin-top: 30px;
-        }
-
-        .article {
-            background: #F6F8FB;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #5B8FF9;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .article:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91, 143, 249, 0.15);
-        }
-
-        .article h2 {
-            margin-top: 0;
-            color: #5B8FF9;
-        }
-
-        .article a {
-            color: #5B8FF9;
-            text-decoration: none;
-            border-bottom: 1px dashed #5B8FF9;
-        }
-
-        .article a:hover {
-            border-bottom-style: solid;
-        }
-
-        .article .meta {
-            color: #666;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .footer {
-            margin-top: 40px;
+        /* 头部区域 */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
-            color: #999;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .header-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header .tagline {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .header .bio {
             font-size: 14px;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .header-social {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .header-social a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .header-social a:hover {
+            color: #764ba2;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+
+        /* 文章列表 */
+        .articles-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .article-card {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            background: white;
+        }
+
+        .article-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-title {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .article-title a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .article-title a:hover {
+            color: #667eea;
+        }
+
+        .article-excerpt {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .article-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .sidebar-content {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #666;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 13px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #666;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #764ba2;
+        }
+
+        .footer-copyright {
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .articles-section,
+            .sidebar-card {
+                padding: 20px;
+            }
+
+            .article-title {
+                font-size: 18px;
+            }
+        }
+
+        /* 装饰元素 */
+        .decorative-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
 <body>
-    <h1>Billy Chen's Blog</h1>
-
-    <div class="article-list">
-        <div class="article">
-            <h2><a href="ai-skeptic-friends.html">我那些质疑 AI 的朋友都疯了</a></h2>
-            <div class="meta">
-                <span>作者：Thomas Ptacek</span> |
-                <span>翻译：Billy Chen</span> |
-                <span>发布日期：2026年5月4日</span>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-avatar">BC</div>
+            <h1>Billy Chen's Blog</h1>
+            <p class="tagline">技术思考与实践 · AI · 软件架构 · 开发者体验</p>
+            <p class="bio">
+                IBM 资深架构师，专注于混合云与 AI 解决方案。在这里分享我对技术、编程和软件工程的思考与实践。
+                20+ 年软件开发经验，热爱探索新技术，追求代码之美与工程之道的平衡。
+            </p>
+            <div class="header-social">
+                <a href="https://github.com/jchenibm" target="_blank">GitHub</a>
+                <a href="https://twitter.com/jchenibm" target="_blank">Twitter</a>
+                <a href="https://linkedin.com/in/jchenibm" target="_blank">LinkedIn</a>
             </div>
-            <p>一篇关于 AI 辅助编程的真诚挑衅。作者认为，许多对 AI 的怀疑论者基于过时的使用方式或错误的前提进行批评，而这些批评在当今使用 Agent 和工作流的实践中已不成立。</p>
+        </header>
+
+        <!-- 主内容 -->
+        <div class="main-content">
+            <!-- 文章列表 -->
+            <main class="articles-section">
+                <h2 class="section-title">最新文章</h2>
+
+                <article class="article-card">
+                    <h3 class="article-title">
+                        <a href="ai-skeptic-friends.html">我那些质疑 AI 的朋友都疯了</a>
+                    </h3>
+                    <p class="article-excerpt">
+                        一篇关于 AI 辅助编程的真诚挑衅。作者 Thomas Ptacek 认为，许多对 AI 的怀疑论者基于过时的使用方式或错误的前提进行批评，
+                        而这些批评在当今使用 Agent 和工作流的实践中已不成立。即使从今天开始，LLM 的所有进步都停止，
+                        LLM 仍将是他职业生涯中发生的第二重要的事情。
+                    </p>
+                    <div class="article-meta">
+                        <span class="article-tag">AI</span>
+                        <span class="article-tag">编程</span>
+                        <span>📅 2026年5月4日</span>
+                        <span>✍️ Thomas Ptacek</span>
+                        <span>🌐 翻译：Billy Chen</span>
+                    </div>
+                </article>
+
+                <!-- 更多文章占位符 -->
+                <article class="article-card" style="opacity: 0.6;">
+                    <h3 class="article-title">
+                        <a href="#">更多文章即将发布...</a>
+                    </h3>
+                    <p class="article-excerpt">
+                        敬请期待更多关于 AI、软件架构、云原生技术等主题的深度文章。
+                    </p>
+                    <div class="article-meta">
+                        <span class="article-tag">待发布</span>
+                    </div>
+                </article>
+            </main>
+
+            <!-- 侧边栏 -->
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">📊 博客统计</h3>
+                    <div class="sidebar-content">
+                        <div class="stat-item">
+                            <span class="stat-label">文章总数</span>
+                            <span class="stat-value">1</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">分类数量</span>
+                            <span class="stat-value">2</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">标签数量</span>
+                            <span class="stat-value">4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">🏷️ 热门标签</h3>
+                    <div class="sidebar-content">
+                        <div class="tag-cloud">
+                            <span class="tag">AI</span>
+                            <span class="tag">LLM</span>
+                            <span class="tag">编程</span>
+                            <span class="tag">软件架构</span>
+                            <span class="tag">云原生</span>
+                            <span class="tag">IBM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">🔗 友情链接</h3>
+                    <div class="sidebar-content">
+                        <p style="margin-bottom: 10px;">
+                            <a href="https://www.ibm.com" target="_blank" style="color: #667eea; text-decoration: none;">IBM 中国</a>
+                        </p>
+                        <p style="margin-bottom: 10px;">
+                            <a href="https://developer.ibm.com" target="_blank" style="color: #667eea; text-decoration: none;">IBM Developer</a>
+                        </p>
+                        <p>
+                            <a href="https://github.com/jchenibm" target="_blank" style="color: #667eea; text-decoration: none;">GitHub</a>
+                        </p>
+                    </div>
+                </div>
+            </aside>
         </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="https://github.com/jchenibm" target="_blank">GitHub</a>
+                <a href="mailto:billy.chen@ibm.com">联系我</a>
+                <a href="#">RSS 订阅</a>
+            </div>
+            <p class="footer-copyright">
+                © 2026 Billy Chen. All rights reserved.<br>
+                Powered by GitHub Pages · Made with ❤️ in Shanghai
+            </p>
+        </footer>
     </div>
 
-    <div class="footer">
-        <p>Powered by GitHub Pages</p>
-        <p>© 2026 Billy Chen. All rights reserved.</p>
-    </div>
+    <script>
+        // 添加装饰性浮动点
+        function createDecorativeDots() {
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe'];
+            for (let i = 0; i < 20; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'decorative-dot';
+                dot.style.left = Math.random() * 100 + 'vw';
+                dot.style.top = Math.random() * 100 + 'vh';
+                dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+                dot.style.width = (Math.random() * 6 + 2) + 'px';
+                dot.style.height = dot.style.width;
+                dot.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out infinite`;
+                dot.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(dot);
+            }
+        }
+
+        // 页面加载时执行
+        window.addEventListener('load', createDecorativeDots);
+
+        // 文章卡片点击效果
+        document.querySelectorAll('.article-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const link = this.querySelector('a');
+                if (link) {
+                    window.location.href = link.href;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
