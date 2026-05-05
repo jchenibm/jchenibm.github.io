@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五一假期特别制作：AI助力开发摩尔斯码学习神器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* HBR 2026 Actual Styles - Based on real HBR page analysis */
+        :root {
+            --hbr-navy: #1C3F6E;
+            --hbr-dark: #1A1A1A;
+            --hbr-gray: #666666;
+            --hbr-gray-light: #999999;
+            --hbr-bg-light: #F8F8F8;
+            --hbr-border: #E5E5E5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'GT America', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--hbr-dark);
+            background: #FFFFFF;
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Main Container */
+        .hbr-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        @media (min-width: 768px) {
+            .hbr-container {
+                padding: 80px 48px;
+            }
+        }
+
+        /* Brand */
+        .hbr-brand {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--hbr-border);
+        }
+
+        .hbr-brand-text {
+            font-family: 'GT America', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--hbr-navy);
+        }
+
+        /* Category Tag */
+        .hbr-category {
+            display: inline-block;
+            font-family: 'GT America', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--hbr-navy);
+            margin-bottom: 16px;
+        }
+
+        /* Main Headline */
+        .hbr-headline {
+            font-family: 'GT America', sans-serif;
+            font-weight: 700;
+            font-size: clamp(32px, 5vw, 44px);
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--hbr-dark);
+            margin-bottom: 20px;
+        }
+
+        /* Subheadline */
+        .hbr-subheadline {
+            font-family: 'GT America', sans-serif;
+            font-weight: 300;
+            font-size: clamp(20px, 3vw, 26px);
+            line-height: 1.3;
+            color: var(--hbr-gray);
+            margin-bottom: 32px;
+        }
+
+        /* Author Section */
+        .hbr-author-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--hbr-border);
+        }
+
+        .hbr-author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--hbr-bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--hbr-gray);
+            font-weight: 600;
+        }
+
+        .hbr-author-info {
+            flex: 1;
+        }
+
+        .hbr-author-name {
+            font-family: 'GT America', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--hbr-dark);
+            margin-bottom: 2px;
+        }
+
+        .hbr-author-bio {
+            font-size: 13px;
+            color: var(--hbr-gray);
+            line-height: 1.4;
+        }
+
+        /* Article Meta */
+        .hbr-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--hbr-gray-light);
+            margin-bottom: 40px;
+        }
+
+        /* Article Content */
+        .hbr-content {
+            font-family: 'GT America', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--hbr-dark);
+        }
+
+        .hbr-content p {
+            margin-bottom: 24px;
+        }
+
+        /* Drop Cap */
+        .hbr-drop-cap::first-letter {
+            float: left;
+            font-size: 64px;
+            line-height: 0.85;
+            padding-right: 12px;
+            padding-top: 8px;
+            font-weight: 700;
+            color: var(--hbr-dark);
+        }
+
+        /* Section Headings */
+        .hbr-content h2 {
+            font-family: 'GT America', sans-serif;
+            font-weight: 700;
+            font-size: clamp(24px, 4vw, 32px);
+            line-height: 1.2;
+            color: var(--hbr-dark);
+            margin-top: 48px;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .hbr-content h3 {
+            font-family: 'GT America', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 1.3;
+            color: var(--hbr-dark);
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        /* Pull Quote */
+        .hbr-pull-quote {
+            border-left: 3px solid var(--hbr-navy);
+            padding-left: 24px;
+            margin: 40px 0;
+            font-family: 'GT America', sans-serif;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 1.4;
+            color: var(--hbr-navy);
+            font-style: italic;
+        }
+
+        /* Lists */
+        .hbr-content ul,
+        .hbr-content ol {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .hbr-content li {
+            margin-bottom: 12px;
+        }
+
+        /* Links */
+        .hbr-content a {
+            color: var(--hbr-navy);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease;
+        }
+
+        .hbr-content a:hover {
+            color: var(--hbr-dark);
+        }
+
+        /* Strong */
+        .hbr-content strong {
+            font-weight: 600;
+        }
+
+        /* Call to Action Box */
+        .hbr-cta-box {
+            background: var(--hbr-bg-light);
+            border-left: 3px solid var(--hbr-navy);
+            padding: 24px;
+            margin: 40px 0;
+            border-radius: 4px;
+        }
+
+        .hbr-cta-box h4 {
+            font-family: 'GT America', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--hbr-navy);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hbr-cta-box p {
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        /* Tags */
+        .hbr-tags {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--hbr-border);
+        }
+
+        .hbr-tag {
+            display: inline-block;
+            background: var(--hbr-bg-light);
+            color: var(--hbr-gray);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .hbr-footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--hbr-border);
+            text-align: center;
+        }
+
+        .hbr-footer p {
+            font-family: 'GT America', sans-serif;
+            font-size: 11px;
+            color: var(--hbr-gray-light);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            .hbr-content {
+                font-size: 16px;
+            }
+
+            .hbr-pull-quote {
+                font-size: 20px;
+                padding-left: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hbr-container">
+        <!-- Header -->
+        <header class="hbr-brand">
+            <div class="hbr-brand-text">教育科技 · AI赋能</div>
+        </header>
+
+        <!-- Article Category -->
+        <div class="hbr-category">亲子教育</div>
+
+        <!-- Main Headline -->
+        <h1 class="hbr-headline">五一假期特别制作：AI助力开发摩尔斯码学习神器</h1>
+
+        <!-- Subheadline -->
+        <p class="hbr-subheadline">这个五一假期，我做了一件有趣的事——用AI快速开发了一个摩尔斯码学习网页，专门用来向孩子介绍这种经典的通信编码方式。</p>
+
+        <!-- Author Section -->
+        <div class="hbr-author-section">
+            <div class="hbr-author-avatar">陈</div>
+            <div class="hbr-author-info">
+                <div class="hbr-author-name">陈剑</div>
+                <div class="hbr-author-bio">IBM架构师 · 技术背景家长</div>
+            </div>
+        </div>
+
+        <!-- Article Meta -->
+        <div class="hbr-meta">
+            <span>2026年5月5日</span>
+            <span>·</span>
+            <span>阅读时间 5 分钟</span>
+        </div>
+
+        <!-- Article Content -->
+        <article class="hbr-content">
+            <p class="hbr-drop-cap">
+                摩尔斯码虽然发明于19世纪，但它依然是理解数字通信原理的绝佳入门教材。通过点（·）和划（−）的不同组合，就能传递所有信息，这种二进制思维正是现代数字技术的基础。
+            </p>
+
+            <p>
+                然而，市面上的摩尔斯码学习工具大多缺乏互动性。对于孩子来说，光看码表很难建立直观理解。<strong>能不能听到声音呢？</strong>这正是我开发这个工具的初衷。
+            </p>
+			<p>
+				<img src="./morse.png" width="80%" alignment="center">
+			</p>
+
+            <h2>✨ 工具特色</h2>
+
+            <h3>🎨 清晰的视觉呈现</h3>
+            <p>网页分为四个标签页，系统性地组织内容：</p>
+            <ul>
+                <li><strong>字母表</strong>：A-Z 26个英文字母，配有北约音标字母</li>
+                <li><strong>数字</strong>：0-9 的摩尔斯编码</li>
+                <li><strong>标点符号</strong>：常用标点及特殊字符</li>
+                <li><strong>参考信息</strong>：基本规则、常用缩写、业余无线电Q代码</li>
+            </ul>
+
+            <h3>🔊 互动音频功能（核心亮点！）</h3>
+            <p>
+                <strong>这是最让孩子喜欢的功能</strong>——点击任何一个字符卡片，就能听到对应的摩尔斯码声音！
+            </p>
+            <ul>
+                <li>使用Web Audio API生成600Hz正弦波</li>
+                <li>严格遵循摩尔斯码时序标准</li>
+                <li>点=1单位时间，划=3单位时间</li>
+                <li>播放时卡片会有绿色发光动画反馈</li>
+            </ul>
+
+            <h3>🌓 深色/浅色主题切换</h3>
+            <p>保护眼睛，适应不同光线环境。</p>
+
+            <h3>📱 响应式设计</h3>
+            <p>电脑、平板、手机都能完美使用，随时随地学习。</p>
+
+            <h2>🎓 教育价值</h2>
+            <ol>
+                <li><strong>听觉-视觉双重刺激</strong>：看到编码，听到声音，记忆更深刻</li>
+                <li><strong>自主探索学习</strong>：孩子可以随意点击，按自己的节奏学习</li>
+                <li><strong>培养二进制思维</strong>：理解"最简单的符号可以表达复杂信息"</li>
+                <li><strong>连接历史与技术</strong>：从电报到5G，通信技术的演变</li>
+            </ol>
+
+            <div class="hbr-pull-quote">
+                在教育场景中，AI不是替代人类，而是赋能人类。家长/老师专注于"教什么"和"为什么教"，AI帮助实现"怎么呈现"。
+            </div>
+
+            <h2>🛠️ AI辅助开发的故事</h2>
+            <p>
+                作为技术背景的家长，我本来想从零开始写代码。但这次尝试了新的工作流：
+            </p>
+            <p>
+                <strong>AI负责基础代码生成</strong> → <strong>我负责产品设计和体验优化</strong>
+            </p>
+            <p>整个过程非常高效：</p>
+            <ul>
+                <li>描述需求 → AI生成HTML/CSS/JS框架</li>
+                <li>测试功能 → 发现问题 → AI迭代优化</li>
+                <li>调整细节 → 添加主题切换、动画效果</li>
+            </ul>
+            <p>
+                <strong>最终成果</strong>：一个功能完整、设计精美、完全可用的教育工具，开发时间比传统方式缩短了80%以上。
+            </p>
+            <p>
+                这也让我思考：<strong>在教育场景中，AI不是替代人类，而是赋能人类</strong>。家长/老师专注于"教什么"和"为什么教"，AI帮助实现"怎么呈现"。
+            </p>
+
+            <h2>💡 使用建议</h2>
+
+            <h3>给家长的建议：</h3>
+            <ol>
+                <li><strong>从孩子感兴趣的内容开始</strong>：如果孩子喜欢数字，就先从数字标签页开始</li>
+                <li><strong>一起玩"猜编码"游戏</strong>：播放声音，让孩子猜是哪个字符</li>
+                <li><strong>联系实际生活</strong>：解释SOS求救信号、电影里的摩尔斯码情节</li>
+                <li><strong>适度引导，不过度教学</strong>：保持趣味性最重要</li>
+            </ol>
+
+            <h3>给老师的建议：</h3>
+            <ol>
+                <li>可作为信息技术课的导入素材</li>
+                <li>结合通信史教学，展示技术演变</li>
+                <li>组织小组竞赛，看谁能快速解码</li>
+                <li>跨学科整合：数学（二进制）、历史（电报）、物理（声波）</li>
+            </ol>
+
+            <div class="hbr-cta-box">
+                <h4>立即体验</h4>
+                <p>工具完全免费使用，无需安装，浏览器打开即可。适合年龄：6岁+（只要认识英文字母和数字）</p>
+				<p><a href="https://jchenibm.github.io/morse-code-table.html">https://jchenibm.github.io/morse-code-table.html</a></p>
+            </div>
+
+            <h2>📝 写在最后</h2>
+            <p>这个小小的工具，凝聚了几个教育理念：</p>
+            <ul>
+                <li><strong>互动性是学习的催化剂</strong></li>
+                <li><strong>技术可以增强理解，而不是替代思考</strong></li>
+                <li><strong>家长是最好的产品经理</strong>——我们最了解孩子的需求</li>
+            </ul>
+            <p>
+                如果你也在寻找有趣的方式向孩子介绍技术概念，希望这个工具能给你一些灵感。
+            </p>
+        </article>
+
+        <!-- Tags -->
+        <div class="hbr-tags">
+            <span class="hbr-tag">#亲子教育</span>
+            <span class="hbr-tag">#编程教育</span>
+            <span class="hbr-tag">#AI辅助开发</span>
+            <span class="hbr-tag">#摩尔斯码</span>
+            <span class="hbr-tag">#STEM教育</span>
+        </div>
+
+        <!-- Footer -->
+        <footer class="hbr-footer">
+            <p>&copy; 2026 陈剑. All rights reserved.</p>
+            <p>本文首发于微信公众号，转载请注明出处</p>
+        </footer>
+    </div>
+</body>
+</html>
