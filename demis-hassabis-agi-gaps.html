@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Demis Hassabis: DeepMind CEO on AGI's Future — 播客笔记</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=Manrope:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Light Theme (Default) */
+    --paper-50:#FDFCFB;
+    --paper-100:#F8F7F4;
+    --paper-200:#EBE9E4;
+    --paper-300:#DCD9D2;
+    --paper-400:#C8C5BE;
+    --paper-500:#A8A49C;
+    --ink-100:#2A2825;
+    --ink-200:#4A4640;
+    --ink-300:#6B675F;
+    --ink-400:#8B877D;
+    --accent:#2563EB;
+    --accent-hot:#3B82F6;
+    --signal:#EA580C;
+    --warn:#DC2626;
+    --grow:#16A34A;
+    --grid:rgba(0,0,0,0.04);
+    --hairline:rgba(0,0,0,0.08);
+
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    --card-hover-bg:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.5));
+    --card-expand-bg:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.6));
+    --floor-gradient-01:linear-gradient(180deg, rgba(37,99,235,0.04) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(37,99,235,0.08) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(37,99,235,0.12) 0%, transparent 60%);
+    --floor-number-01:rgba(42,40,37,0.25);
+    --floor-number-02:rgba(42,40,37,0.45);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,0,0,0.03), transparent 60%);
+    --chip-bg:rgba(255,255,255,0.5);
+    --detail-border:1px dashed rgba(0,0,0,0.12);
+    --tab-bg:rgba(255,255,255,0.6);
+    --tab-hover-bg:rgba(255,255,255,0.9);
+    --tab-active-bg:var(--accent);
+    --tab-active-text:#FFFFFF;
+    --tab-border:rgba(0,0,0,0.1);
+    --shadow:0 2px 8px rgba(0,0,0,0.06);
+    --shadow-hover:0 4px 16px rgba(0,0,0,0.1);
+    --shadow-expand:0 4px 20px rgba(37,99,235,0.15);
+  }
+
+  body.theme-dark{
+    /* Dark Theme */
+    --paper-50:#050A12;
+    --paper-100:#0A1628;
+    --paper-200:#0F1B30;
+    --paper-300:#152340;
+    --paper-400:#1E2F50;
+    --paper-500:#293D63;
+    --ink-100:#E8EEF7;
+    --ink-200:#C4D0E0;
+    --ink-300:#7B8AA3;
+    --ink-400:#4F5E78;
+    --accent:#4A9EFF;
+    --accent-hot:#82B7FF;
+    --signal:#FFB347;
+    --warn:#FF6B6B;
+    --grow:#4AFF8F;
+    --grid:rgba(255,255,255,0.035);
+    --hairline:rgba(255,255,255,0.08);
+
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05));
+    --card-hover-bg:linear-gradient(180deg, rgba(74,158,255,0.04), rgba(0,0,0,0.05));
+    --card-expand-bg:linear-gradient(180deg, rgba(74,158,255,0.06), rgba(0,0,0,0.05));
+    --floor-gradient-01:linear-gradient(180deg, rgba(74,158,255,0.025) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(74,158,255,0.045) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(74,158,255,0.065) 0%, transparent 60%);
+    --floor-number-01:rgba(196,208,224,0.45);
+    --floor-number-02:rgba(196,208,224,0.7);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74,158,255,0.10), transparent 60%);
+    --chip-bg:transparent;
+    --detail-border:1px dashed rgba(255,255,255,0.12);
+    --tab-bg:rgba(255,255,255,0.05);
+    --tab-hover-bg:rgba(255,255,255,0.1);
+    --tab-active-bg:var(--accent);
+    --tab-active-text:#FFFFFF;
+    --tab-border:rgba(255,255,255,0.1);
+    --shadow:none;
+    --shadow-hover:none;
+    --shadow-expand:none;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  ::selection{ background:var(--accent); color:#FFFFFF; }
+
+  body{
+    font-family:'Manrope', system-ui, sans-serif;
+    font-weight:300;
+    background:var(--bg-main);
+    color:var(--text-primary);
+    line-height:1.55;
+    overflow-x:hidden;
+    background-image:var(--top-glow),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
+    background-attachment: fixed, fixed, fixed;
+    min-height:100vh;
+    transition: background 320ms ease, color 320ms ease;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.035;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .frame{
+    position:relative; z-index:2;
+    max-width:1320px;
+    margin:0 auto;
+    padding:0 56px;
+  }
+
+  /* ───────── HERO ───────── */
+  .hero{
+    padding:96px 0 72px;
+    position:relative;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    padding-bottom:64px;
+    border-bottom:1px solid var(--border-color);
+  }
+  .topbar .left{ display:flex; align-items:center; gap:14px; }
+  .topbar .left::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.5; transform:scale(.85); }
+  }
+  .topbar .right{ display:flex; gap:32px; align-items:center; }
+  .topbar .right span:not(:last-child)::after{
+    content:'/'; margin-left:32px; color:var(--ink-400);
+  }
+
+  /* Theme Toggle Button */
+  .theme-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 12px;
+    border:1px solid var(--border-color);
+    border-radius:4px;
+    background:var(--tab-bg);
+    cursor:pointer;
+    transition: all 320ms ease;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-secondary);
+  }
+  .theme-toggle:hover{
+    background:var(--tab-hover-bg);
+    border-color:var(--accent);
+  }
+  .theme-toggle .icon{
+    font-size:14px;
+    line-height:1;
+  }
+
+  .eyebrow{
+    margin-top:72px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{
+    content:''; width:32px; height:1px; background:var(--accent);
+  }
+
+  h1.title{
+    margin-top:32px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+    font-size:clamp(56px, 9.2vw, 148px);
+    line-height:.92;
+    letter-spacing:-.035em;
+    color:var(--text-primary);
+  }
+  h1.title .ital{
+    font-style:italic;
+    font-variation-settings:'opsz' 144, 'wght' 320, 'SOFT' 100, 'WONK' 1;
+    color:var(--accent);
+  }
+
+  .kicker{
+    margin-top:40px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 36, 'wght' 320, 'SOFT' 50;
+    font-style:italic;
+    font-size:clamp(20px, 2.1vw, 26px);
+    line-height:1.45;
+    color:var(--text-secondary);
+    max-width:760px;
+  }
+
+  /* ───────── TAB NAVIGATION ───────── */
+  .tab-nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    gap:4px;
+    padding:12px 0;
+    margin:64px 0 32px;
+    border-bottom:1px solid var(--border-color);
+    background:var(--bg-main);
+    backdrop-filter:blur(10px);
+  }
+
+  .tab-btn{
+    flex:1;
+    padding:12px 20px;
+    border:1px solid var(--tab-border);
+    border-radius:6px 6px 0 0;
+    background:var(--tab-bg);
+    color:var(--text-secondary);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition: all 320ms ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+
+  .tab-btn:hover{
+    background:var(--tab-hover-bg);
+    color:var(--text-primary);
+  }
+
+  .tab-btn.active{
+    background:var(--tab-active-bg);
+    color:var(--tab-active-text);
+    border-color:var(--tab-active-bg);
+  }
+
+  .tab-btn .tab-num{
+    font-size:9px;
+    opacity:0.7;
+  }
+
+  /* ───────── TAB CONTENT ───────── */
+  .tab-content{
+    display:none;
+    animation:fadeIn 480ms ease;
+  }
+
+  .tab-content.active{
+    display:block;
+  }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform:translateY(12px); }
+    to{ opacity:1; transform:none; }
+  }
+
+  /* ───────── FLOOR ───────── */
+  .floor{
+    position:relative;
+    padding:48px 0 64px;
+    border-radius:8px;
+    margin-bottom:24px;
+  }
+  .floor.lvl-01{ background:var(--floor-gradient-01); }
+  .floor.lvl-02{ background:var(--floor-gradient-02); }
+  .floor.lvl-03{ background:var(--floor-gradient-03); }
+
+  .floor-head{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    column-gap:48px;
+    align-items:start;
+    margin-bottom:40px;
+  }
+
+  .floor .number{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 200, 'SOFT' 0, 'WONK' 0;
+    font-style:italic;
+    font-size:clamp(80px, 10vw, 140px);
+    line-height:.84;
+    letter-spacing:-.05em;
+    user-select:none;
+  }
+  .floor.lvl-01 .number{ color:var(--floor-number-01); }
+  .floor.lvl-02 .number{ color:var(--floor-number-02); }
+  .floor.lvl-03 .number{
+    color:var(--accent);
+  }
+  .floor .number .tag{
+    display:block;
+    margin-top:16px;
+    font-family:'JetBrains Mono', monospace;
+    font-style:normal;
+    font-size:9px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    white-space:nowrap;
+  }
+  .floor .number .tag::before{
+    content:''; display:inline-block;
+    width:20px; height:1px;
+    background:var(--ink-300);
+    vertical-align:middle;
+    margin-right:8px;
+  }
+
+  .floor .head-body .verb{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .floor .head-body .verb::before{
+    content:''; width:16px; height:1px; background:var(--accent);
+  }
+
+  .floor .head-body h2{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+    font-size:clamp(36px, 4.5vw, 56px);
+    line-height:.95;
+    letter-spacing:-.028em;
+    color:var(--text-primary);
+    margin-bottom:12px;
+  }
+  .floor .head-body h2 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 100, 'WONK' 1;
+  }
+
+  .floor .head-body .tagline{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 24, 'wght' 350;
+    font-style:italic;
+    font-size:18px;
+    line-height:1.4;
+    color:var(--text-secondary);
+  }
+
+  /* ───────── CONCEPT CARDS ───────── */
+  .concept-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+  }
+  .concept-row.tight { gap:16px; }
+
+  .card{
+    border:1px solid var(--border-color);
+    border-radius:6px;
+    padding:24px;
+    background:var(--card-bg);
+    backdrop-filter:blur(6px);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    transition: all 320ms ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity:.2;
+    transition: opacity 320ms ease;
+  }
+  .card:hover{
+    border-color:var(--accent);
+    background:var(--card-hover-bg);
+    box-shadow:var(--shadow-hover);
+    transform:translateY(-2px);
+  }
+  .card:hover::before{ opacity:.5; }
+  .card.expanded{
+    border-color:var(--accent);
+    background:var(--card-expand-bg);
+    box-shadow:var(--shadow-expand);
+  }
+  .card.expanded::before{ opacity:.7; }
+  .concept-row:has(.card.expanded){
+    grid-template-columns: 1fr;
+  }
+
+  .card .card-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    margin-bottom:12px;
+  }
+  .card h3{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT' 30, 'WONK' 1;
+    font-size:20px;
+    line-height:1.1;
+    letter-spacing:-.018em;
+    color:var(--text-primary);
+    margin-bottom:8px;
+  }
+  .card h3 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT'100, 'WONK' 1;
+  }
+  .card .one-liner{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 18, 'wght' 320;
+    font-style:italic;
+    font-size:14px;
+    color:var(--text-secondary);
+    line-height:1.55;
+  }
+
+  .card .expand-hint{
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    transition: color 320ms ease;
+  }
+  .card:hover .expand-hint{ color:var(--accent); }
+  .card.expanded .expand-hint{ display:none; }
+
+  .card .detail{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:var(--detail-border);
+  }
+  .card.expanded .detail{ display:block; }
+  .card .detail p{
+    font-size:14px;
+    line-height:1.7;
+    color:var(--text-secondary);
+    margin-bottom:12px;
+    max-width:64ch;
+  }
+  .card .detail p strong{ color:var(--text-primary); font-weight:600; }
+  .card .detail p em{ font-style:italic; color:var(--text-primary); }
+
+  .conn-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    margin-top:16px;
+    margin-bottom:8px;
+  }
+  .connections{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .conn-chip{
+    padding:4px 8px;
+    border-radius:3px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.04em;
+    border:1px solid var(--border-color);
+    color:var(--text-secondary);
+    background:var(--chip-bg);
+  }
+  .conn-chip.feeds{ color:var(--accent); border-color:var(--accent); background:rgba(37,99,235,0.08); }
+  .conn-chip.fed-by{ color:var(--grow); border-color:var(--grow); background:rgba(22,163,74,0.08); }
+  .conn-chip.parallel{ color:var(--text-secondary); border-color:var(--border-color); }
+  .conn-chip.branch{ color:var(--accent); border:1px dashed var(--accent); }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width:1100px){
+    .floor-head{ grid-template-columns: 140px 1fr; column-gap:32px; }
+    .tab-btn{ font-size:10px; padding:10px 16px; }
+  }
+  @media (max-width:760px){
+    .frame{ padding:0 24px; }
+    .floor-head{ grid-template-columns:1fr; }
+    .floor .number{ font-size:80px; }
+    h1.title{ font-size:56px; }
+    .topbar .right span:not(.theme-toggle){ display:none; }
+    .tab-nav{ flex-wrap:wrap; }
+    .tab-btn{ flex:1 1 calc(50% - 4px); min-width:120px; }
+  }
+</style>
+</head>
+<body class="theme-light">
+
+<div class="frame">
+
+  <!-- ───────── HERO ───────── -->
+  <header class="hero">
+    <div class="topbar">
+      <div class="left">2026.05 · 播客笔记</div>
+      <div class="right">
+        <span>Demis Hassabis</span>
+        <span>DeepMind CEO</span>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="icon">◐</span>
+          <span class="label">Theme</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="eyebrow">YC 播客 · Garry Tan</div>
+
+    <h1 class="title">
+      AGI 的<span class="ital">三个鸿沟</span><br>
+      <span class="ital">与小模型的价值</span>
+    </h1>
+
+    <p class="kicker">
+      DeepMind CEO Demis Hassabis 与 YC CEO Garry Tan 的深度对话，探讨 AGI 的未来路径、大模型的局限性，以及为什么小模型将在未来 6-12 个月内成为真正的价值焦点。从持续学习到长程推理，从创造力到爱因斯坦测试，全面解析 AI 领域的关键议题。
+    </p>
+  </header>
+
+  <!-- ───────── TAB NAVIGATION ───────── -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">01</span>
+      <span class="tab-label">AGI 鸿沟</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">02</span>
+      <span class="tab-label">创造力测试</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">03</span>
+      <span class="tab-label">小模型时代</span>
+    </button>
+  </nav>
+
+  <!-- ───────── TAB CONTENTS ───────── -->
+  <div class="tab-contents">
+
+    <!-- ── TAB 01: AGI 鸿沟 ── -->
+    <div class="tab-content active">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">01<span class="tag">Layer One</span></div>
+          <div class="head-body">
+            <div class="verb">THE GAPS</div>
+            <h2><em>AGI 的</em>三个鸿沟</h2>
+            <div class="tagline">持续学习、长程推理与记忆系统 — 当前沿范式的局限性</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">系统 · 01</div>
+            <h3>持续学习 <em>Continuous Learning</em></h3>
+            <div class="one-liner">模型如何像人脑一样持续整合新知识</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>问题现状：</strong>每次对话结束，刚学到的东西就会忘记。下次重新打开，还是上次那个模型，没长进。</p>
+              <p><strong>人脑机制：</strong>海马体在睡觉时（特别是 REM 睡眠阶段），会重放白天重要的片段，让新知识温柔地融进旧的知识体系。</p>
+              <p><strong>核心差距：</strong>模型缺少这种知识整合机制。所有信息都塞进 Context Window，包含不重要的、错的、过时的东西——信息很多，但是一团乱麻。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 记忆系统</span>
+                <span class="conn-chip parallel">↔ 长程推理</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">推理 · 02</div>
+            <h3>长程推理 <em>Long-term Reasoning</em></h3>
+            <div class="one-liner">模型缺少的内省能力与策略调整</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>Demis 的发现：</strong>跟 Gemini 下国际象棋时，看到模型的 thinking trace 里清清楚楚写着某步是昏招，但因为没找到更好的走法，还是走了这步昏招。</p>
+              <p><strong>问题本质：</strong>模型能在每一步局部判断对错，但没法基于整盘棋的局势去调整整体策略。缺少"停一下、再想想"的内省能力。</p>
+              <p><strong>正常人的模式：</strong>意识到昏招后脑子里会有反应，停一下再想想。这个退回到当前思考的上一层、重新审视的能力，模型现在没有。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 内省机制</span>
+                <span class="conn-chip parallel">↔ 创造力</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">记忆 · 03</div>
+            <h3>记忆系统 <em>Memory System</em></h3>
+            <div class="one-liner">工作记忆与长期记忆的分离机制</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>Context Window 的局限：</strong>相当于人脑的工作记忆（Working Memory）。人能记住 7 位数字左右，模型做到 100 万 Token，但模型的表现远不如人。</p>
+              <p><strong>人脑优势：</strong>背后有一套独立的系统处理长期记忆——几年前的事、童年的事、几小时前发生的事。这些不塞在工作记忆里，而是另一套系统在管理。</p>
+              <p><strong>关键差距：</strong>模型缺少类似海马体的知识整合机制，无法把新体验在休息时温柔地融入已有知识体系。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip parallel">↔ 神经科学机制</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">范式 · 04</div>
+            <h3>当前范式 <em>Current Paradigm</em></h3>
+            <div class="one-liner">大模型范式仍是 AGI 的一部分，但不是全部</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>Demis 的态度：</strong>大规模预训练 + RLHF + CoT 一定会是 AGI 最终架构的一部分，不认为这会是条死路。</p>
+              <p><strong>现实：</strong>但实现 AGI，必须解决持续学习、长程推理和记忆系统这几个关键问题。</p>
+              <p><strong>进展方向：</strong>这些不是死路，而是待突破的技术鸿沟。当前范式是基础，但需要补充关键机制。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 下一代 AI</span>
+                <span class="conn-chip branch">↗ 架构演进</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── TAB 02: 创造力测试 ── -->
+    <div class="tab-content">
+      <article class="floor lvl-02">
+        <div class="floor-head">
+          <div class="number">02<span class="tag">Layer Two</span></div>
+          <div class="head-body">
+            <div class="verb">THE TEST</div>
+            <h2><em>创造力与</em>爱因斯坦测试</h2>
+            <div class="tagline">AI 能否发明围棋，而不只是下好围棋？</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">围棋 · 01</div>
+            <h3>Move 37 <em>The Starting Point</em></h3>
+            <div class="one-liner">在已有框架内找到人类没想到的招 vs 发明框架本身</div>
+div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>历史时刻：</strong>2016 年 AlphaGo 跟李世石第二局，走出著名的 Move 37。那一步棋下出的瞬间，全世界围棋高手都看呆了。</p>
+              <p><strong>大众认知：</strong>很多人觉得，这就是 AI 的创造力来了。</p>
+              <p><strong>Demis 的判断：</strong>Move 37 只是起点。他真正想看到的是另一件事——AI 能不能发明围棋这件事本身。</p>
+              <p><strong>关键区别：</strong>Move 37 是在围棋这个现成的规则里，找到了一步人类没想到的招。但围棋的规则、棋盘形状、黑白子对弈方式，是人类发明出来的。AI 在已有框架里厉害，能不能自己造一个框架，是另外一回事。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip branch">↗ 爱因斯坦测试</span>
+                <span class="conn-chip parallel">↔ 类比推理</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">测试 · 02</div>
+            <h3>爱因斯坦测试 <em>Einstein Test</em></h3>
+            <div class="one-liner">1901 年知识能否推出 1905 年的狭义相对论？</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>测试设计：</strong>用 1901 年人类已有的全部知识训练一个模型，看它能不能在 1905 年那个时间点，自己推出狭义相对论。</p>
+              <p><strong>历史背景：</strong>爱因斯坦在 1905 年连写了几篇改变物理学的论文（后来叫爱因斯坦奇迹年）。那些工作不是从已有物理学论文里通过拼接得到的，是基于已有材料做了一次全新的概念跳跃。</p>
+              <p><strong>核心能力：</strong>发现新东西需要类比推理的能力——从一个领域里抽出深层结构，搬到另一个全新的领域去用。这个能力，模型现在还没有。也可能是有，但用法不对所以激发不出来。</p>
+              <p><strong>现状分析：</strong>目前的大模型主要在做两件事：pattern matching（从大量数据里找规律）和 extrapolation（把规律往外延伸一点）。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 概念跳跃</span>
+                <span class="conn-chip parallel">↔ 创造力定义</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">设想 · 03</div>
+            <h3>反向推理 <em>Reverse Engineering</em></h3>
+            <div class="one-liner">从高层描述倒推出围棋规则</div>
+            <div class="expand-hint">点击展开详情</div>
+div            <div class="detail">
+              <p><strong>具体设想：</strong>给 AI 一个高层次的描述——造一个游戏，五分钟能学会规则，要好几辈子才能精通，棋局有审美，一下午能下完一局。AI 能不能根据这个描述，自己倒推出围棋？</p>
+              <p><strong>当前状态：</strong>目前做不到。</p>
+              <p><strong>深层含义：</strong>这考验的是 AI 从抽象需求到具体设计的推理能力，也是真正创造力的本质。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 系统设计能力</span>
+                <span class="conn-chip parallel">↔ 抽象到具体</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── TAB 03: 小模型时代 ── -->
+    <div class="tab-content">
+      <article class="floor lvl-03">
+        <div class="floor-head">
+          <div class="number">03<span class="tag">Layer Three</span></div>
+          <div class="head-body">
+            <div class="verb">THE FUTURE</div>
+            <h2><em>小模型的</em>价值时代</h2>
+            <div class="tagline">未来 6-12 个月的真正价值焦点</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">价值 · 01</div>
+            <h3>速度 <em>Speed</em></h3>
+            <div class="one-liner">比成本更重要的其实是速度</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>出乎意料的判断：</strong>未来 6 到 12 个月，真正的价值不在更大的模型，在更小的模型。</p>
+              <p><strong>Demis 的原话：</strong>当小模型的能力已经达到前沿模型的 90% 到 95%，也就是已经相当不错的时候，剩下那 5% 到 10% 的能力差距，比不上速度带来的好处。</p>
+              <p><strong>工程师用 AI 写代码：</strong>一个想法冒出来，几秒之内就能看到结果，不行就改，再不行再改。这个一改再改的循环跑得越快，做出来的东西就越好。</p>
+              <p><strong>心流体验：</strong>快到一定程度，工程师在这种节奏里能进入心流。一个想法、一次尝试、一个反馈、再来一个想法，思维不被打断。进入心流和频繁掉出心流，产出的差距是数量级的。</p>
+              <p><strong>Agent 场景：</strong>一个 Agent 跑完一个任务可能要调几十次模型，每次慢一秒，整个任务就慢一分钟。慢到一定程度，Agent 就从一个能用的东西变成鸡肋。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 开发效率</span>
+                <span class="conn-chip parallel">↔ 心流状态</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">应用 · 02</div>
+            <h3>边缘部署 <em>Edge Deployment</em></h3>
+            <div class="one-liner">本地运行与隐私保护</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>小模型不是廉价替代品：</strong>有些事只有小模型能做。</p>
+              <p><strong>应用场景：</strong>手机、眼镜、家用机器人，需要的就是一个能在本地跑起来的模型。</p>
+              <p><strong>隐私优势：</strong>家里机器人看到的视频、听到的对话，全部在设备本地处理，根本不上云。这件事对很多用户来说不是加分项，是底线。</p>
+              <p><strong>成本、速度、边缘部署：</strong>这是小模型的三重价值。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 隐私保护</span>
+                <span class="conn-chip parallel">↔ 设备要求</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">技术 · 03</div>
+h3>蒸馏 <em>Distillation</em></h3>
+            <div class="one-liner">大模型能力压缩到小模型的路径</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>DeepMind 的积累：</strong>蒸馏简单说就是先训练一个超大的模型，然后用这个超大模型去教一个小模型。教完之后，小模型用极少的参数，能复现原来 95% 以上的能力。</p>
+              <p><strong>为什么重视蒸馏：</strong>要把 AI 能力放进谷歌的头部产品中，前提是低延迟、低成本。前沿模型再强，每次推理花几秒钟、花几毛钱...这条路，恐怕很难走得通。</p>
+              <p><strong>时间表：</strong>一个前沿模型发布之后，6 到 12 个月内，他们就能把这个模型的能力蒸馏到边缘设备能跑的小模型上去。这个时间表比很多人想的要快。</p>
+              <p><strong>智能天花板：</strong>目前没看到信息密度有任何理论上限。小模型的智能天花板还远没看到。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 产品化路径</span>
+                <span class="conn-chip parallel">↔ Gemini 多模态</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow>架构 · 04</div>
+            <h3>协同模式 <em>Hybrid Architecture</em></h3>
+            <div class="one-liner">小模型主力 + 前沿模型后援</div>
+            <div class="expand-hint">点击展开详情</div>
+            <div class="detail">
+              <p><strong>端到端智能助手构想：</strong></p>
+              <ul>
+                <li><strong>本地小模型：</strong>绝大部分日常任务在本地的小模型上跑。智能眼镜看到的画面、家里机器人听到的对话、手机里的私人助理，模型直接在设备里读懂，不需要往云端传一遍。</li>
+                <li><strong>云端前沿模型：</strong>只有遇到特别复杂、本地搞不定的问题，才向云端的前沿模型发起请求。</li>
+              </ul>
+              <p><strong>小模型在边缘做主力，前沿模型在云端做后援。</strong></p>
+              <p><strong>多模态要求：</strong>这个构想对小模型的要求比较高，它不能只会处理文字，还得能理解物理世界。</p>
+              <p><strong>Gemini 的选择：</strong>这就是为什么 Gemini 从一开始就坚持多模态，不光处理文字，也处理图像、视频、声音。一开始这么做比只做文本要难得多，但眼镜也好，机器人也好，需要的是一个能看懂周围世界的模型，不是一个只会聊天的模型。</p>
+              <div class="conn-label">Connections</div>
+              <div class="connections">
+                <span class="conn-chip feeds">→ 边缘智能</span>
+                <span class="conn-chip parallel">↔ 云端支持</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ───────── FOOTER ───────── -->
+      <footer style="margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border-color); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-300); letter-spacing: 0.5px; line-height: 1.8;">
+        <p>播客链接：https://podwise.ai/dashboard/episodes/7887456</p>
+        <p>笔记整理：语音输入 + AI 整理初稿 + 人工逐字优化</p>
+        <p style="margin-top: 16px;">© 2026 Billy Chen · All rights reserved</p>
+      </footer>
+
+    </div>
+
+<script>
+function toggleExpand(el) {
+  el.classList.toggle('expanded');
+}
+
+function switchTab(index) {
+  // Remove active class from all tabs and contents
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  contents.forEach(content => content.classList.remove('active'));
+
+  // Add active class to selected tab and content
+  tabs[index].classList.add('active');
+  contents[index].classList.add('active');
+}
+
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+  body.classList.remove('theme-light', 'theme-dark');
+  body.classList.add('theme-' + newTheme);
+
+  // Save preference
+  localStorage.setItem('nate-theme', newTheme);
+}
+
+// Load saved theme preference on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('nate-theme') || 'light';
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add('theme-' + savedTheme);
+});
+</script>
+
+</body>
+</html>
