@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>摩尔斯密码表 | Morse Code Table</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..500,0..100,0..1&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #F8F7F4;
+      --ink-100: #2A2825;
+      --ink-75: #5A5855;
+      --ink-50: #8A8885;
+      --ink-25: #BAB8B5;
+      --ink-10: #EAE8E5;
+      --accent: #2563EB;
+      --signal: #EA580C;
+      --grow: #16A34A;
+      --warn: #DC2626;
+      --hairline: #D1D0CE;
+      --tab-bg: #E8E6E3;
+      --tab-active-bg: #FFFFFF;
+      --tab-border: #D1D0CE;
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    }
+
+    .theme-dark {
+      --bg-main: #0A1628;
+      --ink-100: #E8EEF7;
+      --ink-75: #B8C8D9;
+      --ink-50: #7A8EA6;
+      --ink-25: #4A5E73;
+      --ink-10: #2A3E52;
+      --accent: #4A9EFF;
+      --signal: #FFB347;
+      --grow: #4AFF8F;
+      --warn: #FF6B6B;
+      --hairline: #2A3E52;
+      --tab-bg: #1A2A3E;
+      --tab-active-bg: #0A1628;
+      --tab-border: #2A3E52;
+      --card-bg: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05));
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Manrope', system-ui, sans-serif;
+      background: var(--bg-main);
+      color: var(--ink-100);
+      line-height: 1.55;
+      transition: background 320ms ease, color 320ms ease;
+    }
+
+    .frame {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    /* Top Bar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .topbar .left {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-50);
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      background: var(--tab-bg);
+      color: var(--ink-100);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 320ms ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      background: var(--tab-active-bg);
+    }
+
+    .theme-toggle .icon {
+      font-size: 16px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    h1.title {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+      font-size: clamp(48px, 8vw, 120px);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      margin-bottom: 16px;
+    }
+
+    .hero .subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ink-50);
+    }
+
+    /* Tab Navigation */
+    .tab-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      gap: 4px;
+      padding: 16px 0;
+      background: var(--bg-main);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      border: 1px solid var(--tab-border);
+      border-radius: 8px 8px 0 0;
+      background: var(--tab-bg);
+      color: var(--ink-75);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 320ms ease;
+    }
+
+    .tab-btn:hover {
+      background: var(--tab-active-bg);
+      color: var(--ink-100);
+    }
+
+    .tab-btn.active {
+      background: var(--tab-active-bg);
+      color: var(--accent);
+      border-bottom-color: var(--tab-active-bg);
+    }
+
+    .tab-num {
+      font-size: 10px;
+      opacity: 0.6;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+      animation: fadeIn 320ms ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floor */
+    .floor {
+      padding: 40px 0;
+    }
+
+    .floor-head {
+      margin-bottom: 32px;
+    }
+
+    .floor-head h2 {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .floor-head .tagline {
+      color: var(--ink-50);
+      font-size: 15px;
+    }
+
+    /* Morse Grid */
+    .morse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+
+    .morse-card {
+      padding: 20px;
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      background: var(--card-bg);
+      backdrop-filter: blur(6px);
+      transition: all 280ms ease;
+      cursor: pointer;
+    }
+
+    .morse-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .morse-card.playing {
+      border-color: var(--grow);
+      box-shadow: 0 0 20px rgba(22, 163, 74, 0.4);
+      transform: scale(1.02);
+    }
+
+    .morse-card .play-hint {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      font-size: 10px;
+      color: var(--ink-25);
+      opacity: 0;
+      transition: opacity 280ms ease;
+    }
+
+    .morse-card:hover .play-hint {
+      opacity: 1;
+    }
+
+    .theme-dark .morse-card:hover {
+      box-shadow: 0 4px 16px rgba(74,158,255,0.15);
+      border-color: rgba(74,158,255,0.35);
+    }
+
+    .morse-card .letter {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 48, 'wght' 400, 'SOFT' 0, 'WONK' 1;
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .morse-card .code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      letter-spacing: 0.15em;
+      color: var(--ink-100);
+      margin-bottom: 8px;
+    }
+
+    .morse-card .name {
+      font-size: 12px;
+      color: var(--ink-50);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .morse-card {
+      position: relative;
+    }
+
+    /* Punctuation Card */
+    .punc-card .letter {
+      font-size: 36px;
+    }
+
+    /* Reference Section */
+    .reference {
+      margin-top: 60px;
+      padding: 32px;
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      background: var(--card-bg);
+    }
+
+    .reference h3 {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 64, 'wght' 320, 'SOFT' 20, 'WONK' 1;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .reference-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .ref-item {
+      padding: 16px;
+      border-left: 3px solid var(--accent);
+      background: rgba(37,99,235,0.05);
+    }
+
+    .theme-dark .ref-item {
+      background: rgba(74,158,255,0.08);
+    }
+
+    .ref-item .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-50);
+      margin-bottom: 8px;
+    }
+
+    .ref-item .value {
+      font-size: 18px;
+      color: var(--ink-100);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .frame { padding: 24px; }
+      .tab-nav { flex-wrap: wrap; }
+      .tab-btn { flex: 1 1 calc(50% - 4px); min-width: 140px; }
+      .morse-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+      .morse-card { padding: 16px; }
+      .morse-card .letter { font-size: 36px; }
+      .morse-card .code { font-size: 14px; }
+      .reference-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <div class="frame">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="left">
+        <span>COMMUNICATIONS // REFERENCE</span>
+      </div>
+      <div class="right">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="icon">◐</span>
+          <span class="label">Theme</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="title">摩尔斯密码</h1>
+      <p class="subtitle">MORSE CODE TABLE</p>
+    </section>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(0)">
+        <span class="tab-num">01</span>
+        <span class="tab-label">字母 Letters</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(1)">
+        <span class="tab-num">02</span>
+        <span class="tab-label">数字 Numbers</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(2)">
+        <span class="tab-num">03</span>
+        <span class="tab-label">标点 Punctuation</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(3)">
+        <span class="tab-num">04</span>
+        <span class="tab-label">参考 Reference</span>
+      </button>
+    </nav>
+
+    <!-- Tab 1: Letters -->
+    <div class="tab-content active">
+      <article class="floor">
+        <div class="floor-head">
+          <h2>英文字母</h2>
+          <p class="tagline">English Alphabet A-Z</p>
+        </div>
+        <div class="morse-grid">
+          <div class="morse-card">
+            <div class="letter">A</div>
+            <div class="code">· −</div>
+            <div class="name">Alpha</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">B</div>
+            <div class="code">− · · ·</div>
+            <div class="name">Bravo</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">C</div>
+            <div class="code">− · − ·</div>
+            <div class="name">Charlie</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">D</div>
+            <div class="code">− · ·</div>
+            <div class="name">Delta</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">E</div>
+            <div class="code">·</div>
+            <div class="name">Echo</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">F</div>
+            <div class="code">· · − ·</div>
+            <div class="name">Foxtrot</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">G</div>
+            <div class="code">− − ·</div>
+            <div class="name">Golf</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">H</div>
+            <div class="code">· · · ·</div>
+            <div class="name">Hotel</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">I</div>
+            <div class="code">· ·</div>
+            <div class="name">India</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">J</div>
+            <div class="code">· − − −</div>
+            <div class="name">Juliett</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">K</div>
+            <div class="code">− · −</div>
+            <div class="name">Kilo</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">L</div>
+            <div class="code">· − · ·</div>
+            <div class="name">Lima</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">M</div>
+            <div class="code">− −</div>
+            <div class="name">Mike</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">N</div>
+            <div class="code">− ·</div>
+            <div class="name">November</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">O</div>
+            <div class="code">− − −</div>
+            <div class="name">Oscar</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">P</div>
+            <div class="code">· − − ·</div>
+            <div class="name">Papa</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">Q</div>
+            <div class="code">− − · −</div>
+            <div class="name">Quebec</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">R</div>
+            <div class="code">· − ·</div>
+            <div class="name">Romeo</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">S</div>
+            <div class="code">· · ·</div>
+            <div class="name">Sierra</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">T</div>
+            <div class="code">−</div>
+            <div class="name">Tango</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">U</div>
+            <div class="code">· · −</div>
+            <div class="name">Uniform</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">V</div>
+            <div class="code">· · · −</div>
+            <div class="name">Victor</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">W</div>
+            <div class="code">· − −</div>
+            <div class="name">Whiskey</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">X</div>
+            <div class="code">− · · −</div>
+            <div class="name">X-ray</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">Y</div>
+            <div class="code">− · − −</div>
+            <div class="name">Yankee</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">Z</div>
+            <div class="code">− − · ·</div>
+            <div class="name">Zulu</div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab 2: Numbers -->
+    <div class="tab-content">
+      <article class="floor">
+        <div class="floor-head">
+          <h2>数字</h2>
+          <p class="tagline">Numbers 0-9</p>
+        </div>
+        <div class="morse-grid">
+          <div class="morse-card">
+            <div class="letter">0</div>
+            <div class="code">− − − − −</div>
+            <div class="name">Zero</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">1</div>
+            <div class="code">· − − − −</div>
+            <div class="name">One</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">2</div>
+            <div class="code">· · − − −</div>
+            <div class="name">Two</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">3</div>
+            <div class="code">· · · − −</div>
+            <div class="name">Three</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">4</div>
+            <div class="code">· · · · −</div>
+            <div class="name">Four</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">5</div>
+            <div class="code">· · · · ·</div>
+            <div class="name">Five</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">6</div>
+            <div class="code">− · · · ·</div>
+            <div class="name">Six</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">7</div>
+            <div class="code">− − · · ·</div>
+            <div class="name">Seven</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">8</div>
+            <div class="code">− − − · ·</div>
+            <div class="name">Eight</div>
+          </div>
+          <div class="morse-card">
+            <div class="letter">9</div>
+            <div class="code">− − − − ·</div>
+            <div class="name">Nine</div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab 3: Punctuation -->
+    <div class="tab-content">
+      <article class="floor">
+        <div class="floor-head">
+          <h2>标点符号</h2>
+          <p class="tagline">Punctuation & Special Characters</p>
+        </div>
+        <div class="morse-grid">
+          <div class="morse-card punc-card">
+            <div class="letter">.</div>
+            <div class="code">· − · − · −</div>
+            <div class="name">Period</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">,</div>
+            <div class="code">− − · · − −</div>
+            <div class="name">Comma</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">?</div>
+            <div class="code">· · − − · ·</div>
+            <div class="name">Question</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">'</div>
+            <div class="code">· − − − − ·</div>
+            <div class="name">Apostrophe</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">!</div>
+            <div class="code">− · − · − −</div>
+            <div class="name">Exclamation</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">/</div>
+            <div class="code">− · · − ·</div>
+            <div class="name">Slash</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">(</div>
+            <div class="code">− · − − ·</div>
+            <div class="name">Left Paren</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">)</div>
+            <div class="code">− · − − · −</div>
+            <div class="name">Right Paren</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">&</div>
+            <div class="code">· − · · ·</div>
+            <div class="name">Ampersand</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">:</div>
+            <div class="code">− − − · · ·</div>
+            <div class="name">Colon</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">;</div>
+            <div class="code">− · − · − ·</div>
+            <div class="name">Semicolon</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">=</div>
+            <div class="code">− · · · −</div>
+            <div class="name">Equals</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">+</div>
+            <div class="code">· − · − ·</div>
+            <div class="name">Plus</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">−</div>
+            <div class="code">− · · · · −</div>
+            <div class="name">Minus</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">_</div>
+            <div class="code">· · − − · −</div>
+            <div class="name">Underscore</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">"</div>
+            <div class="code">· − · · − ·</div>
+            <div class="name">Quote</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">$</div>
+            <div class="code">· · · − · · −</div>
+            <div class="name">Dollar</div>
+          </div>
+          <div class="morse-card punc-card">
+            <div class="letter">@</div>
+            <div class="code">· − − · − ·</div>
+            <div class="name">At</div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab 4: Reference -->
+    <div class="tab-content">
+      <article class="floor">
+        <div class="floor-head">
+          <h2>参考信息</h2>
+          <p class="tagline">Reference & Timing Guide</p>
+        </div>
+        <div class="reference">
+          <h3>基本规则 Basic Rules</h3>
+          <div class="reference-grid">
+            <div class="ref-item">
+              <div class="label">点 Dot</div>
+              <div class="value">· = 1 单位时间</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">划 Dash</div>
+              <div class="value">− = 3 单位时间</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">符号内间隔</div>
+              <div class="value">1 单位时间</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">字母间间隔</div>
+              <div class="value">3 单位时间</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">单词间间隔</div>
+              <div class="value">7 单位时间</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">紧急信号 SOS</div>
+              <div class="value">· · · − − − · · ·</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reference" style="margin-top: 24px;">
+          <h3>常用缩写 Common Abbreviations</h3>
+          <div class="reference-grid">
+            <div class="ref-item">
+              <div class="label">AR</div>
+              <div class="value">· − · − · (结束)</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">AS</div>
+              <div class="value">· − · · · (等待)</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">BK</div>
+              <div class="value">− · · · · − (中断)</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">CQ</div>
+              <div class="value">− · − · − − · (呼叫)</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">DE</div>
+              <div class="value">− · · (来自)</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">K</div>
+              <div class="value">− · − (邀请发射)</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">OK</div>
+              <div class="value">− − · − · − (同意)</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">73</div>
+              <div class="value">− − − · · · − · − (祝福)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reference" style="margin-top: 24px;">
+          <h3>Q代码 Q-Codes (常用)</h3>
+          <div class="reference-grid">
+            <div class="ref-item">
+              <div class="label">QRA</div>
+              <div class="value">你的名称是？</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">QTH</div>
+              <div class="value">你的位置是？</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">QRM</div>
+              <div class="value">我有干扰</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">QSY</div>
+              <div class="value">改变频率</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">QSL</div>
+              <div class="value">确认收到</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">QSO</div>
+              <div class="value">可以通讯</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">QRP</div>
+              <div class="value">降低功率</div>
+            </div>
+            <div class="ref-item">
+              <div class="label">QRO</div>
+              <div class="value">增加功率</div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--hairline); text-align: center;">
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--ink-50);">
+        MORSE CODE REFERENCE TABLE // 摩尔斯密码参考表
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // Morse Code Audio Player
+    let audioContext = null;
+
+    function getAudioContext() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioContext;
+    }
+
+    // Morse code timing (in milliseconds)
+    const DOT_DURATION = 80;
+    const DASH_DURATION = DOT_DURATION * 3;
+    const SYMBOL_GAP = DOT_DURATION;
+    const LETTER_GAP = DOT_DURATION * 3;
+
+    // Play a tone
+    function playTone(frequency, duration, startTime) {
+      const ctx = getAudioContext();
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      oscillator.frequency.value = frequency;
+      oscillator.type = 'sine';
+
+      // Envelope to avoid clicking
+      gainNode.gain.setValueAtTime(0, startTime);
+      gainNode.gain.linearRampToValueAtTime(0.3, startTime + 0.005);
+      gainNode.gain.setValueAtTime(0.3, startTime + duration / 1000 - 0.005);
+      gainNode.gain.linearRampToValueAtTime(0, startTime + duration / 1000);
+
+      oscillator.start(startTime);
+      oscillator.stop(startTime + duration / 1000);
+    }
+
+    // Play morse code
+    function playMorse(code) {
+      const ctx = getAudioContext();
+      const now = ctx.currentTime;
+      let time = now;
+
+      for (let symbol of code) {
+        if (symbol === '·') {
+          playTone(600, DOT_DURATION, time);
+          time += (DOT_DURATION + SYMBOL_GAP) / 1000;
+        } else if (symbol === '−') {
+          playTone(600, DASH_DURATION, time);
+          time += (DASH_DURATION + SYMBOL_GAP) / 1000;
+        } else if (symbol === ' ') {
+          time += LETTER_GAP / 1000;
+        }
+      }
+    }
+
+    // Add click handlers to morse cards
+    function initMorseAudio() {
+      const cards = document.querySelectorAll('.morse-card');
+
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          const codeElement = this.querySelector('.code');
+          if (codeElement) {
+            const code = codeElement.textContent.trim();
+
+            // Visual feedback
+            this.classList.add('playing');
+            setTimeout(() => {
+              this.classList.remove('playing');
+            }, 800);
+
+            // Play sound
+            playMorse(code);
+          }
+        });
+      });
+    }
+
+    // Initialize audio on first interaction
+    function initAudio() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    }
+
+    // Tab switching
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
+
+      tabs[index].classList.add('active');
+      contents[index].classList.add('active');
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+      // Initialize audio on user interaction
+      initAudio();
+
+      const body = document.body;
+      const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      body.classList.remove('theme-light', 'theme-dark');
+      body.classList.add('theme-' + newTheme);
+
+      localStorage.setItem('morse-theme', newTheme);
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('morse-theme') || 'light';
+      document.body.classList.remove('theme-light', 'theme-dark');
+      document.body.classList.add('theme-' + savedTheme);
+
+      // Initialize morse audio
+      initMorseAudio();
+    });
+  </script>
+</body>
+</html>
