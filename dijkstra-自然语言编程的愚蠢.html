@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EWD 667: 论自然语言编程的愚蠢 — 艾兹赫尔·W·戴克斯特拉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=Manrope:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Light Theme (Default) */
+    --paper-50:#FDFCFB;
+    --paper-100:#F8F7F4;
+    --paper-200:#EBE9E4;
+    --paper-300:#DCD9D2;
+    --paper-400:#C8C5BE;
+    --paper-500:#A8A49C;
+    --ink-100:#2A2825;
+    --ink-200:#4A4640;
+    --ink-300:#6B675F;
+    --ink-400:#8B877D;
+    --accent:#2563EB;
+    --accent-hot:#3B82F6;
+    --signal:#EA580C;
+    --warn:#DC2626;
+    --grow:#16A34A;
+    --grid:rgba(0,0,0,0.04);
+    --hairline:rgba(0,0,0,0.08);
+
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    --card-hover-bg:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.5));
+    --card-expand-bg:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.6));
+    --floor-gradient-01:linear-gradient(180deg, rgba(37,99,235,0.04) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(37,99,235,0.08) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(37,99,235,0.12) 0%, transparent 60%);
+    --floor-number-01:rgba(42,40,37,0.25);
+    --floor-number-02:rgba(42,40,37,0.45);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,0,0,0.03), transparent 60%);
+    --chip-bg:rgba(255,255,255,0.5);
+    --detail-border:1px dashed rgba(0,0,0,0.12);
+    --shadow:0 2px 8px rgba(0,0,0,0.06);
+    --shadow-hover:0 4px 16px rgba(0,0,0,0.1);
+    --shadow-expand:0 4px 20px rgba(37,99,235,0.15);
+    --quote-border:#2563EB;
+    --quote-bg:rgba(37,99,235,0.03);
+  }
+
+  body.theme-dark{
+    /* Dark Theme */
+    --paper-50:#050A12;
+    --paper-100:#0A1628;
+    --paper-200:#0F1B30;
+    --paper-300:#152340;
+    --paper-400:#1E2F50;
+    --paper-500:#293D63;
+    --ink-100:#E8EEF7;
+    --ink-200:#C4D0E0;
+    --ink-300:#7B8AA3;
+    --ink-400:#4F5E78;
+    --accent:#4A9EFF;
+    --accent-hot:#82B7FF;
+    --signal:#FFB347;
+    --warn:#FF6B6B;
+    --grow:#4AFF8F;
+    --grid:rgba(255,255,255,0.035);
+    --hairline:rgba(255,255,255,0.08);
+
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05));
+    --card-hover-bg:linear-gradient(180deg, rgba(74,158,255,0.04), rgba(0,0,0,0.05));
+    --card-expand-bg:linear-gradient(180deg, rgba(74,158,255,0.06), rgba(0,0,0,0.05));
+    --floor-gradient-01:linear-gradient(180deg, rgba(74,158,255,0.025) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(74,158,255,0.045) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(74,158,255,0.065) 0%, transparent 60%);
+    --floor-number-01:rgba(196,208,224,0.45);
+    --floor-number-02:rgba(196,208,224,0.7);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74,158,255,0.10), transparent 60%);
+    --chip-bg:transparent;
+    --detail-border:1px dashed rgba(255,255,255,0.12);
+    --shadow:none;
+    --shadow-hover:none;
+    --shadow-expand:none;
+    --quote-border:#4A9EFF;
+    --quote-bg:rgba(74,158,255,0.05);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  ::selection{ background:var(--accent); color:#FFFFFF; }
+
+  body{
+    font-family:'Noto Sans SC', 'Manrope', system-ui, sans-serif;
+    font-weight:400;
+    background:var(--bg-main);
+    color:var(--text-primary);
+    line-height:1.9;
+    overflow-x:hidden;
+    background-image:var(--top-glow),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
+    background-attachment: fixed, fixed, fixed;
+    min-height:100vh;
+    transition: background 320ms ease, color 320ms ease;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.035;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .frame{
+    position:relative; z-index:2;
+    max-width:840px;
+    margin:0 auto;
+    padding:0 56px;
+  }
+
+  /* ───────── HERO ───────── */
+  .hero{
+    padding:96px 0 72px;
+    position:relative;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    padding-bottom:64px;
+    border-bottom:1px solid var(--border-color);
+  }
+  .topbar .left{ display:flex; align-items:center; gap:14px; }
+  .topbar .left::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.5; transform:scale(.85); }
+  }
+  .topbar .right{ display:flex; gap:32px; align-items:center; }
+  .topbar .right span:not(:last-child)::after{
+    content:'/'; margin-left:32px; color:var(--ink-400);
+  }
+
+  /* Theme Toggle Button */
+  .theme-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 12px;
+    border:1px solid var(--border-color);
+    border-radius:4px;
+    background:rgba(255,255,255,0.6);
+    cursor:pointer;
+    transition: all 320ms ease;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-secondary);
+  }
+  body.theme-dark .theme-toggle{
+    background:rgba(255,255,255,0.05);
+  }
+  .theme-toggle:hover{
+    background:rgba(255,255,255,0.9);
+    border-color:var(--accent);
+  }
+  body.theme-dark .theme-toggle:hover{
+    background:rgba(255,255,255,0.1);
+  }
+  .theme-toggle .icon{
+    font-size:14px;
+    line-height:1;
+  }
+
+  .eyebrow{
+    margin-top:72px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{
+    content:''; width:32px; height:1px; background:var(--accent);
+  }
+
+  h1.title{
+    margin-top:32px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+    font-size:clamp(40px, 6.2vw, 72px);
+    line-height:1.1;
+    letter-spacing:-.02em;
+    color:var(--text-primary);
+  }
+  h1.title .ital{
+    font-style:italic;
+    font-variation-settings:'opsz' 144, 'wght' 320, 'SOFT' 100, 'WONK' 1;
+    color:var(--accent);
+  }
+
+  .subtitle{
+    margin-top:24px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 36, 'wght' 320, 'SOFT' 50;
+    font-style:italic;
+    font-size:clamp(18px, 2.8vw, 26px);
+    line-height:1.5;
+    color:var(--text-secondary);
+  }
+
+  .meta{
+    margin-top:48px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  .meta span{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .meta span::before{
+    content:''; width:6px; height:6px; border-radius:50%;
+    background:var(--accent);
+  }
+
+  /* ───────── SECTIONS ───────── */
+  .section{
+    padding:64px 0;
+    position:relative;
+  }
+
+  .section-number{
+    position:absolute;
+    left:-48px;
+    top:0;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 200, 'SOFT' 0, 'WONK' 0;
+    font-style:italic;
+    font-size:clamp(56px, 8vw, 96px);
+    line-height:.84;
+    letter-spacing:-.05em;
+    color:var(--floor-number-01);
+    user-select:none;
+  }
+
+  h2{
+    font-family:'Noto Serif SC', 'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(24px, 3.8vw, 36px);
+    line-height:1.3;
+    letter-spacing:-.01em;
+    color:var(--text-primary);
+    margin-bottom:24px;
+  }
+  h2 em{
+    font-style:italic;
+    color:var(--accent);
+    font-weight:600;
+  }
+
+  h3{
+    font-family:'Noto Serif SC', 'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(20px, 3.2vw, 28px);
+    line-height:1.4;
+    letter-spacing:-.01em;
+    color:var(--text-primary);
+    margin:48px 0 20px;
+  }
+  h3 em{
+    font-style:italic;
+    color:var(--accent);
+  }
+
+  p{
+    font-size:17px;
+    line-height:1.9;
+    color:var(--text-secondary);
+    margin-bottom:24px;
+    max-width:68ch;
+    text-align:justify;
+  }
+
+  p strong{
+    color:var(--text-primary);
+    font-weight:600;
+  }
+
+  p em{
+    font-style:italic;
+    color:var(--text-primary);
+  }
+
+  /* ───────── QUOTES ───────── */
+  blockquote{
+    margin:40px 0;
+    padding:24px 28px;
+    border-left:3px solid var(--quote-border);
+    background:var(--quote-bg);
+    border-radius:0 6px 6px 0;
+  }
+  blockquote p{
+    margin-bottom:0;
+    font-size:16px;
+    font-style:italic;
+    text-align:left;
+  }
+  blockquote p cite{
+    display:block;
+    margin-top:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    font-style:normal;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+  }
+  blockquote p cite::before{
+    content:'— ';
+  }
+
+  /* ───────── REMARK BOX ───────── */
+  .remark{
+    margin:48px 0;
+    padding:32px;
+    border:1px solid var(--border-color);
+    border-radius:8px;
+    background:var(--card-bg);
+    backdrop-filter:blur(6px);
+  }
+  .remark-header{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .remark-header::before{
+    content:'';
+    width:20px;
+    height:1px;
+    background:var(--accent);
+  }
+  .remark p{
+    font-size:15px;
+    text-align:justify;
+  }
+  .remark p:last-child{
+    margin-bottom:0;
+  }
+
+  /* ───────── FOOTER ───────── */
+  footer{
+    margin-top:96px;
+    padding:48px 0;
+    border-top:1px solid var(--border-color);
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    line-height:1.8;
+  }
+  footer strong{
+    color:var(--text-primary);
+    font-weight:500;
+  }
+
+  /* ───────── NAVIGATION ───────── */
+  .nav-dots{
+    position:fixed;
+    right:24px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    z-index:10;
+  }
+  .nav-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    border:1px solid var(--ink-300);
+    background:transparent;
+    cursor:pointer;
+    transition: all 240ms ease;
+  }
+  .nav-dot:hover{
+    border-color:var(--accent);
+    background:var(--accent);
+  }
+  .nav-dot.active{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width:900px){
+    .frame{ padding:0 32px; }
+    .section-number{
+      position:static;
+      margin-bottom:16px;
+      font-size:48px;
+    }
+    .nav-dots{ display:none; }
+  }
+  @media (max-width:600px){
+    .frame{ padding:0 24px; }
+    h1.title{ font-size:36px; }
+    .topbar .right span:not(.theme-toggle){ display:none; }
+    p{ font-size:16px; text-align:left; }
+  }
+</style>
+</head>
+<body class="theme-light">
+
+<div class="frame">
+
+  <!-- ───────── HERO ───────── -->
+  <header class="hero">
+    <div class="topbar">
+      <div class="left">EWD 667</div>
+      <div class="right">
+        <span>E·W·戴克斯特拉</span>
+        <span>Burroughs 研究员</span>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">
+          <span class="icon">◐</span>
+          <span class="label">主题</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="eyebrow">论文 · 1982</div>
+
+    <h1 class="title">
+      论<span class="ital">自然语言</span><br>
+      编程的<span class="ital">愚蠢</span>
+    </h1>
+
+    <p class="subtitle">
+      为什么形式化符号系统是一种特权而非负担，以及为什么用我们的母语编程的梦想从根本上就是错误的。
+    </p>
+
+    <div class="meta">
+      <span>荷兰 奈诺芬 5671 AL</span>
+      <span>Tristram Brelstaff 录入</span>
+      <span>2010年11月19日修订</span>
+    </div>
+  </header>
+
+  <!-- ───────── INTRODUCTION ───────── -->
+  <section class="section">
+    <span class="section-number">01</span>
+    <h2><em>机械奴隶</em>的问题</h2>
+
+    <p>自从自动计算的早期以来，就有人觉得编程需要使用任何形式符号系统所特有的精确性和严谨性，这是一种缺陷。他们责怪机械奴隶只会严格服从地执行给定的指令，即使稍作思考就会发现这些指令中包含着明显的错误。</p>
+
+    <blockquote>
+      <p>"但是，片刻也是漫长的时光，而思考则是痛苦的过程。"</p>
+      <p><cite>A·E·豪斯曼</cite></p>
+    </blockquote>
+
+    <p>他们热切地希望并等待更加明智的机器，这种机器会拒绝因为一个微小的文书错误而引发的无意义活动。</p>
+  </section>
+
+  <!-- ───────── HIGH-LEVEL LANGUAGES ───────── -->
+  <section class="section">
+    <span class="section-number">02</span>
+    <h2>从<em>机器代码</em>到高级语言</h2>
+
+    <p>机器代码几乎没有任何形式的冗余，很快就被认为是人机之间一种不必要的高风险接口。部分出于对这一点的认识，所谓的"高级编程语言"被开发出来，随着时间的推移，我们在一定程度上学会了如何增强对愚蠢错误的保护。</p>
+
+    <p>这是一个重大的改进：现在许多愚蠢错误确实会产生错误信息，而不是产生错误的答案。而且，这种改进甚至没有得到普遍的赞赏：有些人认为无法忽视的错误信息比错误的结果更令人恼火，而且在判断编程语言的相对优劣时，有些人似乎仍然将"编程的容易程度"等同于"犯下未被检测到的错误的容易程度"。</p>
+
+    <p>然而，对应于编程语言的（抽象）机器仍然是一个忠实的奴隶，即完全有能力执行无意义指令的无意义自动机。编程仍然是形式符号系统的使用，因此，仍然需要像以前一样的精确性和严谨性。</p>
+  </section>
+
+  <!-- ───────── THE PROPOSAL ───────── -->
+  <section class="section">
+    <span class="section-number">03</span>
+    <h2><em>自然语言</em>提案</h2>
+
+    <p>为了使机器更易于使用，有人提议（尝试）设计能够用我们的母语指令的机器。诚然，这会使机器变得更加复杂，但有人认为，通过让机器承担更大份额的负担，我们的生活将变得更加轻松。</p>
+
+    <p>听起来很合理，前提是你将使用形式符号系统的义务视为困难的根源。但这个论点有效吗？我表示怀疑。</p>
+  </section>
+
+  <!-- ───────── INTERFACE COMPLEXITY ───────── -->
+  <section class="section">
+    <span class="section-number">04</span>
+    <h2><em>接口</em>谬误</h2>
+
+    <p>我们现在已经知道，接口的选择不仅仅是（固定数量）劳动的分配，因为跨越接口进行合作和通信所涉及的工作必须被加进去。我们现在已经从清醒的经验中——我可以补充一点——知道，接口的变化很容易在双方都增加工作量（甚至大幅增加）。</p>
+
+    <p>因此，现在人们对所谓的"窄接口"的偏好日益增加。因此，虽然将人机通信改为后者的母语会大大增加机器的负担，但我们必须质疑这会简化人类生活的假设。</p>
+  </section>
+
+  <!-- ───────── HISTORICAL PERSPECTIVE ───────── -->
+  <section class="section">
+    <span class="section-number">05</span>
+    <h2>从<em>数学</em>中汲取的教训</h2>
+
+    <p>简单回顾一下数学史，就可以看出这种质疑是多么合理。希腊数学之所以停滞不前，是因为它仍然是一种口头的、图像化的活动，穆斯林的"代数"，在尝试符号化的犹豫之后，因为回到修辞风格而消亡了，而现代文明世界之所以能够出现——无论好坏——是因为西欧能够从中世纪经院主义的枷锁中解放出来——这是一种对语言精确性的徒劳尝试！——这要归功于韦达、笛卡尔、莱布尼茨和（后来的）布尔等人精心设计的、至少是有意识设计的形式符号系统。</p>
+
+    <p>形式文本的优点在于，为了使其操作合法化，只需要满足少数几条简单的规则；当你仔细想想，它们是一种惊人有效的工具，可以排除各种荒谬，而当我们使用母语时，这些荒谬几乎是不可能避免的。</p>
+  </section>
+
+  <!-- ───────── FORMAL SYMBOLS AS PRIVILEGE ───────── -->
+  <section class="section">
+    <span class="section-number">06</span>
+    <h2><em>特权</em>而非负担</h2>
+
+    <p>我们不应该将使用形式符号的义务视为负担，而应该将使用它们的便利视为特权：多亏了它们，学童们可以学会在以前只有天才才能做到的事情。</p>
+
+    <p>1977年，一位作者在技术报告的前言中写道，"为了清晰起见，甚至避免了逻辑连接词的标准符号"，这显然没有理解这一点。这句话的出现表明，作者的不理解并不仅限于他一个人。</p>
+
+    <p>归根结底，我们使用母语的"自然性"归结为我们使用它们来做出其荒谬性并不明显的陈述的便利性。</p>
+  </section>
+
+  <!-- ───────── IMAGINING THE ALTERNATIVE ───────── -->
+  <section class="section">
+    <span class="section-number">07</span>
+    <h2><em>自举</em>噩梦</h2>
+
+    <p>试着想象一下，如果从一开始，我们的母语就是信息处理设备输入和输出的唯一载体，会发生什么，这可能是有启发性的。经过深思熟虑，我猜测历史会在某种意义上重演，计算机科学将主要包含如何从那里自举到足够定义明确的形式系统的真正黑色艺术。</p>
+
+    <p>我们需要世界上所有的智慧才能使接口足够窄以供使用，而且，鉴于人类历史，猜测要做好这项工作需要再次几千年的时间，可能并不是过于悲观。</p>
+  </section>
+
+  <!-- ───────── REMARK ───────── -->
+  <section class="section">
+    <span class="section-number">08</span>
+    <h2><em>发人深省</em>的评论</h2>
+
+    <div class="remark">
+      <div class="remark-header">评论</div>
+      <p>由于教育趋势偏离了智力纪律，近几十年来，西方世界人们对自己语言的掌握能力急剧下降：按照前一代的标准，许多人应该知道得更多，但已经无法有效地使用自己的母语，即使对于相当适用的目的也是如此。</p>
+
+      <p>你只需看看科学文章、技术报告、政府出版物中确实令人震惊的大量经不起细读的无意义赘语。这种现象——被称为"新文盲现象"——应该让那些缺乏预测其失败所需的技术洞察力的自然语言编程信徒感到沮丧。</p>
+
+      <p><em>（评论结束。）</em></p>
+    </div>
+  </section>
+
+  <!-- ───────── CONCLUSION ───────── -->
+  <section class="section">
+    <span class="section-number">09</span>
+    <h2><em>慰藉</em>所在</h2>
+
+    <p>从一种直觉中，我得到了很多慰藉：我怀疑，用我们的母语——无论是荷兰语、英语、美式英语、法语、德语还是斯瓦希里语——编程的机器，制造起来和它们使用起来一样该死地困难。</p>
+  </section>
+
+  <!-- ───────── FOOTER ───────── -->
+  <footer>
+    <strong>艾兹赫尔·W·戴克斯特拉 教授 博士</strong><br>
+    Burroughs 研究员<br>
+    Plataanstraat 5<br>
+    5671 AL NUENEN<br>
+    荷兰
+  </footer>
+
+</div>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots">
+  <button class="nav-dot active" onclick="scrollToSection(0)" aria-label="第1节"></button>
+  <button class="nav-dot" onclick="scrollToSection(1)" aria-label="第2节"></button>
+  <button class="nav-dot" onclick="scrollToSection(2)" aria-label="第3节"></button>
+  <button class="nav-dot" onclick="scrollToSection(3)" aria-label="第4节"></button>
+  <button class="nav-dot" onclick="scrollToSection(4)" aria-label="第5节"></button>
+  <button class="nav-dot" onclick="scrollToSection(5)" aria-label="第6节"></button>
+  <button class="nav-dot" onclick="scrollToSection(6)" aria-label="第7节"></button>
+  <button class="nav-dot" onclick="scrollToSection(7)" aria-label="第8节"></button>
+  <button class="nav-dot" onclick="scrollToSection(8)" aria-label="第9节"></button>
+</nav>
+
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+  body.classList.remove('theme-light', 'theme-dark');
+  body.classList.add('theme-' + newTheme);
+
+  localStorage.setItem('nate-theme', newTheme);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('nate-theme') || 'light';
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add('theme-' + savedTheme);
+});
+
+function scrollToSection(index) {
+  const sections = document.querySelectorAll('.section');
+  if (sections[index]) {
+    sections[index].scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+const observerOptions = {
+  root: null,
+  rootMargin: '-50% 0px -50% 0px',
+  threshold: 0
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const dots = document.querySelectorAll('.nav-dot');
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      const sections = document.querySelectorAll('.section');
+      const index = Array.from(sections).indexOf(entry.target);
+      if (index >= 0 && dots[index]) {
+        dots[index].classList.add('active');
+      }
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.section').forEach(section => {
+  observer.observe(section);
+});
+</script>
+
+</body>
+</html>

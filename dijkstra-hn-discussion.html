@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dijkstra与自然语言编程的愚行 — Hacker News讨论总结</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..500,0..120,0..1&family=Manrope:wght@200..800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper-100: #F8F7F4;
+      --ink-100: #2A2825;
+      --ink-200: #5C5853;
+      --ink-300: #8A8580;
+      --accent: #2563EB;
+      --signal: #EA580C;
+      --grow: #16A34A;
+      --warn: #DC2626;
+      --hairline: rgba(42, 40, 37, 0.12);
+      --bg-main: var(--paper-100);
+      --bg-card: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+      --border-color: var(--hairline);
+      --tab-bg: rgba(42, 40, 37, 0.04);
+      --tab-border: rgba(42, 40, 37, 0.16);
+      --tab-active-bg: var(--accent);
+      --tab-active-text: #FFFFFF;
+    }
+
+    .theme-dark {
+      --paper-100: #0A1628;
+      --ink-100: #E8EEF7;
+      --ink-200: #B8C5D9;
+      --ink-300: #7A8BA6;
+      --accent: #4A9EFF;
+      --signal: #FFB347;
+      --grow: #4AFF8F;
+      --warn: #FF6B6B;
+      --hairline: rgba(232, 238, 247, 0.12);
+      --bg-main: var(--paper-100);
+      --bg-card: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05));
+      --border-color: var(--hairline);
+      --tab-bg: rgba(232, 238, 247, 0.06);
+      --tab-border: rgba(232, 238, 247, 0.16);
+      --tab-active-text: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', system-ui, sans-serif;
+      background: var(--bg-main);
+      color: var(--ink-100);
+      line-height: 1.55;
+      font-weight: 300;
+      transition: background 320ms ease, color 320ms ease;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      background: var(--bg-main);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+
+    .topbar .left {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-300);
+    }
+
+    .topbar .right {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: var(--tab-bg);
+      border: 1px solid var(--tab-border);
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 320ms ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-100);
+    }
+
+    .theme-toggle:hover {
+      background: var(--tab-border);
+    }
+
+    .theme-toggle .icon {
+      font-size: 16px;
+    }
+
+    .frame {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 0;
+    }
+
+    h1.title {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+      font-size: clamp(56px, 9.2vw, 148px);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+    }
+
+    .hero .tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-300);
+      margin-bottom: 16px;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-300);
+      margin-top: 32px;
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      padding: 12px 0;
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 73px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border: 1px solid var(--tab-border);
+      border-radius: 6px 6px 0 0;
+      background: var(--tab-bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 320ms ease;
+      color: var(--ink-100);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      background: var(--tab-border);
+    }
+
+    .tab-btn.active {
+      background: var(--tab-active-bg);
+      color: var(--tab-active-text);
+      border-color: var(--tab-active-bg);
+    }
+
+    .tab-num {
+      font-weight: 700;
+      opacity: 0.7;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 320ms ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .floor {
+      padding: 48px 0;
+    }
+
+    .floor-head {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .floor .number {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+      font-size: clamp(48px, 5.8vw, 76px);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+    }
+
+    .floor .number .tag {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-300);
+      margin-top: 8px;
+    }
+
+    .head-body .verb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-300);
+      margin-bottom: 8px;
+    }
+
+    .head-body h2 {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+      font-size: clamp(32px, 4.2vw, 56px);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+    .head-body h2 em {
+      font-style: italic;
+      font-variation-settings: 'SOFT' 60;
+    }
+
+    .head-body .tagline {
+      color: var(--ink-300);
+      font-size: 16px;
+    }
+
+    .concept-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      padding: 24px;
+      background: var(--bg-card);
+      backdrop-filter: blur(6px);
+      transition: all 320ms ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .theme-dark .card:hover {
+      border-color: rgba(74,158,255,0.35);
+      background: linear-gradient(180deg, rgba(74,158,255,0.04), rgba(0,0,0,0.05));
+    }
+
+    .card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-300);
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 48, 'wght' 320, 'SOFT' 20, 'WONK' 1;
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.015em;
+    }
+
+    .card p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink-200);
+    }
+
+    .card-chip {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--tab-bg);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-300);
+      margin: 4px 4px 4px 0;
+    }
+
+    .quote-card {
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    .quote-card .quote-text {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 36, 'wght' 280, 'SOFT' 40, 'WONK' 1;
+      font-size: 20px;
+      line-height: 1.4;
+      font-style: italic;
+      color: var(--ink-100);
+      margin-bottom: 12px;
+    }
+
+    .quote-card .quote-author {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-300);
+    }
+
+    @media (max-width: 760px) {
+      .frame { padding: 24px; }
+      .floor-head { grid-template-columns: 1fr; }
+      .floor .number { font-size: 56px; }
+      h1.title { font-size: 48px; }
+      .topbar { padding: 12px 16px; }
+      .topbar .right span:not(.theme-toggle) { display: none; }
+      .tab-nav { flex-wrap: wrap; }
+      .tab-btn { flex: 1 1 calc(50% - 4px); min-width: 120px; }
+      .concept-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <nav class="topbar">
+    <div class="left">Hacker News Discussion Summary</div>
+    <div class="right">
+      <span>2025年4月3日</span>
+      <span>275条评论</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span class="icon">◐</span>
+        <span class="label">主题</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="frame">
+    <header class="hero">
+      <div class="tagline">Hacker News 精彩讨论总结</div>
+      <h1 class="title">Dijkstra论<br><em>自然语言编程</em><br>的愚行</h1>
+      <p class="meta">基于 EWD 808 (1982) 与现代技术语境的深度探讨</p>
+    </header>
+
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(0)">
+        <span class="tab-num">01</span>
+        <span class="tab-label">核心论点</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(1)">
+        <span class="tab-num">02</span>
+        <span class="tab-label">类比分析</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(2)">
+        <span class="tab-num">03</span>
+        <span class="tab-label">数学与符号</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(3)">
+        <span class="tab-num">04</span>
+        <span class="tab-label">现代反思</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(4)">
+        <span class="tab-num">05</span>
+        <span class="tab-label">综合洞察</span>
+      </button>
+    </nav>
+
+    <div class="tab-content active">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">01<span class="tag">Layer One</span></div>
+          <div class="head-body">
+            <div class="verb">The fundamental question</div>
+            <h2><em>自然语言编程</em><br>的核心争议</h2>
+            <div class="tagline">从LLM时代回看Dijkstra的经典论断</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card quote-card">
+            <div class="quote-text">"将代码转换回自然语言，能否在不丢失细节的情况下重建程序？"</div>
+            <div class="quote-author">— 01100011, Hacker News 用户</div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">问题提出</div>
+            <h3>逆向实验</h3>
+            <p>用户提出一个思想实验：用LLM将中等复杂度的项目从代码转换回自然语言，检查是否能提供合理的行为描述，而不丢失重建程序所需的细节。</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">关键洞察</div>
+            <h3>复杂度管理</h3>
+            <p>大多数"vibe-coded"应用之所以简单，是因为存在一个复杂度和精确性难以管理的阈值。自然语言描述可能不如精确语言那样可扩展、可理解。</p>
+            <span class="card-chip">精确性</span>
+            <span class="card-chip">可扩展性</span>
+          </div>
+
+          <div class="card">
+            <div class="card-label">类比论证</div>
+            <h3>法律语言的启示</h3>
+            <p>法律语言不使用平实英语并非仅仅为了设置门槛，而是因为精确性要求。这暗示了专业领域对形式化语言的内在需求。</p>
+            <span class="card-chip">专业性</span>
+            <span class="card-chip">精确性</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="tab-content">
+      <article class="floor lvl-02">
+        <div class="floor-head">
+          <div class="number">02<span class="tag">Layer Two</span></div>
+          <div class="head-body">
+            <div class="verb">The aviation analogy</div>
+            <h2><em>航空气象代码</em><br>METAR的启示</h2>
+            <div class="tagline">专业领域为何偏好编码而非自然语言</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card quote-card">
+            <div class="quote-text">"专业飞行员和空中交通管制普遍偏好编码格式。它紧凑、格式明确定义、无歧义。"</div>
+            <div class="quote-author">— drpixie, 航空专家</div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">METAR示例</div>
+            <h3>编码格式实例</h3>
+            <p><code style="font-family: 'JetBrains Mono', monospace; background: var(--tab-bg); padding: 2px 6px; border-radius: 4px;">METAR YSSY 031000Z 08005KT CAVOK 22/13 Q1012 RMK RF00.0/000.0</code></p>
+            <p style="margin-top: 12px;">一行代码替代整个段落的自然语言描述，新手飞行员常问"为什么不用文字？"</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">三大优势</div>
+            <h3>编码vs自然语言</h3>
+            <p><strong>紧凑性</strong>：一行而非一段<br>
+            <strong>格式明确</strong>：知道去哪里找需要的信息<br>
+            <strong>无歧义</strong>：明确定义，减少误解</p>
+            <span class="card-chip">效率</span>
+            <span class="card-chip">精确性</span>
+          </div>
+
+          <div class="card">
+            <div class="card-label">普适规律</div>
+            <h3>专业领域的共性</h3>
+            <p>一旦达到一定的专业水平，自然语言的复杂性和冗余性带来的成本超过了其收益。这适用于数学、编程以及所有专业领域。</p>
+            <span class="card-chip">数学</span>
+            <span class="card-chip">编程</span>
+            <span class="card-chip">专业领域</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="tab-content">
+      <article class="floor lvl-03">
+        <div class="floor-head">
+          <div class="number">03<span class="tag">Layer Three</span></div>
+          <div class="head-body">
+            <div class="verb">Historical perspective</div>
+            <h2><em>数学符号</em><br>演化的智慧</h2>
+            <div class="tagline">从冗长描述到符号表达的革命</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card">
+            <div class="card-label">历史见证</div>
+            <h3>Thomas Harriot的手稿</h3>
+            <p>《Thomas Harriot's Artis Analyticae Praxis》展示了方程如何用冗长的文字表述，然后对比新的符号表示法（首次使用Robert Recorde的等号）。</p>
+            <span class="card-chip">数学史</span>
+            <span class="card-chip">符号革命</span>
+          </div>
+
+          <div class="card">
+            <div class="card-label">平衡观点</div>
+            <h3>教科书中的混合</h3>
+            <p>大多数数学教科书和论文在方程周围仍有相当多的英语表述。数学和编程一样，两者都有其位置，取决于场景。</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">符号的优势</div>
+            <h3>精确性与可检索性</h3>
+            <p>纯数学书籍可能非常少用常规英语。这使得它们更容易阅读——在符号中找到特定陈述比在英语中更容易，因为符号比单词更容易定位。</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">教学vs研究</div>
+            <h3>语境的重要性</h3>
+            <p>教科书不仅传达定理和证明，还包括教学所需的语言、重要性说明、使用方法，甚至发现背后的故事。这是为了教学而非精确性。</p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="tab-content">
+      <article class="floor lvl-04">
+        <div class="floor-head">
+          <div class="number">04<span class="tag">Layer Four</span></div>
+          <div class="head-body">
+            <div class="verb">Modern context</div>
+            <h2><em>现代技术</em><br>与LLM的挑战</h2>
+            <div class="tagline">AI时代重新审视形式化语言的价值</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card">
+            <div class="card-label">LLM的局限</div>
+            <h3>Vibe-coding的边界</h3>
+            <p>大多数vibe-coded应用演示之所以简单，是因为存在复杂度和精确性管理的阈值。超出这个范围，自然语言的模糊性就成为致命问题。</p>
+            <span class="card-chip">LLM</span>
+            <span class="card-chip">复杂度</span>
+          </div>
+
+          <div class="card">
+            <div class="card-label">工具论</div>
+            <h3>语言即工具</h3>
+            <p>语言只是工作工具箱中的另一个工具。像任何其他工具一样，你应该使用最适用和高效的那种语言。METAR就像为特定问题设计的专用工具。</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">领域特定性</div>
+            <h3>所有语言都是DSL</h3>
+            <p>不同自然语言提供不同的世界观。日语从日本人的角度描述世界，有专门描述日本传统的词汇。所有语言本质上都是领域特定语言（DSL）。</p>
+            <span class="card-chip">DSL</span>
+            <span class="card-chip">文化视角</span>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Rust类型系统</div>
+            <h3>编译期验证</h3>
+            <p>Rust的类型系统能够捕捉特定类型的错误，这是形式化方法的现代应用。类型系统本质上是数学在软件工程中的实际应用。</p>
+            <span class="card-chip">Rust</span>
+            <span class="card-chip">类型系统</span>
+          </div>
+        </div>
+
+        <div class="concept-row" style="margin-top: 32px;">
+          <div class="card">
+            <div class="card-label">形式化方法</div>
+            <h3>数学的实用性</h3>
+            <p>形式化验证和类型推断等技术，展示了数学符号系统如何帮助构建更可靠的软件。这些是Dijkstra理念的延续。</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">测试vs证明</div>
+            <h3>验证的层次</h3>
+            <p>讨论涉及测试与形式化证明的权衡。测试发现错误的存在，证明保证错误的缺席——两者各有其价值和应用场景。</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">领域驱动设计</div>
+            <h3>Ubiquitous Language</h3>
+            <p>DDD强调在特定领域内使用统一语言，这呼应了"所有语言都是DSL"的观点。关键是在正确的上下文中使用正确的工具。</p>
+            <span class="card-chip">DDD</span>
+            <span class="card-chip">Ubiquitous Language</span>
+          </div>
+
+          <div class="card">
+            <div class="card-label">文学编程</div>
+            <h3>Literate Programming</h3>
+            <p>Knuth提出的文学编程理念认为，程序员本质上应该是散文家，用自然语言解释"为什么"，用代码表达"怎么做"。</p>
+            <span class="card-chip">Knuth</span>
+            <span class="card-chip">文档化</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="tab-content">
+      <article class="floor lvl-05">
+        <div class="floor-head">
+          <div class="number">05<span class="tag">Layer Five</span></div>
+          <div class="head-body">
+            <div class="verb">Synthesis</div>
+            <h2><em>综合洞察</em><br>讨论的核心收获</h2>
+            <div class="tagline">从275条评论中提取的智慧结晶</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" style="border-left-color: var(--grow);">
+            <div class="card-label">共识1</div>
+            <h3>精确性vs可读性</h3>
+            <p>形式化语言提供精确性和效率，自然语言提供可访问性和教学价值。两者各有其位，关键是在正确场景使用正确工具。</p>
+            <span class="card-chip">精确性</span>
+            <span class="card-chip">可读性</span>
+          </div>
+
+          <div class="card" style="border-left-color: var(--accent);">
+            <div class="card-label">共识2</div>
+            <h3>专业化的必然</h3>
+            <p>随着领域知识增长，专业人士必然发展出符号化的表达方式。这是认知效率的要求，而非排他性的手段。</p>
+            <span class="card-chip">专业化</span>
+            <span class="card-chip">认知效率</span>
+          </div>
+
+          <div class="card" style="border-left-color: var(--signal);">
+            <div class="card-label">共识3</div>
+            <h3>历史趋势</h3>
+            <p>从数学符号到编程语言，历史显示了从自然语言向形式化语言演化的清晰趋势。这反映了人类对精确性和效率的持续追求。</p>
+            <span class="card-chip">历史演化</span>
+            <span class="card-chip">符号系统</span>
+          </div>
+
+          <div class="card" style="border-left-color: var(--warn);">
+            <div class="card-label">警示</div>
+            <h3>AI的幻觉</h3>
+            <p>LLM和自然语言编程工具虽然强大，但无法替代形式化方法的精确性。在关键系统中，符号验证仍然不可或缺。</p>
+            <span class="card-chip">AI</span>
+            <span class="card-chip">验证</span>
+          </div>
+        </div>
+
+        <div class="concept-row" style="margin-top: 32px;">
+          <div class="card quote-card">
+            <div class="quote-text">"语言只是工作工具箱中的另一个工具。像任何其他工具一样，你使用最适用和高效的那种。当需要快速无歧义地描述天气条件时，使用METAR。当然可以用英语或其他自然语言，但这就像用多功能工具而不是主厨刀——在紧要关头能用，但为特定问题设计的工具会工作得更好。"</div>
+            <div class="quote-author">— diputsmonro, 工具论观点</div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Dijkstra的遗产</div>
+            <h3>40年后的回响</h3>
+            <p>Dijkstra在1982年的警告在AI时代显得更加深刻。虽然技术进步了，但自然语言与形式化语言之间的根本权衡没有改变。讨论显示，他的核心洞见经受住了时间的考验。</p>
+            <span class="card-chip">EWD 808</span>
+            <span class="card-chip">遗产</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
+
+      tabs[index].classList.add('active');
+      contents[index].classList.add('active');
+
+      // Scroll to top of content
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      body.classList.remove('theme-light', 'theme-dark');
+      body.classList.add('theme-' + newTheme);
+
+      // Save preference
+      localStorage.setItem('dijkstra-hn-theme', newTheme);
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('dijkstra-hn-theme') || 'light';
+      document.body.classList.remove('theme-light', 'theme-dark');
+      document.body.classList.add('theme-' + savedTheme);
+    });
+  </script>
+</body>
+</html>

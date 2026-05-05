@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一个 48 年前的「预言」- Dijkstra 与自然语言编程</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* HBR 2026 Actual Styles - Based on real HBR page analysis */
+        :root {
+            --hbr-navy: #1C3F6E;
+            --hbr-dark: #1A1A1A;
+            --hbr-gray: #666666;
+            --hbr-gray-light: #999999;
+            --hbr-bg-light: #F8F8F8;
+            --hbr-border: #E5E5E5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'GT America', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--hbr-dark);
+            background: #FFFFFF;
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Main Container - HBR uses narrow centered layout */
+        .hbr-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        @media (min-width: 768px) {
+            .hbr-container {
+                padding: 80px 48px;
+            }
+        }
+
+        /* HBR Logo/Brand */
+        .hbr-brand {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--hbr-border);
+        }
+
+        .hbr-brand-text {
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--hbr-navy);
+        }
+
+        /* Category Tag - Small, uppercase, navy */
+        .hbr-category {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--hbr-navy);
+            margin-bottom: 16px;
+        }
+
+        /* Main Headline - Bold, tight leading */
+        .hbr-headline {
+            font-weight: 700;
+            font-size: clamp(32px, 5vw, 44px);
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--hbr-dark);
+            margin-bottom: 20px;
+        }
+
+        /* Subheadline/Deck - Light */
+        .hbr-subheadline {
+            font-weight: 300;
+            font-size: clamp(20px, 3vw, 26px);
+            line-height: 1.3;
+            color: var(--hbr-gray);
+            margin-bottom: 32px;
+        }
+
+        /* Author Section */
+        .hbr-author-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--hbr-border);
+        }
+
+        .hbr-author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--hbr-bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--hbr-gray);
+        }
+
+        .hbr-author-info {
+            flex: 1;
+        }
+
+        .hbr-author-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--hbr-dark);
+            margin-bottom: 2px;
+        }
+
+        .hbr-author-bio {
+            font-size: 13px;
+            color: var(--hbr-gray);
+            line-height: 1.4;
+        }
+
+        /* Article Meta - Date, read time */
+        .hbr-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--hbr-gray-light);
+            margin-bottom: 40px;
+        }
+
+        /* Article Content */
+        .hbr-content {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--hbr-dark);
+        }
+
+        .hbr-content p {
+            margin-bottom: 24px;
+        }
+
+        /* Drop Cap - First letter styling */
+        .hbr-drop-cap::first-letter {
+            float: left;
+            font-size: 64px;
+            line-height: 0.85;
+            padding-right: 12px;
+            padding-top: 8px;
+            font-weight: 700;
+            color: var(--hbr-dark);
+        }
+
+        /* Section Headings */
+        .hbr-content h2 {
+            font-weight: 700;
+            font-size: clamp(24px, 4vw, 32px);
+            line-height: 1.2;
+            color: var(--hbr-dark);
+            margin-top: 48px;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .hbr-content h3 {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 1.3;
+            color: var(--hbr-dark);
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        /* Pull Quote - Navy accent, prominent */
+        .hbr-pull-quote {
+            border-left: 3px solid var(--hbr-navy);
+            padding-left: 24px;
+            margin: 40px 0;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 1.4;
+            color: var(--hbr-navy);
+            font-style: italic;
+        }
+
+        /* Blockquote */
+        .hbr-blockquote {
+            border-left: 2px solid var(--hbr-border);
+            padding-left: 20px;
+            margin: 32px 0;
+            font-style: italic;
+            color: var(--hbr-gray);
+        }
+
+        /* Lists */
+        .hbr-content ul,
+        .hbr-content ol {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .hbr-content li {
+            margin-bottom: 12px;
+        }
+
+        /* Links */
+        .hbr-content a {
+            color: var(--hbr-navy);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease;
+        }
+
+        .hbr-content a:hover {
+            color: var(--hbr-dark);
+        }
+
+        /* Emphasis */
+        .hbr-content strong {
+            font-weight: 600;
+        }
+
+        .hbr-content em {
+            font-style: italic;
+        }
+
+        /* Call to Action Box */
+        .hbr-cta-box {
+            background: var(--hbr-bg-light);
+            border-left: 3px solid var(--hbr-navy);
+            padding: 24px;
+            margin: 40px 0;
+            border-radius: 4px;
+        }
+
+        .hbr-cta-box h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--hbr-navy);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hbr-cta-box p {
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        /* Article Footer */
+        .hbr-footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--hbr-border);
+            text-align: center;
+        }
+
+        .hbr-footer p {
+            font-size: 11px;
+            color: var(--hbr-gray-light);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive Images */
+        .hbr-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 32px 0;
+        }
+
+        /* Code */
+        .hbr-content pre {
+            background: var(--hbr-bg-light);
+            padding: 16px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 24px 0;
+            font-size: 14px;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+        }
+
+        .hbr-content code {
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            background: var(--hbr-bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--hbr-border);
+            margin: 48px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="hbr-container">
+
+
+        <!-- Article Category -->
+        <div class="hbr-category">技术哲学 · AI 编程</div>
+
+        <!-- Main Headline -->
+        <h1 class="hbr-headline">一个 48 年前的「预言」</h1>
+
+        <!-- Subheadline -->
+        <p class="hbr-subheadline">Dijkstra 在 1978 年批判自然语言编程，而 2026 年的 AI 编程浪潮证明了他对了一半——而且是更重要的那一半。</p>
+
+        <!-- Author Section -->
+        <div class="hbr-author-section">
+            <div class="hbr-author-avatar">作者</div>
+            <div class="hbr-author-info">
+                <div class="hbr-author-name">王勃 </div>
+                <div class="hbr-author-bio">清华大学 计算机科学与技术硕士</div>
+            </div>
+        </div>
+
+        <!-- Article Meta -->
+        <div class="hbr-meta">
+			<span>来源：<a href="https://www.zhihu.com/question/1923534024288236685/answer/2021258227166319271" target="_blank">知乎</a></span>
+            <span>2026 年 3 月 28 日</span>
+            <span>·</span>
+            <span>阅读时间 12 分钟</span>
+        </div>
+
+        <!-- Article Content -->
+        <article class="hbr-content">
+            <p class="hbr-drop-cap">1978 年，计算机科学的祖师爷之一 Edsger Dijkstra 写了一篇短文，编号 EWD667，标题直白到近乎挑衅：《论「自然语言编程」的愚蠢》（On the foolishness of "natural language programming"）。</p>
+
+            <p>他的论点很简单：有人觉得编程太严格了，希望有一天能用自然语言跟计算机说话。Dijkstra 认为这个愿望不仅不切实际，而且方向就是错的。形式化符号不是程序员的负担，而是特权。</p>
+
+            <p>48 年后的 2026 年，大语言模型让自然语言编程真的成了现实。Karpathy 说自己从去年 12 月起几乎没再亲手敲过代码，Anthropic Claude Code 产品负责人 Cat Wu 撰文指出 PM 的核心产出正在从文档变成可运行的原型，Stripe 每周有 1300 个无人值守的 Agent PR 被合并。</p>
+
+            <p>Dijkstra 错了吗？</p>
+
+            <p>我带团队用了一年多 AI 编程工具，从最初的阻力到现在全员 Cursor，从 Vibe Coding 的兴奋到 Planned 模式的回归。回头看，我觉得 Dijkstra 对了一半——而且是更重要的那一半。</p>
+
+            <h2>Dijkstra 到底说了什么</h2>
+
+            <p>EWD667 全文不长，但论证链条极其锋利。核心是三个观点：</p>
+
+            <p><strong>第一，形式化符号是文明进步的引擎，不是累赘。</strong></p>
+
+            <p>他用数学史来论证：希腊数学因为停留在口头和图形描述而停滞不前；穆斯林代数短暂尝试符号化后退回修辞风格而消亡；现代科学的崛起，恰恰是因为 Vieta、Descartes、Leibniz、Boole 这些人精心设计了形式化符号系统。</p>
+
+            <div class="hbr-pull-quote">
+                形式化文本的美德在于，其操作只需满足少数简单规则；它们是排除各种胡说八道的极其有效的工具——而当我们使用自然语言时，胡说八道几乎不可避免。
+            </div>
+
+            <p><strong>第二，自然语言的「自然」本质上是一种危险的舒适。</strong></p>
+
+            <p>这是全文最犀利的一句：</p>
+
+            <div class="hbr-pull-quote">
+                所谓自然语言的「自然性」，归根结底，不过是我们能轻松地用它说出那些荒谬性并不显而易见的话。
+            </div>
+
+            <p>翻译成大白话：自然语言让你很容易说出自己都没意识到的模糊和矛盾，而且还觉得自己说清楚了。</p>
+
+            <p><strong>第三，让接口变宽，不一定减轻负担，可能两边都更累。</strong></p>
+
+            <p>他指出，接口设计不是简单的劳动分配。让机器理解自然语言，不只是给机器加活——跨接口的沟通成本也会增加，最终可能双方都更累。他因此主张「窄接口」（narrow interface）：约束越明确，合作越高效。</p>
+
+            <h2>一年 AI 编程实践的印证</h2>
+
+            <p>去年我要求团队全面使用 Cursor，原则是不限量、用好模型。初期有阻力，但很快大家就感受到了效率的飞跃。前端岗位开始大量减少，我们要求前端转全栈。产品经理也开始用 Cursor 写文档、出交互式原型。很多项目一个人就能搞定需求分析加开发。</p>
+
+            <p>Vibe Coding 的甜蜜期是真实的：用自然语言描述需求，AI 几分钟就能生成一个能跑的 demo。Demo 效率大增，我们开始接受「不用想很清楚就可以开始」的工作方式，产品和研发一起摸石头过河。</p>
+
+            <p>但甜蜜期过后，问题开始浮现——而这些问题，恰恰是 Dijkstra 48 年前预言的。</p>
+
+            <h3>AI 总是漏需求</h3>
+
+            <p>你以为自己说清楚了，AI 也表现得好像理解了，但交付的东西总是差那么几个关键点。本质上就是 Dijkstra 说的：自然语言让你轻松说出荒谬性并不显而易见的话。你的需求描述有模糊地带，你自己都没意识到，AI 就按它的理解填补了空白。</p>
+
+            <h3>代码没有架构感</h3>
+
+            <p>AI 生成的代码能跑，但结构松散，容易被现有代码的风格带偏。因为自然语言描述天然缺乏架构约束——你说「帮我写一个用户管理模块」，这句话里没有任何关于分层、依赖关系、接口设计的形式化信息。</p>
+
+            <h3>上下文越长越降智</h3>
+
+            <p>对话一长，AI 的服从性反而变成问题——它会被之前对话中的错误信息污染，然后在错误的方向上越走越远，最终放弃或者乱试。这就是 Dijkstra 说的「接口变宽，两边都更累」的现代版本。</p>
+
+            <h3>写码快不代表深思熟虑</h3>
+
+            <p>这一点我们团队反复体会到。AI 可以很快写出代码，但速度掩盖了思考的缺失。不推荐所有标榜对编码特化的模型，除非代码用一次就扔。</p>
+
+            <h2>形式化没有消失，只是换了形态</h2>
+
+            <p>踩完坑之后，我们的工作流逐渐从 Vibe Coding 回归到了 Planned 模式。一个典型的开发过程变成了：</p>
+
+            <ol>
+                <li>描述需求</li>
+                <li>和模型对齐，确认它的理解是正确的</li>
+                <li>让模型分析细化，排除矛盾</li>
+                <li>可行性预研，给出备选方案，人来选择</li>
+                <li>提出测试需求</li>
+                <li>系统设计和关键算法设计，人来审查</li>
+                <li>设计测试方案（自动化 + 端到端）</li>
+                <li>分拆任务，确定验收标准</li>
+                <li>执行并验收</li>
+            </ol>
+
+            <p>看到了吗？这个流程的每一步，都是在把自然语言的模糊描述逐步转化为更形式化的约束——spec、测试用例、验收标准、任务分拆。</p>
+
+            <p>这不是倒退，这是 Dijkstra 说的「窄接口」思想的现代实践。</p>
+
+            <p>今年行业里出现了一个概念叫 <strong>Harness Engineering（马具工程/驾驭工程）</strong>，由 Terraform 的作者 Mitchell Hashimoto 提出。他的核心原则是：每次发现 AI 犯错，就花时间工程化一个机制，让它以后再也不犯这个错。</p>
+
+            <p>这个概念的演进路线很清晰：</p>
+
+            <ul>
+                <li><strong>2023-2024：Prompt Engineering</strong> — 怎么跟 AI 说话。本质是优化一次性的自然语言输入。</li>
+                <li><strong>2025：Context Engineering</strong> — 给 AI 看什么信息。不再只盯措辞，而是设计整个信息环境。</li>
+                <li><strong>2026：Harness Engineering</strong> — 构建什么环境让 AI 可靠地工作。验证闭环、架构约束、测试护栏、熵清理。</li>
+            </ul>
+
+            <p>从 Prompt 到 Context 到 Harness，这条路线的方向是什么？是从自然语言走向形式化约束。</p>
+
+            <p>CLAUDE.md、AGENTS.md 这些配置文件，本质上就是写给 AI 的形式化规范。TDD 测试套件就是用代码表达的验收标准。CI/CD 管道就是自动化的质量闸门。</p>
+
+            <div class="hbr-pull-quote">
+                Dijkstra 说「形式化符号是排除胡说八道的工具」。在 AI 时代，这句话变成了：测试和约束是排除 AI 胡说八道的工具。
+            </div>
+
+            <p>过去 CI/CD 集成、TDD 这些被认为是昂贵的工程实践，很多团队嫌麻烦不做。但在 AI 编程时代，它们已经从奢侈品变成了必需品。AI 由于实现机制的原因，没有办法保证 100% 稳定不出错，在兜底防御方面投入多少力气都不为过。</p>
+
+            <h2>AI 真正改变的是什么</h2>
+
+            <p>说到这里，可能有人觉得我在唱衰 AI 编程。恰恰相反。</p>
+
+            <p>Dijkstra 的洞察在 LLM 时代依然成立，但他有一件事没预见到：<strong>形式化的生产成本可以被 AI 大幅降低</strong>。</p>
+
+            <p>以前，写一套完整的测试用例、设计一份严谨的接口规范、维护一份结构化的需求文档——这些形式化工作本身就需要大量人力，所以很多团队干脆不做。代码裸奔、需求口头传递、测试靠手点，这是大多数团队的现实。</p>
+
+            <p>现在不一样了。你可以用自然语言描述你想要什么，让 AI 帮你生成测试用例、类型定义、接口文档、验收标准。然后你审核和修正这些形式化产物。</p>
+
+            <p>这个变化的意义在于：<strong>不是用自然语言替代了形式化，而是用 AI 作为自然语言到形式化的桥梁。</strong></p>
+
+            <div class="hbr-cta-box">
+                <h4>三层工作模式</h4>
+                <p><strong>自然语言是好的输入层</strong>——它降低了表达意图的门槛。<strong>形式化是必要的验证层</strong>——它保证意图被正确执行。<strong>AI 是两者之间的翻译器</strong>——它让形式化变得便宜了。</p>
+            </div>
+
+            <p>这三层结构，才是 AI 编程真正可持续的工作模式。</p>
+
+            <p>我们团队现在的做法是：产品用自然语言写 spec，AI 帮忙转化成结构化需求；开发用自然语言描述功能，AI 生成代码同时生成测试；测试人员用 AI 增强能力，从手工点点点转向编写自动化测试。每个环节，自然语言是入口，形式化是出口，AI 在中间做翻译。</p>
+
+            <div class="hbr-pull-quote">
+                烧 token 的速度直接代表了你的 AI 编程能力——这句话听起来有点夸张，但实际确实如此。对编程工具的驾驭能力和并行工作的能力，直接决定了你烧 token 的速度。别抠省 token，浪费的是你的时间和成长速度。
+            </div>
+
+            <h2>Dijkstra 如果活在今天</h2>
+
+            <p>Dijkstra 在 EWD667 的最后写了一句很有意思的话：</p>
+
+            <div class="hbr-blockquote">
+                我有一种直觉可以让我感到安慰：能用我们的母语编程的机器，无论是荷兰语、英语、美语、法语、德语还是斯瓦希里语——它们既该死地难以制造，也该死地难以使用。
+            </div>
+
+            <p>制造这件事，LLM 做到了。但「该死地难以使用」这个预言，某种意义上也成真了——不是难在操作界面上，而是难在如何让自然语言的模糊性不变成系统性的质量问题。</p>
+
+            <p>如果 Dijkstra 活在今天，看到我们先用自然语言让 AI 写代码，然后又花大量精力构建测试、约束、验证闭环来确保 AI 不犯错，他大概会说：</p>
+
+            <div class="hbr-pull-quote">
+                「你们终于造出了能听懂自然语言的机器，然后发现还是得用形式化来约束它——这不正是我说的吗？」
+            </div>
+
+            <p><strong>写代码变便宜了，但思考没有变便宜。</strong></p>
+
+            <p>驾驭 AI 的能力，本质上是构建形式化约束的能力——把模糊的意图变成精确的规则，把不可验证的期望变成可执行的测试，把「我觉得差不多了」变成「测试全部通过」。</p>
+
+            <p>这件事，48 年前 Dijkstra 就想明白了。只不过他当年是对着编译器说的，我们今天是对着大语言模型说的。工具变了，道理没变。</p>
+
+            <hr>
+
+            <p style="font-size: 14px; color: var(--hbr-gray); font-style: italic;">本文基于 Dijkstra 1978 年手稿 EWD667 及笔者团队 AI 编程实践经验。原文可在德克萨斯大学 Dijkstra 档案馆在线阅读。</p>
+        </article>
+
+    </div>
+</body>
+</html>
