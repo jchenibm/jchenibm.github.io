@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编程时代已终结！Claude Code 创始人 Boris Cherny 访谈</title>
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fraunces - Variable Serif for Headlines -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&display=swap" rel="stylesheet">
+
+  <!-- Manrope - Body Text -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+  <!-- JetBrains Mono - Labels & Technical -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       NATE HERK V2 - LIGHT THEME DEFAULT
+       ======================================== */
+
+    :root {
+      /* Light Theme Colors (Default) */
+      --paper-100: #F8F7F4;
+      --ink-100: #2A2825;
+      --ink-200: #3D3A36;
+      --ink-300: #5A564F;
+      --accent: #2563EB;
+      --signal: #EA580C;
+      --grow: #16A34A;
+      --warn: #DC2626;
+
+      /* Semantic Colors */
+      --bg-main: var(--paper-100);
+      --text-primary: var(--ink-100);
+      --text-secondary: var(--ink-300);
+      --border-color: rgba(42, 40, 37, 0.12);
+      --hairline: rgba(42, 40, 37, 0.08);
+
+      /* Tab Colors Light */
+      --tab-bg: rgba(42, 40, 37, 0.04);
+      --tab-border: rgba(42, 40, 37, 0.15);
+      --tab-active-bg: var(--accent);
+      --tab-active-text: #FFFFFF;
+      --tab-hover-bg: rgba(42, 40, 37, 0.08);
+
+      /* Card Colors Light */
+      --card-bg-start: rgba(255, 255, 255, 0.8);
+      --card-bg-end: rgba(255, 255, 255, 0.4);
+      --card-hover-border: var(--accent);
+
+      /* Transitions */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --duration: 320ms;
+    }
+
+    /* Dark Theme Override */
+    body.theme-dark {
+      --bg-main: #0A1628;
+      --text-primary: #E8EEF7;
+      --text-secondary: #A8B4C4;
+      --border-color: rgba(232, 238, 247, 0.12);
+      --hairline: rgba(232, 238, 247, 0.06);
+
+      --tab-bg: rgba(232, 238, 247, 0.04);
+      --tab-border: rgba(232, 238, 247, 0.15);
+      --tab-active-bg: #4A9EFF;
+      --tab-active-text: #0A1628;
+      --tab-hover-bg: rgba(232, 238, 247, 0.08);
+
+      --card-bg-start: rgba(0, 0, 0, 0.18);
+      --card-bg-end: rgba(0, 0, 0, 0.05);
+      --card-hover-border: rgba(74, 158, 255, 0.5);
+
+      --accent: #4A9EFF;
+      --signal: #FFB347;
+      --grow: #4AFF8F;
+      --warn: #FF6B6B;
+    }
+
+    /* ========================================
+       BASE STYLES
+       ======================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Manrope', system-ui, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background-color var(--duration) var(--ease),
+                  color var(--duration) var(--ease);
+      overflow-x: hidden;
+    }
+
+    body.theme-light {
+      --bg-main: var(--paper-100);
+      --text-primary: var(--ink-100);
+    }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+
+    /* Fraunces - Headlines */
+    .fraunces {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    h1.title {
+      font-variation-settings: 'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+      font-size: clamp(48px, 8vw, 120px);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+    }
+
+    h2 {
+      font-variation-settings: 'opsz' 64, 'wght' 340, 'SOFT' 40, 'WONK' 1;
+      font-size: clamp(32px, 4vw, 56px);
+    }
+
+    h3 {
+      font-variation-settings: 'opsz' 48, 'wght' 320, 'SOFT' 50, 'WONK' 1;
+      font-size: clamp(24px, 3vw, 36px);
+    }
+
+    /* JetBrains Mono - Labels */
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ========================================
+       LAYOUT
+       ======================================== */
+
+    .frame {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    @media (max-width: 760px) {
+      .frame {
+        padding: 0 24px;
+      }
+    }
+
+    /* ========================================
+       TOP BAR
+       ======================================== */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      background: var(--bg-main);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color var(--duration) var(--ease);
+    }
+
+    .topbar .left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .topbar .logo {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 32, 'wght' 280, 'SOFT' 60, 'WONK' 1;
+      font-size: 20px;
+    }
+
+    .topbar .right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .topbar .right span {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--tab-bg);
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--duration) var(--ease);
+    }
+
+    .theme-toggle:hover {
+      background: var(--tab-hover-bg);
+      border-color: var(--accent);
+    }
+
+    .theme-toggle .icon {
+      font-size: 16px;
+    }
+
+    /* ========================================
+       HERO SECTION
+       ======================================== */
+
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .hero .meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .hero .meta-item .label {
+      color: var(--accent);
+    }
+
+    .hero h1 {
+      margin-bottom: 24px;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--text-secondary);
+      max-width: 800px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ========================================
+       TAB NAVIGATION
+       ======================================== */
+
+    .tab-nav {
+      position: sticky;
+      top: 73px;
+      z-index: 100;
+      display: flex;
+      gap: 4px;
+      padding: 16px 0;
+      background: var(--bg-main);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color var(--duration) var(--ease);
+    }
+
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 16px 24px;
+      border: 1px solid var(--tab-border);
+      border-radius: 8px 8px 0 0;
+      background: var(--tab-bg);
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--duration) var(--ease);
+    }
+
+    .tab-btn:hover {
+      background: var(--tab-hover-bg);
+    }
+
+    .tab-btn.active {
+      background: var(--tab-active-bg);
+      color: var(--tab-active-text);
+      border-color: var(--tab-active-bg);
+    }
+
+    .tab-btn .tab-num {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .tab-btn .tab-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+    }
+
+    @media (max-width: 760px) {
+      .tab-nav {
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        flex: 1 1 calc(50% - 4px);
+        min-width: 120px;
+      }
+    }
+
+    /* ========================================
+       TAB CONTENT
+       ======================================== */
+
+    .tab-content {
+      display: none;
+      padding: 48px 0;
+      animation: fadeIn var(--duration) var(--ease);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========================================
+       FLOOR / SECTION
+       ======================================== */
+
+    .floor {
+      padding: 48px 0;
+    }
+
+    .floor-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+      align-items: start;
+    }
+
+    .floor .number {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 96, 'wght' 280, 'SOFT' 60, 'WONK' 1;
+      font-size: clamp(64px, 8vw, 120px);
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.3;
+    }
+
+    .floor .number .tag {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      opacity: 1;
+    }
+
+    .head-body {
+      padding-top: 16px;
+    }
+
+    .head-body .verb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .head-body h2 {
+      margin-bottom: 16px;
+    }
+
+    .head-body .tagline {
+      font-size: 18px;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    @media (max-width: 760px) {
+      .floor-head {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .floor .number {
+        font-size: 64px;
+      }
+    }
+
+    /* ========================================
+       CONCEPT ROW (Cards)
+       ======================================== */
+
+    .concept-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    /* ========================================
+       CARD COMPONENT
+       ======================================== */
+
+    .card {
+      border: 1px solid var(--hairline);
+      background: linear-gradient(180deg, var(--card-bg-start), var(--card-bg-end));
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all var(--duration) var(--ease);
+    }
+
+    .card:hover {
+      border-color: var(--card-hover-border);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--tab-bg);
+      border-radius: 8px;
+      font-size: 24px;
+    }
+
+    .card-expand {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: transform var(--duration) var(--ease);
+    }
+
+    .card.expanded .card-expand {
+      transform: rotate(180deg);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .card .summary {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .card .details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--duration) var(--ease);
+    }
+
+    .card.expanded .details {
+      max-height: 2000px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .card .details p {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .card .details ul {
+      margin-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .card .details li {
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    /* Card Status Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .badge.signal {
+      background: rgba(234, 88, 12, 0.1);
+      color: var(--signal);
+    }
+
+    .badge.grow {
+      background: rgba(22, 163, 74, 0.1);
+      color: var(--grow);
+    }
+
+    .badge.warn {
+      background: rgba(220, 38, 38, 0.1);
+      color: var(--warn);
+    }
+
+    /* Connection Chips */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--tab-bg);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin: 4px;
+    }
+
+    /* ========================================
+       QUOTE BLOCK
+       ======================================== */
+
+    .quote-block {
+      border-left: 4px solid var(--accent);
+      padding: 24px;
+      margin: 32px 0;
+      background: var(--tab-bg);
+      border-radius: 0 12px 12px 0;
+    }
+
+    .quote-block p {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 32, 'wght' 260, 'SOFT' 70, 'WONK' 1;
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+
+    .quote-block .author {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+       STATS GRID
+       ======================================== */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 32px 24px;
+      background: var(--tab-bg);
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+    }
+
+    .stat-value {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 64, 'wght' 380, 'SOFT' 20, 'WONK' 1;
+      font-size: 48px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ========================================
+       ACCESSIBILITY
+       ======================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="theme-light">
+
+  <div class="frame">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="left">
+        <div class="logo">Claude Code</div>
+        <span class="label">AI Ascent 2026</span>
+      </div>
+      <div class="right">
+        <span>Boris Cherny 访谈实录</span>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="icon">◐</span>
+          <span class="label">主题</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="meta">
+        <div class="meta-item">
+          <span class="label">Interview</span>
+          <span>AI Ascent 2026 峰会</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Speaker</span>
+          <span>Boris Cherny</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Editor</span>
+          <span>云昭</span>
+        </div>
+      </div>
+      <h1 class="title fraunces">编程时代<br>已终结</h1>
+      <p class="subtitle">Claude Code 创始人断言：编程就像发短信一样自然，首曝个人最新工作流：自创 Sloop 循环，单日 PR 达 150！传统 SaaS 护城河崩塌</p>
+    </section>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(0)">
+        <span class="tab-num">01</span>
+        <span class="tab-label">核心观点</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(1)">
+        <span class="tab-num">02</span>
+        <span class="tab-label">访谈实录</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(2)">
+        <span class="tab-num">03</span>
+        <span class="tab-label">未来展望</span>
+      </button>
+    </nav>
+
+    <!-- Tab Content 1: 核心观点 -->
+    <div class="tab-content active">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">01<span class="tag">Programming</span></div>
+          <div class="head-body">
+            <div class="verb">The Thesis</div>
+            <h2 class="fraunces">编程问题已经<br>100% 被解决</h2>
+            <p class="tagline">Boris Cherny 在 Anthropic 的 2026 实际工作情况揭秘</p>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">0</div>
+            <div class="stat-label">2026 年手写代码行数</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">150</div>
+            <div class="stat-label">单日最高 PR 数量</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">代码由模型生成</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">1000+</div>
+            <div class="stat-label">同时运行的 Agent</div>
+          </div>
+        </div>
+
+        <!-- Quote Block -->
+        <div class="quote-block">
+          <p>"对我个人而言，编程的时代已经结束了，现在是'指挥 AI'的时代。"</p>
+          <div class="author">— Boris Cherny, Claude Code 创始人</div>
+        </div>
+
+        <!-- Concept Cards -->
+        <div class="concept-row">
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">📱</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">手机 Agent 办公</h3>
+            <p class="summary">所有的复杂工程，全部在手机 App 上通过调度上千个 Agent 完成</p>
+            <div class="details">
+              <p>Boris 大部分的工作在手机上完成，在 Claude App 左侧有"代码"选项卡，同时开启 5-10 个会话，每个会话运行着一堆 Agent。</p>
+              <p>目前大约有几百个 Agent 同时运行，每晚通常有几千个 Agent 在执行更深层次的任务。</p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🔄</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">Sloop 循环任务</h3>
+            <p class="summary">使用 Cron 预约未来任务，可每分钟、每五分钟或每天运行</p>
+            <div class="details">
+              <p>Sloop 是"最酷、最简单的方案"：让 Claude 使用 Cron（计划任务）来预约未来的任务。</p>
+              <p><strong>实际应用场景：</strong></p>
+              <ul>
+                <li>自动监控 PR，修复 CI 报错或自动 Rebase</li>
+                <li>维护 CI 健康，自动修复挂掉的测试</li>
+                <li>每 30 分钟抓取 Twitter 反馈并分类总结</li>
+              </ul>
+              <div class="chip">自动化</div>
+              <div class="chip">定时任务</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">⚡</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">Opus 4.7 转折点</h3>
+            <p class="summary">从去年 5 月 Opus 4 发布，增长曲线开始爆发式上升</p>
+            <div class="details">
+              <p><strong>时间线：</strong></p>
+              <ul>
+                <li>2024 年底：最初 6 个月不太好用，只有 10% 代码用它写</li>
+                <li>2025 年 5 月：Opus 4 发布，增长曲线爆发</li>
+                <li>随后：Opus 4.5, 4.6, 4.7 持续向上折射</li>
+                <li>2025 年 10-11 月：达到临界点，模型可编写 100% 代码</li>
+              </ul>
+              <p>本质上是"产品市场匹配"前六个月就开始研发，为"下一个更强的模型"而设计。</p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🏢</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">Anthropic 内部</h3>
+            <p class="summary">全公司已无手写代码，所有 SQL 和基础构架由模型生成</p>
+            <div class="details">
+              <p><strong>领先的不是技术本身，而是组织流程：</strong></p>
+              <ul>
+                <li>内部使用的模型和大家一样（Opus 4.7）</li>
+                <li>所有事情上都使用 Claude</li>
+                <li>Claude 之间在 Slack 上自动沟通解决未知问题</li>
+                <li>所有 SQL 语句都是模型写的</li>
+              </ul>
+              <p>"吃自家的狗粮"至关重要，确保开发者用的和内部用的是一套东西。</p>
+              <div class="badge signal">Internal Tool</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🚀</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">未来团队形态</h3>
+            <p class="summary">跨学科全才时代：设计师、产品经理、财务人员都在写代码</p>
+            <div class="details">
+              <p><strong>Claude Code 团队现状：</strong></p>
+              <ul>
+                <li>工程经理、产品经理、设计师都会写代码</li>
+                <li>数据科学家、财务人员、用户研究员都在写代码</li>
+                <li>每个人在某个领域是专家，但所有人都在写代码</li>
+              </ul>
+              <p>未来将出现更多"跨学科全才"：工程师同时擅长设计，或同时精通产品、数据科学和工程。</p>
+              <div class="badge grow">Team Evolution</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">💡</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">产品成功要素</h3>
+            <p class="summary">模型能力与产品决策/交互体验各占 50%</p>
+            <div class="details">
+              <p><strong>YC 理念："做出人们热爱的东西"</strong></p>
+              <p>无论技术或模型如何，最终必须构建一个让人爱不释手的产品。团队非常关注细节，让全天候使用时依然感受到极佳体验。</p>
+              <p>随着模型变强，产品的"Harness"（外壳）重要性可能降低。未来一年后，模型的对齐会做得更好，许多安全机制可能不再重要。</p>
+              <div class="chip">User Experience</div>
+              <div class="chip">Product-Market Fit</div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab Content 2: 访谈实录 -->
+    <div class="tab-content">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">02<span class="tag">Interview</span></div>
+          <div class="head-body">
+            <div class="verb">The Conversation</div>
+            <h2 class="fraunces">AI Ascent 2026<br>访谈实录</h2>
+            <p class="tagline">Boris Cherny 与 Lauren Reer 的深度对话</p>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🎭</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">Claude Code 精神官能症</h3>
+            <p class="summary">对 AI 生成的代码不放心，自己不敲代码就焦虑</p>
+            <div class="details">
+              <p><strong>主持人开场：</strong></p>
+              <p>"这里有多少人在用 Claude Code？有多少人患有'Claude Code 精神官能症'？别害羞，我的团队经常说我患有这种病。"</p>
+              <p><strong>Boris 背景：</strong></p>
+              <p>工程师中的工程师，职业生涯编写大量代码，写过《TypeScript 编程》教科书。但 2026 年至今，没写过一行代码。</p>
+              <p><strong>冷知识：</strong></p>
+              <p>Boris 初中时写过 TI-83 Plus 计算器 Basic 编程指南，至今仍在互联网上。</p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🔬</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">产品滞后与起源</h3>
+            <p class="summary">Anthropic Labs 内部孵化团队的意外之作</p>
+            <div class="details">
+              <p><strong>产品滞后定义：</strong></p>
+              <p>模型已经拥有强大能力，但还没有产品能够将其转化为用户体验。</p>
+              <p><strong>技术背景：</strong></p>
+              <ul>
+                <li>2024 年底：技术停留在"输入预判"阶段（Tab 键补全）</li>
+                <li>Claude 3.5 Sonnet：只补全一行代码</li>
+                <li>Anthropic Labs 愿景：让 Agent 直接编写全部代码</li>
+              </ul>
+              <p><strong>团队历史：</strong></p>
+              <p>2024 年底加入 Anthropic Labs 内部孵化团队，构建了 Claude Code、MCP 和桌面应用。现在为"第二回合"重新集结，由首席产品官 Mike Krieger（Instagram 联合创始人）领导。</p>
+              <div class="badge signal">Origin Story</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">📊</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">编程解决了吗？</h3>
+            <p class="summary">对 Boris 是 100%，对观众是 50%</p>
+            <div class="details">
+              <p><strong>现场调研：</strong></p>
+              <ul>
+                <li>100% 纯手写代码：少数</li>
+                <li>100% 使用 Agent 写代码：少数</li>
+                <li>两者之间：大多数（编程被"解决"了 50%）</li>
+              </ul>
+              <p><strong>Boris 个人情况：</strong></p>
+              <ul>
+                <li>Claude Code 代码库：TypeScript 和 React（简单）</li>
+                <li>选择原因：处于模型训练分布核心</li>
+                <li>2025 年 10-11 月：达到临界点</li>
+                <li>现在：每天提交几十个 PR，最高一天 150 个</li>
+              </ul>
+              <p><strong>例外情况：</strong></p>
+              <p>庞大复杂的遗留代码库、模型不擅长的冷门语言。但技术正在飞速赶上，答案通常是：等待下一个模型。</p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🎯</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">SaaS 启示录</h3>
+            <p class="summary">当写代码成本降低 100 倍，商业护城河如何变化？</p>
+            <div class="details">
+              <p><strong>Hamilton Helmer 的"七大权力"理论：</strong></p>
+              <p><strong>贬值的护城河：</strong></p>
+              <ul>
+                <li>切换成本：模型可轻松迁移数据和功能</li>
+                <li>流程权力：Claude 擅长理顺工作流（4.7 的爬山算法）</li>
+              </ul>
+              <p><strong>依然有效的护城河：</strong></p>
+              <ul>
+                <li>网络效应</li>
+                <li>规模经济</li>
+                <li>垄断资源</li>
+              </ul>
+              <p><strong>预测：</strong></p>
+              <p>未来 10 年，能颠覆一切的初创公司数量会增加 10 倍。微型初创公司可构建与大公司同等价值的产品。</p>
+              <div class="badge warn">Disruption</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">📚</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">印刷机类比</h3>
+            <p class="summary">软件将像发短信一样成为全民本能</p>
+            <div class="details">
+              <p><strong>14 世纪欧洲印刷机：</strong></p>
+              <ul>
+                <li>印刷前：欧洲只有 10% 的人识字</li>
+                <li>印刷后 50 年：出版文献超过之前 1000 年总和</li>
+                <li>书籍成本：下降 100 倍</li>
+                <li>最终结果：全球识字率上升到 70%</li>
+              </ul>
+              <p><strong>软件领域类比：</strong></p>
+              <p>"写软件"会变成像发短信一样自然的基本技能，比 Office 技能更普及。</p>
+              <p><strong>例子：</strong></p>
+              <p>写会计软件的最佳人选不是工程师，而是优秀的会计。他们最懂业务逻辑，编码只是最简单的环节。</p>
+              <div class="badge grow">Democratization</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🤖</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">提示词工程本质</h3>
+            <p class="summary">多 Agent 协作功能本质上还是提示词工程</p>
+            <div class="details">
+              <p><strong>观众问题：</strong></p>
+              <p>如何优化"分发任务给 Agent"的体验？什么时候该开启并行 Agent？</p>
+              <p><strong>Boris 回答：</strong></p>
+              <p>"在产品层面，这归根结底就是提示词工程。就是这么简单。"</p>
+              <p><strong>4.7 的自主性：</strong></p>
+              <p>模型已经开始自主启用"循环"功能。比如让它查询动态数据，它会说："我注意到数据随时间变化，我开个循环任务，每 30 分钟给你发报告。"</p>
+              <p><strong>长远方向：</strong></p>
+              <p>不应该由用户琢磨如何操控工具，那是产品设计问题。应该让模型更智能，通过提示词让这种行为变得像本能一样自然。</p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">☁️</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">云端 vs 本地</h3>
+            <p class="summary">几年后这都不重要了，模型会自己决定</p>
+            <div class="details">
+              <p><strong>观众问题：</strong></p>
+              <p>未来会继续依赖云端中心化算力，还是转向本地 Agent？</p>
+              <p><strong>Boris 回答：</strong></p>
+              <p>"最根本的答案是：这以后都不重要了。"</p>
+              <p>我们正进入"模型能搞定一切"的阶段。几年后：</p>
+              <ul>
+                <li>模型负责所有代码</li>
+                <li>自己启动 Agent</li>
+                <li>自己构建环境</li>
+                <li>判断用本地还是云端模型</li>
+              </ul>
+              <p>这些决定未来不再由"工程师"来做，模型会代劳。</p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🔌</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">MCP 与 Computer Use</h3>
+            <p class="summary">MCP 是核心答案，Computer Use 是保底方案</p>
+            <div class="details">
+              <p><strong>知识工作工具访问：</strong></p>
+              <p>对于云端工具（Salesforce、Google Docs、Google Calendar），最简单的答案是 MCP。</p>
+              <p><strong>MCP 连接器：</strong></p>
+              <p>在 Claude AI 中使用的 MCP 连接器，可以接通各种云端服务。然后在 Co-work、Claude CLI 或 Claude Code 任何地方都能调用这些能力。</p>
+              <p><strong>Computer Use：</strong></p>
+              <p>对于没有 MCP 接口的系统，"计算机使用"是保底方案。Anthropic 在这方面处于领先地位，虽然速度慢，但在 4.7 加持下已经完成得相当出色。</p>
+              <p><strong>Token 视角：</strong></p>
+              <p>"不管是 MCP、CLI 还是 API，对模型来说都无所谓，那只是不同的 Token 而已。"</p>
+              <div class="badge grow">MCP First</div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tab Content 3: 未来展望 -->
+    <div class="tab-content">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">03<span class="tag">Future</span></div>
+          <div class="head-body">
+            <div class="verb">The Roadmap</div>
+            <h2 class="fraunces">未来方向<br>与隐藏大招</h2>
+            <p class="tagline">Claude Code 正在筹备的秘密功能</p>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🔮</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">正在筹备的功能</h3>
+            <p class="summary">接下来几周内会陆续发布的秘密功能</p>
+            <div class="details">
+              <p><strong>公开透露的方向：</strong></p>
+              <ul>
+                <li><strong>Sloop（循环）</strong>：持续进化，成为一等公民</li>
+                <li><strong>批量处理</strong>：更强大的批量任务能力</li>
+                <li><strong>大规模并行 Agent</strong>：协作能力持续进化</li>
+                <li><strong>Computer Use</strong>：另一个重点方向</li>
+              </ul>
+              <p><strong>其他产品：</strong></p>
+              <ul>
+                <li>Claude Design：现在已经很不错，未来会强得多</li>
+                <li>秘密进行的内测功能：陆续公开</li>
+              </ul>
+              <div class="badge signal">Coming Soon</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🏛️</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">大公司的挑战</h3>
+            <p class="summary">必须改变业务流程，重新培训员工，面临巨大内部阻力</p>
+            <div class="details">
+              <p><strong>初创公司优势：</strong></p>
+              <ul>
+                <li>没有历史包袱</li>
+                <li>可以从零开始构建"AI 原生"公司</li>
+                <li>可以正面竞争大公司</li>
+              </ul>
+              <p><strong>大公司困境：</strong></p>
+              <ul>
+                <li>必须改变业务流程</li>
+                <li>必须重新培训员工</li>
+                <li>面临巨大的内部阻力</li>
+              </ul>
+              <p><strong>结论：</strong></p>
+              <p>"现在是创业最好的时代，变革即将到来。"</p>
+              <div class="badge warn">Transformation</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🎨</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">软件平民化</h3>
+            <p class="summary">软件开发像发短信一样成为全民本能</p>
+            <div class="details">
+              <p><strong>印刷机类比的时间线：</strong></p>
+              <ul>
+                <li>1400 年代：印刷机发明</li>
+                <li>印刷后 50 年：文献爆发式增长</li>
+                <li>几个世纪后：全球识字率 70%</li>
+              </ul>
+              <p><strong>软件领域预测：</strong></p>
+              <p>同样的变革正在发生，而且速度会快得多。</p>
+              <p><strong>现实案例：</strong></p>
+              <ul>
+                <li>店主为自己写软件</li>
+                <li>单片机程序：门一开就自动开灯</li>
+                <li>会计写会计软件（比工程师更懂业务）</li>
+              </ul>
+              <div class="badge grow">Accessibility</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🔄</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">Routines 常规任务</h3>
+            <p class="summary">服务器端运行的循环任务，关掉笔记本也继续跑</p>
+            <div class="details">
+              <p><strong>Sloop vs Routines：</strong></p>
+              <ul>
+                <li>Sloop：本地循环任务</li>
+                <li>Routines：服务器端常规任务</li>
+              </ul>
+              <p><strong>Routines 优势：</strong></p>
+              <ul>
+                <li>运行在服务器端</li>
+                <li>即使关掉笔记本也继续运行</li>
+                <li>原理一样，但更持久</li>
+              </ul>
+              <p>"循环就是未来的方向，如果你还没试过，强烈推荐。"</p>
+              <div class="chip">Server-Side</div>
+              <div class="chip">Automation</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🌐</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">跨学科全才</h3>
+            <p class="summary">未来的团队：设计师、产品经理、财务人员都在写代码</p>
+            <div class="details">
+              <p><strong>传统全才定义：</strong></p>
+              <p>工程师兼顾 iOS、网页端和服务器端的"产品工程师"</p>
+              <p><strong>未来全才定义：</strong></p>
+              <p>跨学科全才：</p>
+              <ul>
+                <li>工程师 + 设计师</li>
+                <li>产品 + 数据科学 + 工程</li>
+                <li>财务 + 编程</li>
+              </ul>
+              <p><strong>Claude Code 团队现状：</strong></p>
+              <p>每个人都在写代码——工程经理、产品经理、设计师、数据科学家、财务人员、用户研究员。</p>
+              <div class="badge grow">Future of Work</div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleCard(this)">
+            <div class="card-header">
+              <div class="card-icon">🎯</div>
+              <div class="card-expand">▼</div>
+            </div>
+            <h3 class="fraunces">产品哲学</h3>
+            <p class="summary">做出人们热爱的东西，关注细节</p>
+            <div class="details">
+              <p><strong>YC 理念：</strong></p>
+              <p>"做出人们热爱的东西"——反复灌输的唯一一件事。</p>
+              <p><strong>模型 vs 产品：</strong></p>
+              <ul>
+                <li>一年前：50/50</li>
+                <li>半年前：50/50</li>
+                <li>两年后：未知</li>
+              </ul>
+              <p><strong>规划方法：</strong></p>
+              <p>"看一周，想半年"</p>
+              <p><strong>细节关注：</strong></p>
+              <p>非常关注细节，让全天候使用时依然感受到极佳体验。</p>
+              <div class="chip">Product Excellence</div>
+              <div class="chip">User Experience</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Quote -->
+        <div class="quote-block">
+          <p>"现在，一家微型初创公司可以构建出与大公司同等价值的产品，并进行正面竞争。现在是创业最好的时代，变革即将到来。"</p>
+          <div class="author">— Boris Cherny</div>
+        </div>
+
+        <!-- Reference -->
+        <div style="text-align: center; margin-top: 48px; padding: 24px; background: var(--tab-bg); border-radius: 12px;">
+          <p class="label" style="margin-bottom: 12px;">参考链接</p>
+          <a href="https://www.youtube.com/watch?v=SlGRN8jh2RI" target="_blank" style="color: var(--accent); text-decoration: none;">
+            YouTube: AI Ascent 2026 - Boris Cherny Interview
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>基于 Nate Herk HTML Design System V2 生成</p>
+      <p style="margin-top: 8px;">
+        <span class="label">Source</span>
+        <a href="https://www.youtube.com/watch?v=SlGRN8jh2RI" target="_blank">AI Ascent 2026</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // Theme Toggle Function
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      body.classList.remove('theme-light', 'theme-dark');
+      body.classList.add('theme-' + newTheme);
+
+      // Save preference
+      localStorage.setItem('nate-theme', newTheme);
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('nate-theme') || 'light';
+      document.body.classList.remove('theme-light', 'theme-dark');
+      document.body.classList.add('theme-' + savedTheme);
+    });
+
+    // Tab Switching Function
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
+
+      tabs[index].classList.add('active');
+      contents[index].classList.add('active');
+
+      // Scroll to top of content
+      window.scrollTo({
+        top: 200,
+        behavior: 'smooth'
+      });
+    }
+
+    // Card Toggle Function
+    function toggleCard(card) {
+      card.classList.toggle('expanded');
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      // Alt + T for theme toggle
+      if (e.altKey && e.key === 't') {
+        e.preventDefault();
+        toggleTheme();
+      }
+
+      // Alt + 1, 2, 3 for tab switching
+      if (e.altKey && e.key >= '1' && e.key <= '3') {
+        e.preventDefault();
+        switchTab(parseInt(e.key) - 1);
+      }
+    });
+  </script>
+</body>
+</html>
