@@ -1,0 +1,1444 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>驾驭工程 — Martin Fowler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=Manrope:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Light Theme (Default) */
+    --paper-50:#FDFCFB;
+    --paper-100:#F8F7F4;
+    --paper-200:#EBE9E4;
+    --paper-300:#DCD9D2;
+    --paper-400:#C8C5BE;
+    --paper-500:#A8A49C;
+    --ink-100:#2A2825;
+    --ink-200:#4A4640;
+    --ink-300:#6B675F;
+    --ink-400:#8B877D;
+    --accent:#2563EB;
+    --accent-hot:#3B82F6;
+    --signal:#EA580C;
+    --warn:#DC2626;
+    --grow:#16A34A;
+    --grid:rgba(0,0,0,0.04);
+    --hairline:rgba(0,0,0,0.08);
+
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    --card-hover-bg:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.5));
+    --card-expand-bg:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.6));
+    --floor-gradient-01:linear-gradient(180deg, rgba(37,99,235,0.04) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(37,99,235,0.08) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(37,99,235,0.12) 0%, transparent 60%);
+    --floor-number-01:rgba(42,40,37,0.25);
+    --floor-number-02:rgba(42,40,37,0.45);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,0,0,0.03), transparent 60%);
+    --chip-bg:rgba(255,255,255,0.5);
+    --detail-border:1px dashed rgba(0,0,0,0.12);
+    --tab-bg:rgba(255,255,255,0.6);
+    --tab-hover-bg:rgba(255,255,255,0.9);
+    --tab-active-bg:var(--accent);
+    --tab-active-text:#FFFFFF;
+    --tab-border:rgba(0,0,0,0.1);
+    --shadow:0 2px 8px rgba(0,0,0,0.06);
+    --shadow-hover:0 4px 16px rgba(0,0,0,0.1);
+    --shadow-expand:0 4px 20px rgba(37,99,235,0.15);
+  }
+
+  body.theme-dark{
+    /* Dark Theme */
+    --paper-50:#050A12;
+    --paper-100:#0A1628;
+    --paper-200:#0F1B30;
+    --paper-300:#152340;
+    --paper-400:#1E2F50;
+    --paper-500:#293D63;
+    --ink-100:#E8EEF7;
+    --ink-200:#C4D0E0;
+    --ink-300:#7B8AA3;
+    --ink-400:#4F5E78;
+    --accent:#4A9EFF;
+    --accent-hot:#82B7FF;
+    --signal:#FFB347;
+    --warn:#FF6B6B;
+    --grow:#4AFF8F;
+    --grid:rgba(255,255,255,0.035);
+    --hairline:rgba(255,255,255,0.08);
+
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05));
+    --card-hover-bg:linear-gradient(180deg, rgba(74,158,255,0.04), rgba(0,0,0,0.05));
+    --card-expand-bg:linear-gradient(180deg, rgba(74,158,255,0.06), rgba(0,0,0,0.05));
+    --floor-gradient-01:linear-gradient(180deg, rgba(74,158,255,0.025) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(74,158,255,0.045) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(74,158,255,0.065) 0%, transparent 60%);
+    --floor-number-01:rgba(196,208,224,0.45);
+    --floor-number-02:rgba(196,208,224,0.7);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74,158,255,0.10), transparent 60%);
+    --chip-bg:transparent;
+    --detail-border:1px dashed rgba(255,255,255,0.12);
+    --tab-bg:rgba(255,255,255,0.05);
+    --tab-hover-bg:rgba(255,255,255,0.1);
+    --tab-active-bg:var(--accent);
+    --tab-active-text:#FFFFFF;
+    --tab-border:rgba(255,255,255,0.1);
+    --shadow:none;
+    --shadow-hover:none;
+    --shadow-expand:none;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  ::selection{ background:var(--accent); color:#FFFFFF; }
+
+  body{
+    font-family:'Manrope', system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight:300;
+    background:var(--bg-main);
+    color:var(--text-primary);
+    line-height:1.7;
+    overflow-x:hidden;
+    background-image:var(--top-glow),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
+    background-attachment: fixed, fixed, fixed;
+    min-height:100vh;
+    transition: background 320ms ease, color 320ms ease;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.035;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .frame{
+    position:relative; z-index:2;
+    max-width:1320px;
+    margin:0 auto;
+    padding:0 56px;
+  }
+
+  /* ───────── HERO ───────── */
+  .hero{
+    padding:96px 0 72px;
+    position:relative;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    padding-bottom:64px;
+    border-bottom:1px solid var(--border-color);
+  }
+  .topbar .left{ display:flex; align-items:center; gap:14px; }
+  .topbar .left::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.5; transform:scale(.85); }
+  }
+  .topbar .right{ display:flex; gap:32px; align-items:center; }
+  .topbar .right span:not(:last-child)::after{
+    content:'/'; margin-left:32px; color:var(--ink-400);
+  }
+
+  /* Theme Toggle Button */
+  .theme-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 12px;
+    border:1px solid var(--border-color);
+    border-radius:4px;
+    background:var(--tab-bg);
+    cursor:pointer;
+    transition: all 320ms ease;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-secondary);
+  }
+  .theme-toggle:hover{
+    background:var(--tab-hover-bg);
+    border-color:var(--accent);
+  }
+  .theme-toggle .icon{
+    font-size:14px;
+    line-height:1;
+  }
+
+  .eyebrow{
+    margin-top:72px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{
+    content:''; width:32px; height:1px; background:var(--accent);
+  }
+
+  h1.title{
+    margin-top:32px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+    font-size:clamp(48px, 8vw, 120px);
+    line-height:.92;
+    letter-spacing:-.035em;
+    color:var(--text-primary);
+  }
+  h1.title .ital{
+    font-style:italic;
+    font-variation-settings:'opsz' 144, 'wght' 320, 'SOFT' 100, 'WONK' 1;
+    color:var(--accent);
+  }
+
+  .kicker{
+    margin-top:40px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 36, 'wght' 320, 'SOFT' 50;
+    font-style:italic;
+    font-size:clamp(18px, 2vw, 24px);
+    line-height:1.55;
+    color:var(--text-secondary);
+    max-width:800px;
+  }
+
+  .meta-info{
+    margin-top:24px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--ink-300);
+    display:flex; gap:24px;
+  }
+  .meta-info span{
+    display:flex; align-items:center; gap:8px;
+  }
+  .meta-info a{
+    color:var(--accent);
+    text-decoration:none;
+    transition: color 320ms ease;
+  }
+  .meta-info a:hover{
+    color:var(--accent-hot);
+  }
+
+  /* ───────── TAB NAVIGATION ───────── */
+  .tab-nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    gap:4px;
+    padding:12px 0;
+    margin:64px 0 32px;
+    border-bottom:1px solid var(--border-color);
+    background:var(--bg-main);
+    backdrop-filter:blur(10px);
+  }
+
+  .tab-btn{
+    flex:1;
+    padding:12px 20px;
+    border:1px solid var(--tab-border);
+    border-radius:6px 6px 0 0;
+    background:var(--tab-bg);
+    color:var(--text-secondary);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition: all 320ms ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+
+  .tab-btn:hover{
+    background:var(--tab-hover-bg);
+    color:var(--text-primary);
+  }
+
+  .tab-btn.active{
+    background:var(--tab-active-bg);
+    color:var(--tab-active-text);
+    border-color:var(--tab-active-bg);
+  }
+
+  .tab-btn .tab-num{
+    font-size:9px;
+    opacity:0.7;
+  }
+
+  /* ───────── TAB CONTENT ───────── */
+  .tab-content{
+    display:none;
+    animation:fadeIn 480ms ease;
+  }
+
+  .tab-content.active{
+    display:block;
+  }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform:translateY(12px); }
+    to{ opacity:1; transform:none; }
+  }
+
+  /* ───────── FLOOR ───────── */
+  .floor{
+    position:relative;
+    padding:48px 0 64px;
+    border-radius:8px;
+    margin-bottom:24px;
+  }
+  .floor.lvl-01{ background:var(--floor-gradient-01); }
+  .floor.lvl-02{ background:var(--floor-gradient-02); }
+  .floor.lvl-03{ background:var(--floor-gradient-03); }
+
+  .floor-head{
+    display:grid;
+    grid-template-columns: 180px 1fr;
+    column-gap:40px;
+    align-items:start;
+    margin-bottom:40px;
+  }
+
+  .floor .number{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 200, 'SOFT' 0, 'WONK' 0;
+    font-style:italic;
+    font-size:clamp(70px, 9vw, 120px);
+    line-height:.84;
+    letter-spacing:-.05em;
+    user-select:none;
+  }
+  .floor.lvl-01 .number{ color:var(--floor-number-01); }
+  .floor.lvl-02 .number{ color:var(--floor-number-02); }
+  .floor.lvl-03 .number{
+    color:var(--accent);
+  }
+  .floor .number .tag{
+    display:block;
+    margin-top:16px;
+    font-family:'JetBrains Mono', monospace;
+    font-style:normal;
+    font-size:9px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    white-space:nowrap;
+  }
+  .floor .number .tag::before{
+    content:''; display:inline-block;
+    width:20px; height:1px;
+    background:var(--ink-300);
+    vertical-align:middle;
+    margin-right:8px;
+  }
+
+  .floor .head-body .verb{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .floor .head-body .verb::before{
+    content:''; width:16px; height:1px; background:var(--accent);
+  }
+
+  .floor .head-body h2{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+    font-size:clamp(32px, 4vw, 48px);
+    line-height:.95;
+    letter-spacing:-.028em;
+    color:var(--text-primary);
+    margin-bottom:12px;
+  }
+  .floor .head-body h2 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 100, 'WONK' 1;
+  }
+
+  .floor .head-body .tagline{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 24, 'wght' 350;
+    font-style:italic;
+    font-size:17px;
+    line-height:1.4;
+    color:var(--text-secondary);
+  }
+
+  /* ───────── CONCEPT CARDS ───────── */
+  .concept-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+  }
+  .concept-row.tight { gap:16px; }
+
+  .card{
+    border:1px solid var(--border-color);
+    border-radius:6px;
+    padding:24px;
+    background:var(--card-bg);
+    backdrop-filter:blur(6px);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    transition: all 320ms ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity:.2;
+    transition: opacity 320ms ease;
+  }
+  .card:hover{
+    border-color:var(--accent);
+    background:var(--card-hover-bg);
+    box-shadow:var(--shadow-hover);
+    transform:translateY(-2px);
+  }
+  .card:hover::before{ opacity:.5; }
+  .card.expanded{
+    border-color:var(--accent);
+    background:var(--card-expand-bg);
+    box-shadow:var(--shadow-expand);
+  }
+  .card.expanded::before{ opacity:.7; }
+  .concept-row:has(.card.expanded){
+    grid-template-columns: 1fr;
+  }
+
+  .card .card-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    margin-bottom:12px;
+  }
+  .card h3{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT' 30, 'WONK' 1;
+    font-size:19px;
+    line-height:1.1;
+    letter-spacing:-.018em;
+    color:var(--text-primary);
+    margin-bottom:8px;
+  }
+  .card h3 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT' 100, 'WONK' 1;
+  }
+  .card .one-liner{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 18, 'wght' 320;
+    font-style:italic;
+    font-size:14px;
+    color:var(--text-secondary);
+    line-height:1.55;
+  }
+
+  .card .expand-hint{
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    transition: color 320ms ease;
+  }
+  .card:hover .expand-hint{ color:var(--accent); }
+  .card.expanded .expand-hint{ display:none; }
+
+  .card .detail{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:var(--detail-border);
+  }
+  .card.expanded .detail{ display:block; }
+  .card .detail p{
+    font-size:14px;
+    line-height:1.75;
+    color:var(--text-secondary);
+    margin-bottom:14px;
+    max-width:68ch;
+  }
+  .card .detail p strong{ color:var(--text-primary); font-weight:600; }
+  .card .detail p em{ font-style:italic; color:var(--text-primary); }
+  .card .detail ul{
+    margin: 12px 0;
+    padding-left: 20px;
+    color:var(--text-secondary);
+  }
+  .card .detail li{
+    font-size:14px;
+    line-height:1.7;
+    margin-bottom:8px;
+  }
+
+  .conn-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    margin-top:16px;
+    margin-bottom:8px;
+  }
+  .connections{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .conn-chip{
+    padding:4px 8px;
+    border-radius:3px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.04em;
+    border:1px solid var(--border-color);
+    color:var(--text-secondary);
+    background:var(--chip-bg);
+  }
+  .conn-chip.feeds{ color:var(--accent); border-color:var(--accent); background:rgba(37,99,235,0.08); }
+  .conn-chip.fed-by{ color:var(--grow); border-color:var(--grow); background:rgba(22,163,74,0.08); }
+  .conn-chip.parallel{ color:var(--text-secondary); border-color:var(--border-color); }
+  .conn-chip.branch{ color:var(--accent); border:1px dashed var(--accent); }
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width:1100px){
+    .floor-head{ grid-template-columns: 140px 1fr; column-gap:28px; }
+    .tab-btn{ font-size:10px; padding:10px 16px; }
+  }
+  @media (max-width:760px){
+    .frame{ padding:0 24px; }
+    .floor-head{ grid-template-columns:1fr; }
+    .floor .number{ font-size:70px; }
+    h1.title{ font-size:48px; }
+    .topbar .right span:not(.theme-toggle){ display:none; }
+    .tab-nav{ flex-wrap:wrap; }
+    .tab-btn{ flex:1 1 calc(50% - 4px); min-width:110px; }
+    .meta-info{ flex-direction:column; gap:12px; }
+  }
+</style>
+</head>
+<body class="theme-light">
+
+<div class="frame">
+
+  <!-- ───────── HERO ───────── -->
+  <header class="hero">
+    <div class="topbar">
+      <div class="left">MARTIN FOWLER · 2026</div>
+      <div class="right">
+        <span>AI 工程</span>
+        <span>编码代理</span>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="icon">◐</span>
+          <span class="label">主题</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="eyebrow">THOUGHTWORKS 技术雷达</div>
+
+    <h1 class="title">
+      驾驭<em>工程</em>
+    </h1>
+
+    <p class="kicker">
+      为了让编码代理在更少监督下工作，我们需要建立对其结果信任的机制。作为软件工程师，我们对 AI 生成的代码有着天然的信任障碍——LLM 是非确定性的，它们不了解我们的上下文，也不真正理解代码，它们以 token 为思考单位。本文探索了一个思维模型，整合了上下文工程和驾驭工程中的新兴概念，以构建这种信任。
+    </p>
+
+    <div class="meta-info">
+      <span><a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank">原文链接</a></span>
+      <span>作者：Birgitta Böckeler</span>
+      <span>发布：2026年4月2日</span>
+    </div>
+  </header>
+
+  <!-- ───────── TAB NAVIGATION ───────── -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">01</span>
+      <span class="tab-label">核心概念</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">02</span>
+      <span class="tab-label">控制机制</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">03</span>
+      <span class="tab-label">工程实践</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(3)">
+      <span class="tab-num">04</span>
+      <span class="tab-label">开放问题</span>
+    </button>
+  </nav>
+
+  <!-- ───────── TAB CONTENTS ───────── -->
+  <div class="tab-contents">
+
+    <!-- ── TAB 01: 核心概念 ── -->
+    <div class="tab-content active">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">01<span class="tag">什么是驾驭</span></div>
+          <div class="head-body">
+            <div class="verb">基础概念</div>
+            <h2><em>驾驭</em>的定义</h2>
+            <div class="tagline">Agent = Model + Harness：理解编码代理的控制层</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">定义 · 01</div>
+            <h3>什么是 <em>驾驭</em></h3>
+            <div class="one-liner">"驾驭"已成为 AI 代理中除模型本身以外所有内容的简称。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>Agent = Model + Harness</strong></p>
+              <p>这是一个非常宽泛的定义，因此有必要针对常见类别的代理进行缩小范围。在编码代理的上下文中，我将其定义为：</p>
+              <ul>
+                <li><strong>内置驾驭</strong>：部分驾驭已内置在编码代理中（如系统提示词、代码检索机制、复杂的编排系统）</li>
+                <li><strong>外部驾驭</strong>：编码代理为用户提供的功能，用于针对特定用例和系统构建外部驾驭层</li>
+              </ul>
+              <p>一个构建良好的外部驾驭层有两个目标：</p>
+              <ul>
+                <li>提高代理首次就做对的概率</li>
+                <li>提供反馈循环，让问题在到达人眼之前尽可能自我修正</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 前馈控制</span>
+                <span class="conn-chip parallel">parallels ↔ 上下文工程</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">隐喻 · 02</div>
+            <h3>隐喻的<em>局限</em></h3>
+            <div class="one-liner">"你有没有试过给狗的内侧套上挽具？"</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p>有人指出，在挽具外面再套挽具说不通。这确实让这个隐喻有些牵强，但如果它能帮助我们驾驭编码代理的使用，我愿意接受这种延伸。</p>
+              <p><strong>关键要点：</strong>隐喻的价值在于实用性，而非精确性。如果"驾驭"这个概念能帮助我们思考如何控制 AI 代理，那么它就是有用的。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by 驾驭定义</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">控制论 · 03</div>
+            <h3>控制论<em>调节器</em></h3>
+            <div class="one-liner">代理驾驭像一个控制论调节器，结合前馈和反馈将代码库调节到期望状态。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p>代理驾驭充当<strong>控制论调节器</strong>的角色：</p>
+              <ul>
+                <li><strong>前馈控制</strong>：预判不良输出并尝试预防</li>
+                <li><strong>反馈控制</strong>：观察代理行动后的结果，帮助其自我修正</li>
+              </ul>
+              <p>只有前馈的代理会重复同样的错误；只有反馈的代理会编码规则但永远不知道是否有效。两者结合才能创建真正的自修正系统。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 引导器</span>
+                <span class="conn-chip feeds">feeds → 传感器</span>
+                <span class="conn-chip parallel">parallels ↔ 控制论</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">关系 · 04</div>
+            <h3>与上下文<em>工程</em>的关系</h3>
+            <div class="one-liner">驾驭工程是上下文工程的一种特定形式。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>上下文工程</strong>为我们提供了向代理提供引导器和传感器的手段。</p>
+              <p><strong>驾驭工程</strong>则是为编码代理构建用户驾驭层的特定上下文工程形式。</p>
+              <p>可以理解为：上下文工程是通用的方法论，驾驭工程是其在编码代理领域的具体应用。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by 上下文工程</span>
+                <span class="conn-chip branch">↗ 分支：引导器设计</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── TAB 02: 控制机制 ── -->
+    <div class="tab-content">
+      <article class="floor lvl-02">
+        <div class="floor-head">
+          <div class="number">02<span class="tag">控制机制</span></div>
+          <div class="head-body">
+            <div class="verb">执行类型</div>
+            <h2>引导器与<em>传感器</em></h2>
+            <div class="tagline">计算型 vs 推理型：两种执行类型的选择</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">前馈 · 01</div>
+            <h3><em>引导器</em> Guides</h3>
+            <div class="one-liner">预判代理行为并旨在其行动前进行引导。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>引导器</strong>是前馈控制机制，它们：</p>
+              <ul>
+                <li>在代理行动前预判其行为</li>
+                <li>旨在引导代理在首次尝试时就创建良好结果</li>
+                <li>提高代理首次就做对的概率</li>
+              </ul>
+              <p><strong>示例：</strong></p>
+              <ul>
+                <li>编码约定（AGENTS.md、Skills）</li>
+                <li>项目启动指南</li>
+                <li>代码修改工具（如 OpenRewrite）</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 计算型引导</span>
+                <span class="conn-chip feeds">feeds → 推理型引导</span>
+                <span class="conn-chip parallel">parallels ↔ 传感器</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">反馈 · 02</div>
+            <h3><em>传感器</em> Sensors</h3>
+            <div class="one-liner">在代理行动后观察并帮助其自我修正。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>传感器</strong>是反馈控制机制，它们：</p>
+              <ul>
+                <li>在代理行动后观察结果</li>
+                <li>帮助代理自我修正</li>
+                <li>当产生为 LLM 消费优化的信号时特别强大</li>
+              </ul>
+              <p><strong>特别有效的形式：</strong></p>
+              <p>包含自我修正指令的自定义 linter 消息——一种积极的"提示注入"。</p>
+              <p><strong>示例：</strong></p>
+              <ul>
+                <li>结构化测试（ArchUnit 模块边界检查）</li>
+                <li>代码审查指南</li>
+                <li>类型检查器</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 计算型传感</span>
+                <span class="conn-chip feeds">feeds → 推理型传感</span>
+                <span class="conn-chip fed-by">← fed by 引导器</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">类型 · 03</div>
+            <h3><em>计算型</em> Controls</h3>
+            <div class="one-liner">确定性和快速，由 CPU 运行。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>计算型控制</strong>具有以下特征：</p>
+              <ul>
+                <li><strong>确定性</strong>：结果可靠</li>
+                <li><strong>快速</strong>：毫秒到秒级运行</li>
+                <li><strong>低成本</strong>：由 CPU 运行</li>
+              </ul>
+              <p><strong>示例：</strong></p>
+              <ul>
+                <li>测试（单元测试、集成测试）</li>
+                <li>Linter（代码风格检查）</li>
+                <li>类型检查器（TypeScript、mypy 等）</li>
+                <li>结构分析（依赖分析、复杂度分析）</li>
+              </ul>
+              <p><strong>优势：</strong>计算型引导器通过确定性工具提高良好结果的概率。计算型传感器足够便宜和快速，可以在每次变更时与代理并行运行。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip parallel">parallels ↔ 推理型</span>
+                <span class="conn-chip feeds">feeds → 每次变更检查</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">类型 · 04</div>
+            <h3><em>推理型</em> Controls</h3>
+            <div class="one-liner">语义分析，"LLM 作为判断者"。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>推理型控制</strong>具有以下特征：</p>
+              <ul>
+                <li><strong>语义分析</strong>：理解代码意图和上下文</li>
+                <li><strong>AI 代码审查</strong>：使用 LLM 评估代码质量</li>
+                <li><strong>"LLM 作为判断者"</strong>：让模型评估其他模型的输出</li>
+                <li><strong>较慢且昂贵</strong>：通常由 GPU 或 NPU 运行</li>
+                <li><strong>非确定性</strong>：结果更不确定</li>
+              </ul>
+              <p><strong>优势：</strong>尽管具有非确定性，但当我们使用适合任务的强模型时，推理型传感器可以特别增加我们的信任。</p>
+              <p>它们允许我们既提供丰富的引导，又添加额外的语义判断。</p>
+              <p><strong>示例：</strong></p>
+              <ul>
+                <li>AI 代码审查（语义理解）</li>
+                <li>技能指令（自然语言指导）</li>
+                <li>代码相似度分析（语义级别）</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip parallel">parallels ↔ 计算型</span>
+                <span class="conn-chip feeds">feeds → 语义判断</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="floor lvl-02" style="margin-top: 32px;">
+        <div class="floor-head">
+          <div class="number">02<span class="tag">调节循环</span></div>
+          <div class="head-body">
+            <div class="verb">迭代改进</div>
+            <h2><em>转向循环</em></h2>
+            <div class="tagline">人类在驾驭工程中的角色：通过迭代驾驭来引导代理</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">人类角色 · 01</div>
+            <h3><em>转向循环</em> Steering Loop</h3>
+            <div class="one-liner">人类的工作是通过迭代驾驭来引导代理。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>转向循环的核心思想：</strong></p>
+              <p>每当问题多次发生时，应该改进前馈和反馈控制，使该问题在未来发生的概率降低，甚至完全预防。</p>
+              <p><strong>循环流程：</strong></p>
+              <ol>
+                <li><strong>发现问题</strong>：代理重复犯错</li>
+                <li><strong>分析根因</strong>：理解为什么控制没有捕获问题</li>
+                <li><strong>改进控制</strong>：增强前馈引导或反馈传感</li>
+                <li><strong>验证效果</strong>：观察问题是否减少</li>
+              </ol>
+              <p><strong>使用 AI 改进驾驭：</strong></p>
+              <p>在转向循环中，我们当然也可以使用 AI 来改进驾驭本身。编码代理现在使得构建更多自定义控制和自定义静态分析变得更加便宜：</p>
+              <ul>
+                <li>代理可以帮助编写结构化测试</li>
+                <li>从观察到的模式生成规则草案</li>
+                <li>搭建自定义 linter</li>
+                <li>从代码库考古创建操作指南</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 驾驭迭代</span>
+                <span class="conn-chip parallel">parallels ↔ 持续集成</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">时机 · 02</div>
+            <h3><em>质量左移</em> Keep Quality Left</h3>
+            <div class="one-liner">将检查尽可能放在生产路径的左侧。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>持续集成的挑战：</strong></p>
+              <p>持续集成的团队一直面临将测试、检查和人工审查分布在开发时间轴上的挑战，根据其成本、速度和关键性来决定。</p>
+              <p><strong>质量左移原则：</strong></p>
+              <p>当你渴望持续交付时，你甚至希望每个提交状态都可部署。你希望检查尽可能放在通往生产路径的左侧，因为越早发现问题，修复成本越低。</p>
+              <p><strong>反馈传感器的分布：</strong></p>
+              <p>包括新的推理型传感器在内的反馈传感器，需要相应地分布在生命周期中。</p>
+              <p><strong>四个关键问题：</strong></p>
+              <ol>
+                <li>什么足够快，应该在集成前甚至创建提交前运行？（如 linter、快速测试套件、基本代码审查代理）</li>
+                <li>什么更昂贵，因此只应在集成后的管道中运行？（如变异测试、更广泛的代码审查）</li>
+                <li>什么样的漂移会逐渐积累，应该由在变更生命周期外持续运行的传感器监控？（如死代码检测、测试覆盖率分析、依赖扫描器）</li>
+                <li>代理可以监控什么运行时反馈？（如监控降级的 SLO、AI 判断持续采样响应质量）</li>
+              </ol>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by 转向循环</span>
+                <span class="conn-chip feeds">feeds → CI/CD 优化</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── TAB 03: 工程实践 ── -->
+    <div class="tab-content">
+      <article class="floor lvl-03">
+        <div class="floor-head">
+          <div class="number">03<span class="tag">调节分类</span></div>
+          <div class="head-body">
+            <div class="verb">控制维度</div>
+            <h2><em>调节类别</em></h2>
+            <div class="tagline">三种驾驭类型：可维护性、架构适配性和行为</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">类别 · 01</div>
+            <h3><em>可维护性</em> 驾驭</h3>
+            <div class="one-liner">调节内部代码质量和可维护性。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>可维护性驾驭</strong>是目前最容易实现的驾驭类型，因为我们有大量可使用的现有工具。</p>
+              <p><strong>计算型传感器可靠捕获：</strong></p>
+              <ul>
+                <li>重复代码</li>
+                <li>圈复杂度</li>
+                <li>缺失的测试覆盖</li>
+                <li>架构漂移</li>
+                <li>风格违规</li>
+              </ul>
+              <p>这些是便宜、经过验证且确定性的。</p>
+              <p><strong>推理型控制部分解决：</strong></p>
+              <ul>
+                <li>语义重复代码</li>
+                <li>冗余测试</li>
+                <li>暴力修复</li>
+                <li>过度工程解决方案</li>
+              </ul>
+              <p>但昂贵且概率性，不能在每次提交时运行。</p>
+              <p><strong>都无法可靠捕获：</strong></p>
+              <ul>
+                <li>问题误诊</li>
+                <li>过度工程和不必要的功能</li>
+                <li>误解指令</li>
+              </ul>
+              <p>它们有时会捕获，但不够可靠，无法减少监督。如果人类没有首先清楚地指定他们想要什么，正确性就在任何传感器的范围之外。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 静态分析</span>
+                <span class="conn-chip parallel">parallels ↔ 架构适配性</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">类别 · 02</div>
+            <h3><em>架构适配性</em> 驾驭</h3>
+            <div class="one-liner">定义和检查应用程序的架构特征。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>架构适配性驾驭</strong>将定义和检查应用程序架构特征的引导器和传感器分组。</p>
+              <p><strong>基本上就是：适应度函数。</strong></p>
+              <p><strong>示例：</strong></p>
+              <ul>
+                <li><strong>性能</strong>：前馈我们的性能要求的技能，以及反馈代理是否改进或降级它们的性能测试</li>
+                <li><strong>可观测性</strong>：描述更好可观测性的编码约定（如日志标准）的技能，以及要求代理反思其可用日志质量的调试指令</li>
+              </ul>
+              <p>这些检查确保代码符合架构设计的性能要求和可观测性标准。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 适应度函数</span>
+                <span class="conn-chip parallel">parallels ↔ 可维护性</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">类别 · 03</div>
+            <h3><em>行为</em> 驾驭</h3>
+            <div class="one-liner">房间里的大象：功能行为如何引导和感知？</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>行为驾驭</strong>是房间里的大象——我们如何引导和感知应用程序在功能上是否按我们需要的方式运行？</p>
+              <p><strong>当前主流方法：</strong></p>
+              <p>目前大多数给编码代理高自主权的人这样做：</p>
+              <ul>
+                <li><strong>前馈</strong>：功能规范（从简短提示到多文件描述的不同详细级别）</li>
+                <li><strong>反馈</strong>：检查 AI 生成的测试套件是否通过、是否有合理的高覆盖率、有些人甚至通过变异测试监控其质量。然后结合手动测试</li>
+              </ul>
+              <p><strong>问题：</strong></p>
+              <p>这种方法对 AI 生成的测试寄予了太多信心，这还不够好。</p>
+              <p><strong>一些同事在"批准的夹具模式"（approved fixtures pattern）中看到了好结果，但它在某些领域比其他领域更容易应用。他们选择性地在适合的地方使用它，这不是测试质量问题的全面答案。</p>
+              <p><strong>结论：</strong></p>
+              <p>总的来说，我们还有很多工作要做，以找出功能行为的良好驾驭，这些驾驭能足够增加我们的信心，减少监督和手动测试。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 测试策略</span>
+                <span class="conn-chip branch">↗ 分支：批准夹具模式</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="floor lvl-03" style="margin-top: 32px;">
+        <div class="floor-head">
+          <div class="number">03<span class="tag">实践要点</span></div>
+          <div class="head-body">
+            <div class="verb">实施考虑</div>
+            <h2><em>可驾驭性</em></h2>
+            <div class="tagline">环境属性：让代码库更容易被驾驭</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">环境 · 01</div>
+            <h3><em>可驾驭性</em> Harnessability</h3>
+            <div class="one-liner">不是每个代码库都同样易于驾驭。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>可驾驭性差异：</strong></p>
+              <p>用强类型语言编写的代码库自然有类型检查作为传感器；清晰可定义的模块边界提供架构约束规则；像 Spring 这样的框架抽象了代理甚至不需要担心的细节，因此隐式地增加了代理成功的机会。</p>
+              <p>没有这些属性，这些控制就不可用于构建。</p>
+              <p><strong>环境提供的能力（Ambient Affordances）：</strong></p>
+              <p>我的同事 Ned Letcher 用"环境提供的能力"这个术语来描述使代理环境更可驾驭的属性：</p>
+              <p><em>"环境本身的结构属性，使其在内部操作的代理可读、可导航和可处理。"</em></p>
+              <p><strong>绿地 vs 遗留：</strong></p>
+              <ul>
+                <li><strong>绿地团队</strong>：可以从第一天就嵌入可驾驭性——技术决策和架构选择决定了代码库将有多可治理</li>
+                <li><strong>遗留团队</strong>：面临更困难的问题——尤其是在积累了大量技术债务的应用中，驾驭最需要的地方也最难构建</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 技术选型</span>
+                <span class="conn-chip parallel">parallels ↔ 架构设计</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">模板 · 02</div>
+            <h3><em>驾驭模板</em></h3>
+            <div class="one-liner">服务拓扑演变为驾驭模板的潜力。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>服务拓扑到驾驭模板：</strong></p>
+              <p>大多数企业都有几种常见的服务拓扑，覆盖了他们 80% 的需求——通过 API 暴露数据的业务服务；事件处理服务；数据仪表板。</p>
+              <p>在许多成熟的工程组织中，这些拓扑已经在服务模板中编纂成文。这些可能会在未来演变为驾驭模板：</p>
+              <p><strong>驾驭模板 = 引导器和传感器的捆绑包</strong></p>
+              <p>它将编码代理束缚到拓扑的结构、约定和技术栈上。</p>
+              <p>团队可能会根据哪些驾驭已经可用，部分地基于此来选择技术栈和结构。</p>
+              <p><strong>挑战：</strong></p>
+              <p>我们当然会面临与服务模板类似的挑战。一旦团队实例化它们，它们就开始与上游改进不同步。驾驭模板将面临相同的版本控制和贡献问题，考虑到非确定性的引导器和传感器更难测试，这可能更糟。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by 可驾驭性</span>
+                <span class="conn-chip feeds">feeds → 标准化</span>
+                <span class="conn-chip parallel">parallels ↔ Ashby 定律</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">定律 · 03</div>
+            <h3><em>Ashby 定律</em></h3>
+            <div class="one-liner">必要多样性定律：调节器必须具有至少与被调节系统一样多的多样性。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>Ashby 定律（必要多样性定律）：</strong></p>
+              <p>定律说调节器必须具有至少与被调节系统一样多的多样性，它只能调节它有模型的东西。</p>
+              <p><strong>对驾驭模板的启示：</strong></p>
+              <ul>
+                <li>基于 LLM 的编码代理几乎可以产生任何东西</li>
+                <li>但承诺拓扑会缩小那个空间，使全面的驾驭更可实现</li>
+                <li>定义拓扑是一种多样性减少的举措</li>
+              </ul>
+              <p><strong>关键洞察：</strong></p>
+              <p>通过预定义的拓扑，我们限制了代理可以产生的输出空间，这使得构建全面的驾驭系统变得更加可实现。这是 Ashby 定律在实际工程中的应用。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by 驾驭模板</span>
+                <span class="conn-chip feeds">feeds → 复杂性控制</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">角色 · 04</div>
+            <h3><em>人类角色</em></h3>
+            <div class="one-liner">驾驭是人类开发者经验的外化和显式化。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>人类开发者带来的隐性驾驭：</strong></p>
+              <p>作为人类开发者，我们将技能和经验作为隐性驾驭带到每个代码库：</p>
+              <ul>
+                <li>我们吸收了约定和良好实践</li>
+                <li>我们感受到了复杂性的认知痛苦</li>
+                <li>我们知道我们的名字在提交上</li>
+                <li>我们承载着组织一致性——团队试图实现什么、哪些技术债务因业务原因被容忍、在这个特定上下文中"好"是什么样子的</li>
+                <li>我们以小步和人类速度前进，这创造了经验被触发和应用的思考空间</li>
+              </ul>
+              <p><strong>编码代理缺乏的：</strong></p>
+              <p>编码代理没有这些：</p>
+              <ul>
+                <li>没有社会问责</li>
+                <li>没有对 300 行函数的美学厌恶</li>
+                <li>没有直觉知道"我们不在这里这样做"</li>
+                <li>没有组织记忆</li>
+                <li>不知道哪个约定是承重的，哪个只是习惯</li>
+                <li>不知道技术上正确的解决方案是否符合团队试图做的事情</li>
+              </ul>
+              <p><strong>驾驭的局限性：</strong></p>
+              <p>驾驭是试图外化和显式化人类开发者经验带来的东西，但它只能走到这一步。</p>
+              <p>构建一个连贯的引导器、传感器和自修正循环系统是昂贵的，所以我们必须带着明确的目标进行优先级排序：</p>
+              <p><strong>好的驾驭目标：</strong></p>
+              <p>不一定旨在完全消除人类输入，而是将人类输入引导到我们输入最重要的地方。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 人机协作</span>
+                <span class="conn-chip parallel">parallels ↔ 转向循环</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── TAB 04: 开放问题 ── -->
+    <div class="tab-content">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">04<span class="tag">未来方向</span></div>
+          <div class="head-body">
+            <div class="verb">实践案例</div>
+            <h2><em>当前实践</em> 与开放问题</h2>
+            <div class="tagline">行业案例和尚未解决的问题</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">案例 · 01</div>
+            <h3><em>OpenAI</em> 团队</h3>
+            <div class="one-liner">分层架构、自定义 linter、结构化测试。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p>OpenAI 团队记录了他们的驾驭是什么样的：</p>
+              <ul>
+                <li><strong>分层架构</strong>：由自定义 linter 和结构化测试强制执行</li>
+                <li><strong>定期"垃圾收集"</strong>：扫描漂移并让代理建议修复</li>
+              </ul>
+              <p><strong>他们的结论：</strong></p>
+              <p>"我们现在最困难的挑战集中在设计环境、反馈循环和控制系统上。"</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip parallel">parallels ↔ Stripe</span>
+                <span class="conn-chip feeds">feeds → 环境设计</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">案例 · 02</div>
+            <h3><em>Stripe</em> Minions</h3>
+            <div class="one-liner">前推送钩子、启发式 linter、蓝图的集成。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p>Stripe 关于他们的 minions 的文章描述了：</p>
+              <ul>
+                <li><strong>前推送钩子</strong>：基于启发式运行相关 linter</li>
+                <li><strong>质量左移</strong>：他们强调"将反馈左移"的重要性</li>
+                <li><strong>蓝图</strong>：展示他们如何将反馈传感器集成到代理工作流中</li>
+              </ul>
+              <p><strong>关键实践：</strong></p>
+              <p>Stripe 的做法展示了如何在实际工作流中集成反馈传感器，实现质量左移。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip parallel">parallels ↔ OpenAI</span>
+                <span class="conn-chip feeds">feeds → 质量左移</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">趋势 · 03</div>
+            <h3>工具的<em>复兴</em></h3>
+            <div class="one-liner">变异测试、结构测试、LSP 集成。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>计算型反馈传感器的复兴：</strong></p>
+              <ul>
+                <li><strong>变异测试</strong>：过去未被充分利用，现在正在复兴</li>
+                <li><strong>结构测试</strong>：作为计算型反馈传感器的例子重新出现</li>
+              </ul>
+              <p><strong>LSP 和代码智能的集成：</strong></p>
+              <p>开发者之间越来越多地讨论 LSP（语言服务器协议）和代码智能在编码代理中的集成，这是计算型前馈引导的例子。</p>
+              <p><strong>Thoughtworks 团队的实践：</strong></p>
+              <p>我听到 Thoughtworks 团队关于使用计算型和推理型传感器解决架构漂移的故事：</p>
+              <ul>
+                <li>通过代理和自定义 linter 的混合提高 API 质量</li>
+                <li>通过"清洁工大军"（janitor army）提高代码质量</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 工具演进</span>
+                <span class="conn-chip parallel">parallels ↔ 传感器类型</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="floor lvl-02" style="margin-top: 32px;">
+        <div class="floor-head">
+          <div class="number">04<span class="tag">未解之谜</span></div>
+          <div class="head-body">
+            <div class="verb">研究问题</div>
+            <h2><em>开放问题</em></h2>
+            <div class="tagline">还需要解决的挑战</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">问题 · 01</div>
+            <h3>驾驭的<em>一致性</em></h3>
+            <div class="one-liner">如何保持增长中的驾驭一致性？</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>挑战：</strong></p>
+              <p>如何保持驾驭的连贯性，使引导器和传感器保持同步，不相互矛盾？</p>
+              <p><strong>具体问题：</strong></p>
+              <ul>
+                <li>引导器和传感器可能提供相互冲突的指令</li>
+                <li>随着驾驭系统增长，保持一致性变得困难</li>
+                <li>如何检测和解决引导器与传感器之间的冲突</li>
+              </ul>
+              <p><strong>需求：</strong></p>
+              <p>我们需要一种方法来评估驾驭覆盖率和质量，类似于代码覆盖率和变异测试对测试的作用。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 驾驭测试</span>
+                <span class="conn-chip parallel">parallels ↔ 代码覆盖率</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">问题 · 02</div>
+            <h3><em>权衡</em>决策</h3>
+            <div class="one-liner">代理如何在相互冲突的信号间做出明智权衡？</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>挑战：</strong></p>
+              <p>我们能在多大程度上信任代理在指令和反馈信号指向不同方向时做出明智的权衡？</p>
+              <p><strong>具体场景：</strong></p>
+              <ul>
+                <li>引导器要求代码可读性</li>
+                <li>传感器反馈性能问题</li>
+                <li>代理如何平衡这些相互冲突的要求</li>
+              </ul>
+              <p><strong>信任问题：</strong></p>
+              <p>我们需要理解代理在冲突信号下的决策逻辑，以便对其输出保持适当的信任水平。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 代理决策</span>
+                <span class="conn-chip parallel">parallels ↔ 信任建立</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">问题 · 03</div>
+            <h3><em>静默</em>传感器</h3>
+            <div class="one-liner">传感器从不触发意味着什么？</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>挑战：</strong></p>
+              <p>如果传感器从不触发，那是高质量还是检测机制不足的迹象？</p>
+              <p><strong>两种可能性：</strong></p>
+              <ol>
+                <li><strong>高质量</strong>：代码确实很好，没有问题需要报告</li>
+                <li><strong>检测不足</strong>：传感器没有正确捕获问题</li>
+              </ol>
+              <p><strong>评估困难：</strong></p>
+              <p>我们需要一种方法来区分这两种情况，确保传感器真正在提供价值，而不仅仅是静默运行。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 传感器验证</span>
+                <span class="conn-chip parallel">parallels ↔ 驾驭质量</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">问题 · 04</div>
+            <h3>工具化的<em>潜力</em></h3>
+            <div class="one-liner">配置、同步和推理前馈/反馈控制的工具。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>当前状态：</strong></p>
+              <p>前馈和反馈控制目前分散在交付步骤中，真正有潜力的是帮助配置、同步和推理它们的工具化。</p>
+              <p><strong>工具需求：</strong></p>
+              <ul>
+                <li><strong>配置工具</strong>：帮助定义和管理引导器/传感器</li>
+                <li><strong>同步工具</strong>：确保控制在不同步骤间保持一致</li>
+                <li><strong>推理工具</strong>：帮助理解控制系统作为整体的行为</li>
+              </ul>
+              <p><strong>工程实践：</strong></p>
+              <p>构建这个外部驾驭正在成为一种持续的工程实践，而不是一次性配置。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 工具开发</span>
+                <span class="conn-chip parallel">parallels ↔ 工程实践</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="floor lvl-03" style="margin-top: 32px;">
+        <div class="floor-head">
+          <div class="number">04<span class="tag">结论</span></div>
+          <div class="head-body">
+            <div class="verb">总结</div>
+            <h2><em>思维模型</em></h2>
+            <div class="tagline">从功能层面提升到战略性系统设计</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">愿景 · 01</div>
+            <h3><em>超越功能</em></h3>
+            <div class="one-liner">将对话提升到技能和 MCP 服务器之上。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>思维模型的目标：</strong></p>
+              <p>我在这里概述的思维模型描述了实践中已经在发生的技术，并帮助构建关于我们仍然需要弄清楚的事情的讨论。</p>
+              <p><strong>提升对话层次：</strong></p>
+              <p>它的目标是将对话提升到功能层面以上——从技能和 MCP 服务器到我们如何战略性地设计一个真正给予我们对代理产出的信心的控制系统。</p>
+              <p><strong>核心思想：</strong></p>
+              <p>驾驭工程不是关于单个功能或工具，而是关于设计一个整体的控制系统，这个系统能够：</p>
+              <ul>
+                <li>在问题发生前预防它们</li>
+                <li>在问题发生后自动修正它们</li>
+                <li>将人类注意力引导到最重要的地方</li>
+                <li>持续改进和适应</li>
+              </ul>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 系统设计</span>
+                <span class="conn-chip branch">↗ 分支：控制理论</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">致谢 · 02</div>
+            <h3><em>感谢</em></h3>
+            <div class="one-liner">感谢所有贡献者和审阅者。</div>
+            <div class="expand-hint">点击展开</div>
+            <div class="detail">
+              <p><strong>特别感谢：</strong></p>
+              <p>感谢 Doppler 团队在我们上次技术雷达会议上的精彩讨论，特别是 Kief Morris 提出了控制论的观点。</p>
+              <p>感谢 Ned Letcher、Chris Ford 和 Ben O'Mahoney 关于驾驭是什么的对话，以及 Matteo Vaccari 对行为驾驭的见解。</p>
+              <p><strong>审阅者：</strong></p>
+              <p>感谢所有花时间阅读草稿并提供宝贵反馈的人：Christoph Burgmer、Jörn Dinkla、Michael Feathers、Karrtik Iyer、Swapnil Phulse、Paul Sobocinski、Zhenjia Zhou。</p>
+              <p><strong>工具使用：</strong></p>
+              <p>GenAI（Claude 和 Claude Code）用于研究、从现有笔记中提取相关想法以及润色语言。</p>
+              <div class="conn-label">关联概念</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by 整个文章</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function toggleExpand(el) {
+  el.classList.toggle('expanded');
+}
+
+function switchTab(index) {
+  // Remove active class from all tabs and contents
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  contents.forEach(content => content.classList.remove('active'));
+
+  // Add active class to selected tab and content
+  tabs[index].classList.add('active');
+  contents[index].classList.add('active');
+}
+
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+  body.classList.remove('theme-light', 'theme-dark');
+  body.classList.add('theme-' + newTheme);
+
+  // Save preference
+  localStorage.setItem('nate-theme', newTheme);
+}
+
+// Load saved theme preference on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('nate-theme') || 'light';
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add('theme-' + savedTheme);
+});
+</script>
+
+</body>
+</html>
