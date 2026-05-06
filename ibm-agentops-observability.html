@@ -101,16 +101,17 @@
             align-items: center;
         }
 
-        .logo {
-            font-family: 'Fraunces', serif;
-            font-variation-settings: 'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
-            font-size: 24px;
-            color: var(--ink-100);
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
         }
 
-        .logo em {
-            font-style: normal;
-            color: var(--accent);
+        .topbar-title {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--ink-200);
         }
 
         .theme-toggle {
@@ -118,69 +119,50 @@
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            border: 1px solid var(--hairline);
-            border-radius: 6px;
             background: var(--tab-bg);
+            border: 1px solid var(--tab-border);
+            border-radius: 24px;
             cursor: pointer;
             transition: all 320ms ease;
+            font-size: 13px;
+            color: var(--ink-100);
         }
 
         .theme-toggle:hover {
+            background: var(--tab-active-bg);
             border-color: var(--accent);
-            background: var(--paper-100);
-        }
-
-        .theme-toggle .icon {
-            font-size: 18px;
-        }
-
-        .theme-toggle .label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
         }
 
         /* Hero */
         .hero {
-            padding: 120px 48px 80px;
             max-width: 1280px;
             margin: 0 auto;
+            padding: 80px 48px 60px;
         }
 
-        .hero h1 {
+        .hero-title {
             font-family: 'Fraunces', serif;
             font-variation-settings: 'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
             font-size: clamp(56px, 9.2vw, 148px);
             line-height: 0.92;
             letter-spacing: -0.035em;
-            margin-bottom: 32px;
-            color: var(--ink-100);
-        }
-
-        .hero h1 em {
-            font-style: normal;
-            color: var(--accent);
-        }
-
-        .hero-meta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--ink-300);
             margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--ink-200);
+            max-width: 600px;
         }
 
         /* Tab Navigation */
         .tab-nav {
             position: sticky;
-            top: 57px;
-            z-index: 999;
+            top: 65px;
+            z-index: 900;
             background: var(--paper-100);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--hairline);
-            padding: 12px 0;
         }
 
         .tab-nav-inner {
@@ -189,49 +171,54 @@
             padding: 0 48px;
             display: flex;
             gap: 4px;
+            overflow-x: auto;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px 20px;
-            border: 1px solid var(--tab-border);
-            border-radius: 6px 6px 0 0;
-            background: var(--tab-bg);
+            min-width: 140px;
+            padding: 16px 20px;
+            border: none;
+            background: transparent;
+            color: var(--ink-200);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
             cursor: pointer;
+            border-bottom: 2px solid transparent;
             transition: all 320ms ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .tab-btn:hover {
-            background: var(--paper-100);
+            color: var(--ink-100);
+            background: var(--tab-bg);
         }
 
         .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
             background: var(--tab-active-bg);
-            color: var(--tab-active-text);
-            border-color: var(--tab-active-text);
         }
 
         .tab-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            display: block;
+            font-size: 10px;
+            margin-bottom: 4px;
             opacity: 0.6;
         }
 
         .tab-label {
-            font-weight: 500;
-            font-size: 13px;
+            display: block;
         }
 
-        /* Content */
+        /* Tab Content */
         .tab-content {
             display: none;
-            padding: 48px 0 80px;
             max-width: 1280px;
             margin: 0 auto;
-            animation: fadeIn 320ms ease;
+            padding: 60px 48px;
+            animation: fadeIn 0.4s ease;
         }
 
         .tab-content.active {
@@ -239,63 +226,53 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Sections */
         .section {
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
 
         .section-title {
             font-family: 'Fraunces', serif;
             font-variation-settings: 'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
-            font-size: clamp(36px, 5.8vw, 56px);
-            line-height: 1;
-            margin-bottom: 24px;
-            color: var(--ink-100);
-        }
-
-        .section-title em {
-            font-style: normal;
-            color: var(--accent);
+            font-size: clamp(36px, 4vw, 56px);
+            margin-bottom: 12px;
+            line-height: 1.1;
         }
 
         .section-subtitle {
-            font-size: 21px;
-            font-weight: 400;
-            margin-bottom: 16px;
+            font-size: 18px;
             color: var(--ink-200);
+            margin-bottom: 32px;
         }
 
         /* Cards */
         .card {
-            border: 1px solid var(--hairline);
             background: var(--card-bg);
+            border: 1px solid var(--hairline);
             backdrop-filter: blur(6px);
-            border-radius: 12px;
             padding: 24px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             transition: all 320ms ease;
         }
 
         .card:hover {
             border-color: var(--accent);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px var(--hairline);
         }
 
         .card-title {
-            font-family: 'Fraunces', serif;
-            font-variation-settings: 'opsz' 72, 'wght' 340, 'SOFT' 20, 'WONK' 1;
-            font-size: 24px;
+            font-weight: 600;
             margin-bottom: 12px;
-            color: var(--ink-100);
-        }
-
-        .card-title em {
-            font-style: normal;
-            color: var(--accent);
+            font-size: 16px;
         }
 
         .card-content {
@@ -303,117 +280,73 @@
             line-height: 1.6;
         }
 
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
-            font-size: 15px;
-        }
-
-        th {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            text-align: left;
-            padding: 12px 16px;
-            border-bottom: 2px solid var(--hairline);
-            color: var(--ink-100);
-            font-weight: 500;
-        }
-
-        td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--hairline);
-            color: var(--ink-200);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Code Blocks */
-        pre {
-            background: var(--code-bg);
-            border: 1px solid var(--hairline);
-            border-radius: 8px;
-            padding: 20px;
-            overflow-x: auto;
-            margin: 24px 0;
-        }
-
-        code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            line-height: 1.5;
-            color: var(--ink-100);
-        }
-
-        .inline-code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            background: var(--code-bg);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: var(--accent);
-        }
-
-        /* Lists */
-        ul, ol {
-            margin: 16px 0;
-            padding-left: 24px;
-        }
-
-        li {
-            margin: 8px 0;
-            color: var(--ink-200);
-        }
-
         /* Feature Grid */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 16px;
             margin: 24px 0;
         }
 
         .feature-item {
-            padding: 16px;
-            border-left: 3px solid var(--accent);
-            background: var(--paper-200);
-            border-radius: 0 8px 8px 0;
+            padding: 20px;
+            background: var(--tab-bg);
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
         }
 
         .feature-item-title {
             font-weight: 600;
-            color: var(--ink-100);
             margin-bottom: 8px;
+            font-size: 14px;
         }
 
         .feature-item-content {
+            font-size: 14px;
             color: var(--ink-200);
-            font-size: 15px;
         }
 
-        /* Architecture Diagram */
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        th {
+            font-weight: 600;
+            font-size: 14px;
+            background: var(--tab-bg);
+        }
+
+        td {
+            font-size: 14px;
+            color: var(--ink-200);
+        }
+
+        /* Diagram */
         .diagram {
-            background: var(--paper-200);
+            background: var(--code-bg);
             border: 1px solid var(--hairline);
             border-radius: 8px;
-            padding: 24px;
-            margin: 24px 0;
+            padding: 20px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            font-size: 13px;
             line-height: 1.6;
-            color: var(--ink-200);
             overflow-x: auto;
+            margin: 24px 0;
+            white-space: pre;
         }
 
         /* Link List */
         .link-list {
             list-style: none;
-            padding: 0;
         }
 
         .link-list li {
@@ -421,66 +354,39 @@
             border-bottom: 1px solid var(--hairline);
         }
 
-        .link-list li:last-child {
-            border-bottom: none;
-        }
-
         .link-list a {
             color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: color 320ms ease;
         }
 
         .link-list a:hover {
-            color: var(--ink-100);
+            color: var(--signal);
         }
 
-        .link-list .num {
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--tab-bg);
+            border: 1px solid var(--hairline);
+            border-radius: 16px;
+            font-size: 12px;
+            margin: 4px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--ink-300);
         }
 
-        /* Comparison */
-        .comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin: 24px 0;
+        /* Text Utilities */
+        .text-accent {
+            color: var(--accent);
         }
 
-        .comparison-item {
-            padding: 20px;
-            border-radius: 8px;
+        .text-signal {
+            color: var(--signal);
         }
 
-        .comparison-item.success {
-            background: linear-gradient(135deg, rgba(22, 163, 74, 0.1), rgba(22, 163, 74, 0.05));
-            border: 1px solid rgba(22, 163, 74, 0.2);
-        }
-
-        .comparison-item.error {
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(220, 38, 38, 0.05));
-            border: 1px solid rgba(220, 38, 38, 0.2);
-        }
-
-        .comparison-item-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .comparison-item.success .comparison-item-title {
+        .text-grow {
             color: var(--grow);
-        }
-
-        .comparison-item.error .comparison-item-title {
-            color: var(--warn);
         }
 
         /* Responsive */
@@ -488,6 +394,10 @@
             .topbar-inner, .hero, .tab-nav-inner, .tab-content {
                 padding-left: 24px;
                 padding-right: 24px;
+            }
+
+            .hero {
+                padding-top: 40px;
             }
 
             .tab-nav-inner {
@@ -499,42 +409,31 @@
                 min-width: 120px;
             }
 
-            .comparison {
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
-
-            .hero h1 {
-                font-size: 48px;
-            }
         }
-
-        /* Utility */
-        .text-accent { color: var(--accent); }
-        .text-signal { color: var(--signal); }
-        .text-grow { color: var(--grow); }
-        .text-warn { color: var(--warn); }
     </style>
 </head>
 <body class="theme-light">
     <!-- Top Bar -->
     <div class="topbar">
         <div class="topbar-inner">
-            <div class="logo">IBM <em>AgentOps</em></div>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <span class="icon">◐</span>
-                <span class="label">Theme</span>
+            <div class="topbar-left">
+                <span class="font-mono">IBM</span>
+                <span class="topbar-title">AgentOps 解决方案全景</span>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span>◐</span>
+                <span>主题</span>
             </button>
         </div>
     </div>
 
     <!-- Hero -->
     <div class="hero">
-        <div class="hero-meta">
-            <span>Created: 2026-05-06</span>
-            <span style="margin: 0 12px;">•</span>
-            <span>Tags: IBM • AgentOps • AI • 可观测性</span>
-        </div>
-        <h1>IBM <em>AgentOps</em><br>解决方案全景</h1>
+        <h1 class="hero-title">IBM AgentOps</h1>
+        <p class="hero-subtitle">企业级 AI 智能体编排、监控与治理的完整解决方案</p>
     </div>
 
     <!-- Tab Navigation -->
@@ -568,8 +467,8 @@
     </nav>
 
     <!-- Tab Contents -->
+    <!-- Tab 1: 核心概念 -->
     <div class="tab-content active">
-        <!-- 核心概念 -->
         <div class="section">
             <h2 class="section-title">什么是 <em>AgentOps</em>？</h2>
             <p class="section-subtitle">专注于自主 AI 智能体生命周期管理的新兴实践</p>
@@ -593,7 +492,7 @@
                 </div>
                 <div class="feature-item">
                     <div class="feature-item-title">年复合增长率</div>
-                    <div class="feature-item-content"><span class="text-signal">极高</span></div>
+                    <div class="feature-item-content"><span class="text-grow">极高</span></div>
                 </div>
             </div>
 
@@ -625,7 +524,10 @@
                 </tbody>
             </table>
         </div>
+    </div>
 
+    <!-- Tab 2: IBM watsonx Orchestrate -->
+    <div class="tab-content">
         <div class="section">
             <h2 class="section-title">IBM <em>watsonx</em> Orchestrate</h2>
             <p class="section-subtitle">IBM 的 AgentOps 核心平台</p>
@@ -684,40 +586,34 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="inline-code">ReAct</span></td>
+                        <td><strong>ReAct</strong></td>
                         <td>开放式探索</td>
                     </tr>
                     <tr>
-                        <td><span class="inline-code">Plan-Act</span></td>
+                        <td><strong>Plan-Act</strong></td>
                         <td>结构化执行</td>
                     </tr>
                     <tr>
-                        <td><span class="inline-code">确定性编排</span></td>
+                        <td><strong>确定性编排</strong></td>
                         <td>可预测性关键场景</td>
                     </tr>
                 </tbody>
             </table>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">治理目录</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <div class="feature-item-title">IBM 构建的智能体</div>
-                    <div class="feature-item-content">企业级、域特定智能体（<span class="text-accent">500+ 工具</span>）</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">合作伙伴解决方案</div>
-                    <div class="feature-item-content">经过验证的第三方智能体</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">自定义智能体</div>
-                    <div class="feature-item-content">企业内部开发的智能体</div>
+            <div class="card">
+                <div class="card-content">
+                    <strong>三大组件库：</strong><br>
+                    1. <strong>IBM 构建的智能体</strong> - 企业级、域特定智能体（500+ 工具）<br>
+                    2. <strong>合作伙伴解决方案</strong> - 经过验证的第三方智能体<br>
+                    3. <strong>自定义智能体</strong> - 企业内部开发的智能体
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Tab 3: Agentic Control Plane -->
     <div class="tab-content">
-        <!-- Agentic Control Plane -->
         <div class="section">
             <h2 class="section-title">Agentic <em>Control Plane</em></h2>
             <p class="section-subtitle">统一智能体控制平面</p>
@@ -725,7 +621,7 @@
             <div class="card">
                 <div class="card-title">定义</div>
                 <div class="card-content">
-                    <strong>Agentic Control Plane</strong> 是 IBM watsonx Orchestrate 的统一智能体控制平面，它将企业的整个 AI 智能体生态系统纳入一个集中管理平台。
+                    <strong>Agentic Control Plane</strong> 是 IBM watsonx Orchestrate 的<strong>统一智能体控制平面</strong>，它将企业的整个 AI 智能体生态系统纳入一个集中管理平台。
                 </div>
             </div>
 
@@ -745,85 +641,51 @@
                 </div>
             </div>
 
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">架构特点</h3>
-            <div class="diagram">
-开放架构
-    ↓
-与现有的智能体、工具和系统协同工作
-    ↓
-无需重建或替换
-    ↓
-保护现有投资
-
-混合部署
-    ↓
-跨云、本地和现有系统运行智能体
-    ↓
-无需重新平台化
-    ↓
-AI 在最有意义的地方运行
-
-企业级信任
-    ↓
-安全、治理和合规
-    ↓
-企业级控制
-    ↓
-适当的监督和可追溯性
-            </div>
-
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">统一 AI Gateway</h3>
+            <h3 style="margin-top: 40px; margin-bottom: 16px;">五大核心功能</h3>
             <div class="card">
-                <div class="card-title">支持的 LLM 提供商</div>
+                <div class="card-title">1. 智能体生态系统编排</div>
                 <div class="card-content">
-                    <div class="feature-grid">
-                        <div>IBM Granite</div>
-                        <div>OpenAI</div>
-                        <div>Anthropic</div>
-                        <div>Google Gemini</div>
-                        <div>Mistral</div>
-                        <div>Llama</div>
-                    </div>
-                    <p style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--hairline);">
-                        <strong>保持：</strong>治理 • 可观测性 • 可审计性 • <span class="text-accent">无供应商锁定</span>
-                    </p>
+                    协调 智能体 + 工具 + 工作流 + 基础模型<br>
+                    实时路由到正确的专用智能体或工具
                 </div>
             </div>
 
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">实际应用场景：HR 智能体入职</h3>
-            <div class="comparison">
-                <div class="comparison-item error">
-                    <div class="comparison-item-title">
-                        <span>❌</span> 不带 Control Plane
-                    </div>
-                    <ul style="margin-top: 12px;">
-                        <li>智能体设置福利和薪资</li>
-                        <li>团队缺乏可见性</li>
-                        <li>无法确认策略是否正确应用</li>
-                        <li>无法了解如何处理敏感数据</li>
-                        <li>问题出现后才能发现</li>
-                    </ul>
+            <div class="card">
+                <div class="card-title">2. 集中治理和可观测性</div>
+                <div class="card-content">
+                    治理仪表板、策略执行、使用监控、自动防护栏
                 </div>
-                <div class="comparison-item success">
-                    <div class="comparison-item-title">
-                        <span>✅</span> 带 Control Plane
-                    </div>
-                    <ul style="margin-top: 12px;">
-                        <li>每个操作都被监控和治理</li>
-                        <li>异常被实时标记和纠正</li>
-                        <li>端到端流程可见</li>
-                        <li>从头到尾无缝入职体验</li>
-                    </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-title">3. 统一 AI Gateway</div>
+                <div class="card-content">
+                    <strong>支持的 LLM 提供商：</strong>
+                    <span class="tag">IBM Granite</span>
+                    <span class="tag">OpenAI</span>
+                    <span class="tag">Anthropic</span>
+                    <span class="tag">Google Gemini</span>
+                    <span class="tag">Mistral</span>
+                    <span class="tag">Llama</span>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 16px;">架构特点</h3>
+            <div class="card">
+                <div class="card-content">
+                    <strong>开放性：</strong>与现有的智能体、工具和系统协同工作<br>
+                    <strong>混合支持：</strong>跨云、本地和现有系统运行智能体<br>
+                    <strong>企业级信任：</strong>内置安全、治理和合规
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Tab 4: IBM Instana 可观测性 -->
     <div class="tab-content">
-        <!-- IBM Instana -->
         <div class="section">
             <h2 class="section-title">IBM <em>Instana</em> 可观测性</h2>
-            <p class="section-subtitle">全栈可观测性，特别针对 AI Agent 和 LLM 应用</p>
+            <p class="section-subtitle">全栈可观测性，专为 AI Agent 和 LLM 设计</p>
 
             <div class="card">
                 <div class="card-title">产品定位</div>
@@ -835,20 +697,20 @@ AI 在最有意义的地方运行
             <h3 style="margin-top: 40px; margin-bottom: 16px;">AI Agent 和 LLM 可观测性功能</h3>
             <div class="feature-grid">
                 <div class="feature-item">
-                    <div class="feature-item-title">自动发现</div>
-                    <div class="feature-item-content">自动发现 AI 组件，无需手动检测</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">端到端追踪</div>
-                    <div class="feature-item-content">从用户提示到模型推理和下游服务</div>
+                    <div class="feature-item-title">自动发现和映射</div>
+                    <div class="feature-item-content">自动发现 AI 组件、端到端工作流追踪、动态图应用模型</div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-item-title">深度可见性</div>
-                    <div class="feature-item-content">提示、输出、性能、成本、业务影响</div>
+                    <div class="feature-item-content">提示和输出、性能指标、质量信号、成本追踪</div>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-item-title">RAG 可视化</div>
-                    <div class="feature-item-content">嵌入服务、向量存储、API 调用、LLM 端点</div>
+                    <div class="feature-item-title">RAG 和多模型管道可视化</div>
+                    <div class="feature-item-content">自动识别问题根源：检索缓慢、回退循环、模型饱和</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-item-title">AgentOps 运行时监控</div>
+                    <div class="feature-item-content">任务级可见性、自适应基线、内置评估</div>
                 </div>
             </div>
 
@@ -863,378 +725,175 @@ AI 在最有意义的地方运行
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="inline-code">LangChain</span></td>
+                        <td><strong>LangChain</strong></td>
                         <td>LLM 应用开发</td>
                         <td>LLM 交互、工具使用、工作流执行</td>
                     </tr>
                     <tr>
-                        <td><span class="inline-code">LangGraph</span></td>
+                        <td><strong>LangGraph</strong></td>
                         <td>状态机式智能体</td>
                         <td>复杂工作流追踪、成本监控</td>
                     </tr>
                     <tr>
-                        <td><span class="inline-code">Langflow</span></td>
-                        <td>可视化 AI 流程</td>
-                        <td>流程可视化、性能分析</td>
-                    </tr>
-                    <tr>
-                        <td><span class="inline-code">CrewAI</span></td>
+                        <td><strong>CrewAI</strong></td>
                         <td>多智能体协作</td>
                         <td>智能体间通信、任务分配</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amazon Bedrock AgentCore</strong></td>
+                        <td>AWS 智能体</td>
+                        <td>AWS 服务集成监控</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OpenAI Agents</strong></td>
+                        <td>OpenAI 智能体</td>
+                        <td>GPT 模型交互监控</td>
                     </tr>
                 </tbody>
             </table>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">LLM 提供商支持</h3>
             <div class="card">
-                <div class="card-title">基于 OpenLLMetry 标准支持</div>
                 <div class="card-content">
-                    <div class="feature-grid">
-                        <div>IBM watsonx.ai</div>
-                        <div>OpenAI</div>
-                        <div>Anthropic</div>
-                        <div>Amazon Bedrock</div>
-                        <div>Google Gemini</div>
-                        <div>Groq</div>
-                        <div>DeepSeek</div>
-                    </div>
+                    基于 <strong>OpenLLMetry</strong> 标准支持：<br>
+                    <span class="tag">IBM watsonx.ai</span>
+                    <span class="tag">OpenAI</span>
+                    <span class="tag">Anthropic</span>
+                    <span class="tag">Amazon Bedrock</span>
+                    <span class="tag">Google Gemini</span>
+                    <span class="tag">Groq</span>
+                    <span class="tag">DeepSeek</span>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Tab 5: 开源项目和框架 -->
     <div class="tab-content">
-        <!-- 开源项目 -->
         <div class="section">
             <h2 class="section-title">开源项目和框架</h2>
-            <p class="section-subtitle">完全基于 OpenTelemetry 标准构建</p>
+            <p class="section-subtitle">基于 OpenTelemetry 标准的开放生态系统</p>
 
             <div class="card">
                 <div class="card-title">核心标准：OpenTelemetry (OTel)</div>
                 <div class="card-content">
-                    <p style="margin-bottom: 16px;"><strong>OpenTelemetry (OTel)</strong> 是开源可观测性框架，由 CNCF 托管，用于生成、收集和导出遥测数据。</p>
-                    <p><strong>Instana 对 OpenTelemetry 的支持：</strong></p>
-                    <ul style="margin-top: 12px;">
-                        <li>✅ <strong>Traces</strong> - 一般可用</li>
-                        <li>✅ <strong>Metrics</strong> - 一般可用</li>
-                        <li>✅ <strong>Logs</strong> - 一般可用</li>
-                        <li>✅ <strong>OTLP 格式</strong> - 完全支持</li>
-                        <li>✅ <strong>W3C Trace Context</strong> - 分布式追踪标准</li>
-                    </ul>
+                    <strong>IBM 完全基于 OpenTelemetry 标准构建 AgentOps 解决方案：</strong><br><br>
+                    <code>OpenTelemetry (OTel) → 开源可观测性框架 → CNCF 托管 → 用于生成、收集和导出遥测数据</code>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 16px;">Instana 对 OpenTelemetry 的支持</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-item-title">✅ Traces</div>
+                    <div class="feature-item-content">一般可用</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-item-title">✅ Metrics</div>
+                    <div class="feature-item-content">一般可用</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-item-title">✅ Logs</div>
+                    <div class="feature-item-content">一般可用</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-item-title">✅ OTLP 格式</div>
+                    <div class="feature-item-content">完全支持</div>
                 </div>
             </div>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">Traceloop (OpenLLMetry)</h3>
-            <div class="diagram">
-Traceloop (OpenLLMetry)
-    ↓
-AI 语义约定
-    ↓
-OpenTelemetry 数据源
-    ↓
-Instana Agent
-    ↓
-AI Sensor 转换
-    ↓
-Instana Dashboard
+            <div class="card">
+                <div class="card-content">
+                    用于 AI 可观测性的关键开源项目：<br><br>
+                    <code>Traceloop (OpenLLMetry) → AI 语义约定 → OpenTelemetry 数据源 → Instana Agent → AI Sensor 转换 → Instana Dashboard</code>
+                </div>
             </div>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">架构集成方式</h3>
-
             <div class="card">
                 <div class="card-title">方式 1：直接发送到 Instana Agent</div>
                 <div class="card-content">
-                    <div class="diagram" style="font-size: 11px;">
-应用程序
-    ↓
-OpenTelemetry SDK
-    ↓
-OTLP (gRPC: 4317 / HTTP: 4318)
-    ↓
-Instana Host Agent
-    ↓
-Instana Backend
-                    </div>
-                    <p style="margin-top: 16px;"><strong>配置示例：</strong></p>
-                    <pre><code>com.instana.plugin.opentelemetry:
-  grpc:
-    enabled: true
-  http:
-    enabled: true</code></pre>
+                    <code>应用程序 → OpenTelemetry SDK → OTLP (gRPC: 4317 / HTTP: 4318) → Instana Host Agent → Instana Backend</code>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-title">方式 2：通过 OpenTelemetry Collector</div>
                 <div class="card-content">
-                    <div class="diagram" style="font-size: 11px;">
-应用程序
-    ↓
-OpenTelemetry SDK
-    ↓
-OpenTelemetry Collector
-    ↓
-OTLP Exporter
-    ↓
-Instana Agent/Backend
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">方式 3：W3C Trace Context</div>
-                <div class="card-content">
-                    <div class="diagram" style="font-size: 11px;">
-服务 A → [W3C Trace Headers] → 服务 B
-    ↓
-OpenTelemetry + Instana
-    ↓
-统一追踪
-                    </div>
+                    <code>应用程序 → OpenTelemetry SDK → OpenTelemetry Collector → OTLP Exporter → Instana Agent/Backend</code>
                 </div>
             </div>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">IBM Research AgentOps 技术</h3>
             <div class="card">
-                <div class="card-title">三大核心构建</div>
                 <div class="card-content">
-                    <ol style="margin-top: 12px;">
-                        <li style="margin-bottom: 12px;">
-                            <strong>基于 OpenTelemetry (OTEL) 标准构建</strong><br>
-                            开源 SDK，自动和手动检测支持，支持 LangChain、watsonx、CrewAI、LangGraph 等框架
-                        </li>
-                        <li style="margin-bottom: 12px;">
-                            <strong>OTEL 之上的开放分析平台</strong><br>
-                            高分辨率洞察智能体行为，可扩展架构，易于添加新指标，AI 驱动的分析
-                        </li>
-                        <li>
-                            <strong>AI 驱动的分析能力</strong><br>
-                            多追踪工作流视图，轨迹探索，智能异常检测
-                        </li>
-                    </ol>
-                    <p style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--hairline);">
-                        <strong>实际应用：</strong>IBM Research 成功使用 AgentOps 技术协助构建多个 IBM 自动化软件产品，包括 <span class="text-accent">Instana</span>、Concert 和 Apptio。
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">关键优势对比</h2>
-
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">watsonx Orchestrate vs Instana</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>特性</th>
-                        <th>watsonx Orchestrate</th>
-                        <th>Instana</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>主要定位</strong></td>
-                        <td>智能体编排和控制平台</td>
-                        <td>全栈可观测性平台</td>
-                    </tr>
-                    <tr>
-                        <td><strong>核心能力</strong></td>
-                        <td>构建、编排、治理智能体</td>
-                        <td>监控、追踪、分析</td>
-                    </tr>
-                    <tr>
-                        <td><strong>AgentOps 侧重</strong></td>
-                        <td>生命周期管理、策略执行</td>
-                        <td>运行时监控、性能分析</td>
-                    </tr>
-                    <tr>
-                        <td><strong>开源基础</strong></td>
-                        <td>OpenTelemetry + Traceloop</td>
-                        <td>OpenTelemetry + Traceloop</td>
-                    </tr>
-                    <tr>
-                        <td><strong>部署方式</strong></td>
-                        <td>SaaS / 自托管</td>
-                        <td>SaaS / 自托管</td>
-                    </tr>
-                    <tr>
-                        <td><strong>监控对象</strong></td>
-                        <td>智能体行为、工作流</td>
-                        <td>应用 + 基础设施 + AI</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 style="margin-top: 40px; margin-bottom: 16px;">统一优势</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <div class="feature-item-title">供应商中立</div>
-                    <div class="feature-item-content">基于 OpenTelemetry 标准，无锁定</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">自动检测</div>
-                    <div class="feature-item-content">无需手动代码检测</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">全栈可见性</div>
-                    <div class="feature-item-content">从模型到基础设施的完整视图</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">实时洞察</div>
-                    <div class="feature-item-content">每秒更新的高保真数据</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">成本感知</div>
-                    <div class="feature-item-content">Token、API 调用、GPU 使用成本追踪</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-item-title">治理就绪</div>
-                    <div class="feature-item-content">内置安全和合规控制</div>
+                    <strong>三大核心构建：</strong><br>
+                    1. 基于 OpenTelemetry (OTEL) 标准构建 - 开源 SDK、自动和手动检测支持<br>
+                    2. OTEL 之上的开放分析平台 - 高分辨率洞察智能体行为<br>
+                    3. AI 驱动的分析能力 - 多追踪工作流视图、轨迹探索、智能异常检测
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Tab 6: 引用来源 -->
     <div class="tab-content">
-        <!-- 引用来源 -->
         <div class="section">
             <h2 class="section-title">引用来源</h2>
-            <p class="section-subtitle">25 个 IBM 官方链接</p>
+            <p class="section-subtitle">25 个 IBM 官方资源链接</p>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">IBM 官方产品页面</h3>
             <ul class="link-list">
-                <li>
-                    <span class="num">01</span>
-                    <a href="https://www.ibm.com/think/topics/agentops" target="_blank">What is AgentOps? - IBM Think</a>
-                </li>
-                <li>
-                    <span class="num">02</span>
-                    <a href="https://www.ibm.com/products/watsonx-orchestrate" target="_blank">IBM watsonx Orchestrate 产品页</a>
-                </li>
-                <li>
-                    <span class="num">03</span>
-                    <a href="https://www.ibm.com/products/instana/ai-agent-llm-observability" target="_blank">AI Agent and LLM Observability - IBM Instana</a>
-                </li>
-                <li>
-                    <span class="num">04</span>
-                    <a href="https://www.ibm.com/products/instana" target="_blank">IBM Instana Observability 产品页</a>
-                </li>
-                <li>
-                    <span class="num">05</span>
-                    <a href="https://www.ibm.com/products/instana/opentelemetry" target="_blank">OpenTelemetry - IBM Instana</a>
-                </li>
+                <li><a href="https://www.ibm.com/think/topics/agentops" target="_blank">What is AgentOps?</a></li>
+                <li><a href="https://www.ibm.com/products/watsonx-orchestrate" target="_blank">IBM watsonx Orchestrate</a></li>
+                <li><a href="https://www.ibm.com/products/instana/ai-agent-llm-observability" target="_blank">AI Agent and LLM Observability</a></li>
+                <li><a href="https://www.ibm.com/products/instana" target="_blank">IBM Instana Observability</a></li>
+                <li><a href="https://www.ibm.com/products/instana/opentelemetry" target="_blank">OpenTelemetry</a></li>
             </ul>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">IBM 文档</h3>
             <ul class="link-list">
-                <li>
-                    <span class="num">06</span>
-                    <a href="https://www.ibm.com/docs/en/instana-observability?topic=technologies-ai-agent-frameworks" target="_blank">Monitoring AI agent frameworks - IBM Documentation</a>
-                </li>
-                <li>
-                    <span class="num">07</span>
-                    <a href="https://www.ibm.com/docs/en/instana-observability/1.0.315?topic=opentelemetry" target="_blank">OpenTelemetry Documentation - IBM Docs</a>
-                </li>
-                <li>
-                    <span class="num">08</span>
-                    <a href="https://www.ibm.com/docs/en/iofgs?topic=instana-agent" target="_blank">Sending OpenTelemetry data to Instana agent - IBM Docs</a>
-                </li>
-                <li>
-                    <span class="num">09</span>
-                    <a href="https://www.ibm.com/docs/en/instana-observability?topic=collectors-opentelemetry-collector" target="_blank">Integrating with OpenTelemetry Collector - IBM Docs</a>
-                </li>
+                <li><a href="https://www.ibm.com/docs/en/instana-observability?topic=technologies-ai-agent-frameworks" target="_blank">Monitoring AI agent frameworks</a></li>
+                <li><a href="https://www.ibm.com/docs/en/instana-observability/1.0.315?topic=opentelemetry" target="_blank">OpenTelemetry Documentation</a></li>
+                <li><a href="https://www.ibm.com/docs/en/iofgs?topic=instana-agent" target="_blank">Sending OpenTelemetry data to Instana agent</a></li>
+                <li><a href="https://www.ibm.com/docs/en/instana-observability?topic=collectors-opentelemetry-collector" target="_blank">Integrating with OpenTelemetry Collector</a></li>
             </ul>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">IBM Research 和技术博客</h3>
             <ul class="link-list">
-                <li>
-                    <span class="num">10</span>
-                    <a href="https://research.ibm.com/blog/ibm-agentops-ai-agents-observability" target="_blank">How to know if your AI agents are working - IBM Research</a>
-                </li>
-                <li>
-                    <span class="num">11</span>
-                    <a href="https://www.ibm.com/think/insights/ai-agent-observability" target="_blank">Why observability is essential for AI agents - IBM Think</a>
-                </li>
-                <li>
-                    <span class="num">12</span>
-                    <a href="https://www.ibm.com/think/topics/observability-engineering" target="_blank">What Is Observability Engineering? - IBM Think</a>
-                </li>
-                <li>
-                    <span class="num">13</span>
-                    <a href="https://community.ibm.com/community/user/blogs/sanjita-gupta/2025/05/07/opentel-meets-ibm-instana" target="_blank">Modern Observability Stack: Opentel Meets IBM Instana - IBM Community</a>
-                </li>
-                <li>
-                    <span class="num">14</span>
-                    <a href="https://community.ibm.com/community/user/blogs/divya-pathak/2025/06/25/observe-multi-agent-rag-workflows-with-instana" target="_blank">Observability for Multi-Agent RAG Workflows - IBM Community</a>
-                </li>
+                <li><a href="https://research.ibm.com/blog/ibm-agentops-ai-agents-observability" target="_blank">How to know if your AI agents are working</a></li>
+                <li><a href="https://www.ibm.com/think/insights/ai-agent-observability" target="_blank">Why observability is essential for AI agents</a></li>
+                <li><a href="https://www.ibm.com/think/topics/observability-engineering" target="_blank">What Is Observability Engineering?</a></li>
+                <li><a href="https://community.ibm.com/community/user/blogs/sanjita-gupta/2025/05/07/opentel-meets-ibm-instana" target="_blank">Modern Observability Stack</a></li>
+                <li><a href="https://community.ibm.com/community/user/blogs/divya-pathak/2025/06/25/observe-multi-agent-rag-workflows-with-instana" target="_blank">Observability for Multi-Agent RAG Workflows</a></li>
             </ul>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">IBM 新闻公告</h3>
             <ul class="link-list">
-                <li>
-                    <span class="num">15</span>
-                    <a href="https://www.ibm.com/new/announcements/manage-all-your-ai-agents-in-one-place-with-watsonx-orchestrate" target="_blank">Manage all your AI agents in one place - IBM News</a>
-                </li>
-                <li>
-                    <span class="num">16</span>
-                    <a href="https://www.ibm.com/new/announcements/new-agentic-workflows-and-domain-agents-in-ibm-watsonx-orchestrate" target="_blank">From orchestration to outcomes - IBM News</a>
-                </li>
-                <li>
-                    <span class="num">17</span>
-                    <a href="https://www.ibm.com/new/announcements/revolutionizing-ai-agent-management-with-ibm-watsonx-orchestrate-new-observability-and-governance-capabilities" target="_blank">Revolutionizing AI Agent management - IBM News</a>
-                </li>
-                <li>
-                    <span class="num">18</span>
-                    <a href="https://www.ibm.com/new/announcements/now-ga-monitor-agents-in-runtime-in-watsonx-orchestrate" target="_blank">Now GA: Monitor agents at runtime - IBM News</a>
-                </li>
-                <li>
-                    <span class="num">19</span>
-                    <a href="https://www.ibm.com/new/announcements/genal-llm-observability" target="_blank">Observe GenAI with IBM Instana - IBM News</a>
-                </li>
+                <li><a href="https://www.ibm.com/new/announcements/manage-all-your-ai-agents-in-one-place-with-watsonx-orchestrate" target="_blank">Manage all your AI agents in one place</a></li>
+                <li><a href="https://www.ibm.com/new/announcements/new-agentic-workflows-and-domain-agents-in-ibm-watsonx-orchestrate" target="_blank">From orchestration to outcomes</a></li>
+                <li><a href="https://www.ibm.com/new/announcements/revolutionizing-ai-agent-management-with-ibm-watsonx-orchestrate-new-observability-and-governance-capabilities" target="_blank">Revolutionizing AI Agent management</a></li>
+                <li><a href="https://www.ibm.com/new/announcements/now-ga-monitor-agents-at-runtime-in-watsonx-orchestrate" target="_blank">Now GA: Monitor agents at runtime</a></li>
+                <li><a href="https://www.ibm.com/new/announcements/genal-llm-observability" target="_blank">Observe GenAI with IBM Instana</a></li>
             </ul>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">IBM Think 和学习资源</h3>
             <ul class="link-list">
-                <li>
-                    <span class="num">20</span>
-                    <a href="https://www.ibm.com/think/ai-agents" target="_blank">The 2026 Guide to AI Agents - IBM Think</a>
-                </li>
-                <li>
-                    <span class="num">21</span>
-                    <a href="https://www.ibm.com/think/topics/watsonx-agents" target="_blank">What are watsonx Agents? - IBM Think</a>
-                </li>
-                <li>
-                    <span class="num">22</span>
-                    <a href="https://www.ibm.com/think/topics/ai-agent-orchestration" target="_blank">What is AI Agent Orchestration? - IBM Think</a>
-                </li>
-                <li>
-                    <span class="num">23</span>
-                    <a href="https://www.ibm.com/think/insights/ai-agent-governance" target="_blank">AI Agent Governance - IBM Think Insights</a>
-                </li>
-                <li>
-                    <span class="num">24</span>
-                    <a href="https://www.ibm.com/think/tutorials/agentops-telemetry-watsonx-orchestrate" target="_blank">AgentOps with IBM Telemetry Tutorial - IBM Think</a>
-                </li>
+                <li><a href="https://www.ibm.com/think/ai-agents" target="_blank">The 2026 Guide to AI Agents</a></li>
+                <li><a href="https://www.ibm.com/think/topics/watsonx-agents" target="_blank">What are watsonx Agents?</a></li>
+                <li><a href="https://www.ibm.com/think/topics/ai-agent-orchestration" target="_blank">What is AI Agent Orchestration?</a></li>
+                <li><a href="https://www.ibm.com/think/insights/ai-agent-governance" target="_blank">AI Agent Governance</a></li>
+                <li><a href="https://www.ibm.com/think/tutorials/agentops-telemetry-watsonx-orchestrate" target="_blank">AgentOps with IBM Telemetry Tutorial</a></li>
             </ul>
 
             <h3 style="margin-top: 40px; margin-bottom: 16px;">IBM Developer</h3>
             <ul class="link-list">
-                <li>
-                    <span class="num">25</span>
-                    <a href="https://developer.ibm.com/articles/multi-agent-orchestration-watsonx-orchestrate/" target="_blank">Beginner's guide to multi-agent orchestration - IBM Developer</a>
-                </li>
+                <li><a href="https://developer.ibm.com/articles/multi-agent-orchestrate-watsonx-orchestrate/" target="_blank">Beginner's guide to multi-agent orchestration</a></li>
             </ul>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer style="padding: 48px; text-align: center; border-top: 1px solid var(--hairline); margin-top: 80px;">
-        <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-300);">
-            Created: 2026-05-06 | Based on IBM Official Documentation
-        </p>
-    </footer>
-
-    <!-- JavaScript -->
     <script>
         // Tab switching
         function switchTab(index) {
@@ -1247,7 +906,7 @@ OpenTelemetry + Instana
             tabs[index].classList.add('active');
             contents[index].classList.add('active');
 
-            // Scroll to top of content
+            // Smooth scroll to top of content
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1269,17 +928,6 @@ OpenTelemetry + Instana
             const savedTheme = localStorage.getItem('nate-theme') || 'light';
             document.body.classList.remove('theme-light', 'theme-dark');
             document.body.classList.add('theme-' + savedTheme);
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
         });
     </script>
 </body>
