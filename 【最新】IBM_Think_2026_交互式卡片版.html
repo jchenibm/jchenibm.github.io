@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IBM Think 2026 — 交互式卡片版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=Manrope:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper-50:#FDFCFB;
+    --paper-100:#F8F7F4;
+    --paper-200:#EBE9E4;
+    --paper-300:#DCD9D2;
+    --paper-400:#C8C5BE;
+    --paper-500:#A8A49C;
+    --ink-100:#2A2825;
+    --ink-200:#4A4640;
+    --ink-300:#6B675F;
+    --ink-400:#8B877D;
+    --accent:#2563EB;
+    --accent-hot:#3B82F6;
+    --signal:#EA580C;
+    --warn:#DC2626;
+    --grow:#16A34A;
+    --grid:rgba(0,0,0,0.04);
+    --hairline:rgba(0,0,0,0.08);
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+    --card-hover-bg:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.5));
+    --card-expand-bg:linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.6));
+    --floor-gradient-01:linear-gradient(180deg, rgba(37,99,235,0.04) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(37,99,235,0.08) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(37,99,235,0.12) 0%, transparent 60%);
+    --floor-number-01:rgba(42,40,37,0.25);
+    --floor-number-02:rgba(42,40,37,0.45);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,0,0,0.03), transparent 60%);
+    --chip-bg:rgba(255,255,255,0.5);
+    --detail-border:1px dashed rgba(0,0,0,0.12);
+    --tab-bg:rgba(255,255,255,0.6);
+    --tab-hover-bg:rgba(255,255,255,0.9);
+    --tab-active-bg:var(--accent);
+    --tab-active-text:#FFFFFF;
+    --tab-border:rgba(0,0,0,0.1);
+    --shadow:0 2px 8px rgba(0,0,0,0.06);
+    --shadow-hover:0 4px 16px rgba(0,0,0,0.1);
+    --shadow-expand:0 4px 20px rgba(37,99,235,0.15);
+  }
+
+  body.theme-dark{
+    --paper-50:#050A12;
+    --paper-100:#0A1628;
+    --paper-200:#0F1B30;
+    --paper-300:#152340;
+    --paper-400:#1E2F50;
+    --paper-500:#293D63;
+    --ink-100:#E8EEF7;
+    --ink-200:#C4D0E0;
+    --ink-300:#7B8AA3;
+    --ink-400:#4F5E78;
+    --accent:#4A9EFF;
+    --accent-hot:#82B7FF;
+    --signal:#FFB347;
+    --warn:#FF6B6B;
+    --grow:#4AFF8F;
+    --grid:rgba(255,255,255,0.035);
+    --hairline:rgba(255,255,255,0.08);
+    --bg-main:var(--paper-100);
+    --text-primary:var(--ink-100);
+    --text-secondary:var(--ink-200);
+    --border-color:var(--hairline);
+    --card-bg:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.05));
+    --card-hover-bg:linear-gradient(180deg, rgba(74,158,255,0.04), rgba(0,0,0,0.05));
+    --card-expand-bg:linear-gradient(180deg, rgba(74,158,255,0.06), rgba(0,0,0,0.05));
+    --floor-gradient-01:linear-gradient(180deg, rgba(74,158,255,0.025) 0%, transparent 60%);
+    --floor-gradient-02:linear-gradient(180deg, rgba(74,158,255,0.045) 0%, transparent 60%);
+    --floor-gradient-03:linear-gradient(180deg, rgba(74,158,255,0.065) 0%, transparent 60%);
+    --floor-number-01:rgba(196,208,224,0.45);
+    --floor-number-02:rgba(196,208,224,0.7);
+    --top-glow:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74,158,255,0.10), transparent 60%);
+    --chip-bg:transparent;
+    --detail-border:1px dashed rgba(255,255,255,0.12);
+    --tab-bg:rgba(255,255,255,0.05);
+    --tab-hover-bg:rgba(255,255,255,0.1);
+    --tab-active-bg:var(--accent);
+    --tab-active-text:#FFFFFF;
+    --tab-border:rgba(255,255,255,0.1);
+    --shadow:none;
+    --shadow-hover:none;
+    --shadow-expand:none;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  ::selection{ background:var(--accent); color:#FFFFFF; }
+
+  body{
+    font-family:'Manrope', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-weight:300;
+    background:var(--bg-main);
+    color:var(--text-primary);
+    line-height:1.55;
+    overflow-x:hidden;
+    background-image:var(--top-glow),
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
+    background-attachment: fixed, fixed, fixed;
+    min-height:100vh;
+    transition: background 320ms ease, color 320ms ease;
+  }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.035;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .frame{
+    position:relative; z-index:2;
+    max-width:1320px;
+    margin:0 auto;
+    padding:0 56px;
+  }
+
+  .hero{
+    padding:96px 0 72px;
+    position:relative;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    padding-bottom:64px;
+    border-bottom:1px solid var(--border-color);
+  }
+  .topbar .left{ display:flex; align-items:center; gap:14px; }
+  .topbar .left::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.5; transform:scale(.85); }
+  }
+  .topbar .right{ display:flex; gap:32px; align-items:center; }
+  .topbar .right span:not(:last-child)::after{
+    content:'/'; margin-left:32px; color:var(--ink-400);
+  }
+
+  .theme-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 12px;
+    border:1px solid var(--border-color);
+    border-radius:4px;
+    background:var(--tab-bg);
+    cursor:pointer;
+    transition: all 320ms ease;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-secondary);
+  }
+  .theme-toggle:hover{
+    background:var(--tab-hover-bg);
+    border-color:var(--accent);
+  }
+  .theme-toggle .icon{
+    font-size:14px;
+    line-height:1;
+  }
+
+  .eyebrow{
+    margin-top:72px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{
+    content:''; width:32px; height:1px; background:var(--accent);
+  }
+
+  h1.title{
+    margin-top:32px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 360, 'SOFT' 0, 'WONK' 1;
+    font-size:clamp(56px, 9.2vw, 148px);
+    line-height:.92;
+    letter-spacing:-.035em;
+    color:var(--text-primary);
+  }
+  h1.title .ital{
+    font-style:italic;
+    font-variation-settings:'opsz' 144, 'wght' 320, 'SOFT' 100, 'WONK' 1;
+    color:var(--accent);
+  }
+
+  .kicker{
+    margin-top:40px;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 36, 'wght' 320, 'SOFT' 50;
+    font-style:italic;
+    font-size:clamp(20px, 2.1vw, 26px);
+    line-height:1.45;
+    color:var(--text-secondary);
+    max-width:760px;
+  }
+
+  .tab-nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    gap:4px;
+    padding:12px 0;
+    margin:64px 0 32px;
+    border-bottom:1px solid var(--border-color);
+    background:var(--bg-main);
+    backdrop-filter:blur(10px);
+  }
+
+  .tab-btn{
+    flex:1;
+    padding:12px 20px;
+    border:1px solid var(--tab-border);
+    border-radius:6px 6px 0 0;
+    background:var(--tab-bg);
+    color:var(--text-secondary);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition: all 320ms ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+
+  .tab-btn:hover{
+    background:var(--tab-hover-bg);
+    color:var(--text-primary);
+  }
+
+  .tab-btn.active{
+    background:var(--tab-active-bg);
+    color:var(--tab-active-text);
+    border-color:var(--tab-active-bg);
+  }
+
+  .tab-btn .tab-num{
+    font-size:9px;
+    opacity:0.7;
+  }
+
+  .tab-content{
+    display:none;
+    animation:fadeIn 480ms ease;
+  }
+
+  .tab-content.active{
+    display:block;
+  }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform:translateY(12px); }
+    to{ opacity:1; transform:none; }
+  }
+
+  .floor{
+    position:relative;
+    padding:48px 0 64px;
+    border-radius:8px;
+    margin-bottom:24px;
+  }
+  .floor.lvl-01{ background:var(--floor-gradient-01); }
+  .floor.lvl-02{ background:var(--floor-gradient-02); }
+  .floor.lvl-03{ background:var(--floor-gradient-03); }
+
+  .floor-head{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    column-gap:48px;
+    align-items:start;
+    margin-bottom:40px;
+  }
+
+  .floor .number{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 144, 'wght' 200, 'SOFT' 0, 'WONK' 0;
+    font-style:italic;
+    font-size:clamp(80px, 10vw, 140px);
+    line-height:.84;
+    letter-spacing:-.05em;
+    user-select:none;
+  }
+  .floor.lvl-01 .number{ color:var(--floor-number-01); }
+  .floor.lvl-02 .number{ color:var(--floor-number-02); }
+  .floor.lvl-03 .number{ color:var(--accent); }
+  .floor .number .tag{
+    display:block;
+    margin-top:16px;
+    font-family:'JetBrains Mono', monospace;
+    font-style:normal;
+    font-size:9px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    white-space:nowrap;
+  }
+  .floor .number .tag::before{
+    content:''; display:inline-block;
+    width:20px; height:1px;
+    background:var(--ink-300);
+    vertical-align:middle;
+    margin-right:8px;
+  }
+
+  .floor .head-body .verb{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .floor .head-body .verb::before{
+    content:''; width:16px; height:1px; background:var(--accent);
+  }
+
+  .floor .head-body h2{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 30, 'WONK' 1;
+    font-size:clamp(36px, 4.5vw, 56px);
+    line-height:.95;
+    letter-spacing:-.028em;
+    color:var(--text-primary);
+    margin-bottom:12px;
+  }
+  .floor .head-body h2 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 96, 'wght' 380, 'SOFT' 100, 'WONK' 1;
+  }
+
+  .floor .head-body .tagline{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 24, 'wght' 350;
+    font-style:italic;
+    font-size:18px;
+    line-height:1.4;
+    color:var(--text-secondary);
+  }
+
+  .concept-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+  }
+
+  .card{
+    border:1px solid var(--border-color);
+    border-radius:6px;
+    padding:24px;
+    background:var(--card-bg);
+    backdrop-filter:blur(6px);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    transition: all 320ms ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity:.2;
+    transition: opacity 320ms ease;
+  }
+  .card:hover{
+    border-color:var(--accent);
+    background:var(--card-hover-bg);
+    box-shadow:var(--shadow-hover);
+    transform:translateY(-2px);
+  }
+  .card:hover::before{ opacity:.5; }
+  .card.expanded{
+    border-color:var(--accent);
+    background:var(--card-expand-bg);
+    box-shadow:var(--shadow-expand);
+  }
+  .card.expanded::before{ opacity:.7; }
+  .concept-row:has(.card.expanded){
+    grid-template-columns: 1fr;
+  }
+
+  .card .card-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-300);
+    margin-bottom:12px;
+  }
+  .card h3{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT' 30, 'WONK' 1;
+    font-size:20px;
+    line-height:1.1;
+    letter-spacing:-.018em;
+    color:var(--text-primary);
+    margin-bottom:8px;
+  }
+  .card h3 em{
+    font-style:italic;
+    color:var(--accent);
+    font-variation-settings:'opsz' 36, 'wght' 400, 'SOFT' 100, 'WONK' 1;
+  }
+  .card .one-liner{
+    font-family:'Fraunces', serif;
+    font-variation-settings:'opsz' 18, 'wght' 320;
+    font-style:italic;
+    font-size:14px;
+    color:var(--text-secondary);
+    line-height:1.55;
+  }
+
+  .card .expand-hint{
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    transition: color 320ms ease;
+  }
+  .card:hover .expand-hint{ color:var(--accent); }
+  .card.expanded .expand-hint{ display:none; }
+
+  .card .detail{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:var(--detail-border);
+  }
+  .card.expanded .detail{ display:block; }
+  .card .detail p{
+    font-size:14px;
+    line-height:1.7;
+    color:var(--text-secondary);
+    margin-bottom:12px;
+    max-width:64ch;
+  }
+  .card .detail p strong{ color:var(--text-primary); font-weight:600; }
+  .card .detail p em{ font-style:italic; color:var(--text-primary); }
+  .card .detail ul{
+    margin:12px 0;
+    padding-left:20px;
+  }
+  .card .detail li{
+    font-size:14px;
+    line-height:1.7;
+    color:var(--text-secondary);
+    margin-bottom:8px;
+  }
+
+  .conn-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-400);
+    margin-top:16px;
+    margin-bottom:8px;
+  }
+  .connections{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .conn-chip{
+    padding:4px 8px;
+    border-radius:3px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:.04em;
+    border:1px solid var(--border-color);
+    color:var(--text-secondary);
+    background:var(--chip-bg);
+  }
+  .conn-chip.feeds{ color:var(--accent); border-color:var(--accent); background:rgba(37,99,235,0.08); }
+  .conn-chip.fed-by{ color:var(--grow); border-color:var(--grow); background:rgba(22,163,74,0.08); }
+  .conn-chip.parallel{ color:var(--text-secondary); border-color:var(--border-color); }
+  .conn-chip.branch{ color:var(--accent); border:1px dashed var(--accent); }
+
+  @media (max-width:1100px){
+    .floor-head{ grid-template-columns: 140px 1fr; column-gap:32px; }
+    .tab-btn{ font-size:10px; padding:10px 16px; }
+  }
+  @media (max-width:760px){
+    .frame{ padding:0 24px; }
+    .floor-head{ grid-template-columns:1fr; }
+    .floor .number{ font-size:80px; }
+    h1.title{ font-size:56px; }
+    .topbar .right span:not(.theme-toggle){ display:none; }
+    .tab-nav{ flex-wrap:wrap; }
+    .tab-btn{ flex:1 1 calc(50% - 4px); min-width:120px; }
+  }
+</style>
+</head>
+<body class="theme-light">
+
+<div class="frame">
+
+  <header class="hero">
+    <div class="topbar">
+      <div class="left">IBM · THINK 2026</div>
+      <div class="right">
+        <span>2026年5月</span>
+        <span>企业AI</span>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="icon">◐</span>
+          <span class="label">主题</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="eyebrow">智能代理时代</div>
+
+    <h1 class="title">
+      IBM Think 2026<br>
+      <span class="ital">加速智能代理时代到来</span>
+    </h1>
+
+    <p class="kicker">
+      智能代理时代不是即将到来——它已经在这里了。在波士顿举行的Think 2026大会上，IBM通过一系列新产品、能力和合作伙伴生态的发布，正式宣告了这一时代的到来，涵盖其整个产品组合。
+    </p>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(0)">
+      <span class="tab-num">01</span>
+      <span class="tab-label">重磅发布</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(1)">
+      <span class="tab-num">02</span>
+      <span class="tab-label">创新亮点</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)">
+      <span class="tab-num">03</span>
+      <span class="tab-label">持续关注</span>
+    </button>
+  </nav>
+
+  <div class="tab-contents">
+
+    <div class="tab-content active">
+      <article class="floor lvl-01">
+        <div class="floor-head">
+          <div class="number">01<span class="tag">核心产品</span></div>
+          <div class="head-body">
+            <div class="verb">IBM重磅发布</div>
+            <h2><em>改变游戏规则</em>的创新产品</h2>
+            <div class="tagline">四大核心发布引领智能代理时代</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">AI开发 · 01</div>
+            <h3>IBM <em>Bob</em> SaaS</h3>
+            <div class="one-liner">AI驱动的端到端软件开发系统</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM Bob（专业版、专业增强版、旗舰版和企业SaaS计划）是一个革命性的AI驱动软件开发系统，旨在彻底变革企业构建、现代化和管理应用程序的方式。</p>
+              <p><strong>核心优势：</strong></p>
+              <ul>
+                <li><em>端到端开发伴侣</em>：支持从系统设计、代码生成到测试、安全和部署的全流程</li>
+                <li><em>智能代理AI</em>：理解代码库、工作流和企业标准</li>
+                <li><em>多模型感知</em>：自动完成复杂任务，提高生产力</li>
+                <li><em>跨平台支持</em>：现代系统和传统系统全覆盖</li>
+              </ul>
+              <p>与传统的编码助手不同，Bob在统一集成环境中工作，帮助企业更快交付安全的生产就绪软件。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/shifting-from-ai-assisted-coding-to-ai-assisted-delivery-with-ibm-bob" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px; margin-right: 16px;">了解更多 →</a><a href="https://bob.ibm.com/trial" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">免费试用 →</a></p>
+              <div class="conn-label">相关链接</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → watsonx平台</span>
+                <span class="conn-chip parallel">parallels → GitHub Copilot</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">智能运维 · 02</div>
+            <h3><em>Concert</em> 平台</h3>
+            <div class="one-liner">统一的智能代理运维平台</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM Concert是一个开创性的智能代理运维平台，它将来自现有工具的信号连接到共享的、系统范围的上下文中，并协调整个混合环境中的行动。</p>
+              <p><strong>平台特点：</strong></p>
+              <ul>
+                <li><em>统一视图</em>：整合Concert、Instana、Turbonomic、SevOne和Cloud Pak for AIOps的洞察</li>
+                <li><em>智能关联</em>：自动识别和关联重要信息</li>
+                <li><em>协同行动</em>：团队和AI代理作为一个整体调查、决策和行动</li>
+                <li><em>预测能力</em>：提前预测问题，持续优化性能、成本和弹性</li>
+              </ul>
+              <p>通过将分散的运维数据整合为可行动的洞察，Concert帮助企业加速事件解决，提高运营效率。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/from-insight-to-action-closing-the-gap-in-modern-it-operations" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">集成产品</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by Instana</span>
+                <span class="conn-chip parallel">parallels → Turbonomic</span>
+                <span class="conn-chip branch">↗ Cloud Pak AIOps</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">主权云 · 03</div>
+            <h3>IBM <em>Sovereign</em> Core</h3>
+            <div class="one-liner">端到端主权AI解决方案</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM Sovereign Core使企业、政府和服务提供商能够部署和运营AI就绪的主权环境，对数据、运营和治理拥有完全的客户控制。</p>
+              <p><strong>主权能力：</strong></p>
+              <ul>
+                <li><em>客户控制</em>：完全的数据、运营和治理控制权</li>
+                <li><em>统一软件栈</em>：即开即用的主权软件组合</li>
+                <li><em>AI控制平面</em>：客户运营的AI控制平面</li>
+                <li><em>持续合规</em>：自动化的合规性证据管理</li>
+                <li><em>可扩展目录</em>：预验证的企业软件和服务</li>
+              </ul>
+              <p>合作伙伴生态系统包括：AMD、ATOS、Cegeka、Cloudera、Dell、Elastic、HCL、Intel、Mistral、MongoDB和Palo Alto Networks。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/ibm-sovereign-core-the-new-end-to-end-system-for-sovereign-ai" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">适用场景</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 政府机构</span>
+                <span class="conn-chip parallel">parallels → 金融行业</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">数据流 · 04</div>
+            <h3><em>Confluent</em> 平台</h3>
+            <div class="one-liner">全球领先的数据流平台</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>现已加入IBM家族的Confluent是全球领先的数据流平台，为超过40%的财富500强企业提供实时数据支持。</p>
+              <p><strong>核心能力：</strong></p>
+              <ul>
+                <li><em>实时数据流</em>：将实时的业务事件转化为受管的、AI就绪的数据</li>
+                <li><em>开放标准</em>：建立在Kafka、Flink和Iceberg开放标准之上</li>
+                <li><em>原生集成</em>：与IBM的产品组合原生集成，包括watsonx、IBM Z和IBM webmethods</li>
+                <li><em>完整平台</em>：用于流式传输、连接、处理和管理的完整平台</li>
+              </ul>
+              <p>例如，IBM watsonx.data和Confluent Tableflow协同工作，使实时数据流立即可用作开放表格式，用于分析和商业智能。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/products/confluent" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">数据集成</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → watsonx.data</span>
+                <span class="conn-chip parallel">parallels → IBM Z</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="tab-content">
+      <article class="floor lvl-02">
+        <div class="floor-head">
+          <div class="number">02<span class="tag">创新产品</span></div>
+          <div class="head-body">
+            <div class="verb">Think 2026亮点</div>
+            <h2><em>智能代理</em>创新生态</h2>
+            <div class="tagline">跨越AI、混合云、自动化的全方位创新</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">AI控制 · 01</div>
+            <h3>智能代理<em>控制平面</em></h3>
+            <div class="one-liner">watsonx Orchestrate统一管理</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>AI采用正在加速，但大多数企业仍然在管理代理、工具和系统的分散格局。IBM watsonx Orchestrate提供统一的智能代理控制平面，为这种复杂性带来秩序。</p>
+              <p><strong>核心功能：</strong></p>
+              <ul>
+                <li><em>集中可见性</em>：跨整个AI生态系统的统一视图</li>
+                <li><em>统一控制</em>：集中化的代理管理和配置</li>
+                <li><em>全局优化</em>：跨系统的性能优化和资源分配</li>
+                <li><em>安全扩展</em>：从试点到生产级的安全过渡</li>
+                <li><em>业务影响</em>：可衡量的业务价值和投资回报</li>
+              </ul>
+              <p>帮助企业从孤立的试点安全、高效地转向生产级AI，并产生可衡量的业务影响。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/manage-all-your-ai-agents-in-one-place-with-watsonx-orchestrate" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">集成产品</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → watsonx平台</span>
+                <span class="conn-chip parallel">parallels → AI代理</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">核心软件 · 02</div>
+            <h3>AI版<em>核心软件</em></h3>
+            <div class="one-liner">企业软件的AI增强</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>核心软件AI版将IBM的专用AI助手、代理和智能代理工具包组合在一起，涵盖DB2、Cognos Analytics、CP4BA、Content Cortex、ACE、CP4I、ELM、MQ、B2Bi SaaS和OMS。</p>
+              <p><strong>集成能力：</strong></p>
+              <ul>
+                <li><em>自然语言交互</em>：用户可以用日常语言与系统交互</li>
+                <li><em>上下文感知</em>：自动呈现相关业务信息</li>
+                <li><em>智能诊断</em>：自动识别和诊断问题根源</li>
+                <li><em>性能优化</em>：持续优化系统性能和效率</li>
+                <li><em>企业级控制</em>：完整的透明度和人工监督</li>
+                <li><em>AI原生执行</em>：从依赖专家转向AI驱动</li>
+              </ul>
+              <p>帮助企业从分散的、依赖专家的工作转向AI原生执行，提高生产力、弹力和价值实现速度。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/strengthening-ibms-proven-enterprise-software-for-the-ai-era" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">软件覆盖</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → DB2</span>
+                <span class="conn-chip parallel">parallels → Cognos</span>
+                <span class="conn-chip branch">↗ Content Cortex</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">安全 · 03</div>
+            <h3>Vault <em>Enterprise</em> 2.0</h3>
+            <div class="one-liner">现代化身份安全</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>Vault Enterprise 2.0引入了现代化基于身份的安全性的更新，帮助组织在混合和多云环境中保护、扩展和简化密钥管理。</p>
+              <p><strong>关键特性：</strong></p>
+              <ul>
+                <li><em>工作负载身份联合</em>：消除长期凭证，降低安全风险</li>
+                <li><em>生命周期自动化</em>：改进凭证生命周期管理和轮换</li>
+                <li><em>高性能加密</em>：支持大规模和新兴工作负载</li>
+                <li><em>增强集成</em>：更好的可用性和入门体验</li>
+                <li><em>新版本模型</em>：简化的版本控制和支持流程</li>
+              </ul>
+              <p>采用新的版本控制和支持模型，使平台和安全团队更容易在企业规模上运营Vault，同时保持最高安全标准。</p>
+              <p style="margin-top: 16px;"><a href="https://www.hashicorp.com/en/blog/vault-enterprise-20-modernizes-identity-security-at-scale" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">安全领域</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 密钥管理</span>
+                <span class="conn-chip parallel">parallels → 零信任架构</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">主机安全 · 04</div>
+            <h3>IBM zSecure <em>Secret</em> Manager</h3>
+            <div class="one-liner">z/OS证书生命周期管理</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM zSecure Secret Manager为IBM z/OS环境引入了策略驱动的、自动化的证书生命周期管理，解决传统主机环境中证书管理的复杂性和安全风险。</p>
+              <p><strong>核心优势：</strong></p>
+              <ul>
+                <li><em>策略驱动</em>：基于策略的自动化管理，减少人工错误</li>
+                <li><em>企业集成</em>：与企业证书颁发机构无缝集成</li>
+                <li><em>自动续订</em>：在z/OS上自动化证书续订，避免过期</li>
+                <li><em>IBM Vault集成</em>：与IBM Vault Self-Managed for Z和LinuxONE协同工作</li>
+                <li><em>合规支持</em>：满足行业合规要求和审计需求</li>
+              </ul>
+              <p>帮助组织简化z/OS环境中的证书管理，降低安全风险，提高运营效率，确保业务连续性。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/introducing-ibm-zsecure-secret-manager-modernizing-certificate-lifecycle-management-on-z-os" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">主机生态</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by IBM Vault</span>
+                <span class="conn-chip parallel">parallels → z/OS系统</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">欺诈检测 · 05</div>
+            <h3>IBM <em>Cyber</em> Fraud</h3>
+            <div class="one-liner">AI辅助欺诈调查平台</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM Cyber Fraud引入了一个AI辅助的欺诈调查平台，通过自动化数据收集、智能工作流编排和自然语言分析，彻底改变传统的欺诈调查方式。</p>
+              <p><strong>平台优势：</strong></p>
+              <ul>
+                <li><em>数据自动化</em>：自动收集欺诈、支付和安全系统数据</li>
+                <li><em>工作流编排</em>：智能编排调查流程，提高效率</li>
+                <li><em>自然语言分析</em>：用日常语言查询和分析数据</li>
+                <li><em>统一工作空间</em>：整合分散数据的单一界面</li>
+                <li><em>90%提速</em>：调查速度提高高达90%，显著降低成本</li>
+              </ul>
+              <p>组织能够更高效地解决欺诈、降低运营成本并限制财务损失，同时提升客户体验和品牌声誉。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/introducing-ibm-cyber-fraud-transforming-fraud-investigation-with-ai" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">应用场景</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 金融风控</span>
+                <span class="conn-chip parallel">parallels → 支付安全</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">基础设施 · 06</div>
+            <h3><em>Infragraph</em> 预览版</h3>
+            <div class="one-liner">HCP Terraform可视化</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>由Infragraph驱动的HCP Terraform现已推出公开预览版，通过集中的、事件驱动的知识图谱，为混合基础设施提供前所未有的可见性和洞察力。</p>
+              <p><strong>核心能力：</strong></p>
+              <ul>
+                <li><em>知识图谱</em>：事件驱动的基础设施数据模型</li>
+                <li><em>单一视图</em>：克服复杂的数据孤岛，统一视角</li>
+                <li><em>可操作洞察</em>：用于简化和自动化修复的洞察</li>
+                <li><em>实时更新</em>：基于事件的数据同步，始终保持最新</li>
+                <li><em>可视化</em>：直观的基础设施拓扑和依赖关系</li>
+              </ul>
+              <p>帮助组织更好地理解和管理其混合基础设施资产，提高运维效率，减少停机时间，优化资源利用。</p>
+              <p style="margin-top: 16px;"><a href="https://www.hashicorp.com/en/blog/introducing-hcp-terraform-powered-by-infragraph-in-public-preview" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">工具集成</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → Terraform</span>
+                <span class="conn-chip parallel">parallels → HCP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">数据上下文 · 07</div>
+            <h3>watsonx.data <em>实时上下文</em></h3>
+            <div class="one-liner">AI代理的数据语义理解</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>watsonx.data上的实时上下文为AI代理提供持续可访问的数据，数据随变化实时更新，并附带完整的业务含义、语义和策略信息。</p>
+              <p><strong>关键特性：</strong></p>
+              <ul>
+                <li><em>持续可访问</em>：数据变化时实时更新，代理始终获得最新信息</li>
+                <li><em>业务语义</em>：代理理解数据代表的业务含义</li>
+                <li><em>语义丰富化</em>：结合流式传输和企业数据的语义信息</li>
+                <li><em>治理集成</em>：内置数据治理和策略，确保合规使用</li>
+                <li><em>准确决策</em>：代理基于完整准确的信息做出可靠决策</li>
+              </ul>
+              <p>与Confluent的实时上下文引擎结合，使代理能够检索完整、准确的洞察，并做出知情和可靠的决策，提升AI应用的智能化水平。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/real-time-context-for-ai-across-hybrid-environments" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">数据集成</div>
+              <div class="connections">
+                <span class="conn-chip fed-by">← fed by Confluent</span>
+                <span class="conn-chip parallel">parallels → watsonx.ai</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">数据集成 · 08</div>
+            <h3>智能代理<em>数据集成</em></h3>
+            <div class="one-liner">自然语言数据请求</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>智能代理数据集成（IBM watsonx.data集成中的预览版）通过自然语言数据请求，彻底改变业务用户获取数据的方式，同时解放工程团队专注于更高价值的创新。</p>
+              <p><strong>用户体验：</strong></p>
+              <ul>
+                <li><em>自然语言请求</em>：业务用户用日常语言请求数据</li>
+                <li><em>AI翻译</em>：代理将请求转化为生产就绪的管道</li>
+                <li><em>快速交付</em>：大幅缩短数据交付时间</li>
+                <li><em>内置治理</em>：治理和人工监督控制内置</li>
+                <li><em>高效扩展</em>：数据团队能更有效扩展</li>
+              </ul>
+              <p>通过超越手动和分散的方法，数据团队能够更有效地扩展，以满足不断增长的AI和分析需求，提升数据民主化水平。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/forms/mkt-53895" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">注册预览版 →</a></p>
+              <div class="conn-label">自助服务</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 业务用户</span>
+                <span class="conn-chip fed-by">← fed by watsonx.data</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">API网关 · 09</div>
+            <h3>IBM DataPower <em>Interact</em></h3>
+            <div class="one-liner">AI中介治理网关</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM DataPower Interact Gateway是业界首创的AI中介治理网关，专门设计用于治理、保护并观察代理、模型和工具与企业API及数据之间的所有交互。</p>
+              <p><strong>核心优势：</strong></p>
+              <ul>
+                <li><em>上下文感知</em>：理解AI交互的上下文和意图</li>
+                <li><em>统一网关</em>：所有AI交互的单一入口和控制点</li>
+                <li><em>安全治理</em>：直接在AI交互层强制执行安全策略</li>
+                <li><em>全面可观察性</em>：完整的AI交互监控和审计</li>
+                <li><em>无需重建</em>：无需重建现有架构即可管理AI</li>
+              </ul>
+              <p>与为AI流量改造的传统API网关不同，它使企业能够安全地管理和扩展AI，而无需重建其架构，显著降低AI部署的复杂性和风险。</p>
+              <p style="margin-top: 16px;"><a href="https://ibm.biz/apic-live-demo" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">请求演示 →</a></p>
+              <div class="conn-label">API治理</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → AI代理</span>
+                <span class="conn-chip parallel">parallels → 企业API</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">数据库 · 10</div>
+            <h3>IBM Z <em>数据库助手</em></h3>
+            <div class="one-liner">智能数据库运营</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM Z数据库助手将企业级智能直接带入Db2和IMS运营，通过持续监控、智能洞察和自动化操作指导，彻底改变传统数据库管理方式。</p>
+              <p><strong>智能特性：</strong></p>
+              <ul>
+                <li><em>持续监控</em>：24/7数据库健康评估和监控</li>
+                <li><em>智能洞察</em>：自动呈现关键洞察和异常</li>
+                <li><em>主动管理</em>：从被动故障排除转向主动管理</li>
+                <li><em>持续优化</em>：确保数据持续可用和性能优化</li>
+                <li><em>AI就绪</em>：释放可信IBM Z数据用于大规模AI</li>
+              </ul>
+              <p>使企业能够释放可信IBM Z数据用于大规模AI的全部价值，提升数据库运营的智能化水平，降低管理成本和风险。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/ibm-z-database-assistant-brings-intelligent-operations-for-the-ai-era" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">数据库生态</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → Db2</span>
+                <span class="conn-chip parallel">parallels → IMS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">内容服务 · 11</div>
+            <h3>Content <em>Cortex</em></h3>
+            <div class="one-liner">下一代智能内容服务</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>Content Cortex是一个下一代智能内容服务系统，专门设计用于帮助企业为其智能代理自动化准备、管理和激活内容，解决传统内容管理效率低下的问题。</p>
+              <p><strong>平台优势：</strong></p>
+              <ul>
+                <li><em>最佳摄取</em>：卓越的文档摄取性能和速度</li>
+                <li><em>智能压缩</em>：高效的存储和检索优化</li>
+                <li><em>快速检索</em>：为静态内容提供最佳性能</li>
+                <li><em>上下文保留</em>：保留文档结构和语义上下文</li>
+                <li><em>AI就绪</em>：内容直接可用于智能代理处理</li>
+              </ul>
+              <p>适用于季度报告、税务文档等静态内容。团队可以以从根本上改变工作速度和信心的方式工作，大幅提升内容处理效率。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/docs/announcements/statement-direction-content-cortex" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">内容管理</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → 文档处理</span>
+                <span class="conn-chip parallel">parallels → RAG应用</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">SQL洞察 · 12</div>
+            <h3>IBM SQL <em>Data Insights</em> Pro</h3>
+            <div class="one-liner">Db2 for z/OS智能层</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM SQL Data Insights Pro是z/OS上Db2的革命性智能层，将原始SQL查询转换为实时、决策就绪的洞察，无需任何数据移动或复制，大幅提升数据分析效率。</p>
+              <p><strong>核心能力：</strong></p>
+              <ul>
+                <li><em>语义模式检测</em>：自动检测数据中的语义模式</li>
+                <li><em>自然语言解释</em>：用日常语言解释数据洞察</li>
+                <li><em>隐藏趋势</em>：揭示数据中的隐藏趋势和模式</li>
+                <li><em>异常标记</em>：自动标记异常情况和离群值</li>
+                <li><em>就地优化</em>：无需移动数据即可优化性能</li>
+                <li><em>实时洞察</em>：查询结果即时转换为业务洞察</li>
+              </ul>
+              <p>使团队能够以速度、精度和信心从数据转向行动，大幅缩短从数据到决策的时间，提升业务响应速度。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/bringing-ai-to-where-z-data-lives" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">数据库分析</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → SQL查询</span>
+                <span class="conn-chip fed-by">← fed by Db2</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">文档智能 · 13</div>
+            <h3><em>Docling</em> for watsonx</h3>
+            <div class="one-liner">文档智能平台</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>用于IBM watsonx的Docling是一个先进的文档智能平台，帮助团队将各种格式的文档转换为结构化的、AI就绪的数据格式，如Markdown、JSON和HTML。</p>
+              <p><strong>平台特性：</strong></p>
+              <ul>
+                <li><em>结构保留</em>：保留文档的原始结构和上下文</li>
+                <li><em>格式转换</em>：支持多种AI就绪输出格式</li>
+                <li><em>搜索优化</em>：简化文档搜索准备流程</li>
+                <li><em>RAG支持</em>：为检索增强生成优化文档</li>
+                <li><em>开源工具包</em>：基于开源Docling工具包，可扩展</li>
+                <li><em>批量处理</em>：支持大规模文档批量转换</li>
+              </ul>
+              <p>对高质量信息检索和AI解释至关重要的结构和上下文得以保留，显著提升文档处理的效率和准确性。</p>
+              <p style="margin-top: 16px;"><a href="https://www.docling.ai/" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解开源工具包 →</a></p>
+              <div class="conn-label">文档处理</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → RAG系统</span>
+                <span class="conn-chip parallel">parallels → AI训练</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">RAG框架 · 14</div>
+            <h3><em>OpenRAG</em> 框架</h3>
+            <div class="one-liner">开放智能代理RAG</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>watsonx.data上的OpenRAG是一个开放的、可扩展的智能代理RAG框架，将AI能力与分散的企业知识无缝连接，突破传统知识管理的局限。</p>
+              <p><strong>框架组件：</strong></p>
+              <ul>
+                <li><em>Docling</em>：先进的文档处理和解析</li>
+                <li><em>OpenSearch</em>：强大的混合搜索和检索</li>
+                <li><em>Langflow</em>：灵活的代理编排和工作流</li>
+                <li><em>可组合堆栈</em>：开箱即用的模块化设计</li>
+                <li><em>开放标准</em>：基于开放标准，避免厂商锁定</li>
+              </ul>
+              <p>使代理能够搜索、推理和验证企业知识，因此团队能够更快、更轻松地构建更可靠的AI工作流，大幅降低AI应用开发门槛。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/forms/mkt-waitlist-41f3d0" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">加入候补名单 →</a></p>
+              <div class="conn-label">RAG生态</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → AI代理</span>
+                <span class="conn-chip parallel">parallels → 企业知识</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">MCP集成 · 15</div>
+            <h3>watsonx.data <em>MCP服务器</em></h3>
+            <div class="one-liner">模型上下文协议集成</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>随着企业从人工驱动的数据界面转向能够推理、编排工作流和采取行动的AI代理，IBM watsonx.data 2.3.2引入了创新的MCP服务器集成。</p>
+              <p><strong>MCP服务器特性：</strong></p>
+              <ul>
+                <li><em>托管服务</em>：IBM提供托管的MCP服务器，简化部署</li>
+                <li><em>标准化工具</em>：数据平台能力公开为标准化工具</li>
+                <li><em>可发现性</em>：代理可以发现和调用数据能力</li>
+                <li><em>安全交互</em>：代理安全且动态地与数据交互</li>
+                <li><em>治理控制</em>：所有操作在企业安全和合规控制下</li>
+                <li><em>代理就绪</em>：watsonx.data定位为代理就绪平台</li>
+              </ul>
+              <p>这一创新使AI代理能够安全、高效地访问和操作企业数据，加速智能代理在企业中的部署和应用。</p>
+              <p style="margin-top: 16px;"><a href="https://community.ibm.com/community/user/blogs/rodrigo-de-andrade/2026/04/28/watsonxdata-mcp-server" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">协议集成</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → AI代理</span>
+                <span class="conn-chip parallel">parallels → 数据平台</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">GPU加速 · 16</div>
+            <h3>watsonx.data <em>GPU加速</em></h3>
+            <div class="one-liner">Presto C++ GPU加速</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p>IBM正在推出watsonx.data Presto C++的GPU加速查询处理私人技术预览版，这是与NVIDIA深度协作的创新成果，将分析性能提升到新的高度。</p>
+              <p><strong>加速特性：</strong></p>
+              <ul>
+                <li><em>NVIDIA协作</em>：与NVIDIA GPU协作构建和优化</li>
+                <li><em>工作负载转移</em>：将分析工作负载从CPU转移到GPU</li>
+                <li><em>更快洞察</em>：查询速度显著提升，无需代码更改</li>
+                <li><em>降低成本</em>：更高效的资源利用，降低TCO</li>
+                <li><em>无缝集成</em>：无需更改现有SQL或数据管道</li>
+                <li><em>兼容性</em>：保持与现有工具和流程的兼容</li>
+              </ul>
+              <p>寻求更高效扩展AI和分析的组织受邀加入预览版，帮助塑造未来，获得早期竞争优势，体验下一代分析性能。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/new/announcements/technical-preview-of-gpu-acceleration-for-presto-c-in-watsonx-data" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">了解更多 →</a></p>
+              <div class="conn-label">硬件加速</div>
+              <div class="connections">
+                <span class="conn-chip feeds">feeds → Presto</span>
+                <span class="conn-chip parallel">parallels → NVIDIA GPU</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="tab-content">
+      <article class="floor lvl-03">
+        <div class="floor-head">
+          <div class="number">03<span class="tag">后续跟进</span></div>
+          <div class="head-body">
+            <div class="verb">持续报道</div>
+            <h2><em>保持关注</em>更多内容</h2>
+            <div class="tagline">Think 2026精彩内容持续更新中</div>
+          </div>
+        </div>
+
+        <div class="concept-row">
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">活动 · 01</div>
+            <h3>探索<em>主题演讲</em></h3>
+            <div class="one-liner">Think 2026完整议程</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p><strong>探索主题演讲、会议和活动</strong></p>
+              <p>Think 2026为期四天的活动汇聚了具有远见卓识的领导者、从业者和全球先驱。通过主题演讲、技术会议和创新预览，深入了解IBM最新的产品发布和技术突破。</p>
+              <p><strong>涵盖领域包括：</strong></p>
+              <ul>
+                <li>智能代理AI的最新进展和未来方向</li>
+                <li>混合云和现代化架构最佳实践</li>
+                <li>自动化和IT运维创新</li>
+                <li>数据分析和AI驱动决策</li>
+                <li>安全、合规和风险管理</li>
+              </ul>
+              <p style="margin-top: 16px;"><a href="https://reg.tools.ibm.com/flow/ibm/think26/attendeeportal/page/catalog" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">访问完整议程目录 →</a></p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">视频 · 02</div>
+            <h3>按需观看<em>主题演讲</em></h3>
+            <div class="one-liner">Think 2026视频库</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p><strong>按需观看Think 2026主题演讲</strong></p>
+              <p>错过了现场活动？没关系！所有主题演讲现在都可以按需观看，随时随地获取最新的技术洞察和战略方向。</p>
+              <p><strong>视频内容包括：</strong></p>
+              <ul>
+                <li>开幕主题演讲：IBM战略愿景和产品路线图</li>
+                <li>技术深度剖析：产品功能演示和架构解析</li>
+                <li>客户案例分享：行业领袖的成功实践</li>
+                <li>产品发布演示：新品功能现场展示</li>
+                <li>专家圆桌讨论：前沿技术趋势探讨</li>
+              </ul>
+              <p>随时随地观看，了解IBM最新的战略方向和技术创新，获取灵感推动您的业务转型。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/think/videos/think-keynotes" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">前往视频库 →</a></p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">新闻 · 03</div>
+            <h3>Think<em>新闻</em>团队</h3>
+            <div class="one-liner">现场持续报道</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p><strong>跟随Think新闻团队获取现场报道</strong></p>
+              <p>Think新闻团队在现场为您提供持续报道和最新公告，包括：</p>
+              <ul>
+                <li>最新公告的实时更新和深度解读</li>
+                <li>产品发布的深度分析和专家评论</li>
+                <li>专家访谈和技术洞察分享</li>
+                <li>技术演示和案例研究详解</li>
+                <li>行业趋势和未来展望分析</li>
+              </ul>
+              <p>这仅仅是个开始。随着IBM最新的Think 2026公告在本周内陆续发布，请务必持续关注，获取第一手资讯。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/forms/news-mkt-52954" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">订阅Think新闻 →</a></p>
+            </div>
+          </div>
+
+          <div class="card" onclick="toggleExpand(this)">
+            <div class="card-eyebrow">趋势 · 04</div>
+            <h3>行业<em>趋势</em>洞察</h3>
+            <div class="one-liner">科技行业最重要趋势</div>
+            <div class="expand-hint">点击探索详情</div>
+            <div class="detail">
+              <p><strong>通过Think上最重要故事的独家报道，密切关注科技行业趋势</strong></p>
+              <p>Think 2026不仅是产品发布，更是行业风向标。通过我们的独家报道和专家分析，了解：</p>
+              <ul>
+                <li><em>智能代理AI</em>：从概念到大规模企业应用的发展路径</li>
+                <li><em>数字化转型</em>：企业如何成功进行AI驱动转型</li>
+                <li><em>混合云战略</em>：边缘计算和云原生的融合趋势</li>
+                <li><em>量子计算</em>：商业化进展和早期应用案例</li>
+                <li><em>可持续技术</em>：绿色IT和负责任AI实践</li>
+              </ul>
+              <p>获取前瞻性的行业洞察，为您的战略决策提供支持，把握技术发展趋势，保持竞争优势。</p>
+              <p style="margin-top: 16px;"><a href="https://www.ibm.com/think" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px;">访问Think官网 →</a></p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function toggleExpand(el) {
+  el.classList.toggle('expanded');
+}
+
+function switchTab(index) {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  contents.forEach(content => content.classList.remove('active'));
+
+  tabs[index].classList.add('active');
+  contents[index].classList.add('active');
+}
+
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+  body.classList.remove('theme-light', 'theme-dark');
+  body.classList.add('theme-' + newTheme);
+
+  localStorage.setItem('premium-theme', newTheme);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('premium-theme') || 'light';
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add('theme-' + savedTheme);
+});
+</script>
+
+</body>
+</html>
