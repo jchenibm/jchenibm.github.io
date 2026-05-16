@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 在大型代码库中的工作原理</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --hairline: rgba(0,0,0,0.08);
+            --border-color: rgba(0,0,0,0.12);
+            --bg-main: #F8F7F4;
+            --bg-card: rgba(255,255,255,0.8);
+            --bg-card-hover: rgba(255,255,255,0.95);
+            --text-primary: #2A2825;
+            --text-secondary: #5A5855;
+            --text-muted: #8A8885;
+            --accent: #2563EB;
+            --accent-hover: #1D4ED8;
+            --signal: #EA580C;
+            --grow: #16A34A;
+            --warn: #DC2626;
+            --tab-bg: #E8E6E3;
+            --tab-border: rgba(0,0,0,0.15);
+            --tab-active-bg: #FFFFFF;
+            --tab-active-text: #2563EB;
+            --card-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .theme-dark {
+            --hairline: rgba(255,255,255,0.08);
+            --border-color: rgba(255,255,255,0.12);
+            --bg-main: #0A1628;
+            --bg-card: rgba(0,0,0,0.18);
+            --bg-card-hover: rgba(74,158,255,0.04);
+            --text-primary: #E8EEF7;
+            --text-secondary: #B8C8DD;
+            --text-muted: #7890B0;
+            --accent: #4A9EFF;
+            --accent-hover: #3A8EEF;
+            --signal: #FFB347;
+            --grow: #4AFF8F;
+            --warn: #FF6B6B;
+            --tab-bg: #1A2840;
+            --tab-border: rgba(255,255,255,0.15);
+            --tab-active-bg: #2A3850;
+            --tab-active-text: #4A9EFF;
+            --card-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            --card-shadow-hover: 0 4px 16px rgba(74,158,255,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.75;
+            font-weight: 300;
+            transition: background-color 320ms ease, color 320ms ease;
+        }
+
+        .frame {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .topbar .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar .logo {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .topbar .right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 320ms ease;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+
+        .theme-toggle .icon {
+            font-size: 16px;
+        }
+
+        h1.title {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 900;
+            font-size: clamp(36px, 6.4vw, 72px);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        .tab-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 4px;
+            padding: 12px 0;
+            background: var(--bg-main);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 20px;
+            border: 1px solid var(--tab-border);
+            border-radius: 6px 6px 0 0;
+            background: var(--tab-bg);
+            cursor: pointer;
+            transition: all 320ms ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tab-btn:hover {
+            background: var(--tab-active-bg);
+        }
+
+        .tab-btn.active {
+            background: var(--tab-active-bg);
+            color: var(--tab-active-text);
+            border-bottom-color: transparent;
+        }
+
+        .tab-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            opacity: 0.6;
+        }
+
+        .tab-label {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 320ms ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floor {
+            margin-bottom: 64px;
+        }
+
+        .floor-head {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .floor .number {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            font-size: 64px;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            position: relative;
+        }
+
+        .floor .number .tag {
+            position: absolute;
+            left: 100%;
+            top: 12px;
+            margin-left: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        .head-body .verb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .head-body h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            font-size: clamp(32px, 4.2vw, 48px);
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .head-body .tagline {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .concept-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            border: 1px solid var(--hairline);
+            border-radius: 12px;
+            padding: 24px;
+            background: linear-gradient(180deg, var(--bg-card), var(--bg-card-hover));
+            backdrop-filter: blur(6px);
+            box-shadow: var(--card-shadow);
+            transition: all 320ms ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .card-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .connection-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--accent);
+            color: white;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            font-size: 14px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        .data-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .data-table tr:hover td {
+            background: var(--bg-card);
+        }
+
+        .highlight-box {
+            padding: 24px;
+            border-left: 3px solid var(--accent);
+            background: var(--bg-card);
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0;
+        }
+
+        .highlight-box h4 {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .highlight-box p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .phase-diagram {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 32px 0;
+            overflow-x: auto;
+        }
+
+        .phase {
+            flex-shrink: 0;
+            width: 160px;
+            padding: 20px;
+            border: 1px solid var(--hairline);
+            border-radius: 8px;
+            background: var(--bg-card);
+            text-align: center;
+        }
+
+        .phase-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .phase-name {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .phase-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .arrow {
+            flex-shrink: 0;
+            color: var(--accent);
+            font-size: 24px;
+        }
+
+        @media (max-width: 760px) {
+            .frame { padding: 0 24px; }
+            .floor-head { grid-template-columns: 1fr; }
+            .floor .number { font-size: 48px; }
+            h1.title { font-size: 36px; }
+            .topbar .right span:not(.theme-toggle) { display: none; }
+            .tab-nav { flex-wrap: wrap; }
+            .tab-btn { flex: 1 1 calc(50% - 4px); min-width: 120px; }
+            .phase-diagram { flex-direction: column; }
+            .arrow { transform: rotate(90deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="theme-light">
+    <div class="frame">
+        <header class="topbar">
+            <div class="left">
+                <div class="logo">C</div>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em;">CLAUDE CODE 企业级应用</span>
+            </div>
+            <div class="right">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em;">2026</span>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">
+                    <span class="icon">◐</span>
+                    <span class="label">主题</span>
+                </button>
+            </div>
+        </header>
+
+        <h1 class="title">Claude Code 在<em>大型代码库</em>中的工作原理</h1>
+        <p class="subtitle">从数百万行单体仓库到数十年遗留系统的成功企业级部署最佳实践与模式。</p>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(0)">
+                <span class="tab-num">01</span>
+                <span class="tab-label">导航机制</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab(1)">
+                <span class="tab-num">02</span>
+                <span class="tab-label">扩展系统</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab(2)">
+                <span class="tab-num">03</span>
+                <span class="tab-label">配置模式</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab(3)">
+                <span class="tab-num">04</span>
+                <span class="tab-label">部署策略</span>
+            </button>
+        </nav>
+
+        <div class="tab-content active">
+            <article class="floor lvl-01">
+                <div class="floor-head">
+                    <div class="number">01<span class="tag">第一层</span></div>
+                    <div class="head-body">
+                        <div class="verb">基础机制</div>
+                        <h2>Claude Code 如何<em>导航</em></h2>
+                        <div class="tagline">智能体搜索像软件工程师一样工作——无需索引、无需嵌入，直接访问实时代码库。</div>
+                    </div>
+                </div>
+
+                <div class="concept-row">
+                    <div class="card">
+                        <div class="card-label">工作方式</div>
+                        <h3>文件系统遍历</h3>
+                        <p>Claude 像工程师一样导航代码库：读取文件、使用 grep、跟随代码引用遍历文件系统。</p>
+                        <div class="connection-chips">
+                            <span class="chip">本地运行</span>
+                            <span class="chip">无索引</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">核心优势</div>
+                        <h3>始终最新</h3>
+                        <p>直接在实时代码库上工作——没有过时的嵌入或陈旧的索引。每次查询都能看到当前最新代码。</p>
+                        <div class="connection-chips">
+                            <span class="chip">实时访问</span>
+                            <span class="chip">数据新鲜</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">关键需求</div>
+                        <h3>起始上下文</h3>
+                        <p>需要足够的上下文来知道在哪里查找。CLAUDE.md 文件和技能提供了导航基础。</p>
+                        <div class="connection-chips">
+                            <span class="chip">前期设置</span>
+                            <span class="chip">上下文</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>智能体搜索的优势</h4>
+                    <p>与嵌入整个代码库的 RAG 工具不同，Claude 的智能体搜索避免了数据陈旧问题。无需维护嵌入管道——直接访问实时代码即可。</p>
+                </div>
+
+                <div class="concept-row" style="margin-top: 32px;">
+                    <div class="card">
+                        <div class="card-label">部署环境</div>
+                        <h3>数百万行单体仓库</h3>
+                        <p>在跨越数十年开发的数百万行代码库的生产环境中部署。</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">语言支持</div>
+                        <h3>企业级编程语言</h3>
+                        <p>在 C、C++、C#、Java、PHP 等语言中表现出色——尤其是在最新模型发布后，表现往往超乎预期。</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">系统架构</div>
+                        <h3>分布式系统</h3>
+                        <p>跨越多个独立仓库的数十个微服务，数千名开发者共同贡献。</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="tab-content">
+            <article class="floor lvl-01">
+                <div class="floor-head">
+                    <div class="number">02<span class="tag">第二层</span></div>
+                    <div class="head-body">
+                        <div class="verb">扩展生态</div>
+                        <h2>扩展系统<em>至关重要</em></h2>
+                        <div class="tagline">决定性能的五个扩展点，比模型本身更重要。</div>
+                    </div>
+                </div>
+
+                <div class="concept-row">
+                    <div class="card">
+                        <div class="card-label">基础组件</div>
+                        <h3>CLAUDE.md 文件</h3>
+                        <p>每个会话自动加载的上下文文件。根文件提供整体架构，子目录文件提供本地约定。保持专注于广泛适用的知识。</p>
+                        <div class="connection-chips">
+                            <span class="chip">始终加载</span>
+                            <span class="chip">层次结构</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">自动化</div>
+                        <h3>钩子脚本</h3>
+                        <p>在关键时刻运行的脚本。不仅是防护——它们实现持续改进和一致的自动化。</p>
+                        <div class="connection-chips">
+                            <span class="chip">事件驱动</span>
+                            <span class="chip">自我完善</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">按需加载</div>
+                        <h3>技能包</h3>
+                        <p>专门工作流的渐进式展示。仅在代码审查时加载安全专业知识，仅在发布时加载部署文档。</p>
+                        <div class="connection-chips">
+                            <span class="chip">作用域</span>
+                            <span class="chip">高效</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-row" style="margin-top: 20px;">
+                    <div class="card">
+                        <div class="card-label">分发机制</div>
+                        <h3>插件系统</h3>
+                        <p>打包技能、钩子和 MCP 配置。通过托管市场在整个组织中分发可用的工作设置。</p>
+                        <div class="connection-chips">
+                            <span class="chip">打包</span>
+                            <span class="chip">可共享</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">精确导航</div>
+                        <h3>LSP 集成</h3>
+                        <p>符号级导航。跳转到定义、查找引用、区分不同语言中同名的函数。</p>
+                        <div class="connection-chips">
+                            <span class="chip">IDE 级别</span>
+                            <span class="chip">精确</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">外部扩展</div>
+                        <h3>MCP 服务器</h3>
+                        <p>连接内部工具、数据源和 API。结构化搜索、文档平台、工单系统。</p>
+                        <div class="connection-chips">
+                            <span class="chip">集成</span>
+                            <span class="chip">外部工具</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>构建顺序很重要</h4>
+                    <p>首先是 CLAUDE.md，然后是用于自动化的钩子，用于专业化的技能，用于分发的插件。LSP 和 MCP 完善整个体系。每一层都建立在前一层的基础上。</p>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>组件</th>
+                            <th>加载时机</th>
+                            <th>最佳用途</th>
+                            <th>常见误区</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CLAUDE.md</strong></td>
+                            <td>每个会话</td>
+                            <td>项目约定</td>
+                            <td>用于可复用专业知识</td>
+                        </tr>
+                        <tr>
+                            <td><strong>钩子</strong></td>
+                            <td>事件触发</td>
+                            <td>一致的自动化</td>
+                            <td>用提示词做自动化</td>
+                        </tr>
+                        <tr>
+                            <td><strong>技能</strong></td>
+                            <td>按需加载</td>
+                            <td>可复用工作流</td>
+                            <td>全部加载到 CLAUDE.md</td>
+                        </tr>
+                        <tr>
+                            <td><strong>插件</strong></td>
+                            <td>始终可用</td>
+                            <td>组织分发</td>
+                            <td>让配置 tribal 化</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LSP</strong></td>
+                            <td>始终可用</td>
+                            <td>符号导航</td>
+                            <td>假设自动配置</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MCP</strong></td>
+                            <td>始终可用</td>
+                            <td>内部工具</td>
+                            <td>基础未通就构建</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+        </div>
+
+        <div class="tab-content">
+            <article class="floor lvl-01">
+                <div class="floor-head">
+                    <div class="number">03<span class="tag">第三层</span></div>
+                    <div class="head-body">
+                        <div class="verb">实践模式</div>
+                        <h2>配置<em>模式</em></h2>
+                        <div class="tagline">在成功的大型部署中反复出现的三种方法。</div>
+                    </div>
+                </div>
+
+                <div class="concept-row">
+                    <div class="card">
+                        <div class="card-label">模式一</div>
+                        <h3>使代码库可导航</h3>
+                        <p>分层 CLAUDE.md 文件：根文件用于架构，子目录用于本地模式。权限配置引导哪些可以安全修改。</p>
+                        <div class="connection-chips">
+                            <span class="chip">结构化</span>
+                            <span class="chip">层次</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">模式二</div>
+                        <h3>主动维护</h3>
+                        <p>每 3-6 个月或主要模型发布后审查配置。帮助旧模型的指令可能会限制新模型。</p>
+                        <div class="connection-chips">
+                            <span class="chip">演进</span>
+                            <span class="chip">更新</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">模式三</div>
+                        <h3>指定负责人</h3>
+                        <p>在广泛发布前进行专门的基础设施投资。代理管理员角色：混合 PM/工程师拥有生态系统。</p>
+                        <div class="connection-chips">
+                            <span class="chip">治理</span>
+                            <span class="chip">负责人</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>分层 CLAUDE.md 模式</h4>
+                    <p>根文件：架构概述、测试标准、部署模式。子目录文件：模块特定约定、本地构建命令、领域特定规则。</p>
+                </div>
+
+                <div class="concept-row" style="margin-top: 32px;">
+                    <div class="card">
+                        <div class="card-label">核心原则</div>
+                        <h3>渐进式展示</h3>
+                        <p>并非所有专业知识都需要在每个会话中加载。技能按任务或目录激活，保持上下文专注且相关。</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">避免</div>
+                        <h3>知识孤岛</h3>
+                        <p>插件防止良好配置变得 tribal。打包有效的方法并通过托管市场分发。</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">投资</div>
+                        <h3>前期设置</h3>
+                        <p>投资代码库设置的团队看到更好的结果。可读的代码库 = 更好的导航 = 更高效的会话。</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="tab-content">
+            <article class="floor lvl-01">
+                <div class="floor-head">
+                    <div class="number">04<span class="tag">第四层</span></div>
+                    <div class="head-body">
+                        <div class="verb">组织层面</div>
+                        <h2>部署<em>策略</em></h2>
+                        <div class="tagline">仅靠技术配置无法推动采用——组织投资同样重要。</div>
+                    </div>
+                </div>
+
+                <div class="concept-row">
+                    <div class="card">
+                        <div class="card-label">第一阶段</div>
+                        <h3>基础设施先行</h3>
+                        <p>小团队在广泛访问前连接工具。插件、MCP 和 CLAUDE.md 约定在第一天就准备就绪。</p>
+                        <div class="connection-chips">
+                            <span class="chip">基础</span>
+                            <span class="chip">准备</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">第二阶段</div>
+                        <h3>高效初次体验</h3>
+                        <p>开发者的第一次体验是高效的，而不是令人沮丧的。采用从早期成功开始传播。</p>
+                        <div class="connection-chips">
+                            <span class="chip">入职</span>
+                            <span class="chip">体验</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">第三阶段</div>
+                        <h3>跨职能治理</h3>
+                        <p>工程、安全和治理共同定义需求。工作组建立部署路线图。</p>
+                        <div class="connection-chips">
+                            <span class="chip">协作</span>
+                            <span class="chip">标准</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-diagram">
+                    <div class="phase">
+                        <div class="phase-num">01</div>
+                        <div class="phase-name">基础设施</div>
+                        <div class="phase-desc">插件与 MCP</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="phase">
+                        <div class="phase-num">02</div>
+                        <div class="phase-name">试点</div>
+                        <div class="phase-desc">早期采用者</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="phase">
+                        <div class="phase-num">03</div>
+                        <div class="phase-name">广泛访问</div>
+                        <div class="phase-desc">组织推广</div>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="phase">
+                        <div class="phase-num">04</div>
+                        <div class="phase-name">优化</div>
+                        <div class="phase-desc">迭代改进</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>代理管理员角色</h4>
+                    <p>混合 PM/工程师职能，拥有配置、权限、市场和约定的所有权。有权做出决策并负责保持最新。</p>
+                </div>
+
+                <div class="concept-row" style="margin-top: 32px;">
+                    <div class="card">
+                        <div class="card-label">团队归属</div>
+                        <h3>开发者体验</h3>
+                        <p>Claude Code 管理的典型归属。已经负责入职和开发者工具。</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">治理方式</div>
+                        <h3>起步集</h3>
+                        <p>批准的技能、必需的审查流程、有限的初始访问。随着信心建立而扩展。</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-label">成功要素</div>
+                        <h3>集中化有效方法</h3>
+                        <p>组装和推广约定。没有集中化，知识保持 tribal 状态，采用会停滞。</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+
+            // 滚动到内容顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.classList.contains('theme-light') ? 'light' : 'dark';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            body.classList.remove('theme-light', 'theme-dark');
+            body.classList.add('theme-' + newTheme);
+
+            localStorage.setItem('nate-theme', newTheme);
+        }
+
+        // 页面加载时恢复保存的主题
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('nate-theme') || 'light';
+            document.body.classList.remove('theme-light', 'theme-dark');
+            document.body.classList.add('theme-' + savedTheme);
+        });
+    </script>
+</body>
+</html>
