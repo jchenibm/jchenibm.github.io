@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop Engineering with Claude Code — 完整教程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-code: #0d0d14;
+    --bg-hover: #1a1a28;
+    --border: #1e1e2e;
+    --border-light: #2a2a3e;
+    --text: #e4e4ef;
+    --text-secondary: #8888a0;
+    --text-muted: #55556a;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --accent-glow: rgba(108,92,231,0.15);
+    --green: #00b894;
+    --green-dim: rgba(0,184,148,0.12);
+    --orange: #fdcb6e;
+    --orange-dim: rgba(253,203,110,0.12);
+    --red: #ff6b6b;
+    --red-dim: rgba(255,107,107,0.12);
+    --blue: #74b9ff;
+    --blue-dim: rgba(116,185,255,0.12);
+    --cyan: #81ecec;
+    --cyan-dim: rgba(129,238,236,0.12);
+    --pink: #fd79a8;
+    --radius: 8px;
+    --radius-lg: 14px;
+    --font-sans: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    height: 56px;
+    display: flex; align-items: center;
+    padding: 0 24px;
+    font-size: 13px;
+  }
+  nav .brand {
+    font-weight: 700; color: var(--accent-light);
+    letter-spacing: -0.5px; font-size: 14px;
+    white-space: nowrap;
+  }
+  nav .brand span { color: var(--text-muted); font-weight: 400; margin-left: 6px; }
+  nav .nav-links {
+    display: flex; gap: 4px; margin-left: 32px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  nav .nav-links::-webkit-scrollbar { display: none; }
+  nav .nav-links a {
+    color: var(--text-secondary); text-decoration: none;
+    padding: 6px 12px; border-radius: 6px;
+    white-space: nowrap; transition: all 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--text); background: var(--bg-hover); }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 56px;
+    padding: 80px 24px 60px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(108,92,231,0.06) 0%, transparent 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800; letter-spacing: -1px;
+    line-height: 1.2; margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--accent-light), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .subtitle {
+    font-size: 17px; color: var(--text-secondary);
+    max-width: 640px; margin: 0 auto; line-height: 1.7;
+  }
+  .hero .meta {
+    margin-top: 24px; font-size: 13px; color: var(--text-muted);
+  }
+  .hero .meta a { color: var(--accent-light); text-decoration: none; }
+  .hero .meta a:hover { text-decoration: underline; }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── SECTION ── */
+  .section { padding: 64px 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  .section-label {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: var(--accent-light); margin-bottom: 8px;
+  }
+  h2 {
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 700; letter-spacing: -0.5px;
+    line-height: 1.3; margin-bottom: 24px;
+  }
+  h3 {
+    font-size: 19px; font-weight: 600;
+    color: var(--text); margin: 36px 0 14px;
+    letter-spacing: -0.3px;
+  }
+  h4 {
+    font-size: 16px; font-weight: 600;
+    color: var(--accent-light); margin: 24px 0 10px;
+  }
+
+  p { margin-bottom: 16px; color: var(--text-secondary); }
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* ── BLOCKQUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-glow);
+    padding: 16px 20px; margin: 20px 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 15px; color: var(--text);
+    font-style: italic;
+  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  thead th {
+    text-align: left; padding: 10px 14px;
+    font-weight: 600; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--text-muted); border-bottom: 2px solid var(--border);
+  }
+  tbody td {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top;
+  }
+  tbody td:first-child { color: var(--text); font-weight: 500; }
+  tbody tr:hover { background: var(--bg-hover); }
+  tbody td code {
+    font-family: var(--font-mono); font-size: 12px;
+    background: var(--bg-code); padding: 2px 6px;
+    border-radius: 4px; color: var(--cyan);
+  }
+
+  /* ── CODE ── */
+  pre {
+    background: var(--bg-code); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    margin: 14px 0; overflow-x: auto;
+    font-family: var(--font-mono); font-size: 13px;
+    line-height: 1.7; color: var(--text-secondary);
+  }
+  code {
+    font-family: var(--font-mono); font-size: 13px;
+  }
+  p code, li code {
+    background: var(--bg-code); padding: 2px 6px;
+    border-radius: 4px; color: var(--cyan);
+    border: 1px solid var(--border);
+  }
+  .code-label {
+    font-size: 11px; color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-bottom: 6px;
+  }
+
+  /* ── DIAGRAM ── */
+  .diagram-wrapper {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 32px;
+    margin: 24px 0; overflow-x: auto;
+  }
+  .diagram-wrapper svg { width: 100%; height: auto; display: block; }
+  .diagram-caption {
+    text-align: center; font-size: 13px;
+    color: var(--text-muted); margin-top: 14px;
+    font-style: italic;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius: var(--radius); padding: 18px 20px;
+    margin: 20px 0; font-size: 14px;
+  }
+  .callout-title { font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+  .callout-green { background: var(--green-dim); border: 1px solid rgba(0,184,148,0.2); }
+  .callout-green .callout-title { color: var(--green); }
+  .callout-orange { background: var(--orange-dim); border: 1px solid rgba(253,203,110,0.2); }
+  .callout-orange .callout-title { color: var(--orange); }
+  .callout-red { background: var(--red-dim); border: 1px solid rgba(255,107,107,0.2); }
+  .callout-red .callout-title { color: var(--red); }
+  .callout-blue { background: var(--blue-dim); border: 1px solid rgba(116,185,255,0.2); }
+  .callout-blue .callout-title { color: var(--blue); }
+  .callout p { margin-bottom: 6px; color: var(--text-secondary); }
+
+  /* ── CARD GRID ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 22px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-light); }
+  .card-icon { font-size: 24px; margin-bottom: 10px; }
+  .card h4 { margin: 0 0 8px; font-size: 15px; }
+  .card p { font-size: 13px; margin: 0; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: var(--text-secondary);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px; border: 2px solid var(--border-light);
+    border-radius: 4px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .check-box.checked { background: var(--accent); border-color: var(--accent); }
+  .check-box.checked::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+
+  /* ── FLOW STEPS ── */
+  .flow-steps { margin: 20px 0; }
+  .flow-step {
+    display: flex; gap: 16px; margin-bottom: 0;
+    position: relative;
+  }
+  .flow-step:not(:last-child)::before {
+    content: '';
+    position: absolute; left: 17px; top: 36px; bottom: -12px;
+    width: 2px; background: var(--border-light);
+  }
+  .flow-dot {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+    border: 2px solid var(--border-light);
+    color: var(--text-muted); background: var(--bg-card);
+    position: relative; z-index: 1;
+  }
+  .flow-step[data-status="done"] .flow-dot {
+    background: var(--green-dim); border-color: var(--green); color: var(--green);
+  }
+  .flow-step[data-status="warn"] .flow-dot {
+    background: var(--orange-dim); border-color: var(--orange); color: var(--orange);
+  }
+  .flow-step[data-status="active"] .flow-dot {
+    background: var(--accent-glow); border-color: var(--accent); color: var(--accent-light);
+  }
+  .flow-content { flex: 1; padding-bottom: 20px; }
+  .flow-content h4 { margin: 4px 0 6px; font-size: 15px; }
+  .flow-content p { font-size: 13px; margin: 0; color: var(--text-muted); }
+
+  /* ── COMPARISON ── */
+  .comparison {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 20px 0;
+  }
+  .comparison-col {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 22px;
+  }
+  .comparison-col h4 {
+    margin: 0 0 12px; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .comparison-col ul { list-style: none; padding: 0; }
+  .comparison-col li {
+    padding: 6px 0; font-size: 14px; color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-col li:last-child { border-bottom: none; }
+  .comparison-col li strong { color: var(--text); }
+
+  /* ── RISK CARDS ── */
+  .risk-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+  .risk-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 22px;
+    border-top: 3px solid;
+  }
+  .risk-card.risk-red { border-top-color: var(--red); }
+  .risk-card.risk-orange { border-top-color: var(--orange); }
+  .risk-card.risk-blue { border-top-color: var(--blue); }
+  .risk-card h4 { margin: 0 0 8px; }
+  .risk-card p { font-size: 13px; margin: 0 0 10px; }
+  .risk-card .mitigation { font-size: 12px; color: var(--green); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 24px; text-align: center;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--text-muted);
+  }
+  footer a { color: var(--accent-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .hero { padding: 48px 16px 36px; }
+    .container { padding: 0 16px; }
+    .section { padding: 40px 0; }
+    .comparison { grid-template-columns: 1fr; }
+    .diagram-wrapper { padding: 16px; }
+    nav .nav-links { display: none; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* ── UL/OL ── */
+  ul, ol { padding-left: 24px; margin: 10px 0; }
+  li { font-size: 14px; color: var(--text-secondary); margin-bottom: 6px; }
+  li strong { color: var(--text); }
+
+  /* ── INLINE BADGE ── */
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+    font-family: var(--font-mono);
+  }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-blue { background: var(--blue-dim); color: var(--blue); }
+  .badge-orange { background: var(--orange-dim); color: var(--orange); }
+  .badge-red { background: var(--red-dim); color: var(--red); }
+  .badge-accent { background: var(--accent-glow); color: var(--accent-light); }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="brand">Loop Engineering<span>/ Claude Code 教程</span></div>
+  <div class="nav-links">
+    <a href="#why">为什么</a>
+    <a href="#primitives">六大原语</a>
+    <a href="#config">配置</a>
+    <a href="#agents">Agent 定义</a>
+    <a href="#skills">Skills</a>
+    <a href="#automation">自动化</a>
+    <a href="#case">实战案例</a>
+    <a href="#risks">风险</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<header class="hero">
+  <h1>用 Claude Code 实现 Loop Engineering</h1>
+  <p class="subtitle">从 Prompt Engineering 到 Loop Engineering 的范式转移——你不该再 prompt coding agent，你应该设计能 prompt agent 的 loop。</p>
+  <p class="meta">基于 <a href="https://addyosmani.com/blog/loop-engineering/">Addy Osmani</a> 的核心思想 · 结合 Claude Code 配置体系 · 2026 年 6 月</p>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: WHY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="why">
+<div class="container">
+  <div class="section-label">01 · 为什么需要</div>
+  <h2>从 Prompt Engineering 到 Loop Engineering</h2>
+
+  <p>过去两年，使用 AI Agent 的方式是<strong>「写好 prompt → 看结果 → 写下一个 prompt → 再看」</strong>——你全程握着一个工具，Agent 只是一个响应者。这个模式的根本问题：<strong>你成了调度瓶颈</strong>。</p>
+
+  <p>Loop Engineering 是一种工作范式的迁移：你不再扮演「逐轮提示 Agent 的人」，而是<strong>设计「那个会自动提示 Agent 的系统」</strong>。Claude Code 负责人 Boris Cherny 说——"我不再提示 Claude，我写 Loop"。</p>
+
+  <div class="comparison" style="margin-top:28px">
+    <div class="comparison-col">
+      <h4 style="color:var(--text-muted)">Prompt Engineering</h4>
+      <ul>
+        <li>杠杆点：<strong>每轮提示的质量</strong></li>
+        <li>人的角色：<strong>操作工</strong></li>
+        <li>Agent 角色：<strong>响应者</strong></li>
+        <li>价值来源：<strong>你说了什么</strong></li>
+        <li>难度：写好一段话</li>
+      </ul>
+    </div>
+    <div class="comparison-col" style="border-color:var(--accent)">
+      <h4 style="color:var(--accent-light)">Loop Engineering</h4>
+      <ul>
+        <li>杠杆点：<strong>系统架构的设计质量</strong></li>
+        <li>人的角色：<strong>产线设计师</strong></li>
+        <li>Agent 角色：<strong>自主执行者</strong></li>
+        <li>价值来源：<strong>你设计了什么</strong></li>
+        <li>难度：设计一个系统</li>
+      </ul>
+    </div>
+  </div>
+
+  <blockquote>好的循环把工程判断制度化，坏的循环把混乱自动化。真正的 loop 往往不是最开放的，而是最有边界的。</blockquote>
+
+  <!-- LAYER DIAGRAM -->
+  <div class="diagram-wrapper">
+    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Loop Layer -->
+      <rect x="40" y="20" width="640" height="80" rx="12" fill="rgba(108,92,231,0.08)" stroke="#6c5ce7" stroke-width="1.5"/>
+      <text x="72" y="52" fill="#a29bfe" font-family="Inter,sans-serif" font-size="13" font-weight="700">LOOP ENGINEERING</text>
+      <text x="72" y="76" fill="#8888a0" font-family="Inter,sans-serif" font-size="12">定时触发 · 派生子 Agent · 自我喂食 · 跨会话 · Maker-Checker 分离</text>
+      <text x="620" y="55" fill="#6c5ce7" font-family="JetBrains Mono,monospace" font-size="11" text-anchor="end">/loop, /goal</text>
+      <text x="620" y="75" fill="#6c5ce7" font-family="JetBrains Mono,monospace" font-size="11" text-anchor="end">cron, hooks</text>
+
+      <!-- Harness Layer -->
+      <rect x="40" y="112" width="640" height="80" rx="12" fill="rgba(116,185,255,0.06)" stroke="#74b9ff" stroke-width="1.5"/>
+      <text x="72" y="144" fill="#74b9ff" font-family="Inter,sans-serif" font-size="13" font-weight="700">HARNESS ENGINEERING</text>
+      <text x="72" y="168" fill="#8888a0" font-family="Inter,sans-serif" font-size="12">上下文注入 · 工具边界 · 安全约束 · 钩子系统 · 权限控制</text>
+      <text x="620" y="147" fill="#74b9ff" font-family="JetBrains Mono,monospace" font-size="11" text-anchor="end">CLAUDE.md</text>
+      <text x="620" y="167" fill="#74b9ff" font-family="JetBrains Mono,monospace" font-size="11" text-anchor="end">settings.json</text>
+
+      <!-- Agent Layer -->
+      <rect x="40" y="204" width="640" height="76" rx="12" fill="rgba(0,184,148,0.06)" stroke="#00b894" stroke-width="1.5"/>
+      <text x="72" y="236" fill="#00b894" font-family="Inter,sans-serif" font-size="13" font-weight="700">AGENT（大语言模型）</text>
+      <text x="72" y="258" fill="#8888a0" font-family="Inter,sans-serif" font-size="12">知识处理 · 推理 · 代码生成 · 工具调用</text>
+      <text x="620" y="237" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11" text-anchor="end">Claude Opus/Sonnet/Haiku</text>
+
+      <!-- Arrows -->
+      <line x1="360" y1="100" x2="360" y2="112" stroke="#444466" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="360" y1="192" x2="360" y2="204" stroke="#444466" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#444466"/>
+        </marker>
+      </defs>
+    </svg>
+    <p class="diagram-caption">三层架构：Loop 坐在 Harness 之上，Harness 包裹 Agent</p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: PRIMITIVES -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="primitives">
+<div class="container">
+  <div class="section-label">02 · 六大原语</div>
+  <h2>Loop Engineering 的六个构建块</h2>
+
+  <p>Codex 和 Claude Code 的原语几乎一一对应——这是<strong>工具无关的通用模式</strong>。六个全齐，loop 才能真正无人值守运行。</p>
+
+  <!-- HEXAGON PRIMITIVE DIAGRAM -->
+  <div class="diagram-wrapper">
+    <svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg">
+      <!-- Center -->
+      <circle cx="360" cy="210" r="58" fill="rgba(108,92,231,0.12)" stroke="#6c5ce7" stroke-width="2"/>
+      <text x="360" y="205" fill="#a29bfe" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle">LOOP</text>
+      <text x="360" y="225" fill="#8888a0" font-family="Inter,sans-serif" font-size="11" text-anchor="middle">六大原语</text>
+
+      <!-- Automations - top -->
+      <rect x="280" y="20" width="160" height="60" rx="10" fill="rgba(108,92,231,0.1)" stroke="#6c5ce7" stroke-width="1.5"/>
+      <text x="360" y="45" fill="#a29bfe" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">Automations</text>
+      <text x="360" y="65" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">/loop · cron · hooks</text>
+      <line x1="360" y1="80" x2="360" y2="152" stroke="#6c5ce7" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Worktrees - top-right -->
+      <rect x="510" y="80" width="160" height="60" rx="10" fill="rgba(0,184,148,0.08)" stroke="#00b894" stroke-width="1.5"/>
+      <text x="590" y="105" fill="#00b894" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">Worktrees</text>
+      <text x="590" y="125" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">git worktree · 隔离</text>
+      <line x1="510" y1="125" x2="418" y2="185" stroke="#00b894" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Skills - right -->
+      <rect x="530" y="240" width="160" height="60" rx="10" fill="rgba(253,203,110,0.08)" stroke="#fdcb6e" stroke-width="1.5"/>
+      <text x="610" y="265" fill="#fdcb6e" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">Skills</text>
+      <text x="610" y="285" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">SKILL.md · 意图外部化</text>
+      <line x1="530" y1="265" x2="418" y2="220" stroke="#fdcb6e" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Connectors - bottom-right -->
+      <rect x="430" y="340" width="160" height="60" rx="10" fill="rgba(129,238,236,0.08)" stroke="#81ecec" stroke-width="1.5"/>
+      <text x="510" y="365" fill="#81ecec" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">Connectors</text>
+      <text x="510" y="385" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">MCP servers · 工具接入</text>
+      <line x1="460" y1="340" x2="395" y2="268" stroke="#81ecec" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Sub-agents - bottom-left -->
+      <rect x="130" y="340" width="160" height="60" rx="10" fill="rgba(255,107,107,0.08)" stroke="#ff6b6b" stroke-width="1.5"/>
+      <text x="210" y="365" fill="#ff6b6b" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">Sub-agents</text>
+      <text x="210" y="385" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">Maker/Checker 分离</text>
+      <line x1="260" y1="340" x2="325" y2="268" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- State - left -->
+      <rect x="30" y="240" width="160" height="60" rx="10" fill="rgba(253,121,168,0.08)" stroke="#fd79a8" stroke-width="1.5"/>
+      <text x="110" y="265" fill="#fd79a8" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">State/Memory</text>
+      <text x="110" y="285" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">AGENTS.md · 跨会话持久化</text>
+      <line x1="190" y1="265" x2="302" y2="220" stroke="#fd79a8" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Automations - top-left (placeholder for balance) -->
+      <rect x="50" y="80" width="160" height="60" rx="10" fill="rgba(116,185,255,0.08)" stroke="#74b9ff" stroke-width="1.5"/>
+      <text x="130" y="105" fill="#74b9ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">Hooks</text>
+      <text x="130" y="125" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">生命周期钩子 · 自动响应</text>
+      <line x1="210" y1="125" x2="302" y2="185" stroke="#74b9ff" stroke-width="1" stroke-dasharray="4,3"/>
+    </svg>
+    <p class="diagram-caption">Loop 的六大原语围绕中心协同运作，缺一不可</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>原语</th><th>职责</th><th>Claude Code 实现</th><th>缺了会怎样</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Automations</strong></td><td>心跳——定时发现+分诊</td><td><code>/loop</code> <code>/goal</code> cron hooks</td><td>一次性运行，不是 loop</td></tr>
+      <tr><td><strong>Worktrees</strong></td><td>隔离——并行不冲突</td><td><code>git worktree</code> <code>isolation: worktree</code></td><td>并行 Agent 互相覆盖文件</td></tr>
+      <tr><td><strong>Skills</strong></td><td>意图外部化</td><td><code>SKILL.md</code> 插件打包</td><td>每轮从零推导整个项目</td></tr>
+      <tr><td><strong>Connectors</strong></td><td>接入真实工具</td><td>MCP servers</td><td>Agent 无法操作真实工具链</td></tr>
+      <tr><td><strong>Sub-agents</strong></td><td>Maker/Checker 分离</td><td><code>.claude/agents/</code></td><td>写代码的人给自己打分，太宽容</td></tr>
+      <tr><td><strong>State</strong></td><td>跨轮次持久化</td><td><code>AGENTS.md</code> Markdown 文件</td><td>每次循环从零开始</td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: CONFIG -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="config">
+<div class="container">
+  <div class="section-label">03 · 配置体系</div>
+  <h2>Claude Code 的 Loop Engineering 配置</h2>
+
+  <!-- FILE TREE DIAGRAM -->
+  <div class="diagram-wrapper">
+    <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background sections -->
+      <rect x="20" y="10" width="330" height="360" rx="10" fill="rgba(108,92,231,0.04)" stroke="#6c5ce7" stroke-width="1" stroke-dasharray="6,3"/>
+      <text x="36" y="32" fill="#6c5ce7" font-family="JetBrains Mono,monospace" font-size="11" font-weight="600">~/.claude/</text>
+
+      <rect x="370" y="10" width="330" height="360" rx="10" fill="rgba(0,184,148,0.04)" stroke="#00b894" stroke-width="1" stroke-dasharray="6,3"/>
+      <text x="386" y="32" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11" font-weight="600">项目根目录/</text>
+
+      <!-- Left column files -->
+      <text x="44" y="64" fill="#a29bfe" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500">├── CLAUDE.md</text>
+      <text x="480" y="64" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">全局 Harness</text>
+
+      <text x="44" y="88" fill="#a29bfe" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500">├── settings.json</text>
+      <text x="480" y="88" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">权限、hooks、MCP</text>
+
+      <text x="44" y="120" fill="#ff6b6b" font-family="JetBrains Mono,monospace" font-size="11" font-weight="600">├── agents/</text>
+      <text x="44" y="140" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">│   ├── explorer.md</text>
+      <text x="44" y="156" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">│   ├── implementer.md</text>
+      <text x="44" y="172" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">│   └── reviewer.md</text>
+      <text x="480" y="140" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">Sub-agent 定义</text>
+
+      <text x="44" y="204" fill="#fdcb6e" font-family="JetBrains Mono,monospace" font-size="11" font-weight="600">├── skills/</text>
+      <text x="44" y="224" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">│   └── triage/</text>
+      <text x="44" y="240" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">│       └── SKILL.md</text>
+      <text x="480" y="224" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">可复用项目知识</text>
+
+      <text x="44" y="272" fill="#81ecec" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500">├── hooks/</text>
+      <text x="480" y="272" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">生命周期钩子脚本</text>
+
+      <text x="44" y="296" fill="#fd79a8" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500">└── scheduled_tasks.json</text>
+      <text x="480" y="296" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">定时任务持久化</text>
+
+      <!-- Right column files -->
+      <text x="386" y="64" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500">├── CLAUDE.md</text>
+      <text x="530" y="64" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">项目级 Harness</text>
+
+      <text x="386" y="88" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500">├── AGENTS.md</text>
+      <text x="530" y="88" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">项目状态（跨会话）</text>
+
+      <text x="386" y="120" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="11">├── .github/</text>
+      <text x="386" y="140" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">│   └── workflows/</text>
+      <text x="386" y="156" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">│       └── daily-triage.yml</text>
+      <text x="530" y="140" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">GitHub Actions 自动化</text>
+
+      <text x="386" y="188" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="11">└── .claude/</text>
+      <text x="386" y="208" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">    ├── settings.json</text>
+      <text x="386" y="224" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10">    └── loop-state.md</text>
+      <text x="530" y="208" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">项目级权限 / Loop 状态</text>
+
+      <!-- Legend -->
+      <rect x="40" y="330" width="8" height="8" rx="2" fill="#a29bfe"/>
+      <text x="56" y="339" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">全局配置</text>
+      <rect x="140" y="330" width="8" height="8" rx="2" fill="#ff6b6b"/>
+      <text x="156" y="339" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">Sub-agents</text>
+      <rect x="240" y="330" width="8" height="8" rx="2" fill="#fdcb6e"/>
+      <text x="256" y="339" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">Skills</text>
+      <rect x="320" y="330" width="8" height="8" rx="2" fill="#00b894"/>
+      <text x="336" y="339" fill="#8888a0" font-family="Inter,sans-serif" font-size="10">项目级</text>
+    </svg>
+    <p class="diagram-caption">Claude Code Loop Engineering 的完整文件结构</p>
+  </div>
+
+  <h3>Harness 配置：CLAUDE.md</h3>
+  <p>CLAUDE.md 在每次会话启动时自动注入，为 Agent 提供身份、规则和上下文。保持在 <strong>80 行以内</strong>——有了它，loop 开始有复利。</p>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">💡 设计要点</div>
+    <p>全局 CLAUDE.md 放在 <code>~/.claude/CLAUDE.md</code>，项目级放在项目根目录。项目级覆盖全局。两层协同：全局定义通用规则，项目级定义特定上下文（技术栈、构建命令、代码规范）。</p>
+  </div>
+
+  <p class="code-label">~/.claude/CLAUDE.md — 全局配置示例</p>
+  <pre><code># ABOUT YOU
+你是我的自主操作者和思考伙伴。
+- 先说结论，再用 MECE 和第一性原理分析
+- 输出说重点，砍掉一切不改变决策的信息
+- 遇到问题追根因，不打补丁
+
+# My IMPORTANT Directories
+~/Downloads           # 日常下载
+~/Documents/研究报告    # 行业分析报告
+~/github              # 代码项目
+
+# WEB SEARCH TOOLS
+1. Tavily — AI 优化搜索，首选
+2. WebReader — 提取网页全文为 Markdown
+3. Context7 — 技术文档和 API 参考</code></pre>
+
+  <p class="code-label">项目根目录/CLAUDE.md — 项目级配置示例</p>
+  <pre><code># Project: Payment Service
+
+## 技术栈
+- Go 1.22, Gin, GORM, PostgreSQL 15
+
+## 构建命令
+- 测试: <code>go test ./... -v -race</code>
+- Lint: <code>golangci-lint run ./...</code>
+
+## 代码规范
+- 错误处理用 <code>fmt.Errorf("functionName: %w", err)</code> 包装
+- 日志用 <code>slog</code>，不用 <code>log</code>
+- 数据库操作必须有事务</code></pre>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: AGENTS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="agents">
+<div class="container">
+  <div class="section-label">04 · Maker-Checker 分离</div>
+  <h2>Sub-agents：Loop 中最有杠杆的一步</h2>
+
+  <blockquote>写代码的模型给自己的代码打分，就像学生给自己的考试阅卷——太宽容了。Loop 无人值守时，可信的 verifier 是你唯一能放心走开的理由。</blockquote>
+
+  <!-- MAKER-CHECKER FLOW DIAGRAM -->
+  <div class="diagram-wrapper">
+    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+      <!-- Explorer -->
+      <rect x="30" y="80" width="180" height="120" rx="12" fill="rgba(129,238,236,0.06)" stroke="#81ecec" stroke-width="1.5"/>
+      <text x="120" y="108" fill="#81ecec" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle">Explorer</text>
+      <text x="120" y="130" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">model: haiku</text>
+      <text x="120" y="148" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">tools: 只读</text>
+      <line x1="120" y1="156" x2="120" y2="168" stroke="#444466" stroke-width="0.5"/>
+      <text x="120" y="182" fill="#55556a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">快速 · 低成本</text>
+      <text x="120" y="196" fill="#55556a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">扫描 · 搜索 · 定位</text>
+
+      <!-- Arrow 1 -->
+      <line x1="210" y1="140" x2="268" y2="140" stroke="#444466" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="240" y="130" fill="#8888a0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">发现</text>
+
+      <!-- Implementer -->
+      <rect x="270" y="80" width="180" height="120" rx="12" fill="rgba(108,92,231,0.08)" stroke="#6c5ce7" stroke-width="1.5"/>
+      <text x="360" y="108" fill="#a29bfe" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle">Implementer</text>
+      <text x="360" y="130" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">model: opus</text>
+      <text x="360" y="148" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">tools: 读写</text>
+      <line x1="360" y1="156" x2="360" y2="168" stroke="#444466" stroke-width="0.5"/>
+      <text x="360" y="182" fill="#55556a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">深度推理 · 完整权限</text>
+      <text x="360" y="196" fill="#55556a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">修复 · 重构 · 实现</text>
+
+      <!-- Arrow 2 -->
+      <line x1="450" y1="140" x2="508" y2="140" stroke="#444466" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="480" y="130" fill="#8888a0" font-family="Inter,sans-serif" font-size="9" text-anchor="middle">交付</text>
+
+      <!-- Reviewer -->
+      <rect x="510" y="80" width="180" height="120" rx="12" fill="rgba(255,107,107,0.06)" stroke="#ff6b6b" stroke-width="1.5"/>
+      <text x="600" y="108" fill="#ff6b6b" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle">Reviewer</text>
+      <text x="600" y="130" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">model: opus</text>
+      <text x="600" y="148" fill="#8888a0" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">tools: 只读 · adversarial</text>
+      <line x1="600" y1="156" x2="600" y2="168" stroke="#444466" stroke-width="0.5"/>
+      <text x="600" y="182" fill="#55556a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">对抗性 · 怀疑一切</text>
+      <text x="600" y="196" fill="#55556a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">审查 · 验证 · 裁决</text>
+
+      <!-- Labels -->
+      <text x="120" y="60" fill="#81ecec" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle">👁 侦察</text>
+      <text x="360" y="60" fill="#a29bfe" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle">🔨 执行</text>
+      <text x="600" y="60" fill="#ff6b6b" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle">🔍 审查</text>
+
+      <!-- Feedback arrow -->
+      <path d="M 600 200 L 600 240 L 120 240 L 120 200" fill="none" stroke="#444466" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+      <text x="360" y="260" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">REQUEST_CHANGES → 新一轮修复</text>
+    </svg>
+    <p class="diagram-caption">Explorer → Implementer → Reviewer 流水线，Reviewer 不通过时触发新一轮修复</p>
+  </div>
+
+  <h3>Agent 定义格式</h3>
+  <p>在 <code>~/.claude/agents/</code> 下创建 Markdown 文件，使用 YAML frontmatter：</p>
+
+  <pre><code>---
+name: explorer                      # 必填，Agent 唯一标识
+description: "只读探索 Agent"         # 必填，用途和触发场景
+model: haiku                        # opus | sonnet | haiku
+tools: Read, Grep, Glob, LSP, WebSearch  # 可选工具列表
+---
+# Agent 指令（Markdown 正文）</code></pre>
+
+  <div class="card-grid" style="margin-top:28px">
+    <div class="card">
+      <div class="card-icon">👁</div>
+      <h4 style="color:var(--cyan)">Explorer</h4>
+      <p><span class="badge badge-blue">haiku</span> <span class="badge badge-accent">只读</span></p>
+      <p>快速扫描代码库、搜索模式、分析依赖关系。输出结构化发现供下游消费。</p>
+      <p style="color:var(--text-muted);font-size:12px;margin-top:8px">成本约 Opus 的 1/20，高频低风险操作</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔨</div>
+      <h4 style="color:var(--accent-light)">Implementer</h4>
+      <p><span class="badge badge-accent">opus</span> <span class="badge badge-green">读写</span></p>
+      <p>深度推理，完整读写和执行权限。实现功能、修复 bug、重构代码。</p>
+      <p style="color:var(--text-muted);font-size:12px;margin-top:8px">核心生产者，需要最强推理能力</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔍</div>
+      <h4 style="color:var(--red)">Reviewer</h4>
+      <p><span class="badge badge-accent">opus</span> <span class="badge badge-red">只读+Adversarial</span></p>
+      <p>对抗性审查——默认立场是"这里有问题"。检查正确性、安全性、接口兼容。</p>
+      <p style="color:var(--text-muted);font-size:12px;margin-top:8px">质量守门员，审查者不修改代码</p>
+    </div>
+  </div>
+
+  <div class="callout callout-orange">
+    <div class="callout-title">⚠️ 为什么 Reviewer 只读？</div>
+    <p>审查者不修改代码——避免既当裁判又当运动员。你的工作是指路，不是代驾。这是 Loop 无人值守可信运行的<strong>唯一保障</strong>。</p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: SKILLS + CONNECTORS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="skills">
+<div class="container">
+  <div class="section-label">05 · Skills & Connectors</div>
+  <h2>意图外部化与工具接入</h2>
+
+  <h3>Skills：Loop 的复利效应</h3>
+  <p>没有 skills，loop 每轮从零推导整个项目。有 skills，意图写在外面，约定/构建步骤/历史教训<strong>写一次，每次运行 agent 都读到</strong>——loop 开始有复利。</p>
+
+  <p class="code-label">~/.claude/skills/triage/SKILL.md</p>
+  <pre><code>---
+name: triage
+description: "每日项目 triage。扫描 CI 失败、open issues、lint 警告。"
+---
+
+# 每日 Triage 流程
+
+## Step 1：读取状态
+读取 AGENTS.md 获取上次 triage 的进度。
+
+## Step 2：扫描问题
+- CI 失败: <code>gh run list --status failure --limit 5</code>
+- Open Issues: <code>gh issue list --state open --limit 20</code>
+- Lint 警告: <code>golangci-lint run ./...</code>
+
+## Step 3：分类
+- 可自动修复（低风险）→ 派 implementer agent
+- 需人工判断（高风险）→ 记录到 AGENTS.md</code></pre>
+
+  <h3>Connectors：MCP Servers</h3>
+  <p>Connectors 让 Agent 能操作你的真实工具链——GitHub、数据库、Slack、CI/CD。</p>
+
+  <p class="code-label">~/.claude/settings.json — MCP 配置</p>
+  <pre><code>{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_..." }
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": { "POSTGRES_CONNECTION_STRING": "postgresql://..." }
+    }
+  }
+}</code></pre>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: AUTOMATION -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="automation">
+<div class="container">
+  <div class="section-label">06 · 自动化与状态</div>
+  <h2>Automations + State：让 Loop 转起来</h2>
+
+  <h3>三种定时触发方式</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">⏱</div>
+      <h4>/loop</h4>
+      <p>Claude Code 内置。每 N 分钟运行一次，支持动态间隔。适合交互式场景。</p>
+      <pre style="margin-top:8px;padding:8px;font-size:11px"><code>/loop 5m /triage</code></pre>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h4>CronCreate</h4>
+      <p>在对话中创建定时任务，可持久化到磁盘，跨会话存活。</p>
+      <pre style="margin-top:8px;padding:8px;font-size:11px"><code>cron: "57 8 * * 1-5"
+durable: true</code></pre>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚀</div>
+      <h4>GitHub Actions</h4>
+      <p>CI/CD 集成。适合无人值守、服务器端执行。支持 workflow_dispatch 手动触发。</p>
+      <pre style="margin-top:8px;padding:8px;font-size:11px"><code>claude-code-action@v1
+prompt: "每日 triage..."</code></pre>
+    </div>
+  </div>
+
+  <h3>State：Agent 遗忘，仓库不忘</h3>
+
+  <blockquote>The agent forgets, the repo doesn't. Agent 每次启动都是白纸一张。Loop 能跨会话持续运转，唯一的依赖是外部状态。</blockquote>
+
+  <p class="code-label">项目根目录/AGENTS.md — 状态文件</p>
+  <pre><code># AGENTS.md — Payment Service 状态
+
+## 最近一次 Triage
+- 日期：2026-06-13
+- 处理的问题数：7
+- 自动修复数：4（3 个 PASS，1 个 REQUEST_CHANGES）
+
+## 进行中
+- [ ] JWT Token 验证中间件
+  - 状态：代码已写完，等待 review
+  - 文件：src/middleware/auth.go
+
+## 技术债记录
+- src/handler/user.go:L45 — 错误处理需要细化
+
+## 已知的坑
+- PostgreSQL timestamp 精度 vs Go time.Time 精度</code></pre>
+
+  <div class="callout callout-green">
+    <div class="callout-title">✓ 关键原则</div>
+    <p>每次 loop 启动时，第一个动作就是<strong>读取 AGENTS.md</strong>——从上次的进度接着来，而不是从零开始。这个机制简单到容易被忽视，但它是所有长运行 Agent 的共同依赖。</p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: CASE STUDY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="case">
+<div class="container">
+  <div class="section-label">07 · 实战案例</div>
+  <h2>构建一个每日自动 Triage Loop</h2>
+
+  <p>场景：你维护一个 Go 微服务项目。每天早上 9 点自动扫描 CI 失败、issue、lint 警告，低风险问题自动修复并提 PR，高风险问题推送到 triage inbox。</p>
+
+  <!-- EXECUTION TIMELINE DIAGRAM -->
+  <div class="diagram-wrapper">
+    <svg viewBox="0 0 720 520" xmlns="http://www.w3.org/2000/svg">
+      <!-- Time axis -->
+      <line x1="80" y1="30" x2="80" y2="500" stroke="#2a2a3e" stroke-width="2"/>
+      <text x="80" y="22" fill="#55556a" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle">时间</text>
+
+      <!-- 08:57 Trigger -->
+      <circle cx="80" cy="55" r="5" fill="#6c5ce7"/>
+      <text x="20" y="59" fill="#6c5ce7" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">08:57</text>
+      <rect x="100" y="38" width="580" height="34" rx="8" fill="rgba(108,92,231,0.08)" stroke="#6c5ce7" stroke-width="1"/>
+      <text x="120" y="60" fill="#a29bfe" font-family="Inter,sans-serif" font-size="12">Loop 触发 → 读取 AGENTS.md + CLAUDE.md + triage SKILL.md</text>
+
+      <!-- 09:00 Explorer -->
+      <circle cx="80" cy="115" r="5" fill="#81ecec"/>
+      <text x="20" y="119" fill="#81ecec" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">09:00</text>
+      <rect x="100" y="82" width="580" height="66" rx="8" fill="rgba(129,238,236,0.06)" stroke="#81ecec" stroke-width="1"/>
+      <text x="120" y="104" fill="#81ecec" font-family="Inter,sans-serif" font-size="12" font-weight="600">Explorer Agent 扫描 (model: haiku)</text>
+      <text x="120" y="122" fill="#8888a0" font-family="Inter,sans-serif" font-size="11">发现: CI 失败 #1024 · Issue #156 · Lint warning × 3</text>
+      <text x="120" y="140" fill="#8888a0" font-family="Inter,sans-serif" font-size="11">分类: 4 个可自动修复 · 1 个需人工判断</text>
+
+      <!-- 09:02 Implementer -->
+      <circle cx="80" cy="215" r="5" fill="#6c5ce7"/>
+      <text x="20" y="219" fill="#6c5ce7" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">09:02</text>
+      <rect x="100" y="162" width="580" height="106" rx="8" fill="rgba(108,92,231,0.06)" stroke="#6c5ce7" stroke-width="1"/>
+      <text x="120" y="184" fill="#a29bfe" font-family="Inter,sans-serif" font-size="12" font-weight="600">Implementer Agent 修复 ×4 (并行, model: opus, 独立 worktree)</text>
+      <text x="120" y="206" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11">✅ lint-1: 添加缺失的 error check</text>
+      <text x="120" y="224" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11">✅ lint-2: 替换 deprecated 函数</text>
+      <text x="120" y="242" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11">✅ lint-3: 添加缺失的 doc comment</text>
+      <text x="120" y="260" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11">✅ issue-156: 统一密码强度正则</text>
+
+      <!-- 09:08 Reviewer -->
+      <circle cx="80" cy="345" r="5" fill="#ff6b6b"/>
+      <text x="20" y="349" fill="#ff6b6b" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">09:08</text>
+      <rect x="100" y="282" width="580" height="106" rx="8" fill="rgba(255,107,107,0.04)" stroke="#ff6b6b" stroke-width="1"/>
+      <text x="120" y="304" fill="#ff6b6b" font-family="Inter,sans-serif" font-size="12" font-weight="600">Reviewer Agent 审查 ×4 (并行, model: opus, adversarial)</text>
+      <text x="120" y="326" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11">✅ lint-1: PASS</text>
+      <text x="120" y="344" fill="#fdcb6e" font-family="JetBrains Mono,monospace" font-size="11">⚠️ lint-2: PASS_WITH_NOTES</text>
+      <text x="120" y="362" fill="#ff6b6b" font-family="JetBrains Mono,monospace" font-size="11">❌ lint-3: REQUEST_CHANGES — doc comment 不准确</text>
+      <text x="120" y="380" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="11">✅ issue-156: PASS</text>
+
+      <!-- 09:12 Post-process -->
+      <circle cx="80" cy="430" r="5" fill="#fdcb6e"/>
+      <text x="20" y="434" fill="#fdcb6e" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">09:12</text>
+      <rect x="100" y="400" width="580" height="50" rx="8" fill="rgba(253,203,110,0.06)" stroke="#fdcb6e" stroke-width="1"/>
+      <text x="120" y="420" fill="#fdcb6e" font-family="Inter,sans-serif" font-size="12" font-weight="600">后续处理</text>
+      <text x="120" y="440" fill="#8888a0" font-family="Inter,sans-serif" font-size="11">3 个通过 → 自动开 PR · 1 个不通过 → 记录技术债 · 1 个需人工 → 推送 triage inbox</text>
+
+      <!-- 09:15 Update -->
+      <circle cx="80" cy="480" r="5" fill="#00b894"/>
+      <text x="20" y="484" fill="#00b894" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="end">09:15</text>
+      <rect x="100" y="462" width="580" height="34" rx="8" fill="rgba(0,184,148,0.06)" stroke="#00b894" stroke-width="1"/>
+      <text x="120" y="484" fill="#00b894" font-family="Inter,sans-serif" font-size="12">更新 AGENTS.md — 记录本次结果、更新技术债、标记下次关注</text>
+    </svg>
+    <p class="diagram-caption">每日 Triage Loop 完整执行时间线（08:57 → 09:15，约 18 分钟）</p>
+  </div>
+
+  <h3>GitHub Actions 配置</h3>
+  <p class="code-label">.github/workflows/daily-triage.yml</p>
+  <pre><code>name: Daily Triage
+on:
+  schedule:
+    - cron: '50 1 * * 1-5'   # UTC → 北京时间 9:50
+  workflow_dispatch:
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Triage Loop
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            执行每日 triage：
+            1. 读取 AGENTS.md 获取上次状态
+            2. 用 explorer sub-agent 扫描 CI 和 issues
+            3. 对低风险问题 spawn implementer (worktree)
+            4. 对每个修复 spawn reviewer (adversarial)
+            5. 通过的自动开 PR，不通过的记录技术债
+            6. 更新 AGENTS.md</code></pre>
+
+  <h3>进阶模式：PEV 循环</h3>
+  <p>Loop 的每一轮迭代本质上是一个 <strong>Plan-Execute-Verify</strong> 循环：</p>
+
+  <div class="card-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card" style="border-top:3px solid var(--accent)">
+      <h4 style="color:var(--accent-light);margin-top:0">Plan</h4>
+      <p>将需求转化为操作契约——做什么、不改什么、完成标准</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <h4 style="color:var(--green);margin-top:0">Execute</h4>
+      <p>在隔离环境中运行——worktree、分级权限、沙盒</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red)">
+      <h4 style="color:var(--red);margin-top:0">Verify</h4>
+      <p>静态分析 + 动态测试作为确定性传感器</p>
+    </div>
+  </div>
+
+  <p>每次修改都应该可观测、可回滚。测试失败必须修复，高危操作必须人类审批。</p>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: RISKS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="risks">
+<div class="container">
+  <div class="section-label">08 · 风险与警示</div>
+  <h2>Loop 越强，三个风险越尖锐</h2>
+
+  <p>Loop 改变了工作方式但<strong>没有消除人的责任</strong>。随着 Loop 能力增强，三个问题不是变轻松了，而是变得更尖锐：</p>
+
+  <div class="risk-cards">
+    <div class="risk-card risk-red">
+      <h4 style="color:var(--red)">🔴 验证负担</h4>
+      <p>无人值守的 loop 也无人值守地犯错。"done" 是声明而非证明。</p>
+      <p class="mitigation">→ Reviewer adversarial 指令 + 结构化审查报告 + 人类定期抽查</p>
+    </div>
+    <div class="risk-card risk-orange">
+      <h4 style="color:var(--orange)">🟡 理解债务</h4>
+      <p>Loop 越快地产出你没读过的代码，你对该代码库的理解就越脱离实际。</p>
+      <p class="mitigation">→ 每周固定时间阅读 loop 产出的代码</p>
+    </div>
+    <div class="risk-card risk-blue">
+      <h4 style="color:var(--blue)">🔵 认知缴械</h4>
+      <p>当系统自动运行时，停止思考、全盘接受的诱惑极大。三个风险形成恶性循环。</p>
+      <p class="mitigation">→ 有意识地在 Loop 之外维持对代码库的深度理解</p>
+    </div>
+  </div>
+
+  <blockquote>同一个 Loop，两个人跑可以出完全不同的结果。一个用它深化自己理解的工作加速前进，另一个用它逃避理解。Loop 不知道区别。你知道。</blockquote>
+
+  <div class="diagram-wrapper">
+    <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Risk cycle -->
+      <text x="360" y="30" fill="#8888a0" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">恶性循环</text>
+
+      <!-- Verification -->
+      <ellipse cx="140" cy="120" rx="110" ry="50" fill="rgba(255,107,107,0.06)" stroke="#ff6b6b" stroke-width="1.5"/>
+      <text x="140" y="115" fill="#ff6b6b" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">验证负担</text>
+      <text x="140" y="135" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">无人值守 = 无人纠错</text>
+
+      <!-- Comprehension -->
+      <ellipse cx="360" cy="120" rx="110" ry="50" fill="rgba(253,203,110,0.06)" stroke="#fdcb6e" stroke-width="1.5"/>
+      <text x="360" y="115" fill="#fdcb6e" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">理解债务</text>
+      <text x="360" y="135" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">越不理解 → 越难验证</text>
+
+      <!-- Cognitive Surrender -->
+      <ellipse cx="580" cy="120" rx="110" ry="50" fill="rgba(116,185,255,0.06)" stroke="#74b9ff" stroke-width="1.5"/>
+      <text x="580" y="115" fill="#74b9ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle">认知缴械</text>
+      <text x="580" y="135" fill="#8888a0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">越难验证 → 越倾向放弃</text>
+
+      <!-- Cycle arrows -->
+      <path d="M 250 95 Q 290 60 340 85" fill="none" stroke="#55556a" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <path d="M 470 95 Q 510 60 560 85" fill="none" stroke="#55556a" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <path d="M 560 160 Q 400 195 200 160" fill="none" stroke="#55556a" stroke-width="1.5" marker-end="url(#arrow)"/>
+    </svg>
+    <p class="diagram-caption">三个风险互相强化，形成恶性循环</p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: CHECKLIST -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section class="section" id="checklist">
+<div class="container">
+  <div class="section-label">09 · 落地检查清单</div>
+  <h2>你的 Loop 准备好了吗</h2>
+
+  <ul class="checklist" id="checklist-items">
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>CLAUDE.md 写好了吗（全局 + 项目级，&lt;80 行）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>AGENTS.md 创建了吗（初始状态文件）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>三个 Agent 定义了吗（explorer / implementer / reviewer）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Agent 的 model 和 tools 选对了吗</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>MCP connectors 配置了吗（GitHub、数据库等）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>定时触发配好了吗（cron / GitHub Actions）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>Stop hook 配置了吗（循环拦截）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>完成信号定义了吗（DONE / ABORT / PAUSE）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>验证命令确认能跑通吗（build / test / lint）</li>
+    <li><div class="check-box" onclick="this.classList.toggle('checked')"></div>风险接受了吗（你理解这三个警示吗）</li>
+  </ul>
+
+  <div class="callout callout-green" style="margin-top:24px">
+    <div class="callout-title">下一步</div>
+    <p>完成所有检查项后，运行你的第一个 Loop：<code>/loop 5m /triage</code>。观察一轮完整流程，确认 explorer → implementer → reviewer 流水线正常运转。</p>
+  </div>
+</div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>基于 <a href="https://addyosmani.com/blog/loop-engineering/">Loop Engineering — Addy Osmani</a> · <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code 官方文档</a> · <a href="https://modelcontextprotocol.io/">Model Context Protocol</a></p>
+  <p style="margin-top:8px">2026 年 6 月 · Billy Chen @ IBM Client Engineering</p>
+</footer>
+
+</body>
+</html>
