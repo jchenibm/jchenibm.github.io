@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confluent 数据流处理平台战略 — 完全指南</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --navy: #0a1628;
+    --indigo: #1e3a5f;
+    --steel: #3d6b9e;
+    --copper: #c8944a;
+    --copper-light: #e8c47a;
+    --snow: #f4f6f9;
+    --cloud: #e2e8f0;
+    --ash: #94a3b8;
+    --charcoal: #334155;
+    --ink: #0f172a;
+    --accent-green: #10b981;
+    --accent-red: #ef4444;
+    --accent-blue: #3b82f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: var(--snow);
+    color: var(--ink);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--indigo) 60%, var(--steel) 100%);
+    color: white;
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  .hero-content {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .lesson-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .lesson-number {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--copper-light);
+    font-weight: 500;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero .subtitle {
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 30px;
+  }
+
+  .hero .definition-line {
+    font-size: 17px;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.9);
+    border-left: 3px solid var(--copper);
+    padding-left: 24px;
+    max-width: 720px;
+  }
+
+  .hero .meta-info {
+    margin-top: 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Main */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* Sections */
+  .section {
+    padding: 50px 0;
+    border-bottom: 1px solid var(--cloud);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+
+  .section h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--indigo);
+    margin: 28px 0 16px;
+  }
+
+  .section p {
+    margin-bottom: 16px;
+    color: var(--charcoal);
+    font-size: 16px;
+  }
+
+  /* Analogy Card */
+  .analogy-card {
+    background: linear-gradient(135deg, #fef9f0 0%, #fdf3e3 100%);
+    border: 1px solid #f0dfa8;
+    border-radius: 16px;
+    padding: 32px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .analogy-card::before {
+    content: '💡';
+    font-size: 28px;
+    position: absolute;
+    top: -14px;
+    left: 28px;
+    background: #fdf3e3;
+    padding: 4px 8px;
+    line-height: 1;
+    z-index: 3;
+    border-radius: 4px;
+  }
+
+  .analogy-card .analogy-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #b8860b;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .analogy-card p {
+    color: #5d4200;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  /* Two Column */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+
+  .col-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid var(--cloud);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .col-card h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--cloud);
+  }
+
+  .col-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .col-card li {
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--charcoal);
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .col-card li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--copper);
+    font-weight: 600;
+  }
+
+  /* Key Points */
+  .key-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .key-point {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 4px solid var(--copper);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .key-point h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .key-point p {
+    font-size: 13px;
+    color: var(--charcoal);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* Diagram */
+  .diagram {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    margin: 24px 0;
+    border: 1px solid var(--cloud);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  .diagram h4 {
+    text-align: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 28px;
+    font-weight: 700;
+  }
+
+  /* Stack Diagram */
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .stack-level {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .stack-level .level-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+    min-width: 80px;
+    text-align: center;
+    color: white;
+  }
+
+  .stack-level .level-name {
+    font-weight: 600;
+  }
+
+  .stack-level .level-desc {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-left: auto;
+  }
+
+  .level-5 { background: linear-gradient(90deg, #1e3a5f, #255077); }
+  .level-5 .level-tag { background: rgba(255,255,255,0.25); }
+  .level-4 { background: linear-gradient(90deg, #2d5f8a, #3570a0); }
+  .level-4 .level-tag { background: rgba(255,255,255,0.2); }
+  .level-3 { background: linear-gradient(90deg, #3d7ab5, #4a8dc9); }
+  .level-3 .level-tag { background: rgba(255,255,255,0.18); }
+  .level-2 { background: linear-gradient(90deg, #5a9fd4, #6db3e0); }
+  .level-2 .level-tag { background: rgba(255,255,255,0.15); }
+  .level-1 { background: linear-gradient(90deg, #8ec5f0, #a3d4f7); }
+  .level-1 .level-tag { background: rgba(10,22,40,0.2); color: var(--navy); }
+
+  /* Comparison Table */
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .comparison-table thead {
+    background: var(--navy);
+    color: white;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--cloud);
+  }
+
+  .comparison-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .comparison-table tbody tr:hover {
+    background: var(--snow);
+  }
+
+  .comparison-table .winner {
+    background: #dcfce7;
+    font-weight: 600;
+  }
+
+  /* Code Block */
+  .code-block {
+    background: var(--navy);
+    color: #e2e8f0;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    border: 1px solid var(--indigo);
+  }
+
+  .code-block .comment { color: var(--ash); }
+  .code-block .keyword { color: var(--copper-light); }
+  .code-block .string { color: var(--accent-green); }
+  .code-block .type { color: var(--steel); }
+  .code-block .method { color: #f472b6; }
+
+  /* Use Case Card */
+  .use-case {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fe 100%);
+    border: 1px solid #c5d8f0;
+    border-radius: 16px;
+    padding: 28px;
+    margin: 20px 0;
+  }
+
+  .use-case h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .use-case p {
+    font-size: 14px;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+  }
+
+  .use-case .use-case-tag {
+    display: inline-block;
+    background: var(--indigo);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  /* Best Practices */
+  .best-practices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+  }
+
+  .practice-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--cloud);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .practice-card h5 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-family: 'Noto Serif SC', serif;
+  }
+
+  .practice-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .practice-card li {
+    padding: 6px 0;
+    font-size: 13px;
+    color: var(--charcoal);
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .practice-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent-green);
+    font-weight: bold;
+  }
+
+  /* Quiz */
+  .quiz {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fe 100%);
+    border: 1px solid #c5d8f0;
+    border-radius: 16px;
+    padding: 32px;
+    margin: 24px 0;
+  }
+
+  .quiz h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: var(--navy);
+    margin-bottom: 20px;
+  }
+
+  .quiz-question {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--indigo);
+    margin-bottom: 14px;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .quiz-option {
+    background: white;
+    border: 2px solid var(--cloud);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .quiz-option:hover {
+    border-color: var(--steel);
+    background: #f8fbff;
+  }
+
+  .quiz-option.correct {
+    border-color: var(--accent-green);
+    background: #f0fff4;
+  }
+
+  .quiz-explanation {
+    font-size: 14px;
+    color: var(--charcoal);
+    padding: 16px;
+    background: white;
+    border-radius: 10px;
+    border-left: 3px solid var(--accent-blue);
+    display: none;
+  }
+
+  .quiz-explanation.show { display: block; }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding: 20px 0;
+    margin: 32px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--cloud);
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    width: 50%;
+    padding: 0 40px;
+  }
+
+  .timeline-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+  }
+
+  .timeline-item:nth-child(even) {
+    left: 50%;
+    text-align: left;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--copper);
+    border-radius: 50%;
+    top: 0;
+  }
+
+  .timeline-item:nth-child(odd)::before {
+    right: -10px;
+  }
+
+  .timeline-item:nth-child(even)::before {
+    left: -10px;
+  }
+
+  .timeline-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .timeline-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--cloud);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .timeline-content h4 {
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .timeline-content p {
+    font-size: 13px;
+    color: var(--charcoal);
+    margin: 0;
+  }
+
+  /* Standards Card */
+  .standards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 24px 0;
+  }
+
+  .standard-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--cloud);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    text-align: center;
+  }
+
+  .standard-card .icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .standard-card h4 {
+    font-size: 18px;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .standard-card p {
+    font-size: 13px;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    font-size: 13px;
+    color: var(--ash);
+  }
+
+  .footer a {
+    color: var(--steel);
+    text-decoration: none;
+  }
+
+  /* Command hint */
+  .command-hint {
+    background: var(--navy);
+    color: #a3d4f7;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    text-align: center;
+    margin: 30px 0 0;
+  }
+
+  .command-hint kbd {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .hero h1 { font-size: 28px; }
+    .two-col, .key-points, .best-practices, .standards-grid {
+      grid-template-columns: 1fr;
+    }
+    .container { padding: 0 20px; }
+    .hero { padding: 60px 20px 40px; }
+    .timeline::before { left: 20px; }
+    .timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding-left: 50px; }
+    .timeline-item::before { left: 10px !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="lesson-badge">
+      <span class="lesson-number">CONFLUENT STRATEGY</span> &nbsp;·&nbsp; 数据平台战略
+    </div>
+    <h1>Confluent 数据流处理平台战略</h1>
+    <div class="subtitle">从 Kafka 到统一数据平台的演进之路</div>
+    <div class="definition-line">
+      <strong>统一数据平台</strong>是一个能够整合运营数据和分析数据的实时流处理架构，通过 Kafka + Flink + TableFlow 三大技术标准，推倒运营平面与分析平面之间的"墙"，为 AI Agent 时代提供实时数据基础。
+    </div>
+    <div class="meta-info">
+      📅 2026-07-16 · 👤 Confluent 产品战略 | 技术决策者参考
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Section 01: 流处理演进史 -->
+  <div class="section">
+    <div class="section-label">01 — EVOLUTION HISTORY</div>
+    <h2>流处理演进史：从单体到统一平台</h2>
+    <p>
+      理解流处理的演进，就像理解城市交通系统的发展。让我们穿越时光，看看数据架构如何从简单的点对点连接，演变为今天的统一数据平台。
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2005</div>
+        <div class="timeline-content">
+          <h4>单体时代：运营与分析分离</h4>
+          <p>数据规模尚未爆炸，运营系统（Oracle、SAP、Java 应用）通过点对点方式通信。分析平面刚刚出现，主要是数据仓库。消息中间件（Solace、TIBCO、MQ）用于系统间低延迟通信，但所有连接都是点对点的，没有中央代理。</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2015</div>
+        <div class="timeline-content">
+          <h4>Kafka 诞生：解决大规模实时数据传输</h4>
+          <p>LinkedIn 面临海量 clickstream 数据需要快速进入分析平面的问题。传统消息系统无法处理这个规模，Kafka 应运而生。它实现了分布式、持久化、低延迟的数据流，成为运营与分析平面之间的中央枢纽。</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2017</div>
+        <div class="timeline-content">
+          <h4>Kafka 成熟：事务能力与精确一次</h4>
+          <p>Kafka 增加了事务能力和精确一次语义，开始替代传统消息系统用于应用间通信。一个技术同时解决了两个问题：分析数据摄入和运营系统通信，这使其爆炸式流行。</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-content">
+          <h4>AI Agent 时代：需要统一数据平台</h4>
+          <p>分析平面变得复杂（多云、数据湖、数据集市），同时 AI Agent 成为新的运营组件。智能体需要实时访问组织数据，Kafka 成为关键枢纽。但仅有 Kafka 不够，需要 Kafka + Flink + TableFlow 统一平台。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 02: Kafka 的诞生 -->
+  <div class="section">
+    <div class="section-label">02 — KAFKA ORIGINS</div>
+    <h2>Kafka 的诞生：从 LinkedIn 痛点到行业标准</h2>
+    <p>
+      Kafka 的故事始于 LinkedIn 遇到的实际问题。这不仅是技术演进，更是数据规模爆炸带来的必然选择。
+    </p>
+
+    <div class="analogy-card">
+      <div class="analogy-label">类比理解</div>
+      <p>
+        想象一个繁忙的机场，每天都有无数航班起降（数据产生）。过去，每个航空公司都在自己的柜台处理行李（点对点通信），效率低下且容易出错。Kafka 就像是建了一个超级行李分拣中心，所有航空公司的行李都先送到这里（生产者），再自动分拣到正确的航班（消费者）。这个中心不仅高效，而且记住每一件行李的走向（持久化）。
+      </p>
+    </div>
+
+    <h3>为什么需要 Kafka？</h3>
+    <div class="key-points">
+      <div class="key-point">
+        <h5>1. 数据规模爆炸</h5>
+        <p>互联网带来的数据增长呈指数级，传统批处理机制无法满足实时性需求。</p>
+      </div>
+      <div class="key-point">
+        <h5>2. 消息系统失败</h5>
+        <p>LinkedIn 尝试使用现有消息系统处理 clickstream 数据，但出现灾难性故障。</p>
+      </div>
+      <div class="key-point">
+        <h5>3. 解耦生产消费</h5>
+        <p>分离数据的生产和消费，让系统可以独立扩展，不再点对点连接。</p>
+      </div>
+      <div class="key-point">
+        <h5>4. 分布式架构</h5>
+        <p>支持横向扩展，单节点故障不影响整体系统，保证高可用性。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 03: 三大技术标准 -->
+  <div class="section">
+    <div class="section-label">03 — THREE STANDARDS</div>
+    <h2>三大技术标准：Kafka + Flink + TableFlow</h2>
+    <p>
+      2025年的数据平台不只是 Kafka。Confluent 围绕三大行业标准构建统一平台，每个标准解决特定问题，组合起来实现真正的数据统一。
+    </p>
+
+    <div class="standards-grid">
+      <div class="standard-card">
+        <div class="icon">🔄</div>
+        <h4>Kafka</h4>
+        <p><strong>运营流数据标准</strong><br>分布式、持久化、低延迟的消息系统。负责收集和传输所有实时数据，是整个平台的数据高速公路。</p>
+      </div>
+      <div class="standard-card">
+        <div class="icon">⚡</div>
+        <h4>Flink</h4>
+        <p><strong>流处理标准</strong><br>实时数据处理引擎。提供 SQL 接口，支持过滤、聚合、连接等操作，让数据在流动中被处理和清洗。</p>
+      </div>
+      <div class="standard-card">
+        <div class="icon">📊</div>
+        <h4>TableFlow</h4>
+        <p><strong>分析平面统一标准</strong><br>基于 Iceberg/Delta 的表格式。让 Kafka 数据自动出现在 Snowflake、Databricks 等分析工具中，无需手动连接器。</p>
+      </div>
+    </div>
+
+    <h3>三大标准协同工作</h3>
+    <div class="diagram">
+      <h4>统一数据平台架构</h4>
+      <div class="stack">
+        <div class="stack-level level-5">
+          <span class="level-tag">Layer 5</span>
+          <span class="level-name">应用与分析</span>
+          <span class="level-desc">AI Agent / BI 工具 / 数据科学</span>
+        </div>
+        <div class="stack-level level-4">
+          <span class="level-tag">Layer 4</span>
+          <span class="level-name">TableFlow</span>
+          <span class="level-desc">自动表格式 / Iceberg / Delta</span>
+        </div>
+        <div class="stack-level level-3">
+          <span class="level-tag">Layer 3</span>
+          <span class="level-name">Flink 处理</span>
+          <span class="level-desc">SQL / 聚合 / 清洗 / 丰富</span>
+        </div>
+        <div class="stack-level level-2">
+          <span class="level-tag">Layer 2</span>
+          <span class="level-name">Kafka 核心</span>
+          <span class="level-desc">分布式流 / 持久化 / 分区</span>
+        </div>
+        <div class="stack-level level-1">
+          <span class="level-tag">Layer 1</span>
+          <span class="level-name">数据源</span>
+          <span class="level-desc">应用 / 数据库 / SaaS / IoT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 04: 产品策略 -->
+  <div class="section">
+    <div class="section-label">04 — PRODUCT STRATEGY</div>
+    <h2>产品策略：超越 Kafka 的统一平台</h2>
+    <p>
+      2015 年你需要的是"更好的 Kafka"，2025 年你需要的是"能够统一运营和分析数据的平台"。Confluent 的产品战略围绕这个洞察展开。
+    </p>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h4>🎯 2015 年需求</h4>
+        <ul>
+          <li>高性能 Kafka</li>
+          <li>企业级安全</li>
+          <li>托管服务</li>
+          <li>扩展性</li>
+          <li>低延迟</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>🚀 2025 年需求</h4>
+        <ul>
+          <li>Kafka + Flink + TableFlow</li>
+          <li>统一运营和分析数据</li>
+          <li>支持 10 万+ AI Agent</li>
+          <li>自动数据工程化</li>
+          <li>推平数据隔离墙</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Confluent 的三大投资方向</h3>
+    <div class="key-points">
+      <div class="key-point">
+        <h5>1. 持续优化 Kafka</h5>
+        <p>Confluent Kafka 比开源版本领先 5 年：更弹性、更低成本、更高性能、云原生架构。我们不会停止投资 Kafka。</p>
+      </div>
+      <div class="key-point">
+        <h5>2. 深度集成 Flink</h5>
+        <p>通过收购 Immerok（核心 Flink 贡献者），Flink 与 Kafka 无缝集成。有 Topic 就有 Flink，无需额外配置，用多少付多少。</p>
+      </div>
+      <div class="key-point">
+        <h5>3. 创新 TableFlow</h5>
+        <p>基于 Iceberg/Delta 标准，让 Kafka 数据自动出现在所有分析工具中。配合 Flink 的 Snapshot Queries，实现 Kappa 架构。</p>
+      </div>
+      <div class="key-point">
+        <h5>4. AI Agent 就绪</h5>
+        <p>智能体需要实时数据，Kafka 已经连接所有数据源。通过统一平台，智能体可以访问运营和分析两面的数据。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 05: AI Agent 时代 -->
+  <div class="section">
+    <div class="section-label">05 — AI AGENT ERA</div>
+    <h2>AI Agent 时代：实时数据是智能体的氧气</h2>
+    <p>
+      AI Agent 不是独立运行的，它们需要访问组织的历史数据和实时数据。Kafka 成为连接所有数据源的关键枢纽。
+    </p>
+
+    <div class="analogy-card">
+      <div class="analogy-label">类比理解</div>
+      <p>
+        AI Agent 就像是连接到公司数据血管的超级员工。过去的员工只能访问档案室里的旧文件（分析平面），现在 AI Agent 可以实时监听所有部门对话（运营平面），同时查阅历史档案（分析平面）。Kafka 就是这个超级血管系统，让数据像血液一样流动到需要的地方。
+      </p>
+    </div>
+
+    <h3>AI Agent 的数据需求</h3>
+    <div class="use-case">
+      <span class="use-case-tag">智能客服</span>
+      <h4>🤖 实时客户服务 Agent</h4>
+      <p><strong>场景</strong>: 客户咨询订单状态，Agent 需要实时查询订单系统、库存系统、物流信息。</p>
+      <p><strong>数据需求</strong>: 订单数据库实时变更 + 库存系统实时更新 + 物流实时位置 + 历史客户记录。</p>
+      <p><strong>Kafka 价值</strong>: 统一所有数据源，Agent 只需订阅相关 Topic，就能获得完整实时视图。</p>
+    </div>
+
+    <div class="use-case">
+      <span class="use-case-tag">金融风控</span>
+      <h4>💳 实时欺诈检测 Agent</h4>
+      <p><strong>场景</strong>: 检测信用卡交易中的异常模式，实时阻止欺诈行为。</p>
+      <p><strong>数据需求</strong>: 实时交易流 + 历史交易模式 + 用户行为画像 + 黑名单实时更新。</p>
+      <p><strong>Flink 价值</strong>: 流式计算实时分析交易模式，毫秒级响应可疑行为。</p>
+    </div>
+  </div>
+
+  <!-- Section 06: 架构演进 -->
+  <div class="section">
+    <div class="section-label">06 — ARCHITECTURE EVOLUTION</div>
+    <h2>架构演进：推倒运营与分析之间的墙</h2>
+    <p>
+      过去二十年，我们在运营平面和分析平面之间建了一堵"墙"。现在，是时候推倒这堵墙了。
+    </p>
+
+    <h3>旧架构：数据隔离墙</h3>
+    <div class="diagram">
+      <h4>传统数据架构的痛点</h4>
+      <div class="stack">
+        <div class="stack-level level-5">
+          <span class="level-tag">分析</span>
+          <span class="level-name">Snowflake / Databricks / BigQuery</span>
+          <span class="level-desc">分析用户只能看到导入的数据</span>
+        </div>
+        <div class="stack-level level-3" style="background: linear-gradient(90deg, #ef4444, #f87171); margin: 8px 0;">
+          <span class="level-tag">隔离墙</span>
+          <span class="level-name">数据孤岛</span>
+          <span class="level-desc">需要手动连接器，数据延迟</span>
+        </div>
+        <div class="stack-level level-1">
+          <span class="level-tag">运营</span>
+          <span class="level-name">应用 / 数据库 / SaaS 系统</span>
+          <span class="level-desc">实时数据，但分析用户无法访问</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>新架构：统一数据平台</h3>
+    <div class="diagram">
+      <h4>Confluent 统一平台的价值</h4>
+      <div class="stack">
+        <div class="stack-level level-5">
+          <span class="level-tag">AI Agent</span>
+          <span class="level-name">智能体 + BI + 数据科学</span>
+          <span class="level-desc">所有用户访问所有数据</span>
+        </div>
+        <div class="stack-level level-4">
+          <span class="level-tag">TableFlow</span>
+          <span class="level-name">自动表格式 / Iceberg</span>
+          <span class="level-desc">数据自动出现在分析工具</span>
+        </div>
+        <div class="stack-level level-3">
+          <span class="level-tag">Flink</span>
+          <span class="level-name">流处理 / SQL / 清洗</span>
+          <span class="level-desc">数据在流动中被处理</span>
+        </div>
+        <div class="stack-level level-2">
+          <span class="level-tag">Kafka</span>
+          <span class="level-name">中央数据枢纽</span>
+          <span class="level-desc">所有数据汇聚于此</span>
+        </div>
+        <div class="stack-level level-1">
+          <span class="level-tag">数据源</span>
+          <span class="level-name">运营 + 分析系统</span>
+          <span class="level-desc">数据源持续连接</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 07: 应用场景 -->
+  <div class="section">
+    <div class="section-label">07 — USE CASES</div>
+    <h2>典型应用场景</h2>
+    <p>
+      统一数据平台的价值体现在具体应用场景中。以下是几个典型案例，展示 Kafka + Flink + TableFlow 如何解决实际问题。
+    </p>
+
+    <div class="use-case">
+      <span class="use-case-tag">金融服务</span>
+      <h4>🏦 全球实时欺诈检测</h4>
+      <p><strong>场景</strong>: 某全球银行需要实时检测所有渠道的交易欺诈，包括 ATM、POS、在线交易。</p>
+      <p><strong>架构</strong>: 所有交易流入 Kafka，Flink 实时分析交易模式，AI Agent 实时响应可疑行为。</p>
+      <p><strong>关键功能</strong>: Flink 复杂事件处理 + 实时机器学习模型 + 自动阻断机制。</p>
+      <p><strong>为什么选</strong>: 需要毫秒级响应，批处理无法满足；需要统一全球交易数据；需要支持 10 万+ 并发 Agent。</p>
+    </div>
+
+    <div class="use-case">
+      <span class="use-case-tag">制造业</span>
+      <h4>🏭 智能工厂实时监控</h4>
+      <p><strong>场景</strong>: 某汽车制造商需要实时监控生产线，预测设备故障，优化生产流程。</p>
+      <p><strong>架构</strong>: 机器传感器数据流入 Kafka，Flink 计算设备健康指标，TableFlow 将数据送到 BI 工具。</p>
+      <p><strong>关键功能</strong>: 实时传感器数据处理 + 预测性维护模型 + 生产优化算法。</p>
+      <p><strong>为什么选</strong>: 需要处理高频传感器数据；需要实时分析；工程师使用熟悉的 BI 工具。</p>
+    </div>
+
+    <div class="use-case">
+      <span class="use-case-tag">数据工程</span>
+      <h4>📊 自动化数据工程</h4>
+      <p><strong>场景</strong>: 某电商公司需要将所有应用数据实时同步到数据仓库，用于分析和 AI 训练。</p>
+      <p><strong>架构</strong>: 应用数据写入 Kafka，Flink 清洗和转换，TableFlow 自动同步到 Snowflake。</p>
+      <p><strong>关键功能</strong>: 无需手动连接器 + 自动 Schema 演进 + 实时数据新鲜度。</p>
+      <p><strong>为什么选</strong>: 消除数据工程 toil；数据工程师使用熟悉的 Snowflake 界面；应用开发者无需关心数据仓库。</p>
+    </div>
+  </div>
+
+  <!-- Section 08: 最佳实践 -->
+  <div class="section">
+    <div class="section-label">08 — BEST PRACTICES</div>
+    <h2>最佳实践：从不同角色的视角</h2>
+    <p>
+      统一数据平台的价值对不同角色不同。以下是针对平台工程师和数据工程师的最佳实践。
+    </p>
+
+    <div class="best-practices">
+      <div class="practice-card">
+        <h5>🛠️ 平台工程师视角</h5>
+        <ul>
+          <li>从 Kafka 开始，逐步扩展到 Flink 和 TableFlow</li>
+          <li>使用托管服务，减少运维负担</li>
+          <li>监控 Topic 延迟和 Consumer Lag</li>
+          <li>合理设置 Partition 和 Replication Factor</li>
+          <li>使用 Schema Registry 保证数据质量</li>
+        </ul>
+      </div>
+      <div class="practice-card">
+        <h5>📈 数据工程师视角</h5>
+        <ul>
+          <li>利用 Flink SQL 进行数据转换</li>
+          <li>使用 TableFlow 自动同步数据</li>
+          <li>关注数据新鲜度和查询性能</li>
+          <li>熟悉 Iceberg/Delta 表格式特性</li>
+          <li>利用 Snapshot Queries 优化查询</li>
+        </ul>
+      </div>
+      <div class="practice-card">
+        <h5>🤖 AI 开发者视角</h5>
+        <ul>
+          <li>设计 Agent 订阅相关 Topic</li>
+          <li>使用 Flink 进行实时特征计算</li>
+          <li>利用 TableFlow 访问历史数据</li>
+          <li>监控 Agent 数据消费延迟</li>
+          <li>设计故障恢复机制</li>
+        </ul>
+      </div>
+      <div class="practice-card">
+        <h5>💼 架构师视角</h5>
+        <ul>
+          <li>设计多年度数据平台演进路线</li>
+          <li>平衡实时性和成本</li>
+          <li>选择合适的 Topic 设计策略</li>
+          <li>规划数据治理和安全策略</li>
+          <li>评估云原生 vs 自建部署</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 09: 知识测验 -->
+  <div class="section">
+    <div class="section-label">09 — QUIZ</div>
+    <h2>知识测验</h2>
+
+    <div class="quiz">
+      <h4>📝 Confluent 数据平台知识测验</h4>
+
+      <p class="quiz-question">Q1. Kafka 最初是为什么而创建的？</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="toggleOption(this, 1, false)">A. 处理金融交易数据</div>
+        <div class="quiz-option" onclick="toggleOption(this, 1, true)">B. 解决 LinkedIn 的 clickstream 实时传输问题</div>
+        <div class="quiz-option" onclick="toggleOption(this, 1, false)">C. 替代传统数据库</div>
+        <div class="quiz-option" onclick="toggleOption(this, 1, false)">D. 支持物联网设备通信</div>
+      </div>
+      <div class="quiz-explanation" id="exp1">
+        <strong>正确答案：B</strong>。Kafka 由 LinkedIn 创建，主要解决海量 clickstream 数据需要快速进入分析平面的问题，传统消息系统无法处理这个规模。
+      </div>
+
+      <p class="quiz-question">Q2. Flink 在统一数据平台中的作用是什么？</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="toggleOption(this, 2, false)">A. 数据存储</div>
+        <div class="quiz-option" onclick="toggleOption(this, 2, true)">B. 流处理和实时数据转换</div>
+        <div class="quiz-option" onclick="toggleOption(this, 2, false)">C. 数据可视化</div>
+        <div class="quiz-option" onclick="toggleOption(this, 2, false)">D. 数据安全</div>
+      </div>
+      <div class="quiz-explanation" id="exp2">
+        <strong>正确答案：B</strong>。Flink 是流处理标准，负责实时数据处理，提供 SQL 接口进行过滤、聚合、连接等操作，让数据在流动中被处理和清洗。
+      </div>
+
+      <p class="quiz-question">Q3. TableFlow 解决的核心问题是什么？</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="toggleOption(this, 3, true)">A. 消除运营平面与分析平面之间的墙</div>
+        <div class="quiz-option" onclick="toggleOption(this, 3, false)">B. 提高 Kafka 性能</div>
+        <div class="quiz-option" onclick="toggleOption(this, 3, false)">C. 降低存储成本</div>
+        <div class="quiz-option" onclick="toggleOption(this, 3, false)">D. 简化运维</div>
+      </div>
+      <div class="quiz-explanation" id="exp3">
+        <strong>正确答案：A</strong>。TableFlow 基于 Iceberg/Delta 标准，让 Kafka 数据自动出现在 Snowflake、Databricks 等分析工具中，无需手动连接器，推倒了运营与分析平面之间的墙。
+      </div>
+
+      <p class="quiz-question">Q4. AI Agent 为什么需要统一数据平台？</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="toggleOption(this, 4, false)">A. 降低计算成本</div>
+        <div class="quiz-option" onclick="toggleOption(this, 4, false)">B. 提高数据安全性</div>
+        <div class="quiz-option" onclick="toggleOption(this, 4, true)">C. 需要实时访问运营和分析两面的数据</div>
+        <div class="quiz-option" onclick="toggleOption(this, 4, false)">D. 简化模型训练</div>
+      </div>
+      <div class="quiz-explanation" id="exp4">
+        <strong>正确答案：C</strong>。AI Agent 需要实时访问组织数据，包括运营系统的实时数据和分析系统的历史数据。Kafka 作为中央枢纽，连接所有数据源，让 Agent 能够获得完整的数据视图。
+      </div>
+
+      <p class="quiz-question">Q5. Kappa 架构的核心思想是什么？</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="toggleOption(this, 5, true)">A. 统一批处理和流处理</div>
+        <div class="quiz-option" onclick="toggleOption(this, 5, false)">B. 分离批处理和流处理</div>
+        <div class="quiz-option" onclick="toggleOption(this, 5, false)">C. 只使用批处理</div>
+        <div class="quiz-option" onclick="toggleOption(this, 5, false)">D. 只使用流处理</div>
+      </div>
+      <div class="quiz-explanation" id="exp5">
+        <strong>正确答案：A</strong>。Kappa 架构通过 Flink 的 Snapshot Queries 功能，从 Iceberg 读取快照数据，再从 Kafka tail 最新数据，实现了批处理和流处理的统一，简化了架构。
+      </div>
+
+      <p class="quiz-question">Q6. TableFlow 的"魔法时刻"是什么？</p>
+      <div class="quiz-options">
+        <div class="quiz-option" onclick="toggleOption(this, 6, false)">A. 数据加密</div>
+        <div class="quiz-option" onclick="toggleOption(this, 6, true)">B. 数据工程师打开 Snowflake 看到新表自动出现</div>
+        <div class="quiz-option" onclick="toggleOption(this, 6, false)">C. 自动备份数据</div>
+        <div class="quiz-option" onclick="toggleOption(this, 6, false)">D. 自动清理数据</div>
+      </div>
+      <div class="quiz-explanation" id="exp6">
+        <strong>正确答案：B</strong>。TableFlow 的"魔法时刻"是：数据工程师打开熟悉的 Snowflake/Databricks 界面，发现新的表已经存在，数据新鲜且经过清洗，完全不需要手动创建连接器或编写 ETL 代码。
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 10: 追问引导 -->
+  <div class="section">
+    <div class="section-label">FOLLOW-UP</div>
+    <h2>还有什么想深挖的？</h2>
+    <p>
+      本指南建立了 Confluent 数据流处理平台战略的全景图。如果你对某个方向特别感兴趣，现在可以追问：
+    </p>
+    <p>
+      <strong>🔍 技术深度：</strong>Kafka 的内部架构原理、Flink SQL 详解、TableFlow 的 Iceberg 实现<br>
+      <strong>🔍 架构设计：</strong>Topic 设计最佳实践、多集群部署策略、灾备和高可用方案<br>
+      <strong>🔍 应用实践：</strong>具体行业的实施案例、性能调优经验、常见陷阱和解决方案<br>
+      <strong>🔍 产品选型：</strong>Confluent Cloud vs 自建、MSK 迁移策略、成本优化方法
+    </p>
+  </div>
+
+  <div class="command-hint">
+    💡 提示：在浏览器中打开此文件，使用 Quiz 功能检验理解。选择选项后查看详细解析。
+  </div>
+
+</div>
+
+<div class="footer">
+  Confluent 数据流处理平台战略 · Knowledge Dashboard · 2026-07-16<br>
+  基于 Confluent 产品战略演讲生成 · 适用于技术决策者和架构师
+</div>
+
+<script>
+function toggleOption(element, num, isCorrect) {
+  const options = element.parentElement.querySelectorAll('.quiz-option');
+  options.forEach(opt => opt.classList.remove('correct'));
+
+  if (isCorrect) {
+    element.classList.add('correct');
+  }
+
+  document.getElementById('exp' + num).classList.add('show');
+}
+</script>
+
+</body>
+</html>
