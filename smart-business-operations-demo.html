@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双轮驱动：企业级智慧经营与智慧运营解决方案全景与实战演练 // BILLY CHEN</title>
+    <meta name="description" content="IBM Client Engineering 首席架构师出品：基于 IBM Planning Analytics + watsonx 数据底座（智慧经营）与 IBM BAW + watsonx Orchestrate 工作流（智慧运营）的企业级双轮驱动闭环方案，内含完整 One Page 架构方案 PDF 与 3 部高清 1080P 实战演示视频。">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* 亮色模式色彩体系 (Nate Herk V2 升级版) */
+            --bg-page: #f8f7f4;
+            --bg-surface: #ffffff;
+            --bg-subtle: #f0eee9;
+            --bg-card: #ffffff;
+            --bg-overlay: rgba(248, 247, 244, 0.95);
+
+            --text-main: #18181b;
+            --text-secondary: #52525b;
+            --text-muted: #71717a;
+            --text-inverse: #ffffff;
+
+            --border-light: #e4e4e7;
+            --border-focus: #2563eb;
+            --border-subtle: #eceae5;
+
+            --accent-blue: #0f62fe;        /* IBM Blue */
+            --accent-blue-hover: #0353e9;
+            --accent-cyan: #1192e8;
+            --accent-teal: #007d79;
+            --accent-purple: #8a3ffc;
+            --accent-amber: #b28600;
+            --accent-green: #198038;
+            --accent-red: #da1e28;
+
+            --tag-bg: rgba(15, 98, 254, 0.08);
+            --tag-text: #0f62fe;
+            --tag-border: rgba(15, 98, 254, 0.2);
+
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
+            --shadow-focus: 0 0 0 3px rgba(15, 98, 254, 0.25);
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+
+            --header-h: 68px;
+        }
+
+        /* 暗色模式体系 (Cyber & Deep Studio) */
+        [data-theme="dark"] {
+            --bg-page: #0c0e12;
+            --bg-surface: #14171f;
+            --bg-subtle: #1a1e27;
+            --bg-card: #14171f;
+            --bg-overlay: rgba(12, 14, 18, 0.95);
+
+            --text-main: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --text-inverse: #0c0e12;
+
+            --border-light: #272b36;
+            --border-focus: #4589ff;
+            --border-subtle: #1f232d;
+
+            --accent-blue: #4589ff;
+            --accent-blue-hover: #78a9ff;
+            --accent-cyan: #33b1ff;
+            --accent-teal: #08bdba;
+            --accent-purple: #a56eff;
+            --accent-amber: #f1c21b;
+            --accent-green: #42be65;
+            --accent-red: #ff8389;
+
+            --tag-bg: rgba(69, 137, 255, 0.12);
+            --tag-text: #78a9ff;
+            --tag-border: rgba(69, 137, 255, 0.25);
+
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+            --shadow-focus: 0 0 0 3px rgba(69, 137, 255, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.25s ease, color 0.25s ease;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 顶部导航条 */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+            transition: border-color 0.25s ease;
+        }
+
+        .header-inner {
+            max-width: 1360px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-zone {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-badge {
+            background: var(--accent-blue);
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 1px;
+        }
+
+        .brand-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .brand-title span {
+            color: var(--accent-blue);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-theme-toggle {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-theme-toggle:hover {
+            border-color: var(--accent-blue);
+            transform: scale(1.05);
+        }
+
+        .btn-action-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-blue);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-action-primary:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-action-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 7px 14px;
+            border-radius: var(--radius-full);
+            transition: all 0.2s ease;
+        }
+
+        .btn-action-secondary:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        /* Hero 区域 */
+        .hero-section {
+            padding: 56px 24px 36px;
+            max-width: 1360px;
+            margin: 0 auto;
+        }
+
+        .hero-meta-strip {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .hero-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            border: 1px solid var(--tag-border);
+            letter-spacing: 0.5px;
+        }
+
+        .hero-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .hero-title {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(32px, 4.2vw, 54px);
+            font-weight: 600;
+            line-height: 1.18;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .hero-title .highlight-blue {
+            color: var(--accent-blue);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 1.8vw, 20px);
+            color: var(--text-secondary);
+            max-width: 960px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        /* 核心闭环标语与铁律看板 */
+        .motto-banner {
+            background: linear-gradient(135deg, rgba(15, 98, 254, 0.08) 0%, rgba(138, 63, 252, 0.08) 100%);
+            border: 1px solid var(--border-light);
+            border-left: 4px solid var(--accent-blue);
+            padding: 18px 24px;
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .motto-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .motto-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-surface);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .motto-pill .num {
+            color: var(--accent-blue);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .motto-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* KPI 四大指标卡片 */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 20px 22px;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: transparent;
+            transition: background 0.25s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-focus);
+        }
+
+        .kpi-card:hover::before {
+            background: var(--accent-blue);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .kpi-metric {
+            font-family: 'Fraunces', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .kpi-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .kpi-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .kpi-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* 核心 Tab 导航区 (Nate Herk V2 经典风) */
+        .main-container {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .tabs-nav-wrapper {
+            position: sticky;
+            top: var(--header-h);
+            z-index: 90;
+            background: var(--bg-page);
+            padding-top: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 36px;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .tabs-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-full);
+            padding: 10px 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab-btn .badge-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 2px 7px;
+            border-radius: var(--radius-full);
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+        }
+
+        .tab-btn:hover {
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+            box-shadow: var(--shadow-md);
+        }
+
+        .tab-btn.active .badge-pill {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        /* Tab 内容面板 */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 卡片容器 */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.25s ease;
+        }
+
+        .card-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .card-title-group h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .card-title-group p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* PDF 幻灯片交互浏览器 */
+        .pdf-viewer-box {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .pdf-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-surface);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-light);
+            gap: 12px;
+        }
+
+        .pdf-page-indicator {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pdf-nav-btns {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-pdf-nav {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-pdf-nav:hover:not(:disabled) {
+            background: var(--accent-blue);
+            color: #ffffff;
+            border-color: var(--accent-blue);
+        }
+
+        .btn-pdf-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pdf-stage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            min-height: 540px;
+            background: var(--bg-subtle);
+            position: relative;
+        }
+
+        .pdf-slide-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 720px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .pdf-slide-caption {
+            background: var(--bg-surface);
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-light);
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .pdf-thumbs-strip {
+            display: flex;
+            gap: 12px;
+            padding: 14px 20px;
+            background: var(--bg-surface);
+            overflow-x: auto;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .pdf-thumb-item {
+            width: 110px;
+            height: 62px;
+            flex-shrink: 0;
+            border-radius: var(--radius-sm);
+            border: 2px solid transparent;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .pdf-thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .pdf-thumb-item:hover {
+            opacity: 0.9;
+        }
+
+        .pdf-thumb-item.active {
+            opacity: 1;
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pdf-thumb-item .thumb-num {
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        /* 视频播放器外框 */
+        .video-player-container {
+            background: #000000;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 24px;
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .video-player-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 680px;
+            background: #000000;
+        }
+
+        .video-meta-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-light);
+            gap: 12px;
+        }
+
+        .video-specs {
+            display: flex;
+            gap: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .video-spec-item span {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* 关键流程时序时间线 */
+        .timeline-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .timeline-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            position: relative;
+        }
+
+        .timeline-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            background: var(--tag-bg);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+        }
+
+        .timeline-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .timeline-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* 架构特性对比网格 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .feature-icon-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            background: var(--tag-bg);
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .feature-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .feature-list li {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            line-height: 1.5;
+        }
+
+        .feature-list li::before {
+            content: "•";
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        /* 底部署名与版权 */
+        .site-footer {
+            border-top: 1px solid var(--border-light);
+            background: var(--bg-surface);
+            padding: 40px 24px;
+            margin-top: 60px;
+        }
+
+        .footer-inner {
+            max-width: 1360px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .footer-links a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* 全屏灯箱 Modal */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 95vw;
+            max-height: 92vh;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px;
+            transition: transform 0.2s ease;
+        }
+
+        .lightbox-close:hover {
+            transform: scale(1.15);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 36px 16px 24px;
+            }
+            .main-container {
+                padding: 0 16px 60px;
+            }
+            .glass-card {
+                padding: 20px;
+            }
+            .pdf-stage {
+                min-height: 280px;
+                padding: 12px;
+            }
+            .motto-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="brand-zone" title="返回博客首页">
+                <span class="brand-badge">CE // DEMO</span>
+                <span class="brand-title">BILLY CHEN <span>/</span> 智慧经营+智慧运营</span>
+            </a>
+
+            <div class="header-actions">
+                <a href="assets/smart-business-ops/pdf/smart-business-ops-one-page-demo.pdf" download class="btn-action-primary" title="下载原版 PDF">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>下载 One-Page PDF</span>
+                </a>
+
+                <button class="btn-theme-toggle" id="themeToggleBtn" aria-label="切换明暗主题" title="切换明暗主题">
+                    <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg id="sunIcon" style="display:none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主视觉 Hero 区域 -->
+    <section class="hero-section">
+        <div class="hero-meta-strip">
+            <span class="hero-tag">IBM Client Engineering</span>
+            <span class="hero-tag">双轮驱动架构</span>
+            <span class="hero-tag">watsonx + BAW + PA</span>
+            <span class="hero-date">2026.11.05 发布 // BILLY CHEN</span>
+        </div>
+
+        <h1 class="hero-title">
+            双轮驱动：企业级<span class="highlight-blue">智慧经营</span>与<span class="highlight-blue">智慧运营</span>解决方案全景与实战演练
+        </h1>
+
+        <p class="hero-subtitle">
+            数据出发（IBM Planning Analytics 多维经营底座 + watsonx 数据治理）与流程出发（IBM BAW 业务流程编排 + watsonx Orchestrate 智能体协同），打破“看指标难归因”、“抓流程缺算力”的割裂鸿沟，实现企业从多维预测到工单执行的端到端全域闭环。
+        </p>
+
+        <!-- 核心闭环标语看板 -->
+        <div class="motto-banner">
+            <div class="motto-label">核心闭环铁律 // CORE CLOSED-LOOP VALUE</div>
+            <div class="motto-pills">
+                <div class="motto-pill"><span class="num">01</span> 事前算得清</div>
+                <div class="motto-pill"><span class="num">02</span> 事中看得懂</div>
+                <div class="motto-pill"><span class="num">03</span> 事后说得明</div>
+                <div class="motto-pill"><span class="num">04</span> 下一单用得上</div>
+            </div>
+        </div>
+
+        <!-- KPI 指标概览 -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <div class="kpi-metric">6+1</div>
+                    <div class="kpi-tag">AGENTS</div>
+                </div>
+                <div class="kpi-title">全域智能体协同</div>
+                <div class="kpi-desc">营销、销售、供应链采购、生产库存、财务、人力与研发智能体，统一受控于经营中枢与运营中枢。</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <div class="kpi-metric">8</div>
+                    <div class="kpi-tag">MILESTONES</div>
+                </div>
+                <div class="kpi-title">订单全生命周期经营测算</div>
+                <div class="kpi-desc">从商机测算、方案测算、报价毛利操盘，到执行偏差分析、变更模拟与复盘沉淀。</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <div class="kpi-metric">3 部</div>
+                    <div class="kpi-tag">1080P DEMOS</div>
+                </div>
+                <div class="kpi-title">真实全流程实战演示</div>
+                <div class="kpi-desc">包含 BAW 自动化工单流转、PA 多维下钻+知识库溯源、综合全生命周期双轮驱动演练。</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <div class="kpi-metric">100%</div>
+                    <div class="kpi-tag">CLOSED-LOOP</div>
+                </div>
+                <div class="kpi-title">结构化与非结构化归因</div>
+                <div class="kpi-desc">从财务毛利指标下钻，穿透至 3,680 条用户舆情、ECN 设计变更文档与 8D 客诉报告。</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心内容区域与 Tab 系统 -->
+    <main class="main-container">
+
+        <!-- 导航 Tabs -->
+        <div class="tabs-nav-wrapper">
+            <nav class="tabs-nav" id="mainTabs">
+                <button class="tab-btn active" data-tab="tab-pdf">
+                    <span>💡 方案全景与 One-Pager</span>
+                    <span class="badge-pill">6 页 PPT</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-video-ops">
+                    <span>🎬 演示 ① · 智慧运营闭环</span>
+                    <span class="badge-pill">1分41秒</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-video-kb">
+                    <span>🎬 演示 ② · 智慧经营+知识库</span>
+                    <span class="badge-pill">2分23秒</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-video-v2">
+                    <span>🎬 演示 ③ · 双轮驱动综合演练</span>
+                    <span class="badge-pill">2分50秒</span>
+                </button>
+                <button class="tab-btn" data-tab="tab-arch">
+                    <span>🏛️ 技术底座与组件矩阵</span>
+                    <span class="badge-pill">Stack</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- TAB 1: 方案全景与 One-Pager 架构解读 -->
+        <section class="tab-panel active" id="tab-pdf">
+            <div class="glass-card">
+                <div class="card-header-row">
+                    <div class="card-title-group">
+                        <h3>《智慧经营 + 智慧运营 One Page + DEMO》架构幻灯片</h3>
+                        <p>沉淀可信数据、统一模型与规则，打造覆盖业务、财务与人力的全域智能体闭环。点击下方缩略图或前后按钮切换页面，点击大图可全屏放大浏览。</p>
+                    </div>
+                    <div class="card-action-btns">
+                        <a href="assets/smart-business-ops/pdf/smart-business-ops-one-page-demo.pdf" target="_blank" class="btn-action-secondary">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            新窗口打开 PDF
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PDF 幻灯片浏览器 -->
+                <div class="pdf-viewer-box">
+                    <div class="pdf-toolbar">
+                        <div class="pdf-page-indicator">
+                            <span>PAGE</span>
+                            <span id="curPageNum" style="color:var(--accent-blue)">1</span>
+                            <span>/ 6</span>
+                            <span id="curPageTitle" style="color:var(--text-secondary); margin-left:10px; font-weight:normal;"></span>
+                        </div>
+                        <div class="pdf-nav-btns">
+                            <button class="btn-pdf-nav" id="btnPrevPage">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                                上一页
+                            </button>
+                            <button class="btn-pdf-nav" id="btnNextPage">
+                                下一页
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                            <button class="btn-pdf-nav" id="btnFullscreenPage" title="全屏查看当前页">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                                全屏放大
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pdf-stage">
+                        <img id="pdfMainSlide" src="assets/smart-business-ops/pdf/pages/page-1.webp" alt="智慧经营与智慧运营方案" class="pdf-slide-img" title="点击可全屏高清浏览">
+                    </div>
+
+                    <div class="pdf-slide-caption">
+                        <div id="slideDescription">正在加载要点解析...</div>
+                        <div style="font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-muted);">
+                            SOURCE: IBM Client Engineering Architecture Asset
+                        </div>
+                    </div>
+
+                    <!-- 缩略图横条 -->
+                    <div class="pdf-thumbs-strip" id="thumbsStrip">
+                        <div class="pdf-thumb-item active" data-page="1">
+                            <img src="assets/smart-business-ops/pdf/pages/page-1.webp" alt="Page 1">
+                            <span class="thumb-num">P1</span>
+                        </div>
+                        <div class="pdf-thumb-item" data-page="2">
+                            <img src="assets/smart-business-ops/pdf/pages/page-2.webp" alt="Page 2">
+                            <span class="thumb-num">P2</span>
+                        </div>
+                        <div class="pdf-thumb-item" data-page="3">
+                            <img src="assets/smart-business-ops/pdf/pages/page-3.webp" alt="Page 3">
+                            <span class="thumb-num">P3</span>
+                        </div>
+                        <div class="pdf-thumb-item" data-page="4">
+                            <img src="assets/smart-business-ops/pdf/pages/page-4.webp" alt="Page 4">
+                            <span class="thumb-num">P4</span>
+                        </div>
+                        <div class="pdf-thumb-item" data-page="5">
+                            <img src="assets/smart-business-ops/pdf/pages/page-5.webp" alt="Page 5">
+                            <span class="thumb-num">P5</span>
+                        </div>
+                        <div class="pdf-thumb-item" data-page="6">
+                            <img src="assets/smart-business-ops/pdf/pages/page-6.webp" alt="Page 6">
+                            <span class="thumb-num">P6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 六页要点提炼卡片矩阵 -->
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">01</div>
+                            <h4>双轮驱动：经营与运营决策中枢</h4>
+                        </div>
+                        <ul class="feature-list">
+                            <li><strong>智慧经营决策中枢：</strong>统一经营数据 + 多维模型与规则 + 预测与情景模拟 + 监控与闭环反馈。</li>
+                            <li><strong>智慧运营决策中枢：</strong>将经营策略翻译为可执行的任务与行动建议，驱动 6 大智能体协同。</li>
+                            <li><strong>全域闭环流：</strong>业务变化 ➔ 智能体感知 ➔ PA 分析模拟 ➔ 策略生成 ➔ 业务执行 ➔ 结果反馈。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">02</div>
+                            <h4>项目类订单全生命周期经营测算</h4>
+                        </div>
+                        <ul class="feature-list">
+                            <li><strong>八大业务动作嵌入：</strong>商机测算、方案测算、报价毛利操盘、签约基线、执行偏差分析、变更情景模拟、验收经营结算、复盘知识沉淀。</li>
+                            <li><strong>业务流程穿透：</strong>打通“订单 / 方案 / 采购 / 制造 / 交付 / 回款”全链条。</li>
+                            <li><strong>数据贯通：</strong>收入、成本、毛利、进度、资源与现金流实时联动。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">03</div>
+                            <h4>IBM PA 多维数据底座能力</h4>
+                        </div>
+                        <ul class="feature-list">
+                            <li><strong>智能经营报告：</strong>融合多维经营数据，一键自动生成业务洞察与管理总结。</li>
+                            <li><strong>智能问数与预测：</strong>自然语言直接查询经营数据，快速定位各区域、各产品异常波动。</li>
+                            <li><strong>watsonx 数据治理：</strong>数据目录与血缘、数据质量规则稽核、敏感数据分级管控与 MCP 开放接口。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">04</div>
+                            <h4>毛利下降归因与非结构化数据结合</h4>
+                        </div>
+                        <ul class="feature-list">
+                            <li><strong>以 X-Pro TWS 耳机为例：</strong>毛利率环比下降 3.5pp，下钻定位线上渠道与特定 SKU。</li>
+                            <li><strong>非结构化数据溯源：</strong>AI 语义聚类 3,680 条电商差评（42% 指向“左耳断连”），调阅工程变更说明书 ECN-2026-041。</li>
+                            <li><strong>量化财务影响：</strong>锁定天线布局降本导致的可靠性缺陷，量化损失 -2.8M，触发跨部门整改。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">05</div>
+                            <h4>AI 智能体 + 工作流 + 流程挖掘</h4>
+                        </div>
+                        <ul class="feature-list">
+                            <li><strong>大脑（AI 智能体）：</strong>非确定性场景智能决策、多轮自然语言交互、意图理解与任务规划。</li>
+                            <li><strong>神经系统（BAW 工作流）：</strong>确定性场景高效执行、流程编排、严格业务规则与人工审批。</li>
+                            <li><strong>眼睛（Process Mining 流程挖掘）：</strong>发现真实业务流程、识别瓶颈与合规检查、持续优化闭环。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">06</div>
+                            <h4>零部件厂质量团队实战架构</h4>
+                        </div>
+                        <ul class="feature-list">
+                            <li><strong>定时触发：</strong>BAW 工作流定时发起质量报告生成请求。</li>
+                            <li><strong>智能体调度：</strong>WXO 调用注册的第三方“报告分析 Agent”，结合实时数据生成报告。</li>
+                            <li><strong>工单审批与闭环：</strong>AI 报告推送至门户与 AI Chat，问题自动生成 BAW 人工审批工单，审批后执行知识沉淀并受全程 Trace 监控。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 实战演示 1 · 智慧运营闭环 -->
+        <section class="tab-panel" id="tab-video-ops">
+            <div class="glass-card">
+                <div class="card-header-row">
+                    <div class="card-title-group">
+                        <h3>实战演示 ①：智慧运营闭环（BAW 工作流 + WXO 智能体协作）</h3>
+                        <p>基于某零部件制造厂的真实场景：展示如何通过 BAW 定时触发报告生成、调用 WXO Agent 组装质量分析、在门户中进行人机交互问答，并一键转人工工单审批与 Trace 监控。</p>
+                    </div>
+                </div>
+
+                <!-- 视频播放器 -->
+                <div class="video-player-container">
+                    <video id="videoOps" controls preload="metadata" poster="assets/smart-business-ops/videos/posters/smart-ops-poster.webp">
+                        <source src="assets/smart-business-ops/videos/smart-ops.mp4" type="video/mp4">
+                        您的浏览器不支持原生 HTML5 视频播放，请升级浏览器。
+                    </video>
+                    <div class="video-meta-bar">
+                        <div class="video-specs">
+                            <div class="video-spec-item">分辨率: <span>1080P HD (1920x1080)</span></div>
+                            <div class="video-spec-item">时长: <span>01:41</span></div>
+                            <div class="video-spec-item">技术栈: <span>IBM BAW + watsonx Orchestrate</span></div>
+                        </div>
+                        <a href="assets/smart-business-ops/videos/smart-ops.mp4" download class="btn-action-secondary">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            下载视频 MP4
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 时序步骤解析 -->
+                <div class="timeline-steps">
+                    <div class="timeline-card">
+                        <span class="timeline-badge">STEP 01</span>
+                        <h4>1. 定时触发质量流程</h4>
+                        <p>BAW 业务流程引擎定时调度质量巡检任务，自动组装上下文并向 WXO 智能体编排层发起质量分析工单请求。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">STEP 02</span>
+                        <h4>2. WXO 调度专用 Agent</h4>
+                        <p>WXO Agent 调度已注册的“生产报告分析 Agent”与“根因分析 Agent”，自动萃取 MES 与质量历史数据并生成结构化质量报告。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">STEP 03</span>
+                        <h4>3. 门户交互与异常问答</h4>
+                        <p>质量工程师在统一门户的 AI Chat 界面中查看质量报告，并针对异常指标开展多轮自然语言追问与深度探查。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">STEP 04</span>
+                        <h4>4. 工单审批与 Trace 闭环</h4>
+                        <p>AI 将异常自动转化为 BAW 人工审批工单；审批通过后触发知识沉淀 Agent，全流程在 IBM 观测平台形成可审计 Trace。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: 实战演示 2 · 智慧经营 + 知识库 -->
+        <section class="tab-panel" id="tab-video-kb">
+            <div class="glass-card">
+                <div class="card-header-row">
+                    <div class="card-title-group">
+                        <h3>实战演示 ②：智慧经营 + 知识库（多维问数与非结构化根因溯源）</h3>
+                        <p>以电子消费品 X-Pro TWS 耳机“产品毛利率环比下降 3.5%”为例：演示从财务数据下钻到 SKU，结合 3,680 条用户差评、设计变更文档 ECN-2026-041 与 8D 报告的完整归因与决策闭环。</p>
+                    </div>
+                </div>
+
+                <!-- 视频播放器 -->
+                <div class="video-player-container">
+                    <video id="videoKB" controls preload="metadata" poster="assets/smart-business-ops/videos/posters/smart-business-knowledgebase-poster.webp">
+                        <source src="assets/smart-business-ops/videos/smart-business-knowledgebase.mp4" type="video/mp4">
+                        您的浏览器不支持原生 HTML5 视频播放，请升级浏览器。
+                    </video>
+                    <div class="video-meta-bar">
+                        <div class="video-specs">
+                            <div class="video-spec-item">分辨率: <span>1080P HD (1920x1080)</span></div>
+                            <div class="video-spec-item">时长: <span>02:23</span></div>
+                            <div class="video-spec-item">技术栈: <span>IBM PA (TM1) + watsonx.ai + 知识库</span></div>
+                        </div>
+                        <a href="assets/smart-business-ops/videos/smart-business-knowledgebase.mp4" download class="btn-action-secondary">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            下载视频 MP4
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 归因逻辑链条 -->
+                <div class="timeline-steps">
+                    <div class="timeline-card">
+                        <span class="timeline-badge">问数 ➔ 下钻</span>
+                        <h4>1. 结构化多维经营探查</h4>
+                        <p>自然语言查询：“X-Pro 耳机这个月的毛利是多少？与上个月相比有什么变化？”AI 调取 PA 多维模型秒级下钻，定位华东线上渠道为主要滑坡源。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">舆情 ➔ 聚类</span>
+                        <h4>2. 非结构化电商差评聚类</h4>
+                        <p>销售转化率骤降 27.6%。AI 调取电商评论（3,680条）与客诉工单（612件），NLP 聚类出 42% 集中在“左耳断连/杂音”，退换货飙升 9,180 件。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">文档 ➔ 溯源</span>
+                        <h4>3. 内部技术文档与 ECN 穿透</h4>
+                        <p>知识库 Agent 检索产品设计变更说明书 ECN-2026-041，发现前期为降低 BOM 成本调整了蓝牙天线布局与屏蔽方案，导致可靠性大幅劣化。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">测算 ➔ 行动</span>
+                        <h4>4. 经营影响量化与跨部门行动</h4>
+                        <p>测算质量问题导致直接毛利损失 -2.8M。联动研发重新设计天线屏蔽、质量端严控供方参数，并在 PA 中设立 X-Pro 专项指标持续追踪毛利恢复。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: 实战演示 3 · 双轮驱动综合演练 (v2) -->
+        <section class="tab-panel" id="tab-video-v2">
+            <div class="glass-card">
+                <div class="card-header-row">
+                    <div class="card-title-group">
+                        <h3>实战演示 ③：智慧经营 + 智慧运营综合全景演练 (v2)</h3>
+                        <p>全方位端到端演示：将数据出发的经营预测测算与流程出发的敏捷运营工作流无缝融合，展现“双轮联动”如何赋能现代制造与高科技企业。</p>
+                    </div>
+                </div>
+
+                <!-- 视频播放器 -->
+                <div class="video-player-container">
+                    <video id="videoV2" controls preload="metadata" poster="assets/smart-business-ops/videos/posters/smart-business-ops-v2-poster.webp">
+                        <source src="assets/smart-business-ops/videos/smart-business-ops-v2.mp4" type="video/mp4">
+                        您的浏览器不支持原生 HTML5 视频播放，请升级浏览器。
+                    </video>
+                    <div class="video-meta-bar">
+                        <div class="video-specs">
+                            <div class="video-spec-item">分辨率: <span>1080P HD (1920x1080)</span></div>
+                            <div class="video-spec-item">时长: <span>02:50</span></div>
+                            <div class="video-spec-item">技术栈: <span>全栈集成 (PA + watsonx + BAW + WXO)</span></div>
+                        </div>
+                        <a href="assets/smart-business-ops/videos/smart-business-ops-v2.mp4" download class="btn-action-secondary">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            下载视频 MP4
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 核心业务价值 -->
+                <div class="timeline-steps">
+                    <div class="timeline-card">
+                        <span class="timeline-badge">事前</span>
+                        <h4>事前算得清：多维预测与模拟</h4>
+                        <p>在立项与商机阶段，基于历史成本多维模型秒级推演三种情景（乐观/基准/悲观），算清边际贡献与资源瓶颈。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">事中</span>
+                        <h4>事中看得懂：实时感知与偏差预警</h4>
+                        <p>在项目执行与制造交付中，实时汇聚 ERP/MES/WMS 流水，自动对齐经营基线，微小偏差秒级触达运营智能体。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">事后</span>
+                        <h4>事后说得明：精准归因与财务结算</h4>
+                        <p>验收结算阶段，自动穿透结构化流水与非结构化沟通凭证，讲透“赚在哪里、亏在哪里、卡在哪个节点”。</p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-badge">复盘</span>
+                        <h4>下一单用得上：模型沉淀与知识自演进</h4>
+                        <p>将执行过程中的真实损耗、工时标准与设计妥协反哺至 PA 测算规则库与知识库，让后续报价操盘更精准。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: 技术底座与组件矩阵 -->
+        <section class="tab-panel" id="tab-arch">
+            <div class="glass-card">
+                <div class="card-header-row">
+                    <div class="card-title-group">
+                        <h3>企业级落地技术矩阵与架构分层</h3>
+                        <p>双轮驱动解决方案依托 IBM 核心软件栈打造，各层组件职责清晰、松耦合解耦，支持混合云环境部署（OpenShift / 本地机房 / 专属云）。</p>
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">PA</div>
+                            <h4>IBM Planning Analytics (TM1)</h4>
+                        </div>
+                        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;"><strong>角色定位：</strong>企业多维经营数据底座与内存测算引擎。</p>
+                        <ul class="feature-list">
+                            <li><strong>内存多维计算：</strong>专利级 TM1 多维内存立方体计算技术，支持十亿级单元格秒级聚合与情景模拟。</li>
+                            <li><strong>业务规则可塑性：</strong>支持财务、运营、供应链按需建立复杂分摊规则与预测模型。</li>
+                            <li><strong>标准 API 与 MCP 接口：</strong>完美对接大模型 Agent，实现结构化自然语言问数与反写。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">WXO</div>
+                            <h4>IBM watsonx Orchestrate</h4>
+                        </div>
+                        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;"><strong>角色定位：</strong>企业级 AI Agent 编排与多智能体协同大脑。</p>
+                        <ul class="feature-list">
+                            <li><strong>意图理解与技能编排：</strong>准确解析用户或工作流发起的非结构化诉求，动态调用对应子智能体。</li>
+                            <li><strong>多智能体调度：</strong>编排营销、采购、研发、财务、客服等领域智能体，自动聚合结果。</li>
+                            <li><strong>可审计 Trace：</strong>记录完整的 Agent 思考链路、Prompt 上下文与工具调用记录。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">BAW</div>
+                            <h4>IBM Business Automation Workflow</h4>
+                        </div>
+                        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;"><strong>角色定位：</strong>企业端到端业务流程自动化中枢（神经系统）。</p>
+                        <ul class="feature-list">
+                            <li><strong>严格确定性流程：</strong>保障核心财务审批、质量工单、跨部门调拨按严密合规逻辑流转。</li>
+                            <li><strong>人机协同编排：</strong>既支持定时/事件自动触发 Agent，又支持自动将异常升格为人工审批任务。</li>
+                            <li><strong>与 Process Mining 联动：</strong>无缝结合流程挖掘，持续暴露流程瓶颈与断点。</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-icon-badge">WX</div>
+                            <h4>IBM watsonx.data + .governance</h4>
+                        </div>
+                        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;"><strong>角色定位：</strong>全生命周期可信数据治理底座与 AI 合规护栏。</p>
+                        <ul class="feature-list">
+                            <li><strong>开放湖仓底座：</strong>基于 Apache Iceberg，低成本汇聚 ERP、CRM、MES、售后非结构化数据。</li>
+                            <li><strong>端到端数据血缘：</strong>从底层原始表到多维报表、再到大模型生成的分析建议，全程可追溯。</li>
+                            <li><strong>合规与护栏：</strong>保障敏感财务与供应链数据按角色脱敏，防止 AI 幻觉引发决策风险。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 底部 Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-info">
+                <p><strong>BILLY CHEN (陈剑)</strong> // IBM China Client Engineering 首席架构师</p>
+                <p>专注于企业级混合云、AI 原生架构、数据流与多智能体智能协同</p>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">← 返回博客首页</a>
+                <a href="assets/smart-business-ops/pdf/smart-business-ops-one-page-demo.pdf" download>下载原版 PDF</a>
+                <a href="https://github.com/jchenibm" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 全屏灯箱 Modal -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="全屏预览">
+    </div>
+
+    <!-- 交互脚本 -->
+    <script>
+        // PDF 幻灯片数据
+        const pdfSlides = [
+            {
+                page: 1,
+                title: "双轮驱动：智慧经营（数据出发）+ 智慧运营（流程出发）",
+                desc: "沉淀可信数据、统一模型与规则，打造覆盖业务、财务与人力的全域智能体，驱动企业持续感知、分析、推演与行动。",
+                src: "assets/smart-business-ops/pdf/pages/page-1.webp"
+            },
+            {
+                page: 2,
+                title: "项目类订单全生命周期经营分析与测算",
+                desc: "以电子制造产线设计、生产、交付项目为例：从商机、方案、报价、签约到执行、变更、验收、复盘，每个业务节点嵌入经营分析动作。",
+                src: "assets/smart-business-ops/pdf/pages/page-2.webp"
+            },
+            {
+                page: 3,
+                title: "IBM 智慧经营方案架构全景",
+                desc: "IBM PA（多维经营数据底座）+ watsonx 数据治理：智能经营报告、智能问数、深度洞察、预测模拟与决策行动五位一体。",
+                src: "assets/smart-business-ops/pdf/pages/page-3.webp"
+            },
+            {
+                page: 4,
+                title: "从“产品毛利下降”出发的智能经营分析（结合非结构化数据）",
+                desc: "以 X-Pro TWS 耳机为例：智能问数 ➔ 财务业务层层下钻 ➔ 聚类 3,680 条差评 ➔ 溯源 ECN-2026-041 文档 ➔ 量化损失并推动整改。",
+                src: "assets/smart-business-ops/pdf/pages/page-4.webp"
+            },
+            {
+                page: 5,
+                title: "IBM 智慧运营解决方案：智能体(大脑) + 工作流(神经) + 流程挖掘(眼睛)",
+                desc: "涵盖 IPD、MTL、LTO、OTD、OTC、ITR 六大端到端流程：业务流程治理、流程自动化、AI 赋能与持续优化闭环。",
+                src: "assets/smart-business-ops/pdf/pages/page-5.webp"
+            },
+            {
+                page: 6,
+                title: "某零部件厂质量团队引入智慧运营方案实战",
+                desc: "BAW 报告生成定时触发 ➔ 调用 WXO Agent 生成质量分析 ➔ 门户多轮 AI 对话 ➔ 自动升格人工审批工单 ➔ 全程 Trace 可客观审计。",
+                src: "assets/smart-business-ops/pdf/pages/page-6.webp"
+            }
+        ];
+
+        let curPageIndex = 0;
+
+        const curPageNumEl = document.getElementById('curPageNum');
+        const curPageTitleEl = document.getElementById('curPageTitle');
+        const slideDescEl = document.getElementById('slideDescription');
+        const mainSlideImg = document.getElementById('pdfMainSlide');
+        const btnPrev = document.getElementById('btnPrevPage');
+        const btnNext = document.getElementById('btnNextPage');
+        const thumbs = document.querySelectorAll('.pdf-thumb-item');
+        const lightboxModal = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const btnFullscreen = document.getElementById('btnFullscreenPage');
+
+        function updateSlideView(idx) {
+            if (idx < 0) idx = 0;
+            if (idx >= pdfSlides.length) idx = pdfSlides.length - 1;
+            curPageIndex = idx;
+            const item = pdfSlides[idx];
+
+            curPageNumEl.textContent = item.page;
+            curPageTitleEl.textContent = item.title;
+            slideDescEl.innerHTML = `<strong>P${item.page} 核心要点：</strong>${item.desc}`;
+            mainSlideImg.src = item.src;
+
+            btnPrev.disabled = (idx === 0);
+            btnNext.disabled = (idx === pdfSlides.length - 1);
+
+            thumbs.forEach((t, i) => {
+                if (i === idx) {
+                    t.classList.add('active');
+                    t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else {
+                    t.classList.remove('active');
+                }
+            });
+        }
+
+        btnPrev.addEventListener('click', () => updateSlideView(curPageIndex - 1));
+        btnNext.addEventListener('click', () => updateSlideView(curPageIndex + 1));
+
+        thumbs.forEach((thumb, i) => {
+            thumb.addEventListener('click', () => updateSlideView(i));
+        });
+
+        // 灯箱全屏
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightboxModal.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightboxModal.classList.remove('active');
+        }
+
+        mainSlideImg.addEventListener('click', () => openLightbox(pdfSlides[curPageIndex].src));
+        btnFullscreen.addEventListener('click', () => openLightbox(pdfSlides[curPageIndex].src));
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightboxModal.classList.contains('active')) {
+                closeLightbox();
+            }
+            if (!lightboxModal.classList.contains('active')) {
+                if (e.key === 'ArrowLeft' && curPageIndex > 0) updateSlideView(curPageIndex - 1);
+                if (e.key === 'ArrowRight' && curPageIndex < pdfSlides.length - 1) updateSlideView(curPageIndex + 1);
+            }
+        });
+
+        // 初始化第 1 页
+        updateSlideView(0);
+
+        // Tab 切换逻辑 + 视频互斥暂停
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        const allVideos = document.querySelectorAll('video');
+
+        function pauseAllVideos() {
+            allVideos.forEach(v => {
+                if (!v.paused) v.pause();
+            });
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTabId = btn.getAttribute('data-tab');
+
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabPanels.forEach(p => p.classList.remove('active'));
+
+                btn.classList.add('active');
+                const targetPanel = document.getElementById(targetTabId);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+
+                // 暂停视频，防止切出时后台发声
+                pauseAllVideos();
+            });
+        });
+
+        // 主题切换逻辑
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // 读取持久化主题设置
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(isDark ? 'light' : 'dark');
+        });
+    </script>
+</body>
+</html>
