@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBM TechXchange 2026 官方点播全景导读与视频直达 | Billy Chen's Blog</title>
+    <meta name="description" content="IBM TechXchange 2026 全球技术大会视频点播专区全景导读，涵盖 Tim O'Reilly、Chris Wright、Bill Higgins、Rodney Mullen 等重磅演讲嘉宾的4场核心峰会及官方在线视频直链，支持无跳转2/3悬浮大屏直接点播。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300..800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #FBFBFA;
+            --bg-card: #FFFFFF;
+            --bg-subtle: #F3F2EE;
+            --border: #E5E3DC;
+            --border-hover: #D0CEBE;
+            --text-primary: #1C1B19;
+            --text-secondary: #57554E;
+            --text-muted: #88857C;
+            --accent: #0F62FE;
+            --accent-hover: #0353E9;
+            --accent-bg: rgba(15, 98, 254, 0.08);
+            --pill-bg: #EAE8E0;
+            --pill-text: #3D3B35;
+            --font-display: 'Fraunces', serif;
+            --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+        }
+
+        body.theme-dark {
+            --bg-page: #0C111C;
+            --bg-card: #151D2C;
+            --bg-subtle: #1C273B;
+            --border: #26334D;
+            --border-hover: #3A4C70;
+            --text-primary: #EEF2F6;
+            --text-secondary: #A6B4C9;
+            --text-muted: #6C7D99;
+            --accent: #4589FF;
+            --accent-hover: #6EA6FF;
+            --accent-bg: rgba(69, 137, 255, 0.15);
+            --pill-bg: #223048;
+            --pill-text: #D0DBED;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.25s, color 0.25s;
+        }
+
+        /* Nav */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(251, 251, 250, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.theme-dark .site-nav {
+            background: rgba(12, 17, 28, 0.85);
+        }
+        .nav-brand {
+            font-family: 'Space Grotesk', var(--font-display);
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-brand:hover { color: var(--accent); }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        /* Container */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 24px 96px;
+        }
+
+        /* Header */
+        .article-header {
+            margin-bottom: 48px;
+        }
+        .meta-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .article-title {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 5vw, 44px);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+        .article-lead {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 820px;
+        }
+
+        /* Key Highlights Strip */
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 36px 0 48px;
+        }
+        .highlight-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        .highlight-item .label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .highlight-item .value {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--text-primary);
+        }
+
+        /* Section Title */
+        .section-header {
+            margin: 56px 0 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        .section-header span {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Lead Video Banner Card */
+        .lead-banner-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-subtle));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-sm);
+        }
+        .lead-banner-badge {
+            align-self: flex-start;
+            background: var(--accent);
+            color: #FFF;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 99px;
+            text-transform: uppercase;
+        }
+        .lead-banner-card h3 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .lead-banner-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            max-width: 720px;
+        }
+        .btn-stream {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #FFFFFF !important;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s, transform 0.1s;
+            width: fit-content;
+        }
+        .btn-stream:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--pill-bg);
+            color: var(--text-primary) !important;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+            width: fit-content;
+        }
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Session Cards */
+        .session-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .session-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .session-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md);
+        }
+        .session-meta-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .session-index {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            background: var(--accent-bg);
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+        }
+        .session-duration {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .session-sub-badge {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            background: var(--pill-bg);
+            color: var(--pill-text);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+        }
+        .session-title-zh {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+        .session-title-en {
+            font-size: 14px;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .session-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Speaker Box */
+        .speaker-box {
+            background: var(--bg-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .speaker-title {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .speaker-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+        }
+        .speaker-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .speaker-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        .speaker-role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Quotes / Takeaways */
+        .takeaways {
+            margin: 16px 0 24px;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent);
+        }
+        .takeaway-item {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .takeaway-item strong {
+            color: var(--text-primary);
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* Insight Grid */
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+        .insight-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .insight-tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .insight-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .insight-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .insight-link-arrow {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ============================================================== */
+        /* 2/3 屏幕悬浮视频播放模态框 (2/3 Modal Player) */
+        /* ============================================================== */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 11, 20, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .modal-backdrop.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            /* 约占屏幕整体 2/3 (67vw)，上限 1120px，下限 320px */
+            width: min(67vw, 1120px);
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            transform: scale(0.96);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-backdrop.active .modal-card {
+            transform: scale(1);
+        }
+        .modal-header {
+            padding: 16px 24px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow: hidden;
+        }
+        .modal-session-pill {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--accent);
+            color: #FFF;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+        }
+        .modal-title-text {
+            font-family: var(--font-display);
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .modal-close-btn {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .modal-close-btn:hover {
+            background: var(--accent);
+            color: #FFF;
+            border-color: var(--accent);
+            transform: rotate(90deg);
+        }
+        .modal-video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+        .modal-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .modal-footer {
+            padding: 12px 24px;
+            background: var(--bg-subtle);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .modal-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .modal-footer a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 80px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+        .footer-links a {
+            color: var(--accent);
+            text-decoration: none;
+            margin-left: 16px;
+        }
+        .footer-links a:hover { text-decoration: underline; }
+
+        @media (max-width: 900px) {
+            .modal-card { width: 95vw; }
+        }
+        @media (max-width: 640px) {
+            .container { padding: 32px 16px 64px; }
+            .session-card { padding: 24px 18px; }
+            .session-title-zh { font-size: 20px; }
+            .modal-title-text { font-size: 14px; }
+        }
+    </style>
+    <script src="assets/hls.min.js"></script>
+</head>
+<body>
+
+    <nav class="site-nav">
+        <a href="index.html" class="nav-brand">
+            <span>←</span> BILLY CHEN / ARCHITECT
+        </a>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeBtn" aria-label="切换明暗主题">
+                <span id="themeIcon">🌓</span> <span id="themeText">LIGHT</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <header class="article-header">
+            <span class="meta-tag">IBM TECHXCHANGE 2026 // ON-DEMAND CURATION</span>
+            <h1 class="article-title">IBM TechXchange 2026 会议全景导读与视频直达</h1>
+            <p class="article-lead">
+                聚焦 AI 重塑企业级软件工程与基础设施未来。汇总大会开篇宣传片、4 场核心重量级分会（含 Tim O'Reilly、Chris Wright、Bill Higgins、Rodney Mullen 等顶尖讲者实录），<strong>点击视频按钮即可在当前页面 2/3 高清悬浮窗直接点播观看，免除跳转困扰</strong>。
+            </p>
+
+            <div class="highlight-grid">
+                <div class="highlight-item">
+                    <div class="label">TOTAL SESSIONS</div>
+                    <div class="value">4 场核心 + 1 宣传片</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="label">TOTAL RUNTIME</div>
+                    <div class="value">4 小时 27 分钟</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="label">KEYNOTE SPEAKERS</div>
+                    <div class="value">Tim O'Reilly / Chris Wright</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="label">PLAYBACK MODE</div>
+                    <div class="value">2/3 屏幕弹窗无缝直播</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 开篇宣传片 -->
+        <section class="lead-banner-card">
+            <span class="lead-banner-badge">大会前瞻 / 主视觉宣传片</span>
+            <h3>TechXchange 2026：未来，由您构筑 (Event Page Leadspace)</h3>
+            <p>
+                感受 AI 时代企业级全栈技术重构的磅礴脉动。一分钟全景展现 IBM 混合云、生成式 AI、自主智能体与现代化基础设施协同的宏大愿景。
+            </p>
+            <div style="display: flex; gap: 12px; align-items: center; margin-top: 8px;">
+                <button class="btn-stream js-play-trigger" 
+                        data-entry-id="1_7ye8fkoa" 
+                        data-session="LEADSPACE" 
+                        data-title="TechXchange 2026：未来，由您构筑 (先导片)"
+                        data-duration="01:01">
+                    ▶ 弹窗播放先导片 (01:01)
+                </button>
+                <a href="https://www.ibm.com/cn-zh/new/videos/techxchange-sessions" target="_blank" class="btn-secondary">
+                    官方点播专区 ↗
+                </a>
+            </div>
+        </section>
+
+        <!-- 4 场核心演讲 -->
+        <div class="section-header">
+            <h2>4 场核心专题峰会全景</h2>
+            <span>4 SESSIONS // IN-PAGE MODAL STREAMING</span>
+        </div>
+
+        <div class="session-grid">
+
+            <!-- 第 1 场 -->
+            <article class="session-card">
+                <div class="session-meta-top">
+                    <span class="session-index">SESSION 01</span>
+                    <span class="session-duration">⏱ 80 分钟 56 秒</span>
+                    <span class="session-sub-badge">全英文原版字幕 VTT</span>
+                </div>
+                <h3 class="session-title-zh">让您的智能体适配企业级应用</h3>
+                <div class="session-title-en">Make Your Agents Enterprise Ready (Entry ID: 1_c15pdrqy)</div>
+                <p class="session-desc">
+                    从“秒级生成玩具 Demo”跨越到“20万个微服务容器下的企业生产级集群”。深入探讨自主智能体（Agent）在真实企业网络部署时面临的控制面调度、长状态持久化、实时数据底座与全链路 AgentOps 护栏体系。
+                </p>
+
+                <div class="speaker-box">
+                    <div class="speaker-title">主讲嘉宾与架构团队</div>
+                    <div class="speaker-list">
+                        <div class="speaker-item">
+                            <span class="speaker-name">IBM Enterprise Agentic Platform Team</span>
+                            <span class="speaker-role">watsonx Orchestrate & AgentOps 首席架构专家组</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="takeaways">
+                    <div class="takeaway-item"><strong>核心洞察 1：</strong>开发人员的角色已从具体的“代码编写者（Developer）”全面跃迁为“系统编排者（Orchestrator）”。</div>
+                    <div class="takeaway-item"><strong>核心洞察 2：</strong>多智能体潮汐冲击——不仅要运行内部 Agent，还需安全接纳客户、合作伙伴和供应商的异构 Agent 网络。</div>
+                    <div class="takeaway-item"><strong>核心洞察 3：</strong>Streamhouse 架构为智能体注入实时流式事件与动态上下文，破解静态向量 RAG 延迟顽疾。</div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-stream js-play-trigger"
+                            data-entry-id="1_c15pdrqy"
+                            data-session="SESSION 01"
+                            data-title="第 1 场：让您的智能体适配企业级应用"
+                            data-duration="80分56秒">
+                        ▶ 弹窗播放本场 (81m)
+                    </button>
+                    <a href="techxchange-2026-software-engineering-whitepaper.html#section-2" class="btn-secondary">
+                        阅读白皮书架构解析 →
+                    </a>
+                </div>
+            </article>
+
+            <!-- 第 2 场 -->
+            <article class="session-card">
+                <div class="session-meta-top">
+                    <span class="session-index">SESSION 02</span>
+                    <span class="session-duration">⏱ 52 分钟 07 秒</span>
+                    <span class="session-sub-badge" style="background:#E0F2FE;color:#0284C7;">官方中文字幕 + 12国语言</span>
+                </div>
+                <h3 class="session-title-zh">AI 时代软件开发的未来</h3>
+                <div class="session-title-en">The Future of Software Development In the Age of AI (Entry ID: 1_gs7zccd4)</div>
+                <p class="session-desc">
+                    与开源运动与 Web 2.0 概念奠基人 Tim O'Reilly 及产业领袖共聚一堂：深度探讨 AI 究竟是在提升开发效率，还是在彻底重塑软件工程的职业本质；解析未来 12 至 24 个月工程师必须构建的核心能力护城河。
+                </p>
+
+                <div class="speaker-box">
+                    <div class="speaker-title">重磅对话阵容</div>
+                    <div class="speaker-list">
+                        <div class="speaker-item">
+                            <span class="speaker-name">Tim O'Reilly</span>
+                            <span class="speaker-role">O'Reilly Media 创始人兼 CEO</span>
+                        </div>
+                        <div class="speaker-item">
+                            <span class="speaker-name">Bill Higgins</span>
+                            <span class="speaker-role">IBM 副总裁兼 AI 开发者关系生态负责人（主持）</span>
+                        </div>
+                        <div class="speaker-item">
+                            <span class="speaker-name">Garrett Rowe</span>
+                            <span class="speaker-role">NeuralSeek 创始人兼 CEO</span>
+                        </div>
+                        <div class="speaker-item">
+                            <span class="speaker-name">Justina Nixon-Saintil</span>
+                            <span class="speaker-role">IBM 副总裁兼首席企业影响官 (CIO)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="takeaways">
+                    <div class="takeaway-item"><strong>Tim O'Reilly 金句：</strong>“AI 绝非自动补全打字机。软件工程的基石正从编写底层代码，变成对系统意图与约束契约的设计。”</div>
+                    <div class="takeaway-item"><strong>历史周期律：</strong>每次技术大变革初期人们都恐惧失业，但随之而来的是更高维度的价值爆炸与系统级开发需求。</div>
+                    <div class="takeaway-item"><strong>负责任的 AI：</strong>将安全可信（Trustworthy AI）融入架构血液，合规是进入核心关键任务系统的唯一门票。</div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-stream js-play-trigger"
+                            data-entry-id="1_gs7zccd4"
+                            data-session="SESSION 02"
+                            data-title="第 2 场：AI 时代软件开发的未来 (Tim O'Reilly 对话)"
+                            data-duration="52分07秒">
+                        ▶ 弹窗播放本场 (52m)
+                    </button>
+                    <a href="techxchange-2026-software-engineering-whitepaper.html#section-1" class="btn-secondary">
+                        查看完整对话实录解读 →
+                    </a>
+                </div>
+            </article>
+
+            <!-- 第 3 场 -->
+            <article class="session-card">
+                <div class="session-meta-top">
+                    <span class="session-index">SESSION 03</span>
+                    <span class="session-duration">⏱ 81 分钟 12 秒</span>
+                    <span class="session-sub-badge">全英文原版字幕 VTT</span>
+                </div>
+                <h3 class="session-title-zh">未来：由您构筑</h3>
+                <div class="session-title-en">The Future Built By You (Entry ID: 1_s4ocmylx)</div>
+                <p class="session-desc">
+                    下一代企业技术不仅仅是“智能化对话”，而是真正构建在具备执行闭环的“可行动系统（Actionable Systems）”之上。本场会议带领开发者深入下一代企业堆栈，设计、构建并运行跨越混合云、容器网络与遗留系统的大规模智能体应用。
+                </p>
+
+                <div class="speaker-box">
+                    <div class="speaker-title">主讲团队</div>
+                    <div class="speaker-list">
+                        <div class="speaker-item">
+                            <span class="speaker-name">IBM Enterprise Systems & Infrastructure Team</span>
+                            <span class="speaker-role">全栈系统工程组与混合云首席架构师阵容</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="takeaways">
+                    <div class="takeaway-item"><strong>核心命题：</strong>对话式问答已经到达边际效用递减期，直接调用系统工具、感知运行环境、触发业务动作的闭环 Agent 才是未来。</div>
+                    <div class="takeaway-item"><strong>全栈架构：</strong>从底层异构算力管理、容器编排网络，到上层基于 MCP 的动态微服务组装。</div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-stream js-play-trigger"
+                            data-entry-id="1_s4ocmylx"
+                            data-session="SESSION 03"
+                            data-title="第 3 场：未来：由您构筑 (Actionable Systems)"
+                            data-duration="81分12秒">
+                        ▶ 弹窗播放本场 (81m)
+                    </button>
+                    <a href="techxchange-2026-software-engineering-whitepaper.html#section-3" class="btn-secondary">
+                        阅读白皮书系统设计 →
+                    </a>
+                </div>
+            </article>
+
+            <!-- 第 4 场 -->
+            <article class="session-card">
+                <div class="session-meta-top">
+                    <span class="session-index">SESSION 04</span>
+                    <span class="session-duration">⏱ 52 分钟 19 秒</span>
+                    <span class="session-sub-badge">全英文原版字幕 VTT</span>
+                </div>
+                <h3 class="session-title-zh">规划下一步行动：AI 时代的自我重塑</h3>
+                <div class="session-title-en">Finding Your Next Move: Reinvention in the Age of AI (Entry ID: 1_jrp20s40)</div>
+                <p class="session-desc">
+                    当传奇街式滑板发明人 Rodney Mullen 遇上红帽首席技术官 Chris Wright：一场关于失衡、摔倒、重构与社区驱动创新的跨界思想风暴。深入剖析技术人员在技术爆炸时代如何保持清醒认知与自我颠覆能力。
+                </p>
+
+                <div class="speaker-box">
+                    <div class="speaker-title">跨界思想领袖阵容</div>
+                    <div class="speaker-list">
+                        <div class="speaker-item">
+                            <span class="speaker-name">Rodney Mullen</span>
+                            <span class="speaker-role">传奇滑板教父、街式滑板发明人、TED 创新演讲家</span>
+                        </div>
+                        <div class="speaker-item">
+                            <span class="speaker-name">Chris Wright</span>
+                            <span class="speaker-role">Red Hat 全球执行副总裁兼首席技术官 (CTO)</span>
+                        </div>
+                        <div class="speaker-item">
+                            <span class="speaker-name">Bill Higgins</span>
+                            <span class="speaker-role">IBM 副总裁兼生态负责人（主持）</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="takeaways">
+                    <div class="takeaway-item"><strong>滑板与代码的同构性：</strong>每一个划时代的滑板招式都经历了成千上万次摔倒的微观物理反馈；开源代码的鲁棒性正是源于成千上万个 bug 的崩溃与修复。</div>
+                    <div class="takeaway-item"><strong>激进的重塑 (Radical Reinvention)：</strong>不要固守已被 AI 商品化的已知招式，拥抱失衡，将精力投向底层本质与跨界融合。</div>
+                    <div class="takeaway-item"><strong>社区托底力量：</strong>无论极限动作还是开源内核，个人的飞跃永远依存于彼此激发的社区生态。</div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-stream js-play-trigger"
+                            data-entry-id="1_jrp20s40"
+                            data-session="SESSION 04"
+                            data-title="第 4 场：规划下一步行动：AI时代的自我重塑 (Rodney Mullen 对话)"
+                            data-duration="52分19秒">
+                        ▶ 弹窗播放本场 (52m)
+                    </button>
+                    <a href="techxchange-2026-software-engineering-whitepaper.html#section-4" class="btn-secondary">
+                        阅读重塑与开源哲学 →
+                    </a>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- 官方专属洞察与扩展资源 -->
+        <div class="section-header">
+            <h2>大会专属洞察与推荐产品通道</h2>
+            <span>4 EXTENDED STRATEGIC RESOURCES</span>
+        </div>
+
+        <div class="insight-grid">
+            
+            <a href="https://www.ibm.com/cn-zh/new/announcements" target="_blank" class="insight-card">
+                <div>
+                    <span class="insight-tag">最新公告</span>
+                    <h4 class="insight-title">IBM 全球产品公告体系</h4>
+                    <p class="insight-desc">首先了解 IBM 最新的产品发布、技术特性、培训认证与官方技术前瞻。</p>
+                </div>
+                <div class="insight-link-arrow">访问发布中心 ↗</div>
+            </a>
+
+            <a href="https://www.ibm.com/cn-zh/forms/mkt-demo-automatewebmethods" target="_blank" class="insight-card">
+                <div>
+                    <span class="insight-tag">交互演示</span>
+                    <h4 class="insight-title">IBM Integration 智能中枢</h4>
+                    <p class="insight-desc">预约获取企业级集成定制 Demo，亲身体验 Intelligence Hub 强大的自动化编排。</p>
+                </div>
+                <div class="insight-link-arrow">预约演示 ↗</div>
+            </a>
+
+            <a href="https://bob.ibm.com/blog/september-2026-release/" target="_blank" class="insight-card">
+                <div>
+                    <span class="insight-tag">技术文章</span>
+                    <h4 class="insight-title">Bob 私有化部署能力剖析</h4>
+                    <p class="insight-desc">深入了解面向大型企业级核心研发内网团队的本地化智能体与编程助手部署选项。</p>
+                </div>
+                <div class="insight-link-arrow">阅读白皮书 ↗</div>
+            </a>
+
+            <a href="https://www.ibm.com/cn-zh/new/announcements/navigating-complex-infrastructure-environment-change-with-confidence" target="_blank" class="insight-card">
+                <div>
+                    <span class="insight-tag">架构指南</span>
+                    <h4 class="insight-title">IBM Z Atlas 复杂混合架构应对</h4>
+                    <p class="insight-desc">了解大型机与云原生异构环境下，组织如何从容应对复杂基础设施变革。</p>
+                </div>
+                <div class="insight-link-arrow">了解更多 ↗</div>
+            </a>
+
+        </div>
+
+        <!-- 配套白皮书入口 -->
+        <div class="section-header" style="margin-top: 64px;">
+            <h2>相关深度研报沉淀</h2>
+            <span>FEATURED WHITEPAPER</span>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-sm); margin-top: 20px;">
+            <span class="meta-tag" style="margin-bottom: 8px;">COMPANION WHITEPAPER // 8,200 WORDS</span>
+            <h3 style="font-family: var(--font-display); font-size: 24px; font-weight: 600; margin-bottom: 12px;">
+                IBM IBM TechXchange 2026 软件工程演进白皮书：AI Agent 的企业级落地范式与架构重构
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 15px; margin-bottom: 24px; max-width: 800px; line-height: 1.6;">
+                基于本次 4 场核心峰会 26 万字全量实录深度提炼：系统解构 85% 企业级 Agent 卡死在 PoC 阶段的根本死因，详述统一控制面 (Control Plane)、实时流式底座 (Streamhouse)、开放工具契约 (MCP) 与 AgentOps 治理体系的四阶段落地实施模型。
+            </p>
+            <a href="techxchange-2026-software-engineering-whitepaper.html" class="btn-stream">
+                深入阅读白皮书全文 →
+            </a>
+        </div>
+
+        <footer class="article-footer">
+            <div>
+                © 2026 BILLY CHEN (陈剑) · IBM CHINA CLIENT ENGINEERING
+            </div>
+            <div class="footer-links">
+                <a href="index.html">返回首页</a>
+                <a href="https://github.com/jchenibm" target="_blank">GITHUB</a>
+                <a href="https://www.ibm.com/cn-zh/new/videos/techxchange-sessions" target="_blank">官方源地址 ↗</a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- 2/3 屏幕悬浮视频播放模态框 (In-Page Modal Player) -->
+    <!-- ============================================================== -->
+    <div id="videoModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-card" id="videoModalCard">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <span class="modal-session-pill" id="modalSessionBadge">SESSION 01</span>
+                    <span class="modal-title-text" id="modalVideoTitle">让您的智能体适配企业级应用</span>
+                </div>
+                <button class="modal-close-btn" id="modalCloseBtn" aria-label="关闭视频 (Esc)">✕</button>
+            </div>
+            <div class="modal-video-wrapper">
+                <video id="modalVideoPlayer" 
+                       controls 
+                       playsinline 
+                       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; outline: none;">
+                </video>
+            </div>
+            <div class="modal-footer">
+                <div id="modalFooterMeta">⏱ 时长：-- | 官方高清多语字幕已接入</div>
+                <div>
+                    按 <kbd style="background:var(--border);padding:2px 6px;border-radius:4px;font-size:11px;">ESC</kbd> 或点击外部空白处即可随时退出
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // -------------------------------------------------------------
+        // Theme toggle logic
+        // -------------------------------------------------------------
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        function setTheme(isDark) {
+            if (isDark) {
+                document.body.classList.add('theme-dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'DARK';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'LIGHT';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        themeBtn.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('theme-dark');
+            setTheme(!isDark);
+        });
+
+        // -------------------------------------------------------------
+        // 2/3 悬浮视频播放模态框交互逻辑
+        // -------------------------------------------------------------
+        const modalBackdrop = document.getElementById('videoModalBackdrop');
+        const modalCard = document.getElementById('videoModalCard');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const videoPlayer = document.getElementById('modalVideoPlayer');
+        const modalSessionBadge = document.getElementById('modalSessionBadge');
+        const modalVideoTitle = document.getElementById('modalVideoTitle');
+        const modalFooterMeta = document.getElementById('modalFooterMeta');
+
+        let currentHls = null;
+
+        function openVideoModal(entryId, sessionTag, title, duration) {
+            modalSessionBadge.textContent = sessionTag || 'TECHXCHANGE';
+            modalVideoTitle.textContent = title || '视频点播';
+            modalFooterMeta.textContent = `⏱ 官方时长: ${duration || '完整回放'} | 官方直连 HLS 高清流媒体点播`;
+
+            // 官方权威直链（带签名与防封参数）
+            const streamUrl = `https://cdnapisec.kaltura.com/p/1773841/sp/177384100/playManifest/entryId/${entryId}/protocol/https/format/applehttp/a.m3u8?uiConfId=57792212&referrer=aHR0cHM6Ly93d3cuaWJtLmNvbS9jbi16aC9uZXcvdmlkZW9zL3RlY2h4Y2hhbmdlLXNlc3Npb25z&clientTag=html5:v7.285`;
+
+            // 清理旧实例
+            if (currentHls) {
+                currentHls.destroy();
+                currentHls = null;
+            }
+            videoPlayer.pause();
+            videoPlayer.removeAttribute('src');
+            videoPlayer.load();
+
+            // 优先使用 Hls.js（跨浏览器最稳方案），Safari 则走原生 HLS
+            if (window.Hls && Hls.isSupported()) {
+                currentHls = new Hls({
+                    enableWorker: true,
+                    lowLatencyMode: false,
+                    backBufferLength: 90
+                });
+                currentHls.loadSource(streamUrl);
+                currentHls.attachMedia(videoPlayer);
+                currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    videoPlayer.play().catch(e => {
+                    console.log('Unmuted autoplay prevented, fallback to muted autoplay:', e);
+                    videoPlayer.muted = true;
+                    videoPlayer.play().catch(err => console.log('Final play error:', err));
+                });
+                });
+                currentHls.on(Hls.Events.ERROR, function(event, data) {
+                    if (data.fatal) {
+                        switch(data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR:
+                                currentHls.startLoad();
+                                break;
+                            case Hls.ErrorTypes.MEDIA_ERROR:
+                                currentHls.recoverMediaError();
+                                break;
+                            default:
+                                currentHls.destroy();
+                                break;
+                        }
+                    }
+                });
+            } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                videoPlayer.src = streamUrl;
+                videoPlayer.addEventListener('loadedmetadata', function() {
+                    videoPlayer.play().catch(e => {
+                    console.log('Unmuted autoplay prevented, fallback to muted autoplay:', e);
+                    videoPlayer.muted = true;
+                    videoPlayer.play().catch(err => console.log('Final play error:', err));
+                });
+                }, { once: true });
+            }
+
+            // 显示并淡入动画
+            modalBackdrop.style.display = 'flex';
+            void modalBackdrop.offsetWidth;
+            modalBackdrop.classList.add('active');
+            modalBackdrop.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            modalBackdrop.classList.remove('active');
+            modalBackdrop.setAttribute('aria-hidden', 'true');
+            
+            // 彻底暂停并断开源流
+            videoPlayer.pause();
+            if (currentHls) {
+                currentHls.destroy();
+                currentHls = null;
+            }
+            videoPlayer.removeAttribute('src');
+            videoPlayer.load();
+
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                modalBackdrop.style.display = 'none';
+            }, 250);
+        }
+
+        // 绑定所有触发播放按钮
+        document.querySelectorAll('.js-play-trigger').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const entryId = btn.getAttribute('data-entry-id');
+                const sessionTag = btn.getAttribute('data-session');
+                const title = btn.getAttribute('data-title');
+                const duration = btn.getAttribute('data-duration');
+                openVideoModal(entryId, sessionTag, title, duration);
+            });
+        });
+
+        // 关闭触发
+        modalCloseBtn.addEventListener('click', closeVideoModal);
+
+        modalBackdrop.addEventListener('click', (e) => {
+            // 点击遮罩空白处（非弹窗卡片本体）时关闭
+            if (!modalCard.contains(e.target)) {
+                closeVideoModal();
+            }
+        });
+
+        // ESC 快捷键关闭
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+                closeVideoModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="100%" height="100%">
+  <defs>
+    <!-- 基础投影 -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="112%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F2447" flood-opacity="0.06"/>
+    </filter>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#173D70" flood-opacity="0.08"/>
+    </filter>
+
+    <!-- 箭头标记 -->
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 8 3.5, 0 7" fill="#1F67DF"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <polygon points="0 0, 7 3, 0 6" fill="#5B9DF2"/>
+    </marker>
+  </defs>
+
+  <style>
+    .title { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 22px; font-weight: 700; fill: #173D70; }
+    .subtitle { font-family: 'JetBrains Mono', 'PingFang SC', sans-serif; font-size: 13px; font-weight: 500; fill: #5A6D8C; letter-spacing: 0.05em; }
+    .zone-title { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 15px; font-weight: 700; fill: #173D70; }
+    .card-title { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 16px; font-weight: 700; fill: #173D70; }
+    .card-subtitle { font-family: 'JetBrains Mono', sans-serif; font-size: 12px; font-weight: 600; fill: #1F67DF; }
+    .item-title { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 13.5px; font-weight: 600; fill: #222222; }
+    .item-desc { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 12px; font-weight: 400; fill: #555555; }
+    .badge-text { font-family: 'JetBrains Mono', 'PingFang SC', sans-serif; font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+    .flow-label { font-family: 'JetBrains Mono', 'PingFang SC', sans-serif; font-size: 11.5px; font-weight: 600; fill: #1F67DF; }
+  </style>
+
+  <!-- 画布底板背景 -->
+  <rect width="1200" height="760" rx="14" fill="#FFFFFF" stroke="#E1E8F2" stroke-width="1.5"/>
+
+  <!-- ========================================== -->
+  <!-- 顶栏：图表主标题与双轨边界声明 -->
+  <!-- ========================================== -->
+  <g transform="translate(40, 28)">
+    <text x="0" y="22" class="title">架构图 1：企业级 AI Agent 概率推理与确定性执行解耦架构</text>
+    <text x="0" y="44" class="subtitle">DUAL-TRACK ARCHITECTURE: PROBABILISTIC REASONING VS. DETERMINISTIC SYSTEM CONTROL</text>
+    
+    <!-- 顶栏右侧图例 -->
+    <g transform="translate(860, 8)">
+      <rect x="0" y="0" width="12" height="12" rx="2" fill="#EBF3FD" stroke="#5B9DF2" stroke-width="1"/>
+      <text x="18" y="10" font-family="'PingFang SC', sans-serif" font-size="12px" fill="#555555">概率探索域</text>
+      
+      <rect x="110" y="0" width="12" height="12" rx="2" fill="#F8F9FC" stroke="#1F67DF" stroke-width="1.5"/>
+      <text x="128" y="10" font-family="'PingFang SC', sans-serif" font-size="12px" fill="#173D70" font-weight="600">确定性控制域</text>
+    </g>
+  </g>
+
+  <!-- 分割线 -->
+  <line x1="40" y1="88" x2="1160" y2="88" stroke="#E5EDF7" stroke-width="1.5"/>
+
+  <!-- ========================================== -->
+  <!-- 核心三大纵向架构域 (3 COLUMNS) -->
+  <!-- ========================================== -->
+
+  <!-- 【左侧域】：概率推理空间 (PROBABILISTIC REASONING DOMAIN) -->
+  <g transform="translate(40, 106)">
+    <!-- 区域背景容器 -->
+    <rect width="330" height="480" rx="10" fill="#F4F8FD" stroke="#C4DCFA" stroke-width="1.2" stroke-dasharray="4 4"/>
+    
+    <!-- 区域标题栏 -->
+    <rect x="14" y="14" width="302" height="34" rx="6" fill="#DCEBFB"/>
+    <text x="165" y="36" text-anchor="middle" class="zone-title">【左轨】模糊概率空间 · 推理与规划</text>
+    
+    <!-- 卡片 1.1：LLM 意图解析 -->
+    <g transform="translate(14, 62)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#ADCFF8" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#1F67DF"/>
+      <text x="28" y="32" class="card-title">LLM 核心推理引擎</text>
+      <text x="28" y="52" class="card-subtitle">Intent &amp; Semantic Parsing</text>
+      <text x="28" y="74" class="item-desc">• 多轮上下文会话意图提取与目标分解</text>
+      <text x="28" y="90" class="item-desc">• 业务意图模糊采样与置信度打分评估</text>
+    </g>
+
+    <!-- 卡片 1.2：动态工具规划 -->
+    <g transform="translate(14, 172)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#ADCFF8" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#3F7FE0"/>
+      <text x="28" y="32" class="card-title">动态候选工具规划</text>
+      <text x="28" y="52" class="card-subtitle">Dynamic Action &amp; Step Planner</text>
+      <text x="28" y="74" class="item-desc">• ReAct / Plan-Act 动态推理链编排</text>
+      <text x="28" y="90" class="item-desc">• 生成候选工具入参与前置依赖拓扑</text>
+    </g>
+
+    <!-- 卡片 1.3：实时流式底座 Streamhouse -->
+    <g transform="translate(14, 282)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#ADCFF8" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#5B9DF2"/>
+      <text x="28" y="32" class="card-title">Streamhouse 流式数据中枢</text>
+      <text x="28" y="52" class="card-subtitle">Streaming Context Fabric (Kafka/Flink)</text>
+      <text x="28" y="74" class="item-desc">• 亚秒级流式事件动态注入上下文窗口</text>
+      <text x="28" y="90" class="item-desc">• 突破静态 RAG 滞后，订阅系统异动</text>
+    </g>
+
+    <!-- 风险警示条 -->
+    <g transform="translate(14, 394)">
+      <rect width="302" height="72" rx="6" fill="#FFF8F0" stroke="#FBD38D" stroke-width="1"/>
+      <text x="14" y="24" font-family="'PingFang SC', sans-serif" font-size="12px" font-weight="700" fill="#DD6B20">⚠️ 概率域本质特征与局限：</text>
+      <text x="14" y="44" class="item-desc" fill="#7B341E">• 输出带温度系数（Temperature > 0），存在幻觉</text>
+      <text x="14" y="60" class="item-desc" fill="#7B341E">• 严禁直接握有生产数据库写权限或超级账户</text>
+    </g>
+  </g>
+
+  <!-- 【中间域】：统一控制面 (ENTERPRISE CONTROL PLANE) -->
+  <g transform="translate(435, 106)">
+    <!-- 区域背景容器 -->
+    <rect width="330" height="480" rx="10" fill="#F8FAFC" stroke="#5B9DF2" stroke-width="1.8" filter="url(#cardShadow)"/>
+    
+    <!-- 区域标题栏 -->
+    <rect x="14" y="14" width="302" height="34" rx="6" fill="#173D70"/>
+    <text x="165" y="36" text-anchor="middle" font-family="'PingFang SC', sans-serif" font-size="13.5px" font-weight="700" fill="#FFFFFF">【中枢】企业级统一控制面 (Control Plane)</text>
+
+    <!-- 卡片 2.1：状态机管理 -->
+    <g transform="translate(14, 62)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#5B9DF2" stroke-width="1.2"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#173D70"/>
+      <text x="28" y="32" class="card-title">长会话状态机管理</text>
+      <text x="28" y="52" class="card-subtitle">State Machine &amp; Session Store</text>
+      <text x="28" y="74" class="item-desc">• 状态转移强约束与断点幂等性重试</text>
+      <text x="28" y="90" class="item-desc">• 长耗时任务分布式持久化 (Checkpoint)</text>
+    </g>
+
+    <!-- 卡片 2.2：契约与 Schema 校验 -->
+    <g transform="translate(14, 172)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#5B9DF2" stroke-width="1.2"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#1F67DF"/>
+      <text x="28" y="32" class="card-title">严格契约与 Schema 校验</text>
+      <text x="28" y="52" class="card-subtitle">Contract &amp; Type Enforcer (MCP)</text>
+      <text x="28" y="74" class="item-desc">• 工具入参强类型静态校验与边界阻断</text>
+      <text x="28" y="90" class="item-desc">• 拦截格式畸变，确保后端接口零脏数据</text>
+    </g>
+
+    <!-- 卡片 2.3：多智能体注册与调度 -->
+    <g transform="translate(14, 282)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#5B9DF2" stroke-width="1.2"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#3F7FE0"/>
+      <text x="28" y="32" class="card-title">异构智能体注册与调度</text>
+      <text x="28" y="52" class="card-subtitle">Agent Registry &amp; Orchestration</text>
+      <text x="28" y="74" class="item-desc">• 统一纳管 Bob / watsonx / 开源多框架</text>
+      <text x="28" y="90" class="item-desc">• 并发限流、服务发现与智能寻址路由</text>
+    </g>
+
+    <!-- 核心定位条 -->
+    <g transform="translate(14, 394)">
+      <rect width="302" height="72" rx="6" fill="#EBF3FD" stroke="#B8D7FA" stroke-width="1"/>
+      <text x="14" y="24" font-family="'PingFang SC', sans-serif" font-size="12px" font-weight="700" fill="#173D70">🛡️ 控制面的不可替代职能：</text>
+      <text x="14" y="44" class="item-desc">• 将不可预测的模糊请求，过滤为 100% 确定意图</text>
+      <text x="14" y="60" class="item-desc">• 充当外部多智能体与企业内网间的“防洪坝”</text>
+    </g>
+  </g>
+
+  <!-- 【右侧域】：确定性硬防线与执行网 (DETERMINISTIC SAFETY & EXECUTION) -->
+  <g transform="translate(830, 106)">
+    <!-- 区域背景容器 -->
+    <rect width="330" height="480" rx="10" fill="#F8FAFC" stroke="#C4DCFA" stroke-width="1.2"/>
+    
+    <!-- 区域标题栏 -->
+    <rect x="14" y="14" width="302" height="34" rx="6" fill="#E2EAF4"/>
+    <text x="165" y="36" text-anchor="middle" class="zone-title">【右轨】确定性防线 · 护栏与执行</text>
+
+    <!-- 卡片 3.1：输入输出硬护栏 -->
+    <g transform="translate(14, 62)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#B8D3F5" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#173D70"/>
+      <text x="28" y="32" class="card-title">运行时安全护栏 (Guardrails)</text>
+      <text x="28" y="52" class="card-subtitle">Input/Output Security Gates</text>
+      <text x="28" y="74" class="item-desc">• Prompt 注入防御、PII 敏感数据脱敏</text>
+      <text x="28" y="90" class="item-desc">• SQL / Shell / API Payload 语义硬语法过滤</text>
+    </g>
+
+    <!-- 卡片 3.2：权限委托与数字身份 -->
+    <g transform="translate(14, 172)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#B8D3F5" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#1F67DF"/>
+      <text x="28" y="32" class="card-title">委托身份与最小权限</text>
+      <text x="28" y="52" class="card-subtitle">Delegated Auth &amp; Ephemeral Tokens</text>
+      <text x="28" y="74" class="item-desc">• 权限交集锁定：用户权限 ∩ Agent 权限</text>
+      <text x="28" y="90" class="item-desc">• 废除永久服务账户，全链路短期动态令牌</text>
+    </g>
+
+    <!-- 卡片 3.3：分级人机协同门禁 -->
+    <g transform="translate(14, 282)">
+      <rect width="302" height="96" rx="6" fill="#FFFFFF" stroke="#B8D3F5" stroke-width="1.2" filter="url(#shadow)"/>
+      <rect x="12" y="12" width="6" height="72" rx="3" fill="#E53E3E"/>
+      <text x="28" y="32" class="card-title">分级人机协同 (HITL Gate)</text>
+      <text x="28" y="52" class="card-subtitle" fill="#E53E3E">Human-in-the-Loop Threshold</text>
+      <text x="28" y="74" class="item-desc">• L1只读: 自动执行 | L2可逆: 快照备份</text>
+      <text x="28" y="90" class="item-desc">• L3高危: 转账/写入生产库强制人工双签</text>
+    </g>
+
+    <!-- 卡片 3.4：底层企业系统执行底盘 -->
+    <g transform="translate(14, 394)">
+      <rect width="302" height="72" rx="6" fill="#F0FFF4" stroke="#9AE6B4" stroke-width="1"/>
+      <text x="14" y="24" font-family="'PingFang SC', sans-serif" font-size="12px" font-weight="700" fill="#22543D">🏢 核心交易生产系统 (Mission-Critical):</text>
+      <text x="14" y="44" class="item-desc" fill="#22543D">• ERP / 核心账务 / 工业 MES / Kubernetes 集群</text>
+      <text x="14" y="60" class="item-desc" fill="#22543D">• 100% 确定性、幂等性调用与 ACID 事务保障</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 核心数据流转连接线 (CONNECTOR ARROWS) -->
+  <!-- ========================================== -->
+  <!-- 左轨到中枢 -->
+  <line x1="370" y1="210" x2="433" y2="210" stroke="#1F67DF" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="374" y="196" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#ADCFF8"/>
+  <text x="378" y="209" class="flow-label">候选参数</text>
+
+  <line x1="370" y1="330" x2="433" y2="330" stroke="#1F67DF" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="374" y="316" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#ADCFF8"/>
+  <text x="378" y="329" class="flow-label">流式事件</text>
+
+  <!-- 中枢到右轨 -->
+  <line x1="765" y1="210" x2="828" y2="210" stroke="#1F67DF" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="769" y="196" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#ADCFF8"/>
+  <text x="773" y="209" class="flow-label">契约调用</text>
+
+  <line x1="765" y1="330" x2="828" y2="330" stroke="#1F67DF" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="769" y="316" width="52" height="18" rx="3" fill="#FFFFFF" stroke="#ADCFF8"/>
+  <text x="773" y="329" class="flow-label">权限委托</text>
+
+  <!-- ========================================== -->
+  <!-- 底栏：AgentOps 全链路分布式追踪底盘 (LIFECYCLE TRACING AXIS) -->
+  <!-- ========================================== -->
+  <g transform="translate(40, 606)">
+    <rect width="1120" height="124" rx="8" fill="#F8FAFC" stroke="#5B9DF2" stroke-width="1.2"/>
+    
+    <!-- 标牌 -->
+    <rect x="16" y="14" width="220" height="26" rx="4" fill="#173D70"/>
+    <text x="26" y="31" class="badge-text">AGENTOPS 全链路闭环追踪与治理底座</text>
+    
+    <text x="250" y="31" font-family="'PingFang SC', sans-serif" font-size="12.5px" fill="#555555">
+      覆盖智能体全生命周期：Pre-Deploy 基准评估 ➔ Runtime 护栏拦截 ➔ Post-Deploy 全息 DAG 链路追踪
+    </text>
+
+    <!-- 四段式生命周期流水线 -->
+    <g transform="translate(16, 52)">
+      <!-- 阶段 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="250" height="54" rx="5" fill="#FFFFFF" stroke="#C4DCFA" stroke-width="1"/>
+        <text x="14" y="24" class="item-title">1. Pre-Deploy 黄金集评估</text>
+        <text x="14" y="42" class="item-desc">意图识别度/工具选择率量化门禁</text>
+      </g>
+      <line x1="250" y1="27" x2="278" y2="27" stroke="#3F7FE0" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+      <!-- 阶段 2 -->
+      <g transform="translate(280, 0)">
+        <rect width="250" height="54" rx="5" fill="#FFFFFF" stroke="#C4DCFA" stroke-width="1"/>
+        <text x="14" y="24" class="item-title">2. Runtime 实时硬护栏阻断</text>
+        <text x="14" y="42" class="item-desc">输入注入拦截 / 输出高危指令清洗</text>
+      </g>
+      <line x1="530" y1="27" x2="558" y2="27" stroke="#3F7FE0" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+      <!-- 阶段 3 -->
+      <g transform="translate(560, 0)">
+        <rect width="250" height="54" rx="5" fill="#FFFFFF" stroke="#C4DCFA" stroke-width="1"/>
+        <text x="14" y="24" class="item-title">3. 分级 HITL 人机双签</text>
+        <text x="14" y="42" class="item-desc">L3 核心不可逆动作强制审批熔断</text>
+      </g>
+      <line x1="810" y1="27" x2="838" y2="27" stroke="#3F7FE0" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+
+      <!-- 阶段 4 -->
+      <g transform="translate(840, 0)">
+        <rect width="248" height="54" rx="5" fill="#FFFFFF" stroke="#C4DCFA" stroke-width="1"/>
+        <text x="14" y="24" class="item-title">4. Post-Deploy DAG 回溯</text>
+        <text x="14" y="42" class="item-desc">全息追踪 Thought/Action/Obs 链路</text>
+      </g>
+    </g>
+  </g>
+
+</svg>
