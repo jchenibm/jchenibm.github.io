@@ -1,0 +1,2864 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>规划下一步行动：AI 时代的自我重塑 | IBM TechXchange 2026 全球技术大会逐字实录</title>
+    <meta name="description" content="IBM TechXchange 2026 SESSION 04 官方点播逐字实录与全景精读：滑板教父 Rodney Mullen × 红帽 CTO Chris Wright：极限试错哲学与开源社区的底层同构">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0a0e17;
+            --bg-card: #121826;
+            --bg-subtle: #182236;
+            --bg-input: #0f1523;
+            --border: #23314d;
+            --border-hover: #3b507d;
+            --text-primary: #f0f4fc;
+            --text-secondary: #9cb1d4;
+            --text-muted: #627699;
+            --accent: #00ff9f;
+            --accent-hover: #00d4ff;
+            --accent-bg: rgba(0, 255, 159, 0.08);
+            --accent-blue: #0f62fe;
+            --pill-bg: #1c273d;
+            --pill-text: #c2d5f2;
+            --font-display: 'Fraunces', serif;
+            --font-heading: 'Space Grotesk', -apple-system, sans-serif;
+            --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --shadow: 0 4px 20px rgba(0,0,0,0.4);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+        }
+
+        [data-theme="light"] {
+            --bg-page: #f8f9fc;
+            --bg-card: #ffffff;
+            --bg-subtle: #edf2f9;
+            --bg-input: #f0f4fa;
+            --border: #d8e2f0;
+            --border-hover: #b5c7e3;
+            --text-primary: #121826;
+            --text-secondary: #4a5b78;
+            --text-muted: #8294b0;
+            --accent: #0f62fe;
+            --accent-hover: #0353e9;
+            --accent-bg: rgba(15, 98, 254, 0.08);
+            --accent-blue: #0f62fe;
+            --pill-bg: #e4ecf7;
+            --pill-text: #2a3b5c;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Top Banner & Navigation */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+        [data-theme="light"] .site-nav {
+            background: rgba(248, 249, 252, 0.88);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .nav-home-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .nav-breadcrumb {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-breadcrumb .divider { color: var(--border); }
+        .nav-breadcrumb .current { color: var(--text-primary); font-weight: 600; }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .theme-toggle-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        /* Series Navigation Bar */
+        .series-bar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 24px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .series-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 8px;
+        }
+        .nav-session-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-session-item .ns-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+        }
+        .nav-session-item:hover {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+        }
+        .nav-session-item.active {
+            background: var(--accent-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .nav-session-item.active .ns-num {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* Container */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px 80px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover), #0f62fe);
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .badge {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .badge-accent {
+            background: var(--accent-bg);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .badge-highlight {
+            background: rgba(15, 98, 254, 0.12);
+            color: #78a9ff;
+            border-color: #0f62fe;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 900px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .hero-meta-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .meta-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .meta-item strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .video-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: var(--accent-blue);
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .video-action-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Speakers Grid */
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .speaker-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: border-color 0.2s;
+        }
+        .speaker-card:hover {
+            border-color: var(--border-hover);
+        }
+        .speaker-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .speaker-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .speaker-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .speaker-name {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .speaker-tag {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            padding: 2px 6px;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        .speaker-role {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .speaker-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Main Tabs */
+        .tabs-nav {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 28px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        }
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-subtle);
+        }
+        .tab-btn.active {
+            color: var(--accent);
+            background: var(--bg-card);
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Tab 1: Insights & Highlights */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        @media (max-width: 600px) {
+            .insights-grid { grid-template-columns: 1fr; }
+        }
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .insight-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .insight-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .insight-num {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .insight-tag {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .insight-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .insight-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* Quotes Section */
+        .quotes-section {
+            margin-bottom: 32px;
+        }
+        .section-header {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-header::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 18px;
+        }
+        .quote-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            position: relative;
+        }
+        .quote-mark {
+            font-family: var(--font-display);
+            font-size: 48px;
+            line-height: 1;
+            color: var(--border-hover);
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            opacity: 0.5;
+        }
+        .quote-body {
+            position: relative;
+            z-index: 1;
+        }
+        .quote-en {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .quote-zh {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .quote-author {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* Takeaways Box */
+        .takeaways-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px 28px;
+            margin-bottom: 32px;
+        }
+        .takeaways-box h4 {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .takeaways-box ul {
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Tab 2: Verbatim Transcript */
+        .transcript-toolbar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .transcript-search-box {
+            flex: 1;
+            min-width: 260px;
+            position: relative;
+        }
+        .transcript-search-input {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 8px 14px 8px 36px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: var(--font-body);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .transcript-search-input:focus {
+            border-color: var(--accent);
+        }
+        .transcript-search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .lang-switch-group {
+            display: inline-flex;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 3px;
+            gap: 3px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-family: var(--font-mono);
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover {
+            color: var(--text-primary);
+        }
+        .lang-btn.active {
+            background: var(--bg-card);
+            color: var(--accent);
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .transcript-counter {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Dialogue List */
+        .dialogue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .dialogue-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px 24px;
+            transition: border-color 0.2s;
+        }
+        .dialogue-block:hover {
+            border-color: var(--border-hover);
+        }
+        .dialogue-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .dialogue-time {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--bg-subtle);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .dialogue-speaker {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .speaker-guest {
+            background: rgba(255, 131, 43, 0.12);
+            color: #ff832b;
+            border: 1px solid rgba(255, 131, 43, 0.3);
+        }
+        .speaker-host {
+            background: rgba(15, 98, 254, 0.12);
+            color: #78a9ff;
+            border: 1px solid rgba(15, 98, 254, 0.3);
+        }
+
+        .dialogue-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .dialogue-zh {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .dialogue-en {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-family: var(--font-body);
+            border-top: 1px dashed var(--border);
+            padding-top: 6px;
+        }
+
+        /* View Mode Filtering */
+        body.view-zh-only .dialogue-en { display: none !important; }
+        body.view-zh-only .dialogue-zh { border-top: none; }
+        body.view-en-only .dialogue-zh { display: none !important; }
+        body.view-en-only .dialogue-en { border-top: none; color: var(--text-primary); }
+
+        /* Tab 3: Resources & Context */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .resource-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .resource-card h4 {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .resource-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Prev / Next Session Footer */
+        .prev-next-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+        @media (max-width: 600px) {
+            .prev-next-nav { grid-template-columns: 1fr; }
+        }
+        .prev-next-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .prev-next-btn:hover:not(.disabled) {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .prev-next-btn.next {
+            text-align: right;
+            align-items: flex-end;
+        }
+        .prev-next-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .pn-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .pn-title {
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        .site-footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-family: var(--font-mono);
+            border-top: 1px solid var(--border);
+        }
+        .site-footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .site-footer a:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Site Navigation -->
+    <header class="site-nav">
+        <div class="nav-left">
+            <a href="index.html" class="nav-home-btn">
+                <span>←</span> 返回主页
+            </a>
+            <div class="nav-breadcrumb">
+                <span class="divider">/</span>
+                <span>IBM TechXchange 2026</span>
+                <span class="divider">/</span>
+                <span class="current">SESSION 04 演讲实录</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="theme-toggle-btn" id="themeToggleBtn" title="切换暗色/亮色主题">
+                <span id="themeLabel">☀️ LIGHT</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 4-Session Navigation Bar -->
+    <nav class="series-bar">
+        <div class="series-inner">
+            
+        <a href="techxchange-2026-session-01-enterprise-agents.html" class="nav-session-item">
+            <span class="ns-num">SESSION 01</span>
+            <span class="ns-title">让您的智能体适配企业级应用</span>
+        </a>
+        
+        <a href="techxchange-2026-session-02-future-of-software-development.html" class="nav-session-item">
+            <span class="ns-num">SESSION 02</span>
+            <span class="ns-title">AI 时代软件开发的未来</span>
+        </a>
+        
+        <a href="techxchange-2026-session-03-the-future-built-by-you.html" class="nav-session-item">
+            <span class="ns-num">SESSION 03</span>
+            <span class="ns-title">未来：由您构筑</span>
+        </a>
+        
+        <a href="techxchange-2026-session-04-finding-your-next-move.html" class="nav-session-item active">
+            <span class="ns-num">SESSION 04</span>
+            <span class="ns-title">规划下一步行动：AI 时代的自我重塑</span>
+        </a>
+        
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="page-container">
+
+        <!-- Hero Section -->
+        <header class="hero-section">
+            <div class="hero-badges">
+                <span class="badge badge-accent">IBM TECHXCHANGE 2026</span>
+                <span class="badge badge-highlight">SESSION 04</span>
+                <span class="badge">时长：52分19秒 (00:52:19)</span>
+                <span class="badge">全景双语实录</span>
+            </div>
+            <h1 class="hero-title">规划下一步行动：AI 时代的自我重塑</h1>
+            <p class="hero-subtitle">滑板教父 Rodney Mullen × 红帽 CTO Chris Wright：极限试错哲学与开源社区的底层同构</p>
+
+            <div class="hero-meta-bar">
+                <div class="meta-group">
+                    <span class="meta-item">
+                        <span>官方议题：</span><strong>Finding Your Next Move: Reinvention in the Age of AI</strong>
+                    </span>
+                    <span class="meta-item">
+                        <span>Kaltura Entry ID：</span><code>1_jrp20s40</code>
+                    </span>
+                </div>
+                <a href="https://www.ibm.com/cn-zh/new/videos/techxchange-sessions" target="_blank" rel="noopener noreferrer" class="video-action-btn">
+                    <span>▶ 在官方视频专区点播</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Speakers Grid -->
+        <section class="speakers-grid">
+            
+        <div class="speaker-card">
+            <div class="speaker-avatar" style="background: #FA4D56;">
+                <span>RO</span>
+            </div>
+            <div class="speaker-info">
+                <div class="speaker-header">
+                    <h3 class="speaker-name">Rodney Mullen</h3>
+                    <span class="speaker-tag">Keynote / Skate Legend</span>
+                </div>
+                <div class="speaker-role">街式滑板教父 / 创新哲学家</div>
+                <p class="speaker-desc">发明了平地 Ollie、Kickflip、Heelflip、360 Flip 等几乎所有现代街式滑板基础招式，TED 演讲知名思想家，跨界创新哲学导师。</p>
+            </div>
+        </div>
+        
+        <div class="speaker-card">
+            <div class="speaker-avatar" style="background: #0043CE;">
+                <span>CH</span>
+            </div>
+            <div class="speaker-info">
+                <div class="speaker-header">
+                    <h3 class="speaker-name">Chris Wright</h3>
+                    <span class="speaker-tag">Open Source Leader</span>
+                </div>
+                <div class="speaker-role">Red Hat 首席技术官兼全球工程高级副总裁</div>
+                <p class="speaker-desc">Linux 内核资深元老与代码维护者，引领全球开源社区协同架构、Linux 与 Kubernetes 企业级生态演进。</p>
+            </div>
+        </div>
+        
+        <div class="speaker-card">
+            <div class="speaker-avatar" style="background: #0F62FE;">
+                <span>BI</span>
+            </div>
+            <div class="speaker-info">
+                <div class="speaker-header">
+                    <h3 class="speaker-name">Bill Higgins</h3>
+                    <span class="speaker-tag">Host / IBM Fellow</span>
+                </div>
+                <div class="speaker-role">IBM VP AI Developer Relations</div>
+                <p class="speaker-desc">IBM 开发者生态掌舵人，擅长从跨学科视角挖掘技术演进的人文本质与认知模型跃迁。</p>
+            </div>
+        </div>
+        
+        </section>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="tab-insights">
+                <span>📌 核心洞察与架构解构</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-transcript">
+                <span>🎙️ 逐字发言实录 (147 段)</span>
+            </button>
+            <button class="tab-btn" data-tab="tab-resources">
+                <span>📚 关联技术栈与资源</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: INSIGHTS & HIGHLIGHTS -->
+        <section class="tab-panel active" id="tab-insights">
+            <div class="insights-grid">
+                
+        <div class="insight-card">
+            <div class="insight-meta">
+                <span class="insight-num">01</span>
+                <span class="insight-tag">PARALLEL DYNAMICS</span>
+            </div>
+            <h3 class="insight-title">极限运动与开源社区的底层同构性：从摔倒中提取物理数据</h3>
+            <p class="insight-desc">Rodney Mullen 分享了街式滑板的创造历程：每一项新招式的诞生，都伴随着成千上万次的摔倒、擦伤、甚至骨折。在粗糙的水泥地上，物理定律从不撒谎。这与开源开发者面对成百上千个崩溃日志（Crash Dump）、不断推翻代码重构的本质毫无二致——在真实世界的对抗中，错误是唯一有价值的调试数据。</p>
+        </div>
+        
+        <div class="insight-card">
+            <div class="insight-meta">
+                <span class="insight-num">02</span>
+                <span class="insight-tag">BURDEN OF MASTERY</span>
+            </div>
+            <h3 class="insight-title">打破‘大师的光环’：站在巅峰时的重塑勇气</h3>
+            <p class="insight-desc">Rodney Mullen 连续赢得了 35 场世界滑板锦标赛冠军，建立了不可撼动的自由滑板霸权。然而当时代转向街式滑板时，他赖以成名的所有技巧瞬间变为沉重的负担。为了适应新时代，他不得不强迫自己‘忘掉惯性招式’，换脚滑行，重新作为一个狼狈的新手在街头摔倒。工程师面对 AI 时代的旧技术栈栈守，同样需要这份归零的魄力。</p>
+        </div>
+        
+        <div class="insight-card">
+            <div class="insight-meta">
+                <span class="insight-num">03</span>
+                <span class="insight-tag">CURIOSITY VS FEAR</span>
+            </div>
+            <h3 class="insight-title">把本能的恐惧转化为激发生命力的好奇心</h3>
+            <p class="insight-desc">面对 AI 的颠覆，工程师感受到的迷茫与焦虑是真实的。Mullen 指出，恐惧是神经系统在提醒你‘你正处于未知能力的边缘’。如果你抗拒恐惧，你就会僵化甚至退出；如果你拥抱恐惧，用纯粹的好奇心去探索‘如果我换个姿态踩上去会发生什么’，恐惧就会变成点燃创新活力的超强催化剂。</p>
+        </div>
+        
+        <div class="insight-card">
+            <div class="insight-meta">
+                <span class="insight-num">04</span>
+                <span class="insight-tag">CATALYTIC LEADERSHIP</span>
+            </div>
+            <h3 class="insight-title">从‘掌控一切的权威’走向‘催化生态的连接者’</h3>
+            <p class="insight-desc">Chris Wright 从 Linux 内核维护者的视角总结了领导力的进化：在 AI 重塑软件范式的今天，没有哪个技术领袖能够通晓所有答案。优秀的架构师和管理者不再是发布指令的控制中枢，而是为团队搭建允许安全试错、保障心理安全、连接多元思想的‘开源孵化场’。</p>
+        </div>
+        
+            </div>
+
+            <!-- Quotes -->
+            <div class="quotes-section">
+                <h3 class="section-header">本场震撼金句 (Notable Quotes)</h3>
+                <div class="quotes-grid">
+                    
+        <div class="quote-card">
+            <div class="quote-mark">“</div>
+            <div class="quote-body">
+                <p class="quote-en">Falling isn&#x27;t failing. Falling is just the physical universe giving you the exact feedback data you need to land the trick next time.</p>
+                <p class="quote-zh">摔倒绝不是失败。摔倒只是物理宇宙在用最真实的方式给你提供反馈数据，告诉你下一次如何才能平稳落地。</p>
+                <div class="quote-author">— Rodney Mullen</div>
+            </div>
+        </div>
+        
+        <div class="quote-card">
+            <div class="quote-mark">“</div>
+            <div class="quote-body">
+                <p class="quote-en">Open source is built on the exact same premise as street skateboarding: you invent a trick on the street, you don&#x27;t patent it, you share it with the crew. They modify it, they take it down a 10-stair, and the entire culture elevates.</p>
+                <p class="quote-zh">开源的底层逻辑与街头滑板如出一辙：你在街头摸索出一个新动作，你不会去申请专利，而是直接在街头展示给所有人。别人在此基础上加上转体、跳下十级台阶，于是整个文化和技术边界都被共同推高了。</p>
+                <div class="quote-author">— Rodney Mullen</div>
+            </div>
+        </div>
+        
+        <div class="quote-card">
+            <div class="quote-mark">“</div>
+            <div class="quote-body">
+                <p class="quote-en">When the ground is shifting beneath your feet, stability does not come from standing rigid. It comes from constant, dynamic micro-adjustments.</p>
+                <p class="quote-zh">当你脚下的地面正在剧烈晃动时，真正的平衡绝非来自于身体的僵硬抗拒，而是来自于持续不断、敏锐细微的动态微调。</p>
+                <div class="quote-author">— Chris Wright</div>
+            </div>
+        </div>
+        
+                </div>
+            </div>
+
+            <!-- Actionable Takeaways -->
+            <div class="takeaways-box">
+                <h4>🎯 核心架构启示与工程落地清单 (Actionable Takeaways)</h4>
+                <ul>
+                    <li>拥抱小步快跑的试错机制：不要害怕推翻重来，错误是迭代的最佳输入。</li><li>主动突破舒适区：审视自己的技术护城河，勇于在新领域中重新当一个初学者。</li><li>在开放社区中协同演进：将个人实践开源共享，从生态的集体智慧中汲取力量。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- TAB 2: VERBATIM TRANSCRIPT -->
+        <section class="tab-panel" id="tab-transcript">
+            <!-- Transcript Toolbar -->
+            <div class="transcript-toolbar">
+                <div class="transcript-search-box">
+                    <span class="transcript-search-icon">🔍</span>
+                    <input type="text" id="transcriptSearch" class="transcript-search-input" placeholder="实时搜索本场发言关键词（如 Agent, O'Reilly, Kubernetes, 架构）...">
+                </div>
+
+                <div class="lang-switch-group">
+                    <button class="lang-btn active" data-lang-mode="both">中英双语</button>
+                    <button class="lang-btn" data-lang-mode="zh-only">仅看中文</button>
+                    <button class="lang-btn" data-lang-mode="en-only">仅看英文</button>
+                </div>
+
+                <div class="transcript-counter" id="transcriptCount">
+                    共 147 个对话段落
+                </div>
+            </div>
+
+            <!-- Dialogue Blocks List -->
+            <div class="dialogue-list" id="dialogueList">
+                
+        <div class="dialogue-block" data-index="0" data-time="00:00:07">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:00:07</span>
+                <span class="dialogue-speaker speaker-host">主持人</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">有请 Bill Higgins、Rodney Mullen 和 Chris Wright 有请 Bill Higgins、Rodney Mullen 和 Chris Wright 欢迎他们上台 Mullen 和 Chris Wright 欢迎他们上台 [掌声] MULLEN：你想站中间吗 欢迎他们上台 [掌声] MULLEN：你想站中间吗</p>
+                <p class="dialogue-en">ANNOUNCER: Please welcome Bill Higgins, Rodney Mullen and Chris Wright. Please welcome to the stage. [ APPLAUSE ]</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="1" data-time="00:00:13">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:00:13</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">欢迎他们上台 [掌声] MULLEN：你想站中间吗</p>
+                <p class="dialogue-en">You want to go in the middle?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="2" data-time="00:00:26">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:00:26</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你站中间 MULLEN：我站中间 HIGGINS：好的</p>
+                <p class="dialogue-en">You&#x27;re in the middle.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="3" data-time="00:00:27">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:00:27</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你站中间 MULLEN：我站中间 HIGGINS：好的 好，欢迎大家，</p>
+                <p class="dialogue-en">I&#x27;m in the middle.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="4" data-time="00:00:27">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:00:27</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你站中间 MULLEN：我站中间 HIGGINS：好的 好，欢迎大家，</p>
+                <p class="dialogue-en">Okay.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="5" data-time="00:00:30">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:00:30</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我站中间 HIGGINS：好的 好，欢迎大家， 感谢大家来参加这场座谈 这场座谈非常有趣， 好，欢迎大家， 感谢大家来参加这场座谈 这场座谈非常有趣， 我们已经准备了一段时间，真心希望你们喜欢 感谢大家来参加这场座谈 这场座谈非常有趣， 我们已经准备了一段时间，真心希望你们喜欢 座谈的主题是“找到你的下一步： AI 时代的重塑” 你们可能在想，一个大科技公司的首席技术官和一位 传奇滑板运动员有什么关系 答案正是这场座谈的核心， 传奇滑板运动员有什么关系 答案正是这场座谈的核心， 不过先剧透一下：他们都曾达到各自领域的巅峰， 答案正是这场座谈的核心， 不过先剧透一下：他们都曾达到各自领域的巅峰， 然后改变了自己所做的事 我想在座很多人——</p>
+                <p class="dialogue-en">Well, welcome, everybody, and thanks for coming to this session. This is a really fun one that we&#x27;ve been working on for a little while, and I really hope you enjoy it. So, it&#x27;s called Finding Your Next Move, Reinvention in the Age of AI. And you may be wondering what does a big tech CTO have to do with a legendary skateboarder? And the answer is really the point of this panel, but the preview is that they both reached the top of their game and then changed what they did.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="6" data-time="00:00:57">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:00:57</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">然后改变了自己所做的事 我想在座很多人—— 也许是所有人—— 都在这个 AI 时代经历着自己的重塑， 我想在座很多人—— 也许是所有人—— 都在这个 AI 时代经历着自己的重塑， 我想在座很多人—— 也许是所有人—— 都在这个 AI 时代经历着自己的重塑， 希望这些故事能给你们 都在这个 AI 时代经历着自己的重塑， 希望这些故事能给你们 一些启发 希望这些故事能给你们 一些启发 那我们先从 Chris 开始，他是 Red Hat 的首席技术官 一些启发 那我们先从 Chris 开始，他是 Red Hat 的首席技术官 Chris，你最初只是提交了一个小补丁， 后来逐渐成为世界上最 顶尖的 Linux 贡献者之一 后来逐渐成为世界上最 顶尖的 Linux 贡献者之一 你能讲讲这是怎么开始的吗？你是怎么起步的， 顶尖的 Linux 贡献者之一 你能讲讲这是怎么开始的吗？你是怎么起步的， 又是怎么达到那个高度的 你能讲讲这是怎么开始的吗？你是怎么起步的， 又是怎么达到那个高度的 WRIGHT：好的</p>
+                <p class="dialogue-en">And so I think a lot of us in this audience -- perhaps all of us -- are kind of going through our own reinvention in this age of AI, and so hopefully these stories will be somewhat inspirational for you. So, let&#x27;s start with Chris, who&#x27;s the CTO of Red Hat. Chris, you started with, you know, a small patch, and then you became over time one of the best Linux contributors in the world. Can you talk about how that started, how you began and how you kind of reached that stature?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="7" data-time="00:01:27">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:01:27</span>
+                <span class="dialogue-speaker speaker-guest">又是怎么达到那个高度的 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好的 我得说，我期待这一刻很久了……</p>
+                <p class="dialogue-en">WRIGHT: Yeah.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="8" data-time="00:01:30">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:01:30</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好的 我得说，我期待这一刻很久了…… HIGGINS： 我得说，我期待这一刻很久了…… HIGGINS： 是的 WRIGHT：我从小玩滑板，</p>
+                <p class="dialogue-en">I&#x27;ve just got to say, I&#x27;ve been looking forward to this for a really long time...</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="9" data-time="00:01:34">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:01:34</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的 WRIGHT：我从小玩滑板， Rodney Mullen 对我来说就像英雄一样， 所以这真的很酷 Rodney Mullen 对我来说就像英雄一样， 所以这真的很酷 一切从键盘和电脑开始， 所以这真的很酷 一切从键盘和电脑开始， 这大概没人会意外 一切从键盘和电脑开始， 这大概没人会意外 我当时在做分布式系统， 这大概没人会意外 我当时在做分布式系统， 负责我们所交付 平台的可用性 我经历过一段非常令人沮丧的时期， 每 18 个月，管理层就会说，要么自建，要么购买 要么自建，要么购买 所以我在后台 搭建这套基础设施， 要么自建，要么购买 所以我在后台 搭建这套基础设施， 把它放在一边，同时寻找可以购买</p>
+                <p class="dialogue-en">Yes. WRIGHT: I&#x27;m a skateboarder from my youth age, and Rodney Mullen&#x27;s like a hero to me, so this is really cool. So, it all started with a keyboard and a computer, surprising no one. And I was working in distributed systems, responsible for the availability of the platform that we were delivering. And I was in this very frustrating experience of, every 18 months, management would say, build, buy. Build, buy. So, I was in the background,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="10" data-time="00:02:10">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:02:10</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">要么自建，要么购买 所以我在后台 搭建这套基础设施， 把它放在一边，同时寻找可以购买 所以我在后台 搭建这套基础设施， 把它放在一边，同时寻找可以购买 的东西来满足我们的可用性需求 在这个过程中，我遇到了一个人，他在做一个叫 Linux HA 的高可用项目 他跟我讲了那个项目是做什么的，我觉得， Linux HA 的高可用项目 他跟我讲了那个项目是做什么的，我觉得， 哇，这真的很酷 他跟我讲了那个项目是做什么的，我觉得， 哇，这真的很酷 我对开源了解不多， 但听说过 哇，这真的很酷 我对开源了解不多， 但听说过 哇，这真的很酷 我对开源了解不多， 但听说过 我看了代码，加入了邮件列表， 但听说过 我看了代码，加入了邮件列表， 开始听那些讨论， 我看了代码，加入了邮件列表， 开始听那些讨论， 然后我意识到我正在与最</p>
+                <p class="dialogue-en">kind of building this infrastructure, putting it kind of on the sideline as I go look for things to purchase to satisfy our availability requirements. And along the way, I met this person who was working in an HA project called Linux HA. And he told me what it was about, like, well, this is really cool. I didn&#x27;t know a whole lot about Open Source, but I had heard of it. And I looked at the code, I joined the mailing list, and I started listening to these conversations,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="11" data-time="00:02:37">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:02:37</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">开始听那些讨论， 然后我意识到我正在与最 杰出的分布式系统专家们并肩 然后我意识到我正在与最 杰出的分布式系统专家们并肩 工作 我原本想用一种非常具体的方式来 杰出的分布式系统专家们并肩 工作 我原本想用一种非常具体的方式来 解决这个问题， 工作 我原本想用一种非常具体的方式来 解决这个问题， 但这个项目并没有按照我设想的方式去做 于是我鼓起勇气， 解决这个问题， 但这个项目并没有按照我设想的方式去做 于是我鼓起勇气， 拼凑了一个补丁， 但这个项目并没有按照我设想的方式去做 于是我鼓起勇气， 拼凑了一个补丁， 在地下室测试后发了出去，他们居然接受了 拼凑了一个补丁， 在地下室测试后发了出去，他们居然接受了 我当时想，真的吗 那一刻，我就被迷住了 我当时想，真的吗 那一刻，我就被迷住了 后来，靠运气，我最终得到 那一刻，我就被迷住了 后来，靠运气，我最终得到 了一份能全职从事内核开发的工作 你知道，很多事情就是</p>
+                <p class="dialogue-en">and I realized I was rubbing shoulders with the most brilliant distributed systems people out there. And I had wanted to solve the problem in a very specific way and the project didn&#x27;t do it that way. So, I got up a lot of courage and I hacked together a patch and I tested it in my basement and sent it out there and they took it. And I was like, really? And I was hooked at that minute. And I just, you know, through luck, I ultimately got a job where I was able to work on the kernel full time.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="12" data-time="00:03:11">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:03:11</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">了一份能全职从事内核开发的工作 你知道，很多事情就是 不断迭代， 你知道，很多事情就是 不断迭代， 持续建立信任关系 社区很大程度上关乎人， 不断迭代， 持续建立信任关系 社区很大程度上关乎人， 关乎信任关系 不断迭代， 持续建立信任关系 社区很大程度上关乎人， 关乎信任关系 但我第一次成功完成的那个特技动作，真的太棒了 持续建立信任关系 社区很大程度上关乎人， 关乎信任关系 但我第一次成功完成的那个特技动作，真的太棒了 社区很大程度上关乎人， 关乎信任关系 但我第一次成功完成的那个特技动作，真的太棒了 Rodney 你在佛罗里达 的一个小农场长大，每天练习好几个小时 几年后， 你就赢得了世界锦标赛的冠军 能讲讲那个故事吗 几年后， 你就赢得了世界锦标赛的冠军 能讲讲那个故事吗 Mullen：好的 几年后， 你就赢得了世界锦标赛的冠军 能讲讲那个故事吗 Mullen：好的 我之前也做过一些运动，</p>
+                <p class="dialogue-en">And you know, a lot of this is just, you know, iterative work, continuing to build the trust relationships. Communities are so much about humans and trust relationships. But that first trick I landed, yeah, it was awesome. So, Rodney, you grew up in a small farm in Florida and just practiced hours a day. And then a few years later, you were winning world tournaments. Can you tell us that story?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="13" data-time="00:03:40">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:03:40</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你就赢得了世界锦标赛的冠军 能讲讲那个故事吗 Mullen：好的 我之前也做过一些运动， 后来就爱上了滑板运动 能讲讲那个故事吗 Mullen：好的 我之前也做过一些运动， 后来就爱上了滑板运动 Mullen：好的 我之前也做过一些运动， 后来就爱上了滑板运动 不是把一个动作、一个挥臂动作练到完美—— 后来就爱上了滑板运动 不是把一个动作、一个挥臂动作练到完美—— 那种有人盯着你做的事—— 而是看到一块滑板、那些坡道， 那种有人盯着你做的事—— 而是看到一块滑板、那些坡道， 一切都让我觉得：哇，我可以自己把它调到位 而是看到一块滑板、那些坡道， 一切都让我觉得：哇，我可以自己把它调到位 在这个简单的小东西上， 我能让它做出各种不同的动作 在这个简单的小东西上， 我能让它做出各种不同的动作 我也迷上了这些谜题 我基本上是在农场长大， 我能让它做出各种不同的动作 我也迷上了这些谜题 我基本上是在农场长大， 开始参加比赛， 在佛罗里达各地跑本地赛 后来我赢的比赛越来越多，</p>
+                <p class="dialogue-en">Yes. I fell in love with skateboarding, having done a little bit of sports before. And instead of perfecting a single movement, a swing, something like that, where you&#x27;re overseeing, I saw a skateboard and just the hills everything about it is like, wow, I can dial this in myself. In this little simple thing, I can make it do all this different stuff. And I fell in love with the puzzles. So, being basically growing up on a farm, I started entering contests and I would go locally around Florida.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="14" data-time="00:04:11">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:04:11</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">开始参加比赛， 在佛罗里达各地跑本地赛 后来我赢的比赛越来越多， 多到他们不想让我再参加业余组 到那时，我基本不参赛了， 会看职业选手滑，也会和他们一起滑 后来我到西部， 会看职业选手滑，也会和他们一起滑 后来我到西部， 赢了个所谓的世界冠军…… 后来我到西部， 赢了个所谓的世界冠军…… 但说真的，就像踢毽子世界冠军， 赢了个所谓的世界冠军…… 但说真的，就像踢毽子世界冠军， 不是你想的那种 但说真的，就像踢毽子世界冠军， 不是你想的那种 所以我出去，以业余选手身份赢下那场大赛 不是你想的那种 所以我出去，以业余选手身份赢下那场大赛 第二年回来时我想， 这是我最后一次玩滑板了 第二年回来时我想， 这是我最后一次玩滑板了 别人一直以为我会放弃 我父亲觉得我要是坚持滑下去，长大只会成个废物</p>
+                <p class="dialogue-en">And eventually, I started winning more and more contests, to the point they didn&#x27;t want me to enter amateur anymore. And by the time, I kind of sat out, I would watch the pros, I would skate with them. And then coming out West, I&#x27;d won the sort of world championship...but truly, think of like hacky sack world championship doesn&#x27;t mean what you might think. And so I go out, win the big contest as an amateur. I come back the next year thinking, this is my last time in skateboarding.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="15" data-time="00:04:41">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:04:41</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这是我最后一次玩滑板了 别人一直以为我会放弃 我父亲觉得我要是坚持滑下去，长大只会成个废物 这是我最后一次玩滑板了 别人一直以为我会放弃 我父亲觉得我要是坚持滑下去，长大只会成个废物 结果呢，我看到所有这些职业选手， 我父亲觉得我要是坚持滑下去，长大只会成个废物 结果呢，我看到所有这些职业选手， 心想我能赢 转眼间，我真赢了 心想我能赢 转眼间，我真赢了 很快，我本该退出， 很快，我本该退出， 转眼间，我真赢了 很快，我本该退出， 很快，我本该退出， 我真的把滑板收了起来 我准备退出了 我只是把它藏在心里 我真的把滑板收了起来 我准备退出了 我只是把它藏在心里 然后杂志社的人开始打电话来 我准备退出了 我只是把它藏在心里 然后杂志社的人开始打电话来 六个月里，我的人生彻底变了 然后杂志社的人开始打电话来 六个月里，我的人生彻底变了 当时我入选了一支非常顶尖的队伍—— 六个月里，我的人生彻底变了 当时我入选了一支非常顶尖的队伍—— Bones Brigade</p>
+                <p class="dialogue-en">I was always expected to quit. My dad thought I&#x27;d grow up to be a bum if I stuck with it. And lo and behold, I saw all these pros thinking I can win. And next thing I know, I did. And in no time at all, I was supposed to, And in no time at all, I was supposed to, I actually put away my skateboard. I was set to quit. I just held it in my heart. And then the magazines, people started calling. In a period of six months, my life completely changed. And I was accepted to this really elite team</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="16" data-time="00:05:14">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:05:14</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">当时我入选了一支非常顶尖的队伍—— Bones Brigade 我竟然和那些我仰慕的人在一起 Bones Brigade 我竟然和那些我仰慕的人在一起 他们的照片一直挂在我的墙上 我竟然和那些我仰慕的人在一起 他们的照片一直挂在我的墙上 我被他们接纳， 他们的照片一直挂在我的墙上 我被他们接纳， 被我最敬佩的人接纳了 转眼间，我和他们到处旅行， 被我最敬佩的人接纳了 转眼间，我和他们到处旅行， 我的人生彻底变了 转眼间，我和他们到处旅行， 我的人生彻底变了 我当时正在实现我的梦想 就是这样</p>
+                <p class="dialogue-en">at the time called the Bones Brigade. And here I was with the guys that I&#x27;d looked up to. They&#x27;d been on my wall, those pictures of them. And I was accepted among them, among the people I admired most. And next thing I know, I&#x27;m traveling all around with them and my life completely changed.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="17" data-time="00:05:32">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:05:32</span>
+                <span class="dialogue-speaker speaker-host">我的人生彻底变了 我当时正在实现我的梦想 就是这样 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你们俩都达到了各自领域的顶峰。</p>
+                <p class="dialogue-en">I was living my dreams. That&#x27;s what it was.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="18" data-time="00:05:34">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:05:34</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你们俩都达到了各自领域的顶峰。 Chris 凭借对 Linux 代码的贡献， 成为了 Linux 历史上最杰出的贡献者之一； Rodney 则赢下了所有这些自由式滑板赛事 成为了 Linux 历史上最杰出的贡献者之一； Rodney 则赢下了所有这些自由式滑板赛事 那么，现在我们来聊聊重塑自我 Rodney 则赢下了所有这些自由式滑板赛事 那么，现在我们来聊聊重塑自我 Chris，你曾是 Linux 领域非常 那么，现在我们来聊聊重塑自我 Chris，你曾是 Linux 领域非常 知名、成功的贡献者， Chris，你曾是 Linux 领域非常 知名、成功的贡献者， 后来成了 Red Hat 的首席技术官 知名、成功的贡献者， 后来成了 Red Hat 的首席技术官 能谈谈这种转变吗 后来成了 Red Hat 的首席技术官 能谈谈这种转变吗 WRIGHT：好的 我是说，公平讲，我不知道自己</p>
+                <p class="dialogue-en">So, you both reached the top of your field, so Chris became one of the top Linux committers of all time in terms of the code that went into Linux, and Rodney won all these freestyle tournaments. So, now let&#x27;s talk about reinvention. Chris, you had been this really well-known, successful contributor to Linux, and then you became CTO of Red Hat. So, can you talk about that transition?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="19" data-time="00:05:58">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:05:58</span>
+                <span class="dialogue-speaker speaker-guest">能谈谈这种转变吗 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好的 我是说，公平讲，我不知道自己 算不算产量最高的内核贡献者之一，</p>
+                <p class="dialogue-en">WRIGHT: Yes. I mean, to be fair, I don&#x27;t know if I was one</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="20" data-time="00:06:01">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:06:01</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好的 我是说，公平讲，我不知道自己 算不算产量最高的内核贡献者之一， 但我确实做出了很多贡献 算不算产量最高的内核贡献者之一， 但我确实做出了很多贡献 HIGGINS：维基百科上是这么说的</p>
+                <p class="dialogue-en">of the most prolific kernel contributors, but I certainly made a lot of contributions.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="21" data-time="00:06:07">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:06:07</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">维基百科上是这么说的</p>
+                <p class="dialogue-en">That&#x27;s what Wikipedia says.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="22" data-time="00:06:11">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:06:11</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">啊，那肯定是真的 我在网上看到的 [笑声] 所以，对我来说，这个过程持续了好几年 一部分原因是我一直打算 追随自己觉得有趣的东西 所以，我从来没有想过要成为任何公司的首席技术官 追随自己觉得有趣的东西 所以，我从来没有想过要成为任何公司的首席技术官 如果在我职业生涯早期你问我这个问题， 所以，我从来没有想过要成为任何公司的首席技术官 如果在我职业生涯早期你问我这个问题， 我会嘲笑你 如果在我职业生涯早期你问我这个问题， 我会嘲笑你 那听起来完全是个蠢主意 但有机会时，我总是抓住眼前 我会嘲笑你 那听起来完全是个蠢主意 但有机会时，我总是抓住眼前 那些看起来有趣的机会， 然后我突然就遇到了这样的机会 而我走上这条道路</p>
+                <p class="dialogue-en">WRIGHT: Ah, it must be true. I read it on the Internet. [ LAUGHTER ] So, that process was a multi-year journey for me. Part of it was I had always had this intention to just follow what I found interesting. So, I never set out with a plan to become CTO of anything. If you would have asked me earlier in my career, I would have laughed at you. That sounds like a totally stupid idea. But given the opportunity, I always took the opportunities that were right in front of me if they seemed interesting,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="23" data-time="00:06:43">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:06:43</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">那些看起来有趣的机会， 然后我突然就遇到了这样的机会 而我走上这条道路 的契机，始于社区中的个人贡献者世界： 当你在社区层面 建立信誉时，你也承担起责任， 最终那看起来像一种领导力 建立信誉时，你也承担起责任， 最终那看起来像一种领导力 从层级上说相对扁平，但你确实在发挥 最终那看起来像一种领导力 从层级上说相对扁平，但你确实在发挥 某种领导作用；对我来说，那是在 Linux 从层级上说相对扁平，但你确实在发挥 某种领导作用；对我来说，那是在 Linux 的一个子领域里 某种领导作用；对我来说，那是在 Linux 的一个子领域里 然后我拓展到其他 的一个子领域里 然后我拓展到其他 相关项目，开始做内核 与 OpenStack 这样的项目， 然后我拓展到其他 相关项目，开始做内核 与 OpenStack 这样的项目，</p>
+                <p class="dialogue-en">and I suddenly had this kind of opportunity. And what led me down that path started with that individual contributor world in the community where as you&#x27;re building your kind of credibility at the community level, you also take on responsibility and ultimately it looks like a form of leadership. It&#x27;s relatively flat, hierarchically speaking, but it is a kind of leadership you&#x27;re guiding, for me, it was a subsection of Linux. And then I branched out, started working on other adjacent projects</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="24" data-time="00:07:11">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:07:11</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">然后我拓展到其他 相关项目，开始做内核 与 OpenStack 这样的项目， 或者 Kubernetes、 OpenDaylight 或其他 或者 Kubernetes、 OpenDaylight 或其他 与底层内核世界相关的项目 OpenDaylight 或其他 与底层内核世界相关的项目 所以，你知道，我正在慢慢地拓展自己 与底层内核世界相关的项目 所以，你知道，我正在慢慢地拓展自己 的能力去学习新事物，每一步我都觉得很困难， 所以，你知道，我正在慢慢地拓展自己 的能力去学习新事物，每一步我都觉得很困难， 学到了很多 的能力去学习新事物，每一步我都觉得很困难， 学到了很多 新东西，也不一定总是喜欢 学到了很多 新东西，也不一定总是喜欢 我以前一直用 C 语言编程， 新东西，也不一定总是喜欢 我以前一直用 C 语言编程， 现在突然要写一堆 Java 代码， 心想这 Java 是什么东西 嗯，我不知道我喜不喜欢它</p>
+                <p class="dialogue-en">where the kernel and the other project like OpenStack or I worked on Kubernetes or OpenDaylight or these other things that kind of connect to the underlying kernel world. So I&#x27;m, you know, slowly stretching myself learning new things, and at each step of the way, I found it difficult, got to learn something new and I didn&#x27;t necessarily always like it. I&#x27;m coming from a world of C programming and suddenly doing a bunch of Java programming, like what is this Java stuff?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="25" data-time="00:07:38">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:07:38</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">现在突然要写一堆 Java 代码， 心想这 Java 是什么东西 嗯，我不知道我喜不喜欢它 但是，由于我多年来担任首席架构师， 嗯，我不知道我喜不喜欢它 但是，由于我多年来担任首席架构师， 并在不同的项目中不断拓展， 甚至还有一些人向我汇报工作， 所以我获得了这个机会 那个过程中我觉得真正 所以我获得了这个机会 那个过程中我觉得真正 困难的是改变我对待工作的方式 那个过程中我觉得真正 困难的是改变我对待工作的方式 我原本真是那种什么都知道的人 所有代码都是我写的，我对细节了如指掌 需要以不同的方式展现自己，这，简单来说，</p>
+                <p class="dialogue-en">Yeah, I don&#x27;t know if I like it. But as I as I was offered the opportunity based on kind of years of being the lead architect and branching out between different projects, even having some people that reported to me. The thing that I found really difficult in that process was changing how I approached my work. I was really the guy who knew all the things. I wrote all the code, I knew the details in and out. And needing to sort of show up in a different way was,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="26" data-time="00:08:18">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:08:18</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">令人感到畏惧、不知所措，甚至有点可怕 对可能出错之处的预感，对失败的恐惧 失败状态看起来相当灾难性 所以我就想，做真实的自己最好的 方法就是了解所有的事情 所以，那几年我几乎没怎么睡过觉 方法就是了解所有的事情 所以，那几年我几乎没怎么睡过觉 然后我意识到，与其字面上阅读 所以，那几年我几乎没怎么睡过觉 然后我意识到，与其字面上阅读 所有代码并深入研究， 然后我意识到，与其字面上阅读 所有代码并深入研究， 不如通过经验和推断来弄清楚事情 是的，一路走来，我学到了很多东西 是的，很多事情都改变了我看待问题的方式，</p>
+                <p class="dialogue-en">simply put, intimidating, overwhelming, kind of scary. The sense of what could go wrong, the failure. Failure states looked pretty catastrophic. And so I just figured, well, the best way to be true to myself is to just know all the things. So, that was sort of a sleepless couple of years. And then I realized I could figure out things more through experience and extrapolation than literally reading all the code and diving in deep. But yes, there was a lot of learnings along the way.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="27" data-time="00:08:53">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:08:53</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的，一路走来，我学到了很多东西 是的，很多事情都改变了我看待问题的方式， 比如，我是谁？我能为这个等式带来什么价值</p>
+                <p class="dialogue-en">And yes, a lot of it was changing how I approached, like, who am I and what value do I bring into this equation?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="28" data-time="00:09:01">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:09:01</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">非常感谢 那么，Rodney，你曾是世界 非常感谢 那么，Rodney，你曾是世界 上最好的街头滑板手……抱歉， 那么，Rodney，你曾是世界 上最好的街头滑板手……抱歉， 是世界上最好的自由式滑板手，然后有一天有人告诉你， 上最好的街头滑板手……抱歉， 是世界上最好的自由式滑板手，然后有一天有人告诉你， 也许你应该尝试一些不同的东西 是世界上最好的自由式滑板手，然后有一天有人告诉你， 也许你应该尝试一些不同的东西 能讲讲那个故事吗 Mullen：可以 也许你应该尝试一些不同的东西 能讲讲那个故事吗 Mullen：可以 首先，这种想法就像是，哦，</p>
+                <p class="dialogue-en">Thanks so much. So, Rodney, you were the best street skater in the world...or sorry, the best freestyle skater in the world, and then one day somebody told you maybe you should try something different. Can you tell us that story?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="29" data-time="00:09:13">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:09:13</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">也许你应该尝试一些不同的东西 能讲讲那个故事吗 Mullen：可以 首先，这种想法就像是，哦， 能讲讲那个故事吗 Mullen：可以 首先，这种想法就像是，哦， 我只要学习所有知识就能解决这个问题 [笑声] 这简直就是卓越的标志， 你知道，这就是标准 太棒了 所以，是的，我又想起了踢毽子 那些比赛没有听起来那么大 记住这一点，因为我接下来要说的听起来很厉害 11 年里，我参加了 36 次世界冠军卫冕赛， 成功卫冕 35 次；项目叫自由式滑板，就是在平地上进行 关键在于，我认为最简单的办法就是站在</p>
+                <p class="dialogue-en">Yes. First of all, just this idea of like, oh, I&#x27;ll solve that problem just by learning everything. [ LAUGHTER ] It&#x27;s just such a mark of excellence, you know, the standards. That&#x27;s awesome. So, yes, I, again, think hacky sack. It was like, the contests weren&#x27;t as big as they sound. So, keep that in mind, because what I&#x27;ll say sounds big. I defended a world title 35 out of 36 times over 11 years in something called freestyle which is just flat ground.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="30" data-time="00:09:49">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:09:49</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">成功卫冕 35 次；项目叫自由式滑板，就是在平地上进行 关键在于，我认为最简单的办法就是站在 平坦的地面上，只要你有一块木板就行了 关键在于，我认为最简单的办法就是站在 平坦的地面上，只要你有一块木板就行了 我从小就在谷仓里滑板，你只需要低头看就行了 平坦的地面上，只要你有一块木板就行了 我从小就在谷仓里滑板，你只需要低头看就行了 突然间出现了街头滑板这种新兴类型。 突然间出现了街头滑板这种新兴类型。 它涉及的一切——比如这张长椅—— 都要求你在开始时就站好、瞄准、集中注意力， 因为你要落到上面、跃过它， 都要求你在开始时就站好、瞄准、集中注意力， 因为你要落到上面、跃过它， 或在上面做一个翻板动作， 因为你要落到上面、跃过它， 或在上面做一个翻板动作， 不管具体是什么 所以你有一种对动作的预判感</p>
+                <p class="dialogue-en">And the essence is I think it&#x27;s easier just to stand right you just got a board flat ground. I grew up in a barn skating, and all you do is look down. And suddenly this new emergent type of skateboarding, And suddenly this new emergent type of skateboarding, street skating, and everything about it, like this bench, everything you do, your focus when you start is standing and aiming, you&#x27;re focusing, because you&#x27;re going to land or pop over it, or do a flip trick</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="31" data-time="00:10:13">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:10:13</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">或在上面做一个翻板动作， 不管具体是什么 所以你有一种对动作的预判感 或在上面做一个翻板动作， 不管具体是什么 所以你有一种对动作的预判感 一切都已根植于你心中 所以你有一种对动作的预判感 一切都已根植于你心中 于是我不得不从头重新 一切都已根植于你心中 于是我不得不从头重新 学这些东西 于是我不得不从头重新 学这些东西 我当时的控板能力很强，板子也大得多， 学这些东西 我当时的控板能力很强，板子也大得多， 所以尺寸并不是大问题 我当时的控板能力很强，板子也大得多， 所以尺寸并不是大问题 但有些简单的东西，你没意识到它们对你做的 所以尺寸并不是大问题 但有些简单的东西，你没意识到它们对你做的 一切至关重要， 比如眼睛该看哪里，我并不知道 一切至关重要， 比如眼睛该看哪里，我并不知道 这就像口音 比如眼睛该看哪里，我并不知道 这就像口音 我觉得口音对很多事情是个好比喻， 这就像口音 我觉得口音对很多事情是个好比喻， 因为直到你去了另一个</p>
+                <p class="dialogue-en">over it, whatever it is. So, you have this anticipatory sense of motion. Everything is instilled in you. So, here I am having to relearn this stuff from the very beginning. A lot of the board control I had, much bigger board, and so dimensions weren&#x27;t a big deal. But simple stuff that you don&#x27;t realize that were central to all that you do, such as where you hold your eyes, I didn&#x27;t know. And it&#x27;s like an accent. I think an accent is a good metaphor for a lot of things,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="32" data-time="00:10:44">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:10:44</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我觉得口音对很多事情是个好比喻， 因为直到你去了另一个 说同一种语言的地方， 才会意识到自己有口音 因为直到你去了另一个 说同一种语言的地方， 才会意识到自己有口音 你会想，哦，他们说话怎么这么奇怪 说同一种语言的地方， 才会意识到自己有口音 你会想，哦，他们说话怎么这么奇怪 哦，原来说话奇怪的是我 你会想，哦，他们说话怎么这么奇怪 哦，原来说话奇怪的是我 在这种情况下， 哦，原来说话奇怪的是我 在这种情况下， 我有很多东西是潜移默化地建立起来的，对我做的事至关重要， 在这种情况下， 我有很多东西是潜移默化地建立起来的，对我做的事至关重要， 但我不知道那也是我 学习方式的一部分 所以，当你尝试学新东西时， 但我不知道那也是我 学习方式的一部分 所以，当你尝试学新东西时， 你在处理你之前没意识到的问题； 所以，当你尝试学新东西时， 你在处理你之前没意识到的问题； 然后你还得改掉那些问题，这又会给你 你在处理你之前没意识到的问题； 然后你还得改掉那些问题，这又会给你</p>
+                <p class="dialogue-en">because you don&#x27;t realize you have one until you go somewhere else where people speak a common language. You&#x27;re like, oh, why do they talk so funny? Oh, I&#x27;m the one who talks funny? Well, in this case, I had so much stuff that had been built in under the radar that was central to what I do, but I didn&#x27;t know that was part of how I learned. So, when you&#x27;re trying to learn something new, you&#x27;re addressing problems you didn&#x27;t realize you had; and then you have to undo those, which again,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="33" data-time="00:11:12">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:11:12</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">带来类似口音的问题 我做的每件事都带着这个痕迹 带来类似口音的问题 我做的每件事都带着这个痕迹 不只是这样，我举这个例子是因为， 我做的每件事都带着这个痕迹 不只是这样，我举这个例子是因为， 我那时已经有点名气了 不只是这样，我举这个例子是因为， 我那时已经有点名气了 我上过杂志，拍过视频， 我那时已经有点名气了 我上过杂志，拍过视频， 去过世界各地 你去任何地方，都会看到上千人 我上过杂志，拍过视频， 去过世界各地 你去任何地方，都会看到上千人 那就是我的生活 然后我却在这里改换赛道 去过世界各地 你去任何地方，都会看到上千人 那就是我的生活 然后我却在这里改换赛道 我经常去学校操场， 那里有人在滑板、在斜坡上，或者随便什么地方 我经常去学校操场， 那里有人在滑板、在斜坡上，或者随便什么地方 我真会直接撞上长椅， 那里有人在滑板、在斜坡上，或者随便什么地方 我真会直接撞上长椅， 而不是跃过去，因为我搞不懂该怎么做 我真会直接撞上长椅， 而不是跃过去，因为我搞不懂该怎么做 所以人们就想，哦，他不是很牛吗，这就是 Mullen</p>
+                <p class="dialogue-en">it gives you like an accent. Everything you do, I had this mark. So, not only this, and I give that example because I would go, I was already kind of famous. I&#x27;ve been in magazines, I&#x27;ve been in videos, I&#x27;ve been all over the world. You go places, it&#x27;d be a thousand people. That was my life. And then here I am switching up. And I go to schoolyards where people are skating, a hip, wherever. And I would literally like, I&#x27;d plow into benches instead of popping over them, because I couldn&#x27;t figure it out.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="34" data-time="00:11:39">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:11:39</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">而不是跃过去，因为我搞不懂该怎么做 所以人们就想，哦，他不是很牛吗，这就是 Mullen 然后，哦 所以人们就想，哦，他不是很牛吗，这就是 Mullen 然后，哦 就像“他是不是瞎了”那种反应 然后，哦 就像“他是不是瞎了”那种反应 就是那么糟糕 就像“他是不是瞎了”那种反应 就是那么糟糕 [笑声] 所以开始新事物需要这种谦卑，一点一点地， 就是那么糟糕 [笑声] 所以开始新事物需要这种谦卑，一点一点地， 这让我很难堪—— 因为这关乎我的身份 而我之前没意识到 我开始滑板只是因为我热爱它， 你因为专注而变得非常强大 而我之前没意识到 我开始滑板只是因为我热爱它， 你因为专注而变得非常强大 但这都是内心感受 你因为专注而变得非常强大 但这都是内心感受 这就是你要做的事 但这都是内心感受 这就是你要做的事 你不断鞭策自己 这就像你一样，就像，好吧， 这就是你要做的事 你不断鞭策自己 这就像你一样，就像，好吧， 我会把所有东西都学一遍 嗯，我们就是这么做的，</p>
+                <p class="dialogue-en">And so people thought, oh, he&#x27;s all that, there&#x27;s Mullen. And there was, oh-hh! Like, is he going blind type of thing? It was that bad. [ LAUGHTER ] And so this humility that it takes to start something new, like little bit by little bit, it was embarrassing, my identity. And I didn&#x27;t realize this. I started skating just because I loved it and you get really good because you&#x27;re focused. But this is all stuff of the heart. This is what you do. You push yourself.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="35" data-time="00:12:10">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:12:10</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这就是你要做的事 你不断鞭策自己 这就像你一样，就像，好吧， 我会把所有东西都学一遍 嗯，我们就是这么做的， 就是不断地推进、推进、再推进 你不断鞭策自己 这就像你一样，就像，好吧， 我会把所有东西都学一遍 嗯，我们就是这么做的， 就是不断地推进、推进、再推进 这就像你一样，就像，好吧， 我会把所有东西都学一遍 嗯，我们就是这么做的， 就是不断地推进、推进、再推进 然后当你重新开始， 就是不断地推进、推进、再推进 然后当你重新开始， 你不会意识到你的身份与别人如何看待你有多大关系， 然后当你重新开始， 你不会意识到你的身份与别人如何看待你有多大关系， 比如“哦，他是最棒的”， 你不会意识到你的身份与别人如何看待你有多大关系， 比如“哦，他是最棒的”， 或者“你是最棒的”之类 比如“哦，他是最棒的”， 或者“你是最棒的”之类 就像，它深藏在那里 或者“你是最棒的”之类 就像，它深藏在那里 所以放下这一切， 就像，它深藏在那里 所以放下这一切， 重新开始，但这并不容易，原因很多 所以放下这一切， 重新开始，但这并不容易，原因很多</p>
+                <p class="dialogue-en">It&#x27;s like akin to you, like, well, I&#x27;ll just learn everything. Well, that&#x27;s how we approached it, like you just push and push and push. And then when you&#x27;re starting new, you don&#x27;t realize how much your identity gets tied up in how people perceive you as, oh, he&#x27;s the best, or being the best, whatever. Like, it&#x27;s deep in there. So, dropping all that and starting fresh, that was...it was...it wasn&#x27;t easy, for a lot of reasons.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="36" data-time="00:12:38">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:12:38</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你谈到了从内核编程到首席技术官、 你谈到了从内核编程到首席技术官、 从自由式滑板到街头 你谈到了从内核编程到首席技术官、 从自由式滑板到街头 滑板时，你放下了什么 从自由式滑板到街头 滑板时，你放下了什么 但你带走了什么 滑板时，你放下了什么 但你带走了什么 从之前的状态 到新状态，有什么延续下来 但你带走了什么 从之前的状态 到新状态，有什么延续下来</p>
+                <p class="dialogue-en">So, you were talking about kind of what you left behind when you went from kernel programming to CTO, from freestyle to street skating. But what did you take with you? What kind of carried over from the previous state to the new state?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="37" data-time="00:12:55">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:12:55</span>
+                <span class="dialogue-speaker speaker-guest">你们俩谁先答都行 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我带走了什么 我最初是工程师， 所以我很注重技术细节、 我最初是工程师， 所以我很注重技术细节、 技术问题的解决 所以我很注重技术细节、 技术问题的解决 其中有一点， 技术问题的解决 其中有一点， 我一直喜欢客户反馈或用户反馈， 其中有一点， 我一直喜欢客户反馈或用户反馈， 因为我想知道我所做的 事情是有用的， 而不仅仅是为了完善 代码而完善代码 而不仅仅是为了完善 代码而完善代码 所以，延续下来的是， 代码而完善代码 所以，延续下来的是，</p>
+                <p class="dialogue-en">And in either order. WRIGHT: What did I take with me? I started as an engineer, so I cared about technical details, technical problem solving. There was an aspect in there where I always liked customer feedback or user feedback because I wanted to know that I was doing something that was useful, not just like polishing code to perfection for the sake of polishing code to perfection. So, carrying forward a sense of, yes,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="38" data-time="00:13:32">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:13:32</span>
+                <span class="dialogue-speaker speaker-guest">你们俩谁先答都行 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的，我会说技术卓越或技术能力， 解决问题的意愿和能力 以客户为中心，听起来有点老套， 但确实如此 比如，我相信，在开源世界里， 但确实如此 比如，我相信，在开源世界里， 我们有共同的愿景， 比如，我相信，在开源世界里， 我们有共同的愿景， 我们致力于共同的领域， 我们有共同的愿景， 我们致力于共同的领域， 或解决重要的问题；否则我们不一定去做 然后是能够与人建立联系 你知道，那是一种技能 正如我之前提到的， 你知道，那是一种技能 正如我之前提到的， 它在社区环境里经常派上用场 说到底就是人，是人与人之间的信任关系</p>
+                <p class="dialogue-en">I&#x27;d say technical excellence or aptitude, desire and capability to solve problems. Customer centricity, which sounds a little cheesy, but it really was that. Like, I believe, you know, in the open-source world, we have a common vision, we&#x27;re working towards a common domain or solving problems that matter; otherwise, we wouldn&#x27;t necessarily do it. And then being able to connect with people. You know, that was a skill set. It turned up a lot in community context,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="39" data-time="00:14:09">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:14:09</span>
+                <span class="dialogue-speaker speaker-guest">你们俩谁先答都行 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">正如我之前提到的， 它在社区环境里经常派上用场 说到底就是人，是人与人之间的信任关系 小时候，我妈常说我是个有 它在社区环境里经常派上用场 说到底就是人，是人与人之间的信任关系 小时候，我妈常说我是个有 社交技能的书呆子，好吧，我接受 所以，你知道， 这些像是能迁移的内在特质 我在学校学的是数学和物理； 那不是计算机科学， 我在学校学的是数学和物理； 那不是计算机科学， 但我找到了一种方法来迁移它们 所以，这迁移过来了 那不是计算机科学， 但我找到了一种方法来迁移它们 所以，这迁移过来了 那不是计算机科学， 但我找到了一种方法来迁移它们 所以，这迁移过来了 问题不同了；事实上， 所以，这迁移过来了 问题不同了；事实上， 其中一个问题领域就是人 问题不同了；事实上， 其中一个问题领域就是人 分布式系统很难，但人更难 其中一个问题领域就是人 分布式系统很难，但人更难 管理组织，</p>
+                <p class="dialogue-en">as I mentioned before. It&#x27;s humans, human trust relationships. As a kid, my mom used to refer to me as a nerd with social skills, like, well, okay, I&#x27;ll take that. And so you know, there&#x27;s...these are like intrinsic characteristics that translate. I studied math and physics in school; that&#x27;s not computer science, but I found a way to translate that. So, this translated. The problems were different; and in fact, one of the problem domains was humans. Distributed systems are hard, humans are way harder.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="40" data-time="00:14:43">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:14:43</span>
+                <span class="dialogue-speaker speaker-guest">你们俩谁先答都行 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">分布式系统很难，但人更难 管理组织， 让人们朝共同方向合作 管理组织， 让人们朝共同方向合作 所以，是的，对我来说，这些就是关键所在 有一些核心技术能力， 有解决问题和人际协作的成分， 有解决问题和人际协作的成分， 以及专注于做别人会认可为有用 的事</p>
+                <p class="dialogue-en">You know, managing organizations, getting people to work together in a common direction. And so, yes, I think there&#x27;s, to me, those are the things. There&#x27;s some core technical capabilities, some problem-solving human relationship pieces and focus some problem-solving human relationship pieces and focus on doing something that somebody else would validate</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="41" data-time="00:15:03">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:03</span>
+                <span class="dialogue-speaker speaker-host">以及专注于做别人会认可为有用 的事 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">对 那么，Rodney，从自由式滑板和街头滑板，</p>
+                <p class="dialogue-en">as useful.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="42" data-time="00:15:04">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:04</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">对 那么，Rodney，从自由式滑板和街头滑板， 有什么迁移到你身上</p>
+                <p class="dialogue-en">Right.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="43" data-time="00:15:04">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:04</span>
+                <span class="dialogue-speaker speaker-host">的事 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">对 那么，Rodney，从自由式滑板和街头滑板， 有什么迁移到你身上</p>
+                <p class="dialogue-en">And so, Rodney, was there anything that translated to you</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="44" data-time="00:15:07">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:07</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">对 那么，Rodney，从自由式滑板和街头滑板， 有什么迁移到你身上 MULLEN：有，而且影响很大</p>
+                <p class="dialogue-en">from freestyle to street skating?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="45" data-time="00:15:10">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:10</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">有，而且影响很大 再次抱歉，我得重新说 我最终也爱上了 Linux Bill 第一次把我们连上线时，我见到他， 心想，天哪，你也是个滑手 [笑声] 同样的事情也发生在对物理和数学的热爱上 心想，天哪，你也是个滑手 [笑声] 同样的事情也发生在对物理和数学的热爱上 我也一样 同样的事情也发生在对物理和数学的热爱上 我也一样 你会发现它们之间共同点太多了</p>
+                <p class="dialogue-en">Yes, in a big way. Again, sorry, I got to start again. So, I fell in love with Linux eventually. And meeting him when Bill first connected us, I was like, oh, my God, you&#x27;re a skater, too? [ LAUGHTER ] And the same thing, a love for physics and math. That was the same with me.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="46" data-time="00:15:34">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:34</span>
+                <span class="dialogue-speaker speaker-host">我也一样 你会发现它们之间共同点太多了 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的，我喜欢这一点 MULLEN：那问题是什么来着</p>
+                <p class="dialogue-en">And you find there&#x27;s so much in common.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="47" data-time="00:15:36">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:36</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的，我喜欢这一点 MULLEN：那问题是什么来着</p>
+                <p class="dialogue-en">Yes, I love that.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="48" data-time="00:15:37">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:37</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的，我喜欢这一点 MULLEN：那问题是什么来着 [笑声] HIGGINS：Chris 刚才 那问题是什么来着 [笑声] HIGGINS：Chris 刚才</p>
+                <p class="dialogue-en">So, what was the question again? [ LAUGHTER ]</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="49" data-time="00:15:40">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:40</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">那问题是什么来着 [笑声] HIGGINS：Chris 刚才 讲的是他从内核开发 者变成首席技术官时， 讲的是他从内核开发 者变成首席技术官时， 有些东西留下了，但也有些东西带走了 那么，你从自由式滑板 者变成首席技术官时， 有些东西留下了，但也有些东西带走了 那么，你从自由式滑板 到街头滑板，带走了什么 有些东西留下了，但也有些东西带走了 那么，你从自由式滑板 到街头滑板，带走了什么 Mullen：好的</p>
+                <p class="dialogue-en">So, Chris was talking about when he went from kernel developer to CTO, there was stuff he left behind, but there was some stuff he took with him. So, what did you take with you from freestyle to street skating?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="50" data-time="00:15:53">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:15:53</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">到街头滑板，带走了什么 Mullen：好的 这并不明显 Mullen：好的 这并不明显 于是你到了这一步 这并不明显 于是你到了这一步 我得学一整套新的技巧 于是你到了这一步 我得学一整套新的技巧 像 cricket grind 这样的动作， 我得学一整套新的技巧 像 cricket grind 这样的动作， 甚至只是轻松跃过几级小台阶 像 cricket grind 这样的动作， 甚至只是轻松跃过几级小台阶 各种东西都得学 甚至只是轻松跃过几级小台阶 各种东西都得学 学任何新事物前，你必须先学会基本概念 各种东西都得学 学任何新事物前，你必须先学会基本概念 没错，我当时就是那样 学任何新事物前，你必须先学会基本概念 没错，我当时就是那样 我很快意识到， 没错，我当时就是那样 我很快意识到， 我身上虽然有很多固有技能反而 阻碍了学习，但一旦跨过这些障碍， 并拿出“唉，我在大庭广众下真烂”</p>
+                <p class="dialogue-en">Yes. It wasn&#x27;t obvious. And so here you are. I&#x27;ve got to learn a whole new alphabet of tricks. Cricket grinds, just even snapping over little sets of stairs. All kinds of stuff you have to learn. You just got to learn the alphabet of anything new. So, I was. And what I quickly realized was, while I had all of these skill sets baked in that were impediments to me learning, once I got passed those and the humility it took of like,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="51" data-time="00:16:29">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:16:29</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">的谦逊，我就很快发现：天哪， 我拥有的东西真好 是的，我有一些控板能力， 我有平衡感 我拥有的东西真好 是的，我有一些控板能力， 我有平衡感 我是以别的途径很难学到的 我拥有的东西真好 是的，我有一些控板能力， 我有平衡感 我是以别的途径很难学到的 方式练出来的 是的，我有一些控板能力， 我有平衡感 我是以别的途径很难学到的 方式练出来的 这是我所做事情的独特之处 我有平衡感 我是以别的途径很难学到的 方式练出来的 这是我所做事情的独特之处 我是以别的途径很难学到的 方式练出来的 这是我所做事情的独特之处 我是以钻石切割 这是我所做事情的独特之处 我是以钻石切割 般的精准做到的 我有那种专注力 我是以钻石切割 般的精准做到的 我有那种专注力 我是以钻石切割 般的精准做到的 我有那种专注力 你会意识到，你真正做的是 我有那种专注力 你会意识到，你真正做的是 抽象概念 是思维模式 我在顶尖滑手身上看到了这一点 抽象概念 是思维模式 我在顶尖滑手身上看到了这一点 很清楚 我在顶尖滑手身上看到了这一点 很清楚 在这个顶尖层面，你也许会有这种体验</p>
+                <p class="dialogue-en">ah, I suck in public, what I quickly learned was, oh, my gosh, what I&#x27;ve got good. Yes, I&#x27;ve got some board control, I have a sense of balance. I developed it in a way that&#x27;s kind of hard to learn in other ways. It was unique to what I did. And I had done it with sort of a diamond cutter&#x27;s precision. I had that kind of focus. And you realize what you&#x27;re really doing is it&#x27;s an abstraction. It&#x27;s the mental models. So, and I see this for great skaters. It just makes it clear.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="52" data-time="00:17:04">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:17:04</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">很清楚 在这个顶尖层面，你也许会有这种体验 在某个层级，你会看到这么多天赋极高的人 天赋真高 到了这一层级，这个人成了 职业选手，这个人没能成功， 天赋真高 到了这一层级，这个人成了 职业选手，这个人没能成功， 只能在快餐店打工， 职业选手，这个人没能成功， 只能在快餐店打工， 而这个人被带着满世界飞 只能在快餐店打工， 而这个人被带着满世界飞 他们水平其实差不多 而这个人被带着满世界飞 他们水平其实差不多 差别在哪 这样的人只有少数 他们水平其实差不多 差别在哪 这样的人只有少数 其中一个差别， 差别在哪 这样的人只有少数 其中一个差别， 是学习以前从未见过的事物的能力， 其中一个差别， 是学习以前从未见过的事物的能力， 因为我们的本性就是：你能给社区 是学习以前从未见过的事物的能力， 因为我们的本性就是：你能给社区 做出一些什么新的、不同的贡献</p>
+                <p class="dialogue-en">At this top level, and you might experience this. You have such gifted people in a certain layer. Such gifted people. At this layer of like, this [suit] turns pro, this one didn&#x27;t quite make it, and has to work in a fast food place, and this guy&#x27;s getting flown all over the world. And they&#x27;re about as good as each other. What is the difference? And there&#x27;s a handful of them. But one of them is the ability to learn what&#x27;s not been seen before, because the nature of us is like, how can you contribute</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="53" data-time="00:17:38">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:17:38</span>
+                <span class="dialogue-speaker speaker-guest">因为我们的本性就是</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你能给社区 做出一些什么新的、不同的贡献 不只是输赢， 而是你能做出和别人稍有不同的东西， 做出一些什么新的、不同的贡献 不只是输赢， 而是你能做出和别人稍有不同的东西， 做出一些什么新的、不同的贡献 不只是输赢， 而是你能做出和别人稍有不同的东西， 让别人能借鉴 而是你能做出和别人稍有不同的东西， 让别人能借鉴 并加以改进 这很像开源 让别人能借鉴 并加以改进 这很像开源 事实上，这正是开源吸引我的地方 并加以改进 这很像开源 事实上，这正是开源吸引我的地方 所以，关键在于能够感知并调整这些动作 要做一件从未做过的事， 所以，关键在于能够感知并调整这些动作 要做一件从未做过的事， 你得能在脑中构想出它 要做一件从未做过的事， 你得能在脑中构想出它 不是放胶片，大脑不是那样运作的 你得能在脑中构想出它 不是放胶片，大脑不是那样运作的 而是在脑中建立某种模型，</p>
+                <p class="dialogue-en">to the community something new and different? It&#x27;s not just about winning, it&#x27;s what you can do that&#x27;s a little bit different than everybody else so that they can take it and bring it forward. It&#x27;s very Open Source. In fact, that&#x27;s what drew me to Open Source. So, it&#x27;s the ability to tune in these movements. In order to do something that&#x27;s never been done before, you have to be able to project it in your head. And it&#x27;s not a film strip, brain doesn&#x27;t work that way.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="54" data-time="00:18:01">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:18:01</span>
+                <span class="dialogue-speaker speaker-guest">因为我们的本性就是</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">不是放胶片，大脑不是那样运作的 而是在脑中建立某种模型， 让你能调整，哦，是肩膀， 而是在脑中建立某种模型， 让你能调整，哦，是肩膀， 是脚后跟， 让你能调整，哦，是肩膀， 是脚后跟， 是你在这个曲线变化时的动量 你得在脑中想出模型， 是脚后跟， 是你在这个曲线变化时的动量 你得在脑中想出模型， 是脚后跟， 是你在这个曲线变化时的动量 你得在脑中想出模型， 让自己能适应 我意识到那算是我的王牌 你得在脑中想出模型， 让自己能适应 我意识到那算是我的王牌 我很擅长拆解招式——因为， 再说一次，这些在现实中都是 我很擅长拆解招式——因为， 再说一次，这些在现实中都是 动量向量，对吧 Kick flip backside 再说一次，这些在现实中都是 动量向量，对吧 Kick flip backside tailside 之所以衔接流畅，是有原因的 动量向量，对吧 Kick flip backside tailside 之所以衔接流畅，是有原因的 我很擅长拆解这些动作， tailside 之所以衔接流畅，是有原因的 我很擅长拆解这些动作，</p>
+                <p class="dialogue-en">It&#x27;s building some sort of model in your head that allows you to tune, oh, it&#x27;s your shoulder, it&#x27;s your heel, it&#x27;s your momentum as you change in this curve. You have to figure out models in your head that make you adapt. And I realized that was sort of an ace up my sleeve. I got really good at parsing tricks -- because, again, these are momentum vectors in real life, right? Kick flip backside tailside, there&#x27;s a reason why that flows the way it does. And I got really good at parsing these movements</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="55" data-time="00:18:32">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:18:32</span>
+                <span class="dialogue-speaker speaker-guest">因为我们的本性就是</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">把不同片段拼接起来 这是我从自由式滑板里练出来的本事 把不同片段拼接起来 这是我从自由式滑板里练出来的本事 而这一切都涉及某种看待事物 这是我从自由式滑板里练出来的本事 而这一切都涉及某种看待事物 的思维模式 你觉得我这么说，能理解吗？ HIGGINS：好的 而这一切都涉及某种看待事物 的思维模式 你觉得我这么说，能理解吗？ HIGGINS：好的 而这一切都涉及某种看待事物 的思维模式 你觉得我这么说，能理解吗？ HIGGINS：好的 那我现在真想深入聊的是，</p>
+                <p class="dialogue-en">and splicing different pieces together. I had a knack for that that came from freestyle. And it all involved a certain mental model of way of looking at stuff. Does that make sense?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="56" data-time="00:18:40">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:18:40</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">而这一切都涉及某种看待事物 的思维模式 你觉得我这么说，能理解吗？ HIGGINS：好的 那我现在真想深入聊的是， 你觉得我这么说，能理解吗？ HIGGINS：好的 那我现在真想深入聊的是， 这难在哪，可怕在哪 那我现在真想深入聊的是， 这难在哪，可怕在哪 也许还是从 Chris 开始 这难在哪，可怕在哪 也许还是从 Chris 开始 你从内核黑客转向首席技术官时， 也许还是从 Chris 开始 你从内核黑客转向首席技术官时， 最难、最可怕的部分是什么？ 你是怎么克服的 最难、最可怕的部分是什么？ 你是怎么克服的 WRIGHT：嗯，我觉得我对压力的感受不同</p>
+                <p class="dialogue-en">Yes. So, what I really want to dive into now is what was hard about it, what was scary about it. So, maybe we&#x27;ll start with Chris again. When you were transitioning from kernel hacker to CTO, what were some of the hardest and scariest parts about it, and how did you get over them?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="57" data-time="00:18:57">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:18:57</span>
+                <span class="dialogue-speaker speaker-guest">你是怎么克服的 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">嗯，我觉得我对压力的感受不同 也许换个说法，在内核领域里， 工作虽然难、有挑战性， 我其实真的很爱它，但我有一种掌控感 我清楚自己在做什么 我有一套知道怎么运用的技能 而首席技术官这份工作，我甚至不知道自己 该做什么 没有手册 该做什么 没有手册 我很怕工作失败，不知道怎么应对， 没有手册 我很怕工作失败，不知道怎么应对，</p>
+                <p class="dialogue-en">WRIGHT: Well, I think I had a different sense of pressure. Maybe said differently in the kernel world, while the work was hard and challenging and I actually really loved it, I had a sense of mastery. I really knew what I was doing. I had a skill set that I knew how to apply. In this CTO gig, I really didn&#x27;t even know what I was supposed to do. There&#x27;s not a manual. And I had a lot of fear of just failing at my job,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="58" data-time="00:19:40">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:19:40</span>
+                <span class="dialogue-speaker speaker-guest">你是怎么克服的 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">不知道怎么 与客户沟通，尽管我在非常 不知道怎么 与客户沟通，尽管我在非常 有限的场景内做过 与客户沟通，尽管我在非常 有限的场景内做过 很多这样的事情 有限的场景内做过 很多这样的事情 所以到最后，就像我有一个身份： 很多这样的事情 所以到最后，就像我有一个身份： Chris， 内核专家，但这个身份并不适合 内核专家，但这个身份并不适合 延续下去 它在那个环境里 合理，但并不能延续 延续下去 它在那个环境里 合理，但并不能延续 于是，你知道，就是把所有东西都学会 合理，但并不能延续 于是，你知道，就是把所有东西都学会 我就这样应对对话 于是，你知道，就是把所有东西都学会 我就这样应对对话 那本质上是我应对失败</p>
+                <p class="dialogue-en">not really knowing how to respond, not knowing how to manage customer conversations, even though I had done that a lot in a very narrowed context. And so in the end, it was like I had an identity, Chris the kernel guy, and that identity was not really the right one and that identity was not really the right one to carry forward. It made sense in the context, but it didn&#x27;t really carry forward. And that, you know, just learn all the things. That&#x27;s how I&#x27;ll manage the conversation.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="59" data-time="00:20:10">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:20:10</span>
+                <span class="dialogue-speaker speaker-guest">你是怎么克服的 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我就这样应对对话 那本质上是我应对失败 恐惧的一种方式 是的，你可以找导师， 恐惧的一种方式 是的，你可以找导师， 问一些人问题， 是的，你可以找导师， 问一些人问题， 帮我理解在这种新环境里， 问一些人问题， 帮我理解在这种新环境里， 什么是有用的解决问题方式 帮我理解在这种新环境里， 什么是有用的解决问题方式 但很多就是我在开源 什么是有用的解决问题方式 但很多就是我在开源</p>
+                <p class="dialogue-en">That was part of my response to the fear of failure, essentially. And yes, you look for some mentors, ask a few people some questions to help me understand what would be a useful way to approach problem solving in this new context. But a lot of it was just what I had learned</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="60" data-time="00:20:32">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:20:32</span>
+                <span class="dialogue-speaker speaker-guest">社区学到的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">迭代改进 所以，继续前进，继续努力，继续改进 而且，你知道，还有点疲惫 需要是发明之母， 就像你不可能一直熬夜学习 需要是发明之母， 就像你不可能一直熬夜学习 所有东西一样 某个时刻，你得换种方式思考， 就像你不可能一直熬夜学习 所有东西一样 某个时刻，你得换种方式思考， 建立世界模型 所有东西一样 某个时刻，你得换种方式思考， 建立世界模型 世界模型是什么 建立世界模型 世界模型是什么 那具体应如何实现？ 你如何建立计算机科学式的模型 世界模型是什么 那具体应如何实现？ 你如何建立计算机科学式的模型 世界模型是什么 那具体应如何实现？ 你如何建立计算机科学式的模型 就是对事物运作方式做抽象，在头脑中形成 你如何建立计算机科学式的模型 就是对事物运作方式做抽象，在头脑中形成 抽象模型，再通过这个模型运用你的专业知识</p>
+                <p class="dialogue-en">in the open-source communities was iterative improvements. So, just keep going, keep moving, keep refining. And you know, a little bit of exhaustion. Necessity is the mother of all invention, like you can&#x27;t keep going sleepless nights just trying to learn all the things. At some point, you&#x27;ve got to think differently and build a world model. What is the world model? What does that look like? How do you build computer science? An abstraction, a mental abstraction of how things work,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="61" data-time="00:21:03">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:21:03</span>
+                <span class="dialogue-speaker speaker-guest">社区学到的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">就是对事物运作方式做抽象，在头脑中形成 抽象模型，再通过这个模型运用你的专业知识 也要明白，说“我不知道” 抽象模型，再通过这个模型运用你的专业知识 也要明白，说“我不知道” 完全合理 事实上，我不知道 现在你勾起了我的好奇心 我得去了解一下， 事实上，我不知道 现在你勾起了我的好奇心 我得去了解一下， 或许还要找个这方面的专家来回答 事实上，我不知道 现在你勾起了我的好奇心 我得去了解一下， 或许还要找个这方面的专家来回答 这个问题，或者让他告诉我该 现在你勾起了我的好奇心 我得去了解一下， 或许还要找个这方面的专家来回答 这个问题，或者让他告诉我该 我得去了解一下， 或许还要找个这方面的专家来回答 这个问题，或者让他告诉我该 如何回复客户、公司其他部门， 这个问题，或者让他告诉我该 如何回复客户、公司其他部门， 或者任何我正在与之交谈的人 所以，那种对失败 的恐惧才是最可怕的部分；</p>
+                <p class="dialogue-en">and then apply your expertise through that abstraction. And also learn that it was totally reasonable to say, I don&#x27;t know. And in fact, I don&#x27;t know. And now you made me curious. I&#x27;m going to have to go learn about that and maybe pull somebody else in who&#x27;s an expert in that area and have them answer that question, or inform me to respond back to the customer, or the rest of the organization, whoever I&#x27;m talking to. So, that kind of, you know, the fear of failure was the scary part and you know,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="62" data-time="00:21:42">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:21:42</span>
+                <span class="dialogue-speaker speaker-guest">社区学到的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">而一步一个脚印、不断迭代、提出问题， 本质上就是展现脆弱，这些就是我用的 工具组合 本质上就是展现脆弱，这些就是我用的 工具组合 HIGGINS：是的，就是要让大家</p>
+                <p class="dialogue-en">one step at a time, iterate, ask questions, essentially kind of be vulnerable was the tool set that I applied.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="63" data-time="00:21:51">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:21:51</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的，就是要让大家 了解一下规模，比如你当时在做内核开发时， 你同时在做多少个项目 是的，就是要让大家 了解一下规模，比如你当时在做内核开发时， 你同时在做多少个项目 后来你成为首席 了解一下规模，比如你当时在做内核开发时， 你同时在做多少个项目 后来你成为首席 技术官， 你的技术职责范围有多大 后来你成为首席 技术官， 你的技术职责范围有多大 WRIGHT：嗯，内核就是内核， 技术官， 你的技术职责范围有多大 WRIGHT：嗯，内核就是内核， 它甚至只是整个 Linux 中的一小部分</p>
+                <p class="dialogue-en">Yes, just give the folks a sense of the scale, like when you were doing the kernel hacking, about how many projects were you working on? And then when you became CTO, what was the breadth of software you had technical responsibility for? WRIGHT: Well, the kernel is the kernel,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="64" data-time="00:22:03">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:22:03</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">嗯，内核就是内核， 它甚至只是整个 Linux 中的一小部分 我在内核里的职责涉及 它甚至只是整个 Linux 中的一小部分 我在内核里的职责涉及 几个方面 我在内核里的职责涉及 几个方面 一个狭窄的领域 几个方面 一个狭窄的领域 是 Linux 安全模块 一个狭窄的领域 是 Linux 安全模块 基础设施，类似强制访问控制 是 Linux 安全模块 基础设施，类似强制访问控制 另一个是整个内核的安全， 基础设施，类似强制访问控制 另一个是整个内核的安全， 比如 kernel.org 的安全 另一个是整个内核的安全， 比如 kernel.org 的安全 那是我和另外几个人负责 比如 kernel.org 的安全 那是我和另外几个人负责 然后我还负责 那是我和另外几个人负责 然后我还负责 稳定内核分支 然后我还负责 稳定内核分支 Linus 会切出一个分支， 然后 Greg 和/或我负责把稳定 稳定内核分支 Linus 会切出一个分支， 然后 Greg 和/或我负责把稳定 稳定内核分支 Linus 会切出一个分支， 然后 Greg 和/或我负责把稳定 分支往前维护</p>
+                <p class="dialogue-en">so it&#x27;s even the small part of all of Linux. And my responsibility in the kernel was in a couple of areas. So, one narrow domain, the Linux Security Module Infrastructure, which is like mandatory access controls. And the other is security across all the kernel is like the security at kernel.org. That was me and a couple other folks. And then I had a responsibility for the stable kernel branch. So, Linus would cut a branch and then Greg and/or I would carry the stable</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="65" data-time="00:22:30">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:22:30</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">然后 Greg 和/或我负责把稳定 分支往前维护 所以这里面包含了广泛的内容 Red Hat 的产品组合很大，到了首席技术官层面， 分支往前维护 所以这里面包含了广泛的内容 Red Hat 的产品组合很大，到了首席技术官层面， 就是整个 Linux、所有中间件、整个 OpenStack、整个 Kubernetes 我感受到的预期是： OpenStack、整个 Kubernetes 我感受到的预期是： 你既然了解那些东西、那些架构</p>
+                <p class="dialogue-en">branches forward. So, there&#x27;s breadth in there. Red Hat has a pretty big portfolio, so it came to CTO, it&#x27;s like all of Linux, all of middleware, all of OpenStack, all of Kubernetes. And the feeling I had was the expectation was, well,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="66" data-time="00:22:50">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:22:50</span>
+                <span class="dialogue-speaker speaker-guest">我感受到的预期是</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你既然了解那些东西、那些架构 和代码层面的细节， 那你也了解在开源里围绕它、接触它、 与它竞争的一切 那你也了解在开源里围绕它、接触它、 与它竞争的一切 那差不多就是一切了 与它竞争的一切 那差不多就是一切了 [笑声] 是的 那差不多就是一切了 [笑声] 是的 这感觉有点不现实 [笑声] 是的 这感觉有点不现实 有时我意识到，其实期望是： 哦，顺便你还要懂 商务、定价这些， 哦，顺便你还要懂 商务、定价这些， 哪些版本、路线图、发布日期 商务、定价这些， 哪些版本、路线图、发布日期 是的，在某种程度上就是不现实 哪些版本、路线图、发布日期 是的，在某种程度上就是不现实 没人懂那么多 好消息是，我们现在拥有 AI</p>
+                <p class="dialogue-en">you know all those things, that architectural and code level detail, then you know all the things that wrap around it, that touch it, compete with it, whatever, in Open Source. Like, that&#x27;s only kind of everything. [ LAUGHTER ] Yes. That feels a little unrealistic. And so sometimes I came to that realization, like, actually the expectation is you do actually, oh, by the way, commercials and pricing and all, which versions, roadmaps, release dates. Yes, at some point it&#x27;s just unrealistic.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="67" data-time="00:23:27">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:23:27</span>
+                <span class="dialogue-speaker speaker-guest">我感受到的预期是</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的，在某种程度上就是不现实 没人懂那么多 好消息是，我们现在拥有 AI 所以，是的，这个范围似乎很荒谬 而现实是，你有专长领域， 所以，是的，这个范围似乎很荒谬 而现实是，你有专长领域， 也有依赖别人的领域 而现实是，你有专长领域， 也有依赖别人的领域 HIGGINS：那么，Rodney，同样的问题</p>
+                <p class="dialogue-en">No human knows that much. Good news, we have AI today. So, yes, the breadth was seemingly absurd. And then the reality is you have areas of expertise and you have areas where you rely on other people.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="68" data-time="00:23:41">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:23:41</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">那么，Rodney，同样的问题 你在那个过渡阶段， 决定转去街头滑板时， 那么，Rodney，同样的问题 你在那个过渡阶段， 决定转去街头滑板时， 最难、最可怕的部分是什么？ 决定转去街头滑板时， 最难、最可怕的部分是什么？ 你是怎么熬过来的</p>
+                <p class="dialogue-en">So, Rodney, same question. When you were in that in-between phase, when you had decided to get into street skating, what were some of the hardest and scariest parts and how did you get through those?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="69" data-time="00:23:56">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:23:56</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">一开始是更多身体上的危险， 而这凸显了更戏剧性的东西， 这里会稍微反复出现， 就是杏仁核、恐慌情绪，对吧 紧张时口干舌燥、 心跳加速是有原因的 所以，当你做一件很可怕的事时， 它会让你崩溃 所以，当你做一件很可怕的事时， 它会让你崩溃 你无法想象这会对你的整个系统 它会让你崩溃 你无法想象这会对你的整个系统 造成多大的影响 你无法想象这会对你的整个系统 造成多大的影响 你可能已经把某个动作练到位了， 造成多大的影响 你可能已经把某个动作练到位了，</p>
+                <p class="dialogue-en">There is more physical danger, that&#x27;s the beginning, and that highlighted something that is even more dramatic, which will be a little bit recurrent theme here, is amygdala, panic stuff, right? There&#x27;s a reason why you get a dry mouth and you start the heartbeat when you get nervous. So, when you&#x27;re doing something terrifying, it can break you up. You can&#x27;t believe how much that can take over your whole system. You might have a trick dial, like you have it in you,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="70" data-time="00:24:33">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:24:33</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">明明有这个能力，心想， 好吧，我就稍微加大一点，甚至没多大， 结果整个人完全僵住 明明有这个能力，心想， 好吧，我就稍微加大一点，甚至没多大， 结果整个人完全僵住 你面对的是， 结果整个人完全僵住 你面对的是， 哦，我得控制自己的另一部分， 你面对的是， 哦，我得控制自己的另一部分， 而唯一办法就是 哦，我得控制自己的另一部分， 而唯一办法就是 经典的那套恐惧免疫法 而唯一办法就是 经典的那套恐惧免疫法 你只能一点点积累 经典的那套恐惧免疫法 你只能一点点积累 另一大恐惧也很难，因为我经历过足够多的事情， 可以说是成名之后，我明白这一点 又是名气，对吧 踢毽子 踢毽子 可以说是成名之后，我明白这一点 又是名气，对吧 踢毽子 踢毽子 去某些地方，人们会认出我 又是名气，对吧 踢毽子 踢毽子 去某些地方，人们会认出我 沿街走五分钟， 去某些地方，人们会认出我 沿街走五分钟， 没人搭理你，这是最好的一种</p>
+                <p class="dialogue-en">and just okay, I&#x27;m going to take it down just a little bit bigger, not even that big, and you will completely lock up. And you are faced with, oh, I have to control this other part of myself, and the only way to do it is classically at [rand] is all this fear inoculation. You just build up. A big fear also was hard because I&#x27;ve experienced enough, call it fame, to know. Again, fame, right? Hacky sack. Hacky sack. Go in certain places, people know who I am. You go five minutes down the street,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="71" data-time="00:25:05">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:25:05</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">沿街走五分钟， 没人搭理你，这是最好的一种 [笑声] 没人搭理你，这是最好的一种 [笑声] 我对此了解得够多，明白真正懂你做什么 [笑声] 我对此了解得够多，明白真正懂你做什么 的人给你的纯粹尊重， 那才是驱动你前进的动力 的人给你的纯粹尊重， 那才是驱动你前进的动力 没关系 整个体育场可以亮起来， 那才是驱动你前进的动力 没关系 整个体育场可以亮起来， 那才是驱动你前进的动力 没关系 整个体育场可以亮起来， 高喊你的名字，但一个同行简单点个头 整个体育场可以亮起来， 高喊你的名字，但一个同行简单点个头 就能盖过它 高喊你的名字，但一个同行简单点个头 就能盖过它 所以，我不想在最 就能盖过它 所以，我不想在最 尊重的同行面前出丑 所以，我不想在最 尊重的同行面前出丑 他们知道，我重新开始 尊重的同行面前出丑 他们知道，我重新开始 他们很尊重我，但也会想，哦，你看起来糟透了， 他们知道，我重新开始 他们很尊重我，但也会想，哦，你看起来糟透了，</p>
+                <p class="dialogue-en">no one gives up rat&#x27;s, it&#x27;s the best kind. [ LAUGHTER ] I had enough exposure to that to realize that pure respect from the people that really know what you do, that&#x27;s what drives you. Doesn&#x27;t matter. A whole stadium can light up, shout your name, but that can be drowned out by just a simple peer who gives you a nod. So, I didn&#x27;t want to look like an idiot in front of the peers, people that I respected most. I&#x27;m starting new, they know. They had this respect for me, but they&#x27;re also like, oh,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="72" data-time="00:25:42">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:25:42</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">因为我确实糟糕 所以我就在这里，稍微说明一下， 因为我确实糟糕 所以我就在这里，稍微说明一下， 我又赢了，踢毽子比赛 所以我就在这里，稍微说明一下， 我又赢了，踢毽子比赛 我十三四岁的时候就赢得了世界冠军， 我又赢了，踢毽子比赛 我十三四岁的时候就赢得了世界冠军， 一个小孩子成长起来 我十三四岁的时候就赢得了世界冠军， 一个小孩子成长起来 我保持这个头衔十年 所以，现在想象一下我 23、24、25 岁，几年之后的样子 一个小孩子成长起来 我保持这个头衔十年 所以，现在想象一下我 23、24、25 岁，几年之后的样子 我记得他们给我买了一件“25 岁就退役” 的 T 恤…… 我记得他们给我买了一件“25 岁就退役” 的 T 恤…… [笑声] 然后所有这些年轻小将冒出来， 的 T 恤…… [笑声] 然后所有这些年轻小将冒出来， 他们才 15、16、 17、18 岁那时候我已经有一家小滑板公司 他们才 15、16、 17、18 岁那时候我已经有一家小滑板公司 我带着他们，当爸爸一样， 17、18 岁那时候我已经有一家小滑板公司 我带着他们，当爸爸一样， 给那些晚上还在滑、努力追赶的人搬水、递香蕉</p>
+                <p class="dialogue-en">you look terrible, because I did. And so here I am, and to give a little scale for it, I won, again, hacky sack. I was 13, 14 when I won the world championship, little kid coming up. I held it for 10 years. So, now picture me 23, 24, 25, a couple years into this. I remember they bought me a &quot;25 and Retired&quot; shirt... [ LAUGHTER ] And so all these young guns are coming up and they&#x27;re 15, 16, 17, 18. I have a little skate company at this stage. I&#x27;m carrying them around Dad, taking carrying water,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="73" data-time="00:26:15">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:26:15</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我带着他们，当爸爸一样， 给那些晚上还在滑、努力追赶的人搬水、递香蕉 大概就是那样 给那些晚上还在滑、努力追赶的人搬水、递香蕉 大概就是那样 所以这些更年轻的孩子冒出来， 尤其是 Day One，如果你们当中有滑手的话， 大概就是那样 所以这些更年轻的孩子冒出来， 尤其是 Day One，如果你们当中有滑手的话， 大概就是那样 所以这些更年轻的孩子冒出来， 尤其是 Day One，如果你们当中有滑手的话， Day One Song 来自一个很乱的街区 尤其是 Day One，如果你们当中有滑手的话， Day One Song 来自一个很乱的街区 我记得他住在南中央区边缘地带， Day One Song 来自一个很乱的街区 我记得他住在南中央区边缘地带， 那里治安很差 他说，不，我的社区 我记得他住在南中央区边缘地带， 那里治安很差 他说，不，我的社区 挺好的， 我记得他住在南中央区边缘地带， 那里治安很差 他说，不，我的社区 挺好的， 因为往下走两条街，你就能看到枪击留下的弹孔 那里治安很差 他说，不，我的社区 挺好的， 因为往下走两条街，你就能看到枪击留下的弹孔 他说，不，我的社区 挺好的， 因为往下走两条街，你就能看到枪击留下的弹孔 和房屋残骸 因为往下走两条街，你就能看到枪击留下的弹孔 和房屋残骸 Day One 这个滑手和我非常像， 和房屋残骸 Day One 这个滑手和我非常像，</p>
+                <p class="dialogue-en">bananas to those who&#x27;d skate at night, trying to catch up. That&#x27;s what it looked like. And so these younger kids coming up, Day One in particular, if there are any skaters out there, Day One Song from a rough neighborhood. I remember it&#x27;s rough enough where he lives at the border of South Central. He&#x27;s like, no, my neighborhood&#x27;s fine because like two streets down, you can see all the bullet holes and stuff and the houses from the drive-by&#x27;s. Day One skater is very similar to I did, to me,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="74" data-time="00:26:40">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:26:40</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">但他比我厉害得多 就这样，我老了 但他比我厉害得多 就这样，我老了 我把他招进队里，因为我看到他的天赋 就这样，我老了 我把他招进队里，因为我看到他的天赋 我和他一样，都在不断学习成长</p>
+                <p class="dialogue-en">but he was that much better. And so here I am older. I brought him on to the team because I see his talent. And I&#x27;m learning coming up as he&#x27;s coming up.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="75" data-time="00:26:54">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:26:54</span>
+                <span class="dialogue-speaker speaker-guest">我和他们之间建立了一种奇特的联系</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">他们因为我过去做过的事而敬重我 我当时有点像个负责人 他们因为我过去做过的事而敬重我 我当时有点像个负责人 我以前是公司员工 我当时有点像个负责人 我以前是公司员工 但我也心存谦卑，同时也在向 我以前是公司员工 但我也心存谦卑，同时也在向 他们学习，因为你不可能什么都知道 但我也心存谦卑，同时也在向 他们学习，因为你不可能什么都知道 滑板运动的规模已经足够大了 有台阶滑手、栏杆滑手、技术滑手、台沿滑手 有各种滑手 滑板运动的规模已经足够大了 有台阶滑手、栏杆滑手、技术滑手、台沿滑手 有各种滑手 我正在和一些正在崭露头角 有各种滑手 我正在和一些正在崭露头角 的年轻人一起学习 所以这形成了一种纽带和社区感，老实说， 我正在和一些正在崭露头角 的年轻人一起学习 所以这形成了一种纽带和社区感，老实说，</p>
+                <p class="dialogue-en">And I formed this crazy bond where they looked up to me for something I&#x27;d done in the past. And I was a little bit, I was the guy in charge. I was company guy. But I also had this humbled state of I was learning from them at the same time, because you can&#x27;t know it all. Skateboarding is big enough. There&#x27;s stair guys, rail guys, tech guys, ledge guys. There&#x27;s all kinds of skaters. And I&#x27;m learning with dudes that are, I mean, they&#x27;re coming up. And so it created this bond and the sense of the community</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="76" data-time="00:27:25">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:27:25</span>
+                <span class="dialogue-speaker speaker-guest">我和他们之间建立了一种奇特的联系</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这到今天对我来说仍然意义非凡</p>
+                <p class="dialogue-en">that just means honestly everything to me to this day.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="77" data-time="00:27:29">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:27:29</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">那么， Chris，你的社区经历如何帮助 那么， Chris，你的社区经历如何帮助 你完成转变？毕竟开源显然 Chris，你的社区经历如何帮助 你完成转变？毕竟开源显然 建立在社区之上 你完成转变？毕竟开源显然 建立在社区之上 WRIGHT：嗯，我的意思是，</p>
+                <p class="dialogue-en">So, Chris, how did your community, because obviously Open Source is based on community, how did your community experience help you with your transition?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="78" data-time="00:27:39">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:27:39</span>
+                <span class="dialogue-speaker speaker-guest">建立在社区之上 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">嗯，我的意思是，</p>
+                <p class="dialogue-en">WRIGHT: Well, I mean, part of it was the experience I had</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="79" data-time="00:27:44">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:27:44</span>
+                <span class="dialogue-speaker speaker-guest">部分原因是我在社区中经历过一种转变</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我不再只是与社区互动， 或者说社区的定义变了 可能是内部社区，也可能是外部社区 或者说社区的定义变了 可能是内部社区，也可能是外部社区 所以我认为部分原因是， 可能是内部社区，也可能是外部社区 所以我认为部分原因是， 我其实真的很喜欢 Rodney 指出的那点，就是从别人身上学习 我其实真的很喜欢 Rodney 指出的那点，就是从别人身上学习 而那种学习是好奇心，我想，是其中一部分 指出的那点，就是从别人身上学习 而那种学习是好奇心，我想，是其中一部分 所以，就社区层面而言， 我所做的一些事情是人们能够 所以，就社区层面而言， 我所做的一些事情是人们能够 理解并尊重的</p>
+                <p class="dialogue-en">in communities transitioning into a world where I wasn&#x27;t only engaging with communities, or the definition of community changed. It could be internal, it could be external. And so I think part of it was, I actually really like what Rodney was pointing out, which is like you learn from other people. And that learning is curiosity, I think, is part of it. And so the community aspect was I came in with I had done things that people could understand</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="80" data-time="00:28:20">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:28:20</span>
+                <span class="dialogue-speaker speaker-guest">部分原因是我在社区中经历过一种转变</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我所做的一些事情是人们能够 理解并尊重的 要知道，大家也希望看到我成功 理解并尊重的 要知道，大家也希望看到我成功 所以，从这个意义上说， 要知道，大家也希望看到我成功 所以，从这个意义上说， 我们都在共同做这件事 所以，从这个意义上说， 我们都在共同做这件事 我也许是个名义领袖 我们都在共同做这件事 我也许是个名义领袖 但这是团队运动， 你要和身边的人交流，你知道， 真正互相学习 是的，我不知道</p>
+                <p class="dialogue-en">and have some respect for. You know, people wanted to see me succeed as well. And so, you know, in the sense it&#x27;s we&#x27;re all doing this together. I&#x27;m maybe a figurehead. But it&#x27;s a team sports and you&#x27;re trying to check in with the people around you, and you know, really learn from each other. Yes, I don&#x27;t know.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="81" data-time="00:28:49">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:28:49</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的 所以，这场座谈的缘起在最后一节， 我们马上就来聊它如何应用于 AI 这场座谈源于我在 IBM 负责 的“IBM 这场座谈源于我在 IBM 负责 的“IBM 开发者职业体系”， 的“IBM 开发者职业体系”， 它讲的是在 IBM 做开发者意味着 什么 开发者职业体系”， 它讲的是在 IBM 做开发者意味着 什么 很明显，我们必须在 AI 方面 它讲的是在 IBM 做开发者意味着 什么 很明显，我们必须在 AI 方面 重塑我们所有的开发 者而当我真正深入研究时， 重塑我们所有的开发 者而当我真正深入研究时， 对很多人来说相当吓人，因为， 者而当我真正深入研究时， 对很多人来说相当吓人，因为， 你知道，总有失业的恐惧，</p>
+                <p class="dialogue-en">Yes. So, kind of the origin of this talk is the last section, which we&#x27;re about to get into about how it applies to AI. So, the origin of this talk is one of the things I do at IBM is I&#x27;m in charge of what&#x27;s called the IBM Developer Profession, which talks about what it means to be a developer at IBM. And it was just so clear that we had to reinvent all of our developers around AI. And as I really dug into it, it was just pretty scary for a lot of people because, you know,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="82" data-time="00:29:20">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:29:20</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">对很多人来说相当吓人，因为， 你知道，总有失业的恐惧， 但还有一种更深层的恐惧， 你知道，总有失业的恐惧， 但还有一种更深层的恐惧， 关于身份丧失 Chris 是 Red Hat 的 但还有一种更深层的恐惧， 关于身份丧失 Chris 是 Red Hat 的 但还有一种更深层的恐惧， 关于身份丧失 Chris 是 Red Hat 的 首席技术官，负责 Red Hat 在 AI 方面的转型 Chris 是 Red Hat 的 首席技术官，负责 Red Hat 在 AI 方面的转型 所以我想谈的是， 首席技术官，负责 Red Hat 在 AI 方面的转型 所以我想谈的是， 那看起来什么样， 所以我想谈的是， 那看起来什么样， 我们能从这些其他转型经验中学到什么， 那看起来什么样， 我们能从这些其他转型经验中学到什么， 用于我们个人、组织或作为 我们能从这些其他转型经验中学到什么， 用于我们个人、组织或作为 领导者正在经历的一切 用于我们个人、组织或作为 领导者正在经历的一切 那么，Chris，Red Hat 目前 领导者正在经历的一切 那么，Chris，Red Hat 目前 在 AI 开发方面进展如何？ 那么，Chris，Red Hat 目前 在 AI 开发方面进展如何？ 你们是怎么走到这一步的 哪些地方难，哪些地方出人意料</p>
+                <p class="dialogue-en">there&#x27;s always the fear of the job loss, but there&#x27;s kind of a deeper fear about a loss of identity. And Chris is the CTO of Red Hat, is in charge of Red Hat&#x27;s transformation with AI. And so what I want to get into is, what does that look like and what can we learn about from these other lessons of transformation for everything that we&#x27;re going through either personally or organizationally or as a leader. So, Chris, where is Red Hat right now with developing with AI?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="83" data-time="00:29:48">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:29:48</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">在 AI 开发方面进展如何？ 你们是怎么走到这一步的 哪些地方难，哪些地方出人意料 WRIGHT：好 你们是怎么走到这一步的 哪些地方难，哪些地方出人意料 WRIGHT：好 这么说吧，</p>
+                <p class="dialogue-en">How did you get there? What&#x27;s been hard and what was surprising? WRIGHT: Yes.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="84" data-time="00:29:53">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:29:53</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好 这么说吧， 我们这项进程已经进行了两年半 这么说吧， 我们这项进程已经进行了两年半 现在，我们整个组织—— 现在，我们整个组织—— 我们这项进程已经进行了两年半 现在，我们整个组织—— 现在，我们整个组织—— 数千名开发者——都在通过我所说的 “智能体式 SDLC” “智能体式 SDLC” （软件开发生命周期）利用 AI， 以基于智能体的端到端流程 SDLC” （软件开发生命周期）利用 AI， 以基于智能体的端到端流程 交付代码、内容和产品 目标是所有事情都这样做 我们还没做到</p>
+                <p class="dialogue-en">Well, we are, I&#x27;d say, two and a half years into a process. And so where we are right now is we have the entire And so where we are right now is we have the entire organization, as we&#x27;re talking thousands of developers, working, leveraging AI through what I call an agentic SDLC -- Software Development Lifecycle -- that&#x27;s agent-based, delivering code, content, products, leveraging AI in an end-to-end process. Now, the goal is to have everything done that way.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="85" data-time="00:30:28">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:30:28</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">目标是所有事情都这样做 我们还没做到 100%，有些团队走得更前面， 我们还没做到 100%，有些团队走得更前面， 有些团队正在追赶 所以，这就是我们的现状 可以说，我们完成了这次 有些团队正在追赶 所以，这就是我们的现状 可以说，我们完成了这次 转型的 70% 可以说，我们完成了这次 转型的 70% 起点呢……两年半前我们完全 转型的 70% 起点呢……两年半前我们完全 没做这些；当我们引入这些概念时， 相当艰难 开源社区相当扁平 相当艰难 开源社区相当扁平 在座有工程师吗 开源社区相当扁平 在座有工程师吗 有，几位</p>
+                <p class="dialogue-en">We&#x27;re not 100 percent there, so there&#x27;s teams that are further ahead and there&#x27;s teams that are catching up. So, that&#x27;s where we are. We&#x27;re, let&#x27;s say, 70 percent of the way through this transformation. Where we started...well, we weren&#x27;t doing any of this two and a half years ago; and as we introduced these concepts, it was pretty tough. So, open-source communities are pretty flat. Engineers, any engineers in this room? Yes, a few.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="86" data-time="00:31:06">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:31:06</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我们说话很直， 不会藏着观点 我们说话很直， 不会藏着观点 所以我听到很多类似“这很蠢” 不会藏着观点 所以我听到很多类似“这很蠢” “AI 没用” “永远行不通” 我们经历了教育、试验的过程， 最终融入 日常工作， 最终融入 日常工作， 不过更多是在个人层面 日常工作， 不过更多是在个人层面 每一步都有很多反对 偶尔有人很有动力、特别投入， 每一步都有很多反对 偶尔有人很有动力、特别投入， 但很多 人并不那么热情 偶尔有人很有动力、特别投入， 但很多 人并不那么热情 偶尔有人很有动力、特别投入， 但很多 人并不那么热情 我在方方面面都遇到阻力，</p>
+                <p class="dialogue-en">We&#x27;re pretty blunt instruments, don&#x27;t really hold back opinions. And so I got a lot of like, that&#x27;s just stupid. AI is useless. It&#x27;ll never work. And you know, we went through a process of education, experimentation; and ultimately, integration into daily work, although at a very more individual level. At every step of the way, a lot of pushback. Occasionally you get people who are just motivated and super into it, but a lot of people were not so enthusiastic.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="87" data-time="00:31:39">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:31:39</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">人并不那么热情 我在方方面面都遇到阻力， 但核心大概是：我的工作极其难， 我在方方面面都遇到阻力， 但核心大概是：我的工作极其难， AI 没那么好</p>
+                <p class="dialogue-en">I get resistance in every dimension, but probably the core was, my work is incredibly hard</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="88" data-time="00:31:45">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:31:45</span>
+                <span class="dialogue-speaker speaker-guest">但核心大概是</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我的工作极其难， AI 没那么好 它怎么可能比我更擅长我的工作 AI 没那么好 它怎么可能比我更擅长我的工作 那它能为我做什么</p>
+                <p class="dialogue-en">and AI is not that good. So, how could it possibly be better at my job than I am?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="89" data-time="00:31:49">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:31:49</span>
+                <span class="dialogue-speaker speaker-guest">它怎么可能比我更擅长我的工作 那它能为我做什么 然后是理念上的分歧</span>
+            </div>
+            <div class="dialogue-content">
+                
+                <p class="dialogue-en">So, what could it do for me?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="90" data-time="00:31:51">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:31:51</span>
+                <span class="dialogue-speaker speaker-guest">那它能为我做什么 然后是理念上的分歧</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">AI 从人类那里窃取了知识产权， 并利用这一点来对付我们 所以它是邪恶的 并利用这一点来对付我们 所以它是邪恶的 还有关于 所以它是邪恶的 还有关于 功耗、水耗的真实担忧 最后，我们熬过了去年年底 和今年年底，模型本身 及相关配套工具变得明显好多了 和今年年底，模型本身 及相关配套工具变得明显好多了 我是说，你们今早看到 Bob 及相关配套工具变得明显好多了 我是说，你们今早看到 Bob 展示的那些东西，好得多了，以致全世界 我是说，你们今早看到 Bob 展示的那些东西，好得多了，以致全世界</p>
+                <p class="dialogue-en">And then philosophical differences of, AI has stolen the intellectual property from humanity and is leveraging that against us. So, it&#x27;s evil. And real meaningful concerns around power consumption, water consumption. And ultimately, we got through the end of last year and the end of this year where the models themselves and the associated harnesses got so remarkably better. I mean, you saw this stuff from Bob this morning, got so remarkably better that the whole world started</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="91" data-time="00:32:27">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:32:27</span>
+                <span class="dialogue-speaker speaker-guest">那它能为我做什么 然后是理念上的分歧</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">的思维方式都开始转变，包括内部 技术工具的 这种进步开始形成内部势头 而且这有点传染性 我是说，你玩一玩， 而且这有点传染性 我是说，你玩一玩， 转眼就凌晨两点了 我是说，你玩一玩， 转眼就凌晨两点了 你会想，让我再来一次， 转眼就凌晨两点了 你会想，让我再来一次， 你以为让智能体跑个任务， 你会想，让我再来一次， 你以为让智能体跑个任务， 早上回来再看，结果它已经跑完了 你以为让智能体跑个任务， 早上回来再看，结果它已经跑完了 现在你得再来一次，再来一次 早上回来再看，结果它已经跑完了 现在你得再来一次，再来一次 这真的开始帮助推动势头转变</p>
+                <p class="dialogue-en">to shift their mindset, including internally. And so that sort of improvement in the technical tools started to build internal momentum. And it gets to be a little bit infectious. I mean, if you play with it, next thing you know, it&#x27;s two in the morning. And you&#x27;re like, let me just, you know, one more run, and you think you can launch something with your agent and then come back in the morning, but then it finishes. Now you&#x27;ve got to do just one more, one more run.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="92" data-time="00:32:57">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:32:57</span>
+                <span class="dialogue-speaker speaker-guest">那它能为我做什么 然后是理念上的分歧</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">现在你得再来一次，再来一次 这真的开始帮助推动势头转变 我得说，两年半前我们</p>
+                <p class="dialogue-en">That started to really help create that shift in momentum. I&#x27;d say we made a fundamental mistake two</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="93" data-time="00:33:06">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:33:06</span>
+                <span class="dialogue-speaker speaker-guest">犯了一个根本性 错误</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我们先发了一份法律声明， 我们先发了一份法律声明， 大意是“AI，不要把机密</p>
+                <p class="dialogue-en">and a half years ago, which was we led with a legal statement, which is like,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="94" data-time="00:33:10">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:33:10</span>
+                <span class="dialogue-speaker speaker-guest">错误</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我们先发了一份法律声明， 大意是“AI，不要把机密 信息和服务放进去；法律边界是什么； 大意是“AI，不要把机密 信息和服务放进去；法律边界是什么； 向社区提交补丁时要 信息和服务放进去；法律边界是什么； 向社区提交补丁时要 小心，因为我们还不太了解” 向社区提交补丁时要 小心，因为我们还不太了解” 那对任何势头都是致命打击 小心，因为我们还不太了解” 那对任何势头都是致命打击 你知道，作为工程师， 读到那么长的法律文字， 你知道，作为工程师， 读到那么长的法律文字， 唯一理智的反应就是走开 读到那么长的法律文字， 唯一理智的反应就是走开 然后我们意识到犯了个大错， 唯一理智的反应就是走开 然后我们意识到犯了个大错， 把它重写成第二版，更像一段话，</p>
+                <p class="dialogue-en">AI, you know, don&#x27;t put confidential information and services, and what are the legal boundaries, and be careful about when you submit patches to a community, because we don&#x27;t quite understand. That was a death knell to any momentum. You know, as an engineer, reading something that&#x27;s this long legally, the only sane response is to walk away. So, we then realized we made a pretty big mistake and then rewrote the thing to a second draft that was more</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="95" data-time="00:33:40">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:33:40</span>
+                <span class="dialogue-speaker speaker-guest">基本就是说</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">别犯傻 就跟其他事情一样， 别把内部信息放进公共服务里 所以，是的……在这个智能体式 SDLC 阶段，我们开始时有很多起步失误， 也确实受益于外部能力的提升 还有，别从法律声明开始 [笑声] HIGGINS：是的 我们昨天还开玩笑，这就像告诉别人 还有，别从法律声明开始 [笑声] HIGGINS：是的 我们昨天还开玩笑，这就像告诉别人 别把砒霜放进搅拌机</p>
+                <p class="dialogue-en">like a paragraph that basically said, don&#x27;t be stupid. It&#x27;s just like any other thing, don&#x27;t put internal information out into a public service. So, yes, that was...at this agentic SDLC phase, we started, we had a lot of misstarts really benefiting from the shift in capabilities outside. And don&#x27;t start with a legal statement. [ LAUGHTER ]</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="96" data-time="00:34:07">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:34:07</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">还有，别从法律声明开始 [笑声] HIGGINS：是的 我们昨天还开玩笑，这就像告诉别人 别把砒霜放进搅拌机 还有，别从法律声明开始 [笑声] HIGGINS：是的 我们昨天还开玩笑，这就像告诉别人 别把砒霜放进搅拌机 [笑声] 就这一点稍微说几句，也算是聊聊 AI [笑声] HIGGINS：是的 我们昨天还开玩笑，这就像告诉别人 别把砒霜放进搅拌机 [笑声] 就这一点稍微说几句，也算是聊聊 AI 我们昨天还开玩笑，这就像告诉别人 别把砒霜放进搅拌机 [笑声] 就这一点稍微说几句，也算是聊聊 AI 的乐趣，给这场座谈透露一点幕后花絮 我很喜欢播客， 的乐趣，给这场座谈透露一点幕后花絮 我很喜欢播客， 也喜欢听播客来学习 所以我发现， 我很喜欢播客， 也喜欢听播客来学习 所以我发现， 我可以做一个播客来帮我 我很喜欢播客， 也喜欢听播客来学习 所以我发现， 我可以做一个播客来帮我 准备这场座谈 也喜欢听播客来学习 所以我发现， 我可以做一个播客来帮我 准备这场座谈 做完之后，我想我可以给 Rodney 所以我发现， 我可以做一个播客来帮我 准备这场座谈 做完之后，我想我可以给 Rodney 我可以做一个播客来帮我 准备这场座谈 做完之后，我想我可以给 Rodney 做一个，也可以给 Chris 做一个， 做完之后，我想我可以给 Rodney 做一个，也可以给 Chris 做一个， 基于关于他们的公开知识和资料</p>
+                <p class="dialogue-en">Yes. We were joking yesterday, it&#x27;s like telling somebody not to put arsenic in the blender. [ LAUGHTER ] Yes, just a little bit on that, the fun of AI, just a little bit behind the scenes for this panel. I really like podcasts and I like to listen to podcasts to learn. And so I found myself, I realized that I could create a podcast to help me prepare for this panel. And once I did that, I thought I could create one for Rodney and I could create one from Chris that&#x27;s based</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="97" data-time="00:34:30">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:34:30</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">做一个，也可以给 Chris 做一个， 基于关于他们的公开知识和资料 结果我凌晨两点还在给你们做播客， 基于关于他们的公开知识和资料 结果我凌晨两点还在给你们做播客， 不知道你们有没有看到邮件上奇怪 结果我凌晨两点还在给你们做播客， 不知道你们有没有看到邮件上奇怪 的时间戳 不知道你们有没有看到邮件上奇怪 的时间戳 那讲的是组织转型 的时间戳 那讲的是组织转型 但对开发者个人意味着什么 他们的转变是什么样的 但对开发者个人意味着什么 他们的转变是什么样的 我知道每个人都不一样， 他们的转变是什么样的 我知道每个人都不一样， 所以也许你可以谈谈几种不同的类型 我知道每个人都不一样， 所以也许你可以谈谈几种不同的类型 WRIGHT：好 我是说，这真的非常、</p>
+                <p class="dialogue-en">on the world knowledge about them and their profiles. And I found myself at two in the morning creating podcasts for you guys, if you ever saw the weird timestamps on the e-mail. So, that was about the organizational transformation. But what does it mean to the individual developer? What has the transition been like for them? And I know it&#x27;s not the same for everyone, so maybe you can talk about some different archetypes.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="98" data-time="00:34:51">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:34:51</span>
+                <span class="dialogue-speaker speaker-guest">所以也许你可以谈谈几种不同的类型 WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好 我是说，这真的非常、 非常重要</p>
+                <p class="dialogue-en">WRIGHT: Yes. I mean, this has been really, really significant,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="99" data-time="00:34:54">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:34:54</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好 我是说，这真的非常、 非常重要 软件开发 非常重要 软件开发 生命周期不只是写 生命周期不只是写 软件开发 生命周期不只是写 生命周期不只是写 代码 有代码开发、测试 代码 有代码开发、测试 开发、问题陈述规范， 有代码开发、测试 开发、问题陈述规范， 比如市场需求收集 开发、问题陈述规范， 比如市场需求收集 还有所有验证和产品化 还有文档 还有所有验证和产品化 还有文档 所以是一整套东西， 还有文档 所以是一整套东西， 触及所有这些不同 所以是一整套东西， 触及所有这些不同 的人和角色 产品经理在业务部门， 触及所有这些不同 的人和角色 产品经理在业务部门，</p>
+                <p class="dialogue-en">it&#x27;s very important. So, we have, you know, there&#x27;s a software development lifecycle isn&#x27;t just there&#x27;s a software development lifecycle isn&#x27;t just writing code. There&#x27;s code development, there&#x27;s test development, there&#x27;s, like, problem statement specification, like market requirements kind of gathering. There&#x27;s all the validation and productization. There&#x27;s documentation. So, it&#x27;s a whole set of things which touches all these different kind of people and personas.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="100" data-time="00:35:24">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:35:24</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">触及所有这些不同 的人和角色 产品经理在业务部门， 不在我的组织里， 产品经理在业务部门， 不在我的组织里， 但我们在早期阶段密切合作 不在我的组织里， 但我们在早期阶段密切合作 还有支持的长尾 客户来电，你怎么支持 还有支持的长尾 客户来电，你怎么支持 外面有很多讨论说， 客户来电，你怎么支持 外面有很多讨论说， 文档会由 AI 来写，支持也…… 外面有很多讨论说， 文档会由 AI 来写，支持也…… 再也不需要人， 文档会由 AI 来写，支持也…… 再也不需要人， 全由 AI 驱动，这让那些团队害怕 再也不需要人， 全由 AI 驱动，这让那些团队害怕 自己会把自己干到失业 全由 AI 驱动，这让那些团队害怕 自己会把自己干到失业</p>
+                <p class="dialogue-en">We&#x27;ve got product managers that sit in the business unit, which is outside of my organization, but we work kind of hand in glove in the first phases. There&#x27;s the long tail of support. Customer has a call, how do you support that? And there&#x27;s a lot of external conversation that things like documentation will just be written by AI, and support, you just...you&#x27;ll never have a human again, it&#x27;s all AI driven, which made those teams terrified that they were building themselves out of jobs.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="101" data-time="00:35:55">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:35:55</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">然后，开发者…… 先把这部分说完，支持是个好例子， 有很多“你重启 系统了吗”这类问题， 有很多“你重启 系统了吗”这类问题， 人不需要去问另一个人 系统了吗”这类问题， 人不需要去问另一个人 事实上，我们的目标是把 人不需要去问另一个人 事实上，我们的目标是把 所有简单问题直接转回用户， 立即给出答案 所有简单问题直接转回用户， 立即给出答案 所以只有难题才需要人参与， 而这实际上提升了 立即给出答案 所以只有难题才需要人参与， 而这实际上提升了 客户满意度 所以只有难题才需要人参与， 而这实际上提升了 客户满意度 文档写作方面， 客户满意度 文档写作方面， 文档撰写者不一定写所有文档，</p>
+                <p class="dialogue-en">And then, you know, developers as we...well, to finish that part, a good example, support, there&#x27;s a lot of, you know, &quot;did you reboot the system&quot; kind of questions that a human doesn&#x27;t need to ask a person. Like in fact, we have a goal to redirect all of the easy questions right back to the user with an immediate answer. So, it&#x27;s only the hard questions that a human needs to be involved in, and that actually is improving customer satisfaction. On the documentation writing side,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="102" data-time="00:36:26">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:36:26</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">文档写作方面， 文档撰写者不一定写所有文档， 他们更像编辑 文档撰写者不一定写所有文档， 他们更像编辑 所以，这更像是一种更高层次的责任， 他们更像编辑 所以，这更像是一种更高层次的责任， 关乎如何构建和交付内容 所以，这更像是一种更高层次的责任， 关乎如何构建和交付内容 我们在开发早期就开始， 甚至与写代码 关乎如何构建和交付内容 我们在开发早期就开始， 甚至与写代码 关乎如何构建和交付内容 我们在开发早期就开始， 甚至与写代码 阶段交叉，构建一个最终 甚至与写代码 阶段交叉，构建一个最终 需要文档的功能 阶段交叉，构建一个最终 需要文档的功能 开发者方面，一旦我们过了“工具 很烂、其实 干不了活、我的工作很难、我的工作难度</p>
+                <p class="dialogue-en">a doc writer isn&#x27;t necessarily writing all the documents, they&#x27;re considered more of an editor. So, it&#x27;s sort of an up-level type of responsibility for how you build and deliver content. And we start early in the development phases and intersecting even the code writing phase of building something as a feature that you&#x27;re going to ultimately need to document. On the developer side, once we got passed the part of it, the tools actually suck and they can&#x27;t actually do the job, my job is really hard,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="103" data-time="00:36:56">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:36:56</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">永远无法被替代”这个阶段， 我们换了挡，这真的像一场身份危机 我深有同感 我把自己定义为内核开发者， 我深有同感 我把自己定义为内核开发者， 但我现在的工作很不 一样，我并不真的 100% 把时间 我把自己定义为内核开发者， 但我现在的工作很不 一样，我并不真的 100% 把时间 埋在代码库里写代码、读 代码、审代码变更 埋在代码库里写代码、读 代码、审代码变更 我们的开发者也一样，比如我写代码 代码、审代码变更 我们的开发者也一样，比如我写代码 我审社区的补丁 你怎么把那个身份、那套技能</p>
+                <p class="dialogue-en">I could never replace the difficulty of what I do, we shifted gears, and it&#x27;s really like an identity crisis. I could relate to this deeply. I define myself as a kernel developer, and I have a very different job, and I don&#x27;t really spend 100 percent of my time embedded in a code base writing and reading, reviewing code changes. Our developers are the same way, like I write code. I review patches from the community. How can you take that identity, that skill set</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="104" data-time="00:37:37">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:37:37</span>
+                <span class="dialogue-speaker speaker-guest">WRIGHT</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">转化成有价值、甚至令人兴奋、 有趣的东西，</p>
+                <p class="dialogue-en">and translate that into something that&#x27;s valuable, even exciting, like interesting,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="105" data-time="00:37:45">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:37:45</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">首先， 我们有无限的待办事项 我们的工作多到永远做不完 我们有无限的待办事项 我们的工作多到永远做不完 所以你会听到效率之类的话 我们的工作多到永远做不完 所以你会听到效率之类的话 戴上我那个尖头发老板的帽子 所以你会听到效率之类的话 戴上我那个尖头发老板的帽子 你听到效率， 戴上我那个尖头发老板的帽子 你听到效率， 那只意味着一件事， 你听到效率， 那只意味着一件事， 就是裁员， 那只意味着一件事， 就是裁员， 没人想参与效率提升 就是裁员， 没人想参与效率提升 所以效率其实是，如果你有无限多的积压工作， 没人想参与效率提升 所以效率其实是，如果你有无限多的积压工作， 你就能更深入地把积压工作做下去 总有些东西常年 排在取舍线以下</p>
+                <p class="dialogue-en">your flow state can emerge? So, we&#x27;ve kind of framed it as first and foremost, we have an infinite backlog. We have more work than we could ever possibly do. So, you hear things like efficiency. Put my pointy hair boss hat on. You hear things like efficiency, that means one and only one thing, which is like layoffs, and that&#x27;s like nobody wants to participate in efficiency gains. So, efficiency is really, if you have an infinite backlog, you can burn down deeper through your backlog.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="106" data-time="00:38:17">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:38:17</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你就能更深入地把积压工作做下去 总有些东西常年 排在取舍线以下 你就能更深入地把积压工作做下去 总有些东西常年 排在取舍线以下 我们经常说不 排在取舍线以下 我们经常说不 如果我们能说是呢？ 我们经常说不 如果我们能说是呢？ 如果我们能做更多， 如果我们能说是呢？ 如果我们能做更多， 真正以不同方式回应客户请求， 如果我们能做更多， 真正以不同方式回应客户请求， 甚至增长我们能交付给客户的价值呢 那是另一种对话 甚至增长我们能交付给客户的价值呢 那是另一种对话 关乎增长 不是省成本 那是另一种对话 关乎增长 不是省成本 省成本是为了负担增长， 关乎增长 不是省成本 省成本是为了负担增长， 而不是只为底线省钱 省成本是为了负担增长， 而不是只为底线省钱 然后所有这些技能，所有这些对人的理解 而不是只为底线省钱 然后所有这些技能，所有这些对人的理解</p>
+                <p class="dialogue-en">And there&#x27;s always the things that are kind of perennially below the cut line. We say no a lot. What if we could say yes? Like, what if we could do more and actually respond differently to customer requests and even grow value that we can deliver to customers? That&#x27;s a different kind of conversation. It&#x27;s about growth. It&#x27;s not about cost savings. Cost savings is to afford the growth rather than to just cost save for bottom line only. And then all those skills, all that human understanding.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="107" data-time="00:38:48">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:38:48</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">如果你让一个新同事 加入团队，会发生大量 经验传承 你怎么把它形式化到比如 Markdown 文件里 写下项目里“好”是什么样 你的工作一部分是 定义它，构建出能落实这个定义的机制； 下一部分是维护它， 并端到端地在这个工作流中监督 所有流经的工作。 并端到端地在这个工作流中监督 所有流经的工作。 我们的目标是让提交经过系统时获得完全信任， 所有流经的工作。 我们的目标是让提交经过系统时获得完全信任，</p>
+                <p class="dialogue-en">If you onboard a new associate into a team, there&#x27;s a bunch of tribal knowledge transfer that&#x27;s happening. How do you formalize that in like markdown files? Write down what good looks like in a project. Part of your job is defining that, building the harness that creates that definition, and then the next part of your job is maintaining it and then working end to end through this workflow to supervise all the work flowing through that where our goal is to get to this kind of total confidence</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="108" data-time="00:39:25">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:39:25</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">无需 100% 人工监督—— 无需 100% 人工监督—— 这意味着你必须改变自己的身份 人工监督—— 这意味着你必须改变自己的身份 你的工作不是写所有代码； 事实上，作为维护者，也许鲜为人知， 你其实不写那么多代码 你审的远多于你写的， 因为有很多提交进来 你其实不写那么多代码 你审的远多于你写的， 因为有很多提交进来 如果我们能加速开发， 因为有很多提交进来 如果我们能加速开发， 那我们也需要加速补丁审查 所以你怎么帮助定义品味标准， 如果我们能加速开发， 那我们也需要加速补丁审查 所以你怎么帮助定义品味标准，</p>
+                <p class="dialogue-en">in submissions going through a system without 100 percent human oversight, it means you have to change your identity. Your job isn&#x27;t write all the code; and in fact, as a maintainer, maybe a little known fact, you don&#x27;t actually write that much code. You review way more than you write because you&#x27;ve got all these submissions coming in. And if we can speed up development, well, we also need to speed up patch reviews. So, how can you help define the taste standards, which,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="109" data-time="00:39:55">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:39:55</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这不只是花括号放哪里、用 空格还是制表符 这不只是花括号放哪里、用 空格还是制表符 它更偏架构，比如偏好简单而非复杂； 它更偏架构，比如偏好简单而非复杂； 空格还是制表符 它更偏架构，比如偏好简单而非复杂； 它更偏架构，比如偏好简单而非复杂； 用辅助函数而不是复制粘贴， 它更偏架构，比如偏好简单而非复杂； 它更偏架构，比如偏好简单而非复杂； 用辅助函数而不是复制粘贴， 你知道， 这样会把代码库搞得一团糟 你知道， 这样会把代码库搞得一团糟 现在的任务 这样会把代码库搞得一团糟 现在的任务 就是将这种理念灌输到智能体式系统中， 现在的任务 就是将这种理念灌输到智能体式系统中， 这就像是重新定义 就是将这种理念灌输到智能体式系统中， 这就像是重新定义 了你作为开发者的身份 这就像是重新定义 了你作为开发者的身份 参与其中真是太棒了 了你作为开发者的身份 参与其中真是太棒了 就个人而言，我写更多代码， 参与其中真是太棒了 就个人而言，我写更多代码， 或至少更多</p>
+                <p class="dialogue-en">it&#x27;s not just where you put curly braces and is it spaces or tabs. It&#x27;s more architectural, like prefer simplicity It&#x27;s more architectural, like prefer simplicity over complexity; use helper functions over like copy and paste, you know, creating a spaghetti mess of your code base. You know, instilling that into the agentic system is now the job, and it&#x27;s like it&#x27;s a redefinition of your identity as a developer. And it&#x27;s been fascinating to participate in. You know, personally, I get to write more code</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="110" data-time="00:40:24">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:40:24</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">就个人而言，我写更多代码， 或至少更多 参与代码创作过程 或至少更多 参与代码创作过程 我们那些最深度使用 参与代码创作过程 我们那些最深度使用 AI 的工程师—— 我们那些最深度使用 AI 的工程师—— 用通俗的话说就是“AI 上头”—— 这种氛围会传染 比如，你看到他们能做什么 我们与外部项目紧密合作 今早我提到 OpenShell 和 OpenClaw OpenClaw 项目的发展 今早我提到 OpenShell 和 OpenClaw OpenClaw 项目的发展 速度确实令人惊叹 OpenClaw 项目的发展 速度确实令人惊叹 如果你们当中有人曾经构建过依赖 速度确实令人惊叹 如果你们当中有人曾经构建过依赖</p>
+                <p class="dialogue-en">or at least participate in the code authoring process more. And our engineers that are, I think the vernacular is AI-pilled, our engineers that are most AI-pilled are, it&#x27;s infectious. Like, you see what they&#x27;re able to do. We work very closely with external projects. I mentioned this morning OpenShell and OpenClaw. The OpenClaw project is truly remarkable in how fast it can move. And if any of you have ever built something that&#x27;s</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="111" data-time="00:41:00">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:41:00</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">于同步数据流的分布式系统， 然后将其转换为异步数据流，那么这确实是一个 相当棘手的问题 然后将其转换为异步数据流，那么这确实是一个 相当棘手的问题 这通常要花很长时间 你可以把它规划成一个为期 相当棘手的问题 这通常要花很长时间 你可以把它规划成一个为期 相当棘手的问题 这通常要花很长时间 你可以把它规划成一个为期 一年的转型项目 你可以把它规划成一个为期 一年的转型项目 而 OpenClaw 用几周就做到了： 一年的转型项目 而 OpenClaw 用几周就做到了： 一个定义清晰的提示词、 而 OpenClaw 用几周就做到了： 一个定义清晰的提示词、 一些监督、数百个补丁； 而且一路多次公开发布， 所以任何时点都没出现过故障 这并非易事，尤其是在如此短的时间内</p>
+                <p class="dialogue-en">distributed and dependent on synchronous data flows and then transitioned that into asynchronous data flows, it&#x27;s quite a hard problem. It usually takes a really long time. You could spec it out as like a one-year-long project to do this transformation. This is something that OpenClaw has done over a couple of weeks with a well-defined prompt, some oversight and hundreds of patches; and then, all along the way multiple public releases so it&#x27;s never broken at any point in time.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="112" data-time="00:41:30">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:41:30</span>
+                <span class="dialogue-speaker speaker-guest">让你能进入心流状态 我们是这样框定的</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">所以任何时点都没出现过故障 这并非易事，尤其是在如此短的时间内 所以，当你开始看到这些， 那……很不可思议，也很鼓舞人 所以，当你开始看到这些， 那……很不可思议，也很鼓舞人 所以，是的，总会有唱衰的人。 那……很不可思议，也很鼓舞人 所以，是的，总会有唱衰的人。 但真正的变化在于 所以，是的，总会有唱衰的人。 但真正的变化在于 身份转变：</p>
+                <p class="dialogue-en">That is not easy to do, certainly in that time scale. So, when you start to see that, that&#x27;s...it&#x27;s incredible and it&#x27;s inspiring. And so, yes, we will always have the naysayers, but the identity transformation</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="113" data-time="00:41:44">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:41:44</span>
+                <span class="dialogue-speaker speaker-guest">但真正的变化在于 身份转变</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">看到你能用新的工具组合做到什么，</p>
+                <p class="dialogue-en">and seeing what you&#x27;re capable</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="114" data-time="00:41:46">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:41:46</span>
+                <span class="dialogue-speaker speaker-guest">身份转变</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">看到你能用新的工具组合做到什么， 看到你必须如何重新定义 看到你能用新的工具组合做到什么， 看到你必须如何重新定义 自己的工作形态——甚至到我们招聘时， 看到你必须如何重新定义 自己的工作形态——甚至到我们招聘时， 职位描述和对所需技能 自己的工作形态——甚至到我们招聘时， 职位描述和对所需技能 的预期都变了 职位描述和对所需技能 的预期都变了 这就是我们作为个体开发者、 的预期都变了 这就是我们作为个体开发者、</p>
+                <p class="dialogue-en">of leveraging a new tool set and how you have to redefine what your work looks like, even to the point that we&#x27;ve changed our job descriptions when we hire people and the expectations for what skills we need. That&#x27;s where we are as individual developers</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="115" data-time="00:42:04">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:42:04</span>
+                <span class="dialogue-speaker speaker-host">文档撰写者或支持工程师的现状 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的 所以，你虽然没有直接说出来，</p>
+                <p class="dialogue-en">or documentation writers or support engineers.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="116" data-time="00:42:07">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:42:07</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的 所以，你虽然没有直接说出来， 但从你的回答中已经隐含了意思 这是非常难的转型，对吧</p>
+                <p class="dialogue-en">Yes.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="117" data-time="00:42:07">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:42:07</span>
+                <span class="dialogue-speaker speaker-host">文档撰写者或支持工程师的现状 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的 所以，你虽然没有直接说出来， 但从你的回答中已经隐含了意思 这是非常难的转型，对吧</p>
+                <p class="dialogue-en">So, you didn&#x27;t say it directly,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="118" data-time="00:42:08">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:42:08</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">是的 所以，你虽然没有直接说出来， 但从你的回答中已经隐含了意思 这是非常难的转型，对吧 是的 所以，你虽然没有直接说出来， 但从你的回答中已经隐含了意思 这是非常难的转型，对吧 不是某天决定“我要成为以 AI 为 这是非常难的转型，对吧 不是某天决定“我要成为以 AI 为 核心的开发者”， 不是某天决定“我要成为以 AI 为 核心的开发者”， 然后你就自然而然就成为那样的人 核心的开发者”， 然后你就自然而然就成为那样的人 这是多年的旅程，对吧 WRIGHT：是的 我的意思是，到了那个地步，你试用一个工具，结果发现它很糟糕 然后你就自然而然就成为那样的人 这是多年的旅程，对吧 WRIGHT：是的 我的意思是，到了那个地步，你试用一个工具，结果发现它很糟糕 一旦你做出决定，就绝不回头 以前这行得通 一旦你做出决定，就绝不回头 以前这行得通 你试用一个工具， 觉得很糟糕，但你明天还得再试一次， 以前这行得通 你试用一个工具， 觉得很糟糕，但你明天还得再试一次， 因为它可能非常棒 所以，你得不断挑战自己的假设； 你试用一个工具， 觉得很糟糕，但你明天还得再试一次， 因为它可能非常棒 所以，你得不断挑战自己的假设；</p>
+                <p class="dialogue-en">but it&#x27;s kind of implied by the answer. It&#x27;s a really hard transformation, right? It&#x27;s not a transformation that you just decide one day, I&#x27;m going to be an AI-centric developer, and then you&#x27;re just there. It&#x27;s a multi-year journey, right? WRIGHT: Yes. I mean, to that point, you try a tool, it sucks. You draw a conclusion, you never look back. That used to work. Now you try a tool, it sucks, you&#x27;ve got to try it again tomorrow because it could be amazing. So, you&#x27;ve got to keep challenging your assumptions;</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="119" data-time="00:42:35">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:42:35</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">而在其中，你知道， 你在挑战自己的假设， 这就是旅程的一部分 而在其中，你知道， 你在挑战自己的假设， 这就是旅程的一部分 你用今天的科技，真的创造出了很棒的东西…… 你在挑战自己的假设， 这就是旅程的一部分 你用今天的科技，真的创造出了很棒的东西…… 我的意思是，真的是今天的科技 你用今天的科技，真的创造出了很棒的东西…… 我的意思是，真的是今天的科技 两个月后， 你就得回去重新审视 我的意思是，真的是今天的科技 两个月后， 你就得回去重新审视 你知道，曾经有一段时间， 你必须给模型非常清晰的指导 两个月后， 你就得回去重新审视 你知道，曾经有一段时间， 你必须给模型非常清晰的指导 两个月后， 你就得回去重新审视 你知道，曾经有一段时间， 你必须给模型非常清晰的指导 如果不给清晰指导， 你必须给模型非常清晰的指导 如果不给清晰指导， 你就会出现幻觉，得到垃圾输出 如果不给清晰指导， 你就会出现幻觉，得到垃圾输出 随着时间推移，最佳实践出现了， 你就会出现幻觉，得到垃圾输出 随着时间推移，最佳实践出现了， 比如其实要少给指导 随着时间推移，最佳实践出现了， 比如其实要少给指导 本质上让模型有更多自由</p>
+                <p class="dialogue-en">and in that, you know, you&#x27;re challenging your assumptions, that that is part of the journey. You build something, it&#x27;s amazing, with today&#x27;s...I mean, literally today&#x27;s technology. Two months from now, you&#x27;re going to have to go back and revisit. You know, there was a point in time where you had to give really clear guidance to models. If you didn&#x27;t give clear guidance, you&#x27;d get hallucinations and slop. Over time, best practices emerged as like, actually give less guidance.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="120" data-time="00:43:01">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:01</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">比如其实要少给指导 本质上让模型有更多自由 所以这些最佳实践出现 得很快，而作为一个组织能保持 好奇和敏捷并不容易 我的意思是，我们会变得僵化 好奇和敏捷并不容易 我的意思是，我们会变得僵化 我们会对现有的工作方式感到安逸 我的意思是，我们会变得僵化 我们会对现有的工作方式感到安逸 你知道，改变很难 我们会对现有的工作方式感到安逸 你知道，改变很难 我们都是普通人，改变很难 你知道，改变很难 我们都是普通人，改变很难 我想，我们在某种程度 我们都是普通人，改变很难 我想，我们在某种程度 上天生就会抗拒改变 我想，我们在某种程度 上天生就会抗拒改变 所以，想清楚如何在这个过程 上天生就会抗拒改变 所以，想清楚如何在这个过程 中保持理智和个人身份感， 这是一段旅程</p>
+                <p class="dialogue-en">Let the model take more liberties, essentially. So, there&#x27;s these emergent best practices that happen quickly, and being able to be curious and agile as an organization is not easy. I mean, we get calcified. We get pretty comfortable in how we work. And you know, change is hard. We&#x27;re all human, change is difficult. We&#x27;re kind of, I guess, pre-wired to, on some level, resist change. So, figuring out how to maintain your sanity and your sense of personal identity</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="121" data-time="00:43:34">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:34</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">中保持理智和个人身份感， 这是一段旅程 这需要时间 HIGGINS：这很好地引出了最后一个问题</p>
+                <p class="dialogue-en">through that, it is a journey.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="122" data-time="00:43:36">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:36</span>
+                <span class="dialogue-speaker speaker-host">这是一段旅程 这需要时间 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这很好地引出了最后一个问题 那么，Rodney，</p>
+                <p class="dialogue-en">It takes a while.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="123" data-time="00:43:37">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:37</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这很好地引出了最后一个问题 那么，Rodney， 作为一个经历过重大个人</p>
+                <p class="dialogue-en">So, that&#x27;s a great bridge to the last question.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="124" data-time="00:43:39">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:39</span>
+                <span class="dialogue-speaker speaker-host">这需要时间 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这很好地引出了最后一个问题 那么，Rodney， 作为一个经历过重大个人 重塑、职业重塑的人，而且你也是开发者，</p>
+                <p class="dialogue-en">So, Rodney, as someone who&#x27;s gone</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="125" data-time="00:43:40">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:40</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">这很好地引出了最后一个问题 那么，Rodney， 作为一个经历过重大个人 重塑、职业重塑的人，而且你也是开发者， 那么，Rodney， 作为一个经历过重大个人 重塑、职业重塑的人，而且你也是开发者， 你想对这些开发者说什么 重塑、职业重塑的人，而且你也是开发者， 你想对这些开发者说什么 MULLEN：你刚才讲的这些，内容很多，</p>
+                <p class="dialogue-en">through significant personal reinvention, professional reinvention, and you&#x27;re also a developer, what would you say to these developers?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="126" data-time="00:43:47">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:47</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你刚才讲的这些，内容很多，</p>
+                <p class="dialogue-en">That&#x27;s a lot, what you just laid out,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="127" data-time="00:43:57">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:57</span>
+                <span class="dialogue-speaker speaker-host">真正意味着什么 HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好</p>
+                <p class="dialogue-en">what it really means.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="128" data-time="00:43:59">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:43:59</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">好 用 Fedora 吧 我只是在说…… 用 Fedora 吧 我只是在说…… [笑声] MULLEN：身份的构成是什么？ 我只是在说…… [笑声] MULLEN：身份的构成是什么？</p>
+                <p class="dialogue-en">Okay. Use Fedora. I&#x27;m just putting... [ LAUGHTER ]</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="129" data-time="00:44:07">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:44:07</span>
+                <span class="dialogue-speaker speaker-guest">MULLEN</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我只是在说…… [笑声] MULLEN：身份的构成是什么？ 对不对？ 首先，我会把它摆出来 是分层的 对不对？ 首先，我会把它摆出来 是分层的 永远不要忽视我们分层的本质 对不对？ 首先，我会把它摆出来 是分层的 永远不要忽视我们分层的本质 我想这就是我接下来要说的整体结构： 首先，我会把它摆出来 是分层的 永远不要忽视我们分层的本质 我想这就是我接下来要说的整体结构：</p>
+                <p class="dialogue-en">What are the constituents of identity? Right? For me, first I&#x27;ll lay it out. So, layered. Never lose sight of our layered nature.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="130" data-time="00:44:17">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:44:17</span>
+                <span class="dialogue-speaker speaker-guest">是分层的 永远不要忽视我们分层的本质 我想这就是我接下来要说的整体结构</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我已经从眼睛这一点举了几个例子，</p>
+                <p class="dialogue-en">I think that&#x27;s the overall structure of what I&#x27;m</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="131" data-time="00:44:19">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:44:19</span>
+                <span class="dialogue-speaker speaker-guest">我想这就是我接下来要说的整体结构</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我已经从眼睛这一点举了几个例子， 对吧 我已经从眼睛这一点举了几个例子， 对吧 看东西 对吧 看东西 每当我们学习新事物时， 看东西 每当我们学习新事物时， 我们都会在不知不觉中吸收各种各样的东西 这会进入应对恐惧的部分 那是我们自身的一部分 就像你说的，我们在某种程度上天生抗拒改变 那是我们自身的一部分 就像你说的，我们在某种程度上天生抗拒改变 我们天生就会远离危险 就像你说的，我们在某种程度上天生抗拒改变 我们天生就会远离危险 我们天生寻求舒适 我们天生就会远离危险 我们天生寻求舒适 你必须接纳大量不适 我们天生寻求舒适 你必须接纳大量不适 你必须努力驯服、磨掉自己 身上一些你甚至不知道存在的部分</p>
+                <p class="dialogue-en">about to say, is I&#x27;ve laid out a couple from the eyes, right? Looking at stuff. Whenever we learn something, we are ingraining all kinds of stuff that slides in under the cognitive radar. That goes and goes into dealing with fear. That&#x27;s part of ourselves. Like you say, we&#x27;re wired to resist change to some extent. We&#x27;re wired to keep ourselves away from danger. We&#x27;re kind of wired to seek out comfort. You have to embrace so much discomfort. You have to work and tame and grind down elements</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="132" data-time="00:44:55">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:44:55</span>
+                <span class="dialogue-speaker speaker-guest">我想这就是我接下来要说的整体结构</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你必须努力驯服、磨掉自己 身上一些你甚至不知道存在的部分 改变时，你必须跟自己较劲 改变时，你必须跟自己较劲 身上一些你甚至不知道存在的部分 改变时，你必须跟自己较劲 改变时，你必须跟自己较劲 那对我来说，只是学跳下小台阶， 或者第一条小 扶手之类 然后你会想，哇，我不知道我内心 或者第一条小 扶手之类 然后你会想，哇，我不知道我内心 深处竟然有这么抗拒它 然后你会想，哇，我不知道我内心 深处竟然有这么抗拒它 所以，我们想获得的技能， 深处竟然有这么抗拒它 所以，我们想获得的技能，</p>
+                <p class="dialogue-en">of yourself that you didn&#x27;t even really know were there. You have to push up against yourself when you change. You have to push up against yourself when you change. And that&#x27;s me just learning to pop down baby sets of stairs or the first little handrail or something like that. And you&#x27;re like, whoa, I didn&#x27;t know this part of myself was so resistant to it. So, the skill sets that we want to acquire,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="133" data-time="00:45:22">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:45:22</span>
+                <span class="dialogue-speaker speaker-guest">要区分一下</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">想想灌输与习得知识 想想灌输与习得知识 你想学东西， 想想灌输与习得知识 你想学东西， 学编程、学滑板 你想学东西， 学编程、学滑板 你就去做 学编程、学滑板 你就去做 学习这方面有客观原因， 你就去做 学习这方面有客观原因， 也有明确的学习路径 学习这方面有客观原因， 也有明确的学习路径 但还有被灌输的东西，我们吸收的东西， 也有明确的学习路径 但还有被灌输的东西，我们吸收的东西， 比如眼睛看哪里，我们甚至没意识到自己 学到了 它们以不同速度一起变化 直到你不得不把它拆解开来， 从头开始，你才会知道它灌输了什么</p>
+                <p class="dialogue-en">there&#x27;s a distinction between, think of inculcation versus acquired knowledge. You want to learn something, learn to code, learn to skate. You go at it. There are objective reasons, there are linear paths to what it takes to learn that. But then there&#x27;s inculcated stuff, things that we take on, such as the eyes, things we don&#x27;t even realize we&#x27;re getting them. Those move together at different rates. And you don&#x27;t know what&#x27;s inculcated until you have to take it apart and start afresh and new.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="134" data-time="00:45:59">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:45:59</span>
+                <span class="dialogue-speaker speaker-guest">要区分一下</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">所以，当我学习的时候，当我……一切都从这里开始 有人要求我在一个非常特殊的时刻从 自由式转到街头滑板 我记得是在弗吉尼亚海滩 自由式转到街头滑板 我记得是在弗吉尼亚海滩 大佬 Stacy Peralta、Powell 我记得是在弗吉尼亚海滩 大佬 Stacy Peralta、Powell 我记得是在弗吉尼亚海滩 大佬 Stacy Peralta、Powell 的一些高层飞过来， Peralta、Powell 的一些高层飞过来， 说我们要你改变方向，因为这对滑板有好处， 的一些高层飞过来， 说我们要你改变方向，因为这对滑板有好处， 因为那是它的发展道路 说我们要你改变方向，因为这对滑板有好处， 因为那是它的发展道路 我曾经非常执着于自己的身份认同， 因为那是它的发展道路 我曾经非常执着于自己的身份认同， 但这就是我所做的事 我曾经非常执着于自己的身份认同， 但这就是我所做的事 自由式是我做的事 但这就是我所做的事 自由式是我做的事 我不能离开它 自由式是我做的事 我不能离开它 我会觉得对不起它 然后你可能会说，哦天哪， 我不能离开它 我会觉得对不起它 然后你可能会说，哦天哪，</p>
+                <p class="dialogue-en">So, as I learn, as I...it begins with this. I was asked to switch from freestyle to street skating at a very distinctive time. [Crystal in memory] in Virginia Beach. Big dog Stacy Peralta, some of the brass from Powell flew out, and we want you to change direction, because it&#x27;s going to be good for skateboarding, because that&#x27;s its path. And I was so entrenched in terms of identity, but this is what I do. Freestyle is what I do. I can&#x27;t leave that. I&#x27;ll feel unfaithful to that.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="135" data-time="00:46:34">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:46:34</span>
+                <span class="dialogue-speaker speaker-guest">要区分一下</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我不能离开它 我会觉得对不起它 然后你可能会说，哦天哪， 功耗，这件事可能 然后你可能会说，哦天哪， 功耗，这件事可能 感觉从根本上就不对 功耗，这件事可能 感觉从根本上就不对 同样，我从骨子里觉得，奇怪的是， 感觉从根本上就不对 同样，我从骨子里觉得，奇怪的是， 这在道德上是错的 我不能改变 同样，我从骨子里觉得，奇怪的是， 这在道德上是错的 我不能改变 同样，我从骨子里觉得，奇怪的是， 这在道德上是错的 我不能改变 我会变得不完整 我不能改变 我会变得不完整 过了好几年，甚至不止两年，我才意识到， 我会变得不完整 过了好几年，甚至不止两年，我才意识到， 哦，你猜怎么着 他们不再办自由式比赛了 哦，你猜怎么着 他们不再办自由式比赛了 没人在乎了 他们不再办自由式比赛了 没人在乎了 你这个白痴，能不能明白我的意思 没人在乎了 你这个白痴，能不能明白我的意思 你知道吗？ 你这个白痴，能不能明白我的意思 你知道吗？ 于是我在这里，</p>
+                <p class="dialogue-en">And then where you may describe like, oh, my gosh, well, power consumption, there&#x27;s something maybe that feels fundamentally wrong about this thing. Well, likewise, I felt it fundamentally, weirdly, ethically wrong. I can&#x27;t change. I&#x27;ll be less of a person type of thing. It took a couple of years, more than a couple of years, to realize, oh, guess what? They stopped having freestyle contests. Nobody cares anymore. Like, would you get the message, you idiot? You know?</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="136" data-time="00:47:06">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:47:06</span>
+                <span class="dialogue-speaker speaker-guest">要区分一下</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你知道吗？ 于是我在这里， 天哪，我早该转的， 于是我在这里， 天哪，我早该转的， 但我的原则让我远离它 天哪，我早该转的， 但我的原则让我远离它 事实是，我是不是有点 害怕承担这一切 好的 事实是，我是不是有点 害怕承担这一切 好的 重新学习很糟 事实是，我是不是有点 害怕承担这一切 好的 重新学习很糟 这很可怕，就是这些 害怕承担这一切 好的 重新学习很糟 这很可怕，就是这些 好的 重新学习很糟 这很可怕，就是这些 就是，是啊，是啊 而且我会落后，对吧 这很可怕，就是这些 就是，是啊，是啊 而且我会落后，对吧 这很可怕，就是这些 就是，是啊，是啊 而且我会落后，对吧 这是个大问题 而且我会落后，对吧 这是个大问题 嗯，当我开始的时候，我已经讲了一些故事了， 这是个大问题 嗯，当我开始的时候，我已经讲了一些故事了， 一切都要重新开始， 嗯，当我开始的时候，我已经讲了一些故事了， 一切都要重新开始， 在公众面前表现糟糕， 一切都要重新开始， 在公众面前表现糟糕， 最主要的一点就是，我想做这件事 在公众面前表现糟糕， 最主要的一点就是，我想做这件事</p>
+                <p class="dialogue-en">And so here I am, like, man, I should have gone a long time ago, but my principles kept me away from it. Well, the truth is, was I a little bit afraid to take on all this stuff? Yes, of course. It sucks to learn again. And it&#x27;s scary, and it&#x27;s all this stuff. It&#x27;s like, yeah, yeah. And I&#x27;ll be behind, right? That was a big one. Well, as I embarked, and I&#x27;ve told a little bit of the story now, just starting over again, sucking in public, the very, the big one was like, I want to do this.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="137" data-time="00:47:41">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:47:41</span>
+                <span class="dialogue-speaker speaker-guest">要区分一下</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">我想做这件事 我已加入 这个决定对你们所有 我想做这件事 我已加入 这个决定对你们所有 人都一样。因为我们滑板时带着…… 这个决定对你们所有 人都一样。因为我们滑板时带着…… 怎么说呢……让我换个说法： 人都一样。因为我们滑板时带着…… 怎么说呢……让我换个说法： 这也是我滑了这么多年、有幸认识几代 来来往往的最优秀 滑手后学到的又一个小教训 来来往往的最优秀 滑手后学到的又一个小教训 我明白这一点 滑手后学到的又一个小教训 我明白这一点 我们是最有天赋、 最有技能的人……他们和我一样， 我明白这一点 我们是最有天赋、 最有技能的人……他们和我一样， 为自己的事业而活 我明白这一点 我们是最有天赋、 最有技能的人……他们和我一样， 为自己的事业而活 它会成为你的身份象征 我们是最有天赋、 最有技能的人……他们和我一样， 为自己的事业而活 它会成为你的身份象征 你因此出名 最有技能的人……他们和我一样， 为自己的事业而活 它会成为你的身份象征 你因此出名 为自己的事业而活 它会成为你的身份象征 你因此出名 你周游世界 你会收获这些 而且还有一些细微的变化 你因此出名 你周游世界 你会收获这些 而且还有一些细微的变化 我们最初爱上它，是因为它的本质，</p>
+                <p class="dialogue-en">I want to do this. I&#x27;m in. That decision, to all of you, because we skate with our...what is it...let me put it this way, too, it&#x27;s another little lesson from having skated so long and having the privilege of knowing the best skaters ever in multiple generations that come and go. And I see this. We&#x27;re the most talented, skilled people in ever...they&#x27;re just like me, we live for what we do. And it becomes your identity. You&#x27;re known for that. You travel all around.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="138" data-time="00:48:15">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:48:15</span>
+                <span class="dialogue-speaker speaker-guest">要区分一下</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你因此出名 你周游世界 你会收获这些 而且还有一些细微的变化 我们最初爱上它，是因为它的本质， 你周游世界 你会收获这些 而且还有一些细微的变化 我们最初爱上它，是因为它的本质， 因为我们仰慕其中一些人物 我们最初爱上它，是因为它的本质， 因为我们仰慕其中一些人物 然后我们成了那个人 因为我们仰慕其中一些人物 然后我们成了那个人 然后你周游世界 然后我们成了那个人 然后你周游世界 还有这种狡猾的手法 这在《洛奇》电影里都有 然后你周游世界 还有这种狡猾的手法 这在《洛奇》电影里都有 在 [电影] 中随处可见 然后你周游世界 还有这种狡猾的手法 这在《洛奇》电影里都有 在 [电影] 中随处可见 最初推动你做这件事的动力， 还有这种狡猾的手法 这在《洛奇》电影里都有 在 [电影] 中随处可见 最初推动你做这件事的动力， 这在《洛奇》电影里都有 在 [电影] 中随处可见 最初推动你做这件事的动力， 会在过程中悄悄 被浇灭；因为不知不觉间， 会在过程中悄悄 被浇灭；因为不知不觉间， 你做这件事的 原因似乎被调了包 被浇灭；因为不知不觉间， 你做这件事的 原因似乎被调了包</p>
+                <p class="dialogue-en">You get these. And there&#x27;s subtle changes. We first fell in love with it because of its nature and because we looked up to some of these characters. And then we became that person. And then you&#x27;re traveling all around. And this tricky sleight of hand. It&#x27;s all in the Rocky movies. It&#x27;s in [movies] all over the place. There&#x27;s a subtle change of what fueled you to do what you do gets quenched along the way because somehow surreptitiously it&#x27;s like there&#x27;s been this switcheroo</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="139" data-time="00:48:42">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:48:42</span>
+                <span class="dialogue-speaker speaker-guest">要区分一下</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">被浇灭；因为不知不觉间， 你做这件事的 原因似乎被调了包 好吧，现在我不得不这么做，因为大家都希望我这么做， 原因似乎被调了包 好吧，现在我不得不这么做，因为大家都希望我这么做， 或者因为这是我自己的选择 好吧，现在我不得不这么做，因为大家都希望我这么做， 或者因为这是我自己的选择 你得回到最初， 找回当初吸引你的东西 或者因为这是我自己的选择 你得回到最初， 找回当初吸引你的东西 当你改变某件事的时候，是什么吸引你去做这件事呢？ 或者因为这是我自己的选择 你得回到最初， 找回当初吸引你的东西 当你改变某件事的时候，是什么吸引你去做这件事呢？ 那是因为你热爱做这件事 你得回到最初， 找回当初吸引你的东西 当你改变某件事的时候，是什么吸引你去做这件事呢？ 那是因为你热爱做这件事 找回当初吸引你的东西 当你改变某件事的时候，是什么吸引你去做这件事呢？ 那是因为你热爱做这件事 反正你迟早都会这么做 那是因为你热爱做这件事 反正你迟早都会这么做 这就是你之所以成为 反正你迟早都会这么做 这就是你之所以成为 你的原因，只是换了一种形式 这就是你之所以成为 你的原因，只是换了一种形式 所以一旦你下了这个决心， 就得面对自身层层 你的原因，只是换了一种形式 所以一旦你下了这个决心， 就得面对自身层层 你的原因，只是换了一种形式 所以一旦你下了这个决心， 就得面对自身层层 本性带来的所有阻力：天哪，</p>
+                <p class="dialogue-en">that took place of why you did it. Well, now I have to do it because everyone expects me to do it, or because it&#x27;s my pick. Well, what drew you, you have to get in touch with that in the begin with. When you&#x27;re changing something, what drew you, this is because you love doing it. That&#x27;s what you&#x27;d be doing anyway. This is what&#x27;s defined you, it&#x27;s just taking a different form. So, once you make that decision, you will face all the headwinds</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="140" data-time="00:49:06">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:49:06</span>
+                <span class="dialogue-speaker speaker-guest">就得面对自身层层 本性带来的所有阻力</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">天哪， 我居然都没意识到</p>
+                <p class="dialogue-en">of these layered natures of, oh, my gosh,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="141" data-time="00:49:08">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:49:08</span>
+                <span class="dialogue-speaker speaker-guest">本性带来的所有阻力</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">天哪， 我居然都没意识到 我以前养成的做事方式实际上 我居然都没意识到 我以前养成的做事方式实际上 阻碍了我的进步 我不得不转变思路， 而我之前并没有真正意识到自己会面临这种情况 一旦你这么做了，一旦你开始在这方面 取得进展，那么事情就会好转 一旦你这么做了，一旦你开始在这方面 取得进展，那么事情就会好转 我用自己的经历告诉你， 取得进展，那么事情就会好转 我用自己的经历告诉你， 如果我当时放弃——相信我， 我那时有很多理由放弃 如果我当时放弃——相信我， 我那时有很多理由放弃 很坦白地说，很大一部分原因是， 我那时有很多理由放弃 很坦白地说，很大一部分原因是， 我是我做的事里最棒的 能就此放弃也不错 很坦白地说，很大一部分原因是， 我是我做的事里最棒的 能就此放弃也不错 很坦白地说，很大一部分原因是， 我是我做的事里最棒的 能就此放弃也不错 你不想成为那种屡次重蹈覆辙的人，</p>
+                <p class="dialogue-en">I didn&#x27;t even realize. The way I learned to do things before is actually militating against my progress. And I have to shift gears at level I didn&#x27;t really realize, know I&#x27;d face that. And once you do that, once you start to get traction in doing that, then things come back. And I will tell you from my own experience, had I quit, and believe me, there were a lot of reasons to quit when I did. A lot of it, very frankly, is I was the best at what I did. It&#x27;s kind of good to walk away with that.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="142" data-time="00:49:43">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:49:43</span>
+                <span class="dialogue-speaker speaker-guest">本性带来的所有阻力</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">能就此放弃也不错 你不想成为那种屡次重蹈覆辙的人， 他早就应该停止这种行为了 你不想成为那种屡次重蹈覆辙的人， 他早就应该停止这种行为了 这对我来说很可怕 他早就应该停止这种行为了 这对我来说很可怕 如果我当时就此放弃，屈服于那些恐惧， 这对我来说很可怕 如果我当时就此放弃，屈服于那些恐惧， 而没有接受这一切所带来的谦逊， 相信我，这真的不容易 相信我，这真的不容易 我逐渐发现，天哪， 我拥有这些很难通过其他途径 我逐渐发现，天哪， 我拥有这些很难通过其他途径 获得的技能 我拥有这些很难通过其他途径 获得的技能 我还有一些自己都没 意识到的王牌， 获得的技能 我还有一些自己都没 意识到的王牌， 我可以以全新的方式运用它们， 获得的技能 我还有一些自己都没 意识到的王牌， 我可以以全新的方式运用它们， 从而重新定义我最初热爱的事物 我还有一些自己都没 意识到的王牌， 我可以以全新的方式运用它们， 从而重新定义我最初热爱的事物</p>
+                <p class="dialogue-en">You don&#x27;t want to be the guy that keeps going back and he should have stopped a long time ago. And that is terrifying for me. Had I quit with that and succumbed to those fears and not embrace the humility of all it took; and trust me, it&#x27;s a lot. and trust me, it&#x27;s a lot. I gradually uncovered, oh, my gosh, I have these skill sets that are so hard to acquire otherwise. And I have aces up my sleeve that I didn&#x27;t even realize they were there, and I can apply them in new ways</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="143" data-time="00:50:12">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:50:12</span>
+                <span class="dialogue-speaker speaker-guest">本性带来的所有阻力</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">意识到的王牌， 我可以以全新的方式运用它们， 从而重新定义我最初热爱的事物 它会带我到比以往更远的地方 而这一切，这种改变和经历， 它会带我到比以往更远的地方 而这一切，这种改变和经历， 在滑板上给我的， 而这一切，这种改变和经历， 在滑板上给我的， 比我坚持原路能梦想的还要多得多 所以，如果要给什么建议， 比我坚持原路能梦想的还要多得多 所以，如果要给什么建议， 就是对自己温柔一点，因为这一切， 所以，如果要给什么建议， 就是对自己温柔一点，因为这一切， 如果你那么热爱一件事，你全力以赴却失败了， 就是对自己温柔一点，因为这一切， 如果你那么热爱一件事，你全力以赴却失败了， 它会摧毁你的一部分 如果你那么热爱一件事，你全力以赴却失败了， 它会摧毁你的一部分 你听说过那些马拉松运动员 它会摧毁你的一部分 你听说过那些马拉松运动员 的故事吗？他们对自己有着极强的自律精神，</p>
+                <p class="dialogue-en">that will define what I love to begin with. It will take me further than it ever went before. And this, that change and going through that, that has given me more in skateboarding than I could ever, ever, ever have dreamed sticking with it. So, if there&#x27;s any advice I would give is just, be gentle with yourself, because all of this, if you love something so much and you go at it and you fail, it breaks part of you. You hear about these marathon runners, right,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="144" data-time="00:50:41">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:50:41</span>
+                <span class="dialogue-speaker speaker-guest">本性带来的所有阻力</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">你听说过那些马拉松运动员 的故事吗？他们对自己有着极强的自律精神， 如果跑得不好，他们会直接 的故事吗？他们对自己有着极强的自律精神， 如果跑得不好，他们会直接 冲下桥 如果跑得不好，他们会直接 冲下桥 我想任何达到过那种水平 的人都能体会到那种强度 冲下桥 我想任何达到过那种水平 的人都能体会到那种强度 我当然也是 我想任何达到过那种水平 的人都能体会到那种强度 我当然也是 但要认识到，正是这种跟你作对的强度， 我当然也是 但要认识到，正是这种跟你作对的强度， 也正是让你出色的东西 但要认识到，正是这种跟你作对的强度， 也正是让你出色的东西 如果你能转换思路，对自己好一点、有耐心， 知道 如果你能转换思路，对自己好一点、有耐心， 知道 你现在无法一下子具备改变 知道 你现在无法一下子具备改变 所需的一切 事情需要循序渐进， 你现在无法一下子具备改变 所需的一切 事情需要循序渐进， 所以对自己好一点</p>
+                <p class="dialogue-en">that the kind of discipline they wear on their bodies, and if they&#x27;re not doing well they&#x27;ll just run right off a bridge. I think anyone who&#x27;s done something at that level relates to that intensity. I certainly do. But recognize that same intensity that&#x27;s working against you, it&#x27;s also what makes you great. If you can just shift gears and be good and have patience with yourself to know that you can&#x27;t access everything you need to change right now. It&#x27;s got to unfold in the progress,</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="145" data-time="00:51:10">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:51:10</span>
+                <span class="dialogue-speaker speaker-guest">本性带来的所有阻力</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">所需的一切 事情需要循序渐进， 所以对自己好一点 然后一旦有了起色——你可能会， 所以对自己好一点 然后一旦有了起色——你可能会， 或者说很可能会，至少如果我能从 然后一旦有了起色——你可能会， 或者说很可能会，至少如果我能从 自己人生给建议的话—— 或者说很可能会，至少如果我能从 自己人生给建议的话—— 你会发现它带给你的种种东西， 自己人生给建议的话—— 你会发现它带给你的种种东西， 比如思维模型，那就是你的王牌， 你会发现它带给你的种种东西， 比如思维模型，那就是你的王牌， 能带你走得比你想象的还要远 比如思维模型，那就是你的王牌， 能带你走得比你想象的还要远 HIGGINS：所以我们把最后一个答案留给 Rodney</p>
+                <p class="dialogue-en">so be good to yourself. And then once it gets traction, you will potentially, likely -- or at least if I can give advice from my own life -- discover facets about what it gave you, the mental model stuff, they&#x27;re an ace up your sleeve and take you further than you would have ever believed.</p>
+            </div>
+        </div>
+        
+        <div class="dialogue-block" data-index="146" data-time="00:51:27">
+            <div class="dialogue-meta">
+                <span class="dialogue-time"><i class="icon-clock"></i> 00:51:27</span>
+                <span class="dialogue-speaker speaker-host">HIGGINS</span>
+            </div>
+            <div class="dialogue-content">
+                <p class="dialogue-zh">所以我们把最后一个答案留给 Rodney [掌声] 但还有一个问题， 因为提示词不只是给大语言模型用的 但还有一个问题， 因为提示词不只是给大语言模型用的 所以，我们想请大家 因为提示词不只是给大语言模型用的 所以，我们想请大家 思考一下今天在这里听到 的内容，无论你是领导者、开发者、 所以，我们想请大家 思考一下今天在这里听到 的内容，无论你是领导者、开发者、 所以，我们想请大家 思考一下今天在这里听到 的内容，无论你是领导者、开发者、 产品经理，还是其他任何身份， 的内容，无论你是领导者、开发者、 产品经理，还是其他任何身份， 都请思考一下周一你要做出哪些不同的改变 产品经理，还是其他任何身份， 都请思考一下周一你要做出哪些不同的改变 谢谢大家的到来 都请思考一下周一你要做出哪些不同的改变 谢谢大家的到来 很高兴能参与这场座谈 [掌声] 谢谢大家的到来 很高兴能参与这场座谈 [掌声]</p>
+                <p class="dialogue-en">That&#x27;s why we give Rodney the last answer. [ APPLAUSE ] But there is one more question, because prompts aren&#x27;t just for LLMs. So, we&#x27;d like to ask you to think about what you heard here today and whether you&#x27;re a leader, whether you&#x27;re a developer, whether you&#x27;re a product manager, whatever you are, think about what you&#x27;re going to do different on Monday. Thanks, everybody, for coming. It&#x27;s such a pleasure to do this. [ APPLAUSE ]</p>
+            </div>
+        </div>
+        
+            </div>
+        </section>
+
+        <!-- TAB 3: RESOURCES & CONTEXT -->
+        <section class="tab-panel" id="tab-resources">
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div>
+                        <h4>官方视频在线点播</h4>
+                        <p>IBM TechXchange 2026 官方点播专区，提供高清 1080P/720P 完整录像与官方交互式字幕导航。</p>
+                    </div>
+                    <a href="https://www.ibm.com/cn-zh/new/videos/techxchange-sessions" target="_blank" rel="noopener noreferrer" class="resource-link">
+                        直达官方点播专区 →
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div>
+                        <h4>IBM watsonx & Agent 平台</h4>
+                        <p>企业级生成式 AI 与多智能体编排治理核心平台，涵盖 watsonx.ai、watsonx.data 与 watsonx Orchestrate。</p>
+                    </div>
+                    <a href="https://www.ibm.com/cn-zh/watsonx" target="_blank" rel="noopener noreferrer" class="resource-link">
+                        探索 watsonx 官方架构 →
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div>
+                        <h4>IBM Granite 开源模型家族</h4>
+                        <p>完全遵循 Apache 2.0 协议开源的企业级多语言与代码模型，提供透明数据治理与知识产权兜底。</p>
+                    </div>
+                    <a href="https://www.ibm.com/granite" target="_blank" rel="noopener noreferrer" class="resource-link">
+                        查看 Granite 开源生态 →
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div>
+                        <h4>Red Hat OpenShift AI</h4>
+                        <p>企业级混合云 AI 基础设施与模型推理运行时，为分布式智能体提供确定性容器调度底座。</p>
+                    </div>
+                    <a href="https://www.redhat.com/zh/technologies/cloud-computing/openshift/openshift-ai" target="_blank" rel="noopener noreferrer" class="resource-link">
+                        了解 OpenShift AI 方案 →
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div>
+                        <h4>TechXchange 软件工程白皮书</h4>
+                        <p>基于本次大会 26 万字实录提炼编撰的深度架构白皮书：《AI Agent 的企业级落地范式与架构重构》。</p>
+                    </div>
+                    <a href="techxchange-2026-software-engineering-whitepaper.html" class="resource-link">
+                        阅读白皮书全文 →
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div>
+                        <h4>大会全景精读与视频总览</h4>
+                        <p>汇集 4 场核心峰会元数据、Kaltura 直链、双语 VTT 字幕与本地批量下载脚本的全局速查大纲。</p>
+                    </div>
+                    <a href="ibm-techxchange-2026-sessions.html" class="resource-link">
+                        查看点播总览大纲 →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Previous / Next Session Footer Navigation -->
+        <nav class="prev-next-nav">
+            <a href="techxchange-2026-session-03-the-future-built-by-you.html" class="prev-next-btn prev"><span class="pn-label">← 上一场 (SESSION 03)</span><span class="pn-title">未来：由您构筑</span></a>
+            <div class="prev-next-btn disabled"><span class="pn-label">已是最后一场</span></div>
+        </nav>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>IBM TechXchange 2026 全球技术大会 · 官方实录整理与深度精读</p>
+        <p style="margin-top: 6px;">整理与架构解构：Billy Chen（陈剑） // <a href="index.html">返回博客主页</a></p>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Tab Switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabPanels.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                const targetTab = btn.getAttribute('data-tab');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Language Mode Switching
+        const langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const mode = btn.getAttribute('data-lang-mode');
+                document.body.classList.remove('view-zh-only', 'view-en-only');
+                if (mode === 'zh-only') {
+                    document.body.classList.add('view-zh-only');
+                } else if (mode === 'en-only') {
+                    document.body.classList.add('view-en-only');
+                }
+            });
+        });
+
+        // Transcript Realtime Search
+        const searchInput = document.getElementById('transcriptSearch');
+        const dialogueList = document.getElementById('dialogueList');
+        const counter = document.getElementById('transcriptCount');
+        const blocks = dialogueList.querySelectorAll('.dialogue-block');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            let matched = 0;
+            blocks.forEach(block => {
+                const text = block.textContent.toLowerCase();
+                if (!query || text.includes(query)) {
+                    block.style.display = '';
+                    matched++;
+                } else {
+                    block.style.display = 'none';
+                }
+            });
+            counter.textContent = query ? `匹配到 ${matched} / ${blocks.length} 个段落` : `共 ${blocks.length} 个对话段落`;
+        });
+
+        // Theme Toggle (Dark / Light)
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeLabel = document.getElementById('themeLabel');
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('jchen_theme', theme);
+            themeLabel.textContent = theme === 'dark' ? '☀️ LIGHT' : '🌙 DARK';
+        }
+
+        const savedTheme = localStorage.getItem('jchen_theme') || 'dark';
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+    </script>
+</body>
+</html>
+    
